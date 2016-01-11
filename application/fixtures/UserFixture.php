@@ -17,7 +17,7 @@ class UserFixture implements FixturesInterface
 
         $faker = Faker\Factory::create();
 
-        $CI->db->query('TRUNCATE TABLE user');
+        $CI->db->query('TRUNCATE TABLE nu_user');
 
         // Hash default password
         $pass = hash('sha512', 'admin#123'.config_item('encryption_key'));

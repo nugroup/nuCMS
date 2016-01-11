@@ -9,6 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $lang['text.logout'] = 'Wyloguj';
 $lang['text.menu'] = 'Menu';
 $lang['text.language'] = 'Język';
+$lang['text.checked_items'] = 'zaznaczone';
+$lang['text.choose'] = 'wybierz';
+$lang['text.delete'] = 'usuń';
 
 /* menu
 ============================================================================= */
@@ -39,6 +42,10 @@ $lang['components.per_page'] = 'wyświetl';
 $lang['language.polish'] = 'Polski';
 $lang['language.english'] = 'Angielski';
 
+/* config
+============================================================================= */
+$lang['config.user_types.admin'] = 'Administrator';
+
 /* users
 ============================================================================= */
 $lang['admin'] = 'Administrator';
@@ -51,8 +58,6 @@ $lang['yes'] = 'Tak';
 $lang['no'] = 'Nie';
 $lang['close'] = 'Zamknij';
 $lang['save'] = 'Zapisz';
-$lang['choose'] = 'wybierz';
-$lang['delete'] = 'usuń';
 $lang['add'] = 'Dodaj';
 
 /* alerts
@@ -60,10 +65,6 @@ $lang['add'] = 'Dodaj';
 $lang['no_records'] = 'Brak elementów';
 $lang['delete_checked_items'] = 'Usunięto zaznaczone elementy';
 $lang['save_changes'] = 'Zapisano zmiany';
-
-/* titles
-============================================================================= */
-$lang['checked_items'] = 'zaznaczone';
 
 /* form validations
 ============================================================================= */

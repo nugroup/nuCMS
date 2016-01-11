@@ -8,6 +8,8 @@ if (!defined('BASEPATH'))
  */
 class Admin_user extends Backend_Controller
 {
+    private $sessionName = 'user';
+
     public function __construct()
     {
         parent::__construct();
@@ -32,7 +34,7 @@ class Admin_user extends Backend_Controller
     {
         // Set page
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
-        $this->session->set_userdata('user_return_link', config_item('base_url_301').$this->input->server('REQUEST_URI'));
+        $this->setReturnLink($this->sessionName);
 
         // Delete checked item
         if ($this->input->post('action') == 'delete_checked') {
@@ -46,36 +48,25 @@ class Admin_user extends Backend_Controller
             redirect(current_url());
         }
 
-        // Get users
+        // Get number of items for pager
         $this->user->generate_like_query($this->input->get('string'));
-        $numberOfUsers = $this->user->count();
+        $numberOfItems = $this->user->count();
 
-        // Pagiation
-        $this->load->library('pagination');
-        $config['base_url'] = current_url();
-        $config['total_rows'] = $numberOfUsers;
-        $config['per_page'] = $this->session->userdata('admin_per_page');
-        $config['page_query_string'] = TRUE;
-        $config['query_string_segment'] = 'page';
-        $config['reuse_query_string'] = TRUE;
-        $this->pagination->initialize($config);
-
-        // Set limits
-        $params['limit_offset'] = ($page * $config["per_page"]) - $config["per_page"];
-        $params['limit'] = $config["per_page"];
+        // Init pagination
+        $paginationLimits = $this->initPagination($numberOfItems, $page);
 
         // Get users
         $this->user->generate_like_query($this->input->get('string'));
-        $users = $this->user->limit($params['limit'], $params['limit_offset'])
-            ->get_all();
+        $users = $this->user->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])->get_all();
 
         // Set view data
         $this->data['page'] = $page;
         $this->data['users'] = $users;
-        $this->data['subnav_active']['index'] = TRUE;
+        $this->data['pager'] = $this->pagination->create_links();
+        $this->data['subnav_active'] = 'index';
 
         // Load the view
-        $this->load->view('user/index', $this->data);
+        $this->render('user/index', $this->data);
     }
 
     /**

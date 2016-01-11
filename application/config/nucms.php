@@ -25,7 +25,7 @@ $config['twig_user_functions'] = ['asset', 'generate_menu', 'admin_url', 'flashd
  * Users
  */
 $config['users_types'] = array(
-    0 => lang('admin')
+    0 => lang('config.user_types.admin')
 );
 
 /**

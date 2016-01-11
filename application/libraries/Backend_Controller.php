@@ -78,6 +78,31 @@ class Backend_Controller extends MY_Controller
 
         return $params;
     }
+
+    /**
+     * Set return link from list view
+     *
+     * @param string $controllerName
+     */
+    public function setReturnLink($controllerName)
+    {
+        $this->session->set_userdata($controllerName.'_return_link', config_item('base_url_301').$this->input->server('REQUEST_URI'));
+    }
+
+    /**
+     * Get return link from session to the view
+     *
+     * @param string $controllerName
+     * @return string
+     */
+    public function getReturnLink($controllerName)
+    {
+        if ($this->session->{$controllerName.'_return_link'}) {
+            return $this->session->{$controllerName.'_return_link'};
+        }
+
+        return $this->config->item('admin_url').'/'.$controllerName;
+    }
 }
 
 /* End of file Backend_controller.php */

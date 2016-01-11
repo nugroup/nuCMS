@@ -17,10 +17,10 @@ class Twig
 {
     private $config = [];
     private $functions_asis = [
-        'base_url', 'site_url', 'lang', 'validation_errors'
+        'base_url', 'site_url', 'current_url', 'lang', 'validation_errors'
     ];
     private $functions_safe = [
-        'form_open', 'form_close', 'form_error', 'set_value', 'form_hidden', 'form_input', 'form_password'
+        'form_open', 'form_close', 'form_error', 'set_value', 'form_hidden', 'form_input', 'form_password', 'form_checkbox'
     ];
 
     /**

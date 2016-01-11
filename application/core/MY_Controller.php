@@ -31,6 +31,7 @@ class MY_Controller extends MX_Controller
         // Add global variables to twig
         $this->twig->addGlobal("session", $this->session->userdata);
         $this->twig->addGlobal("config", $this->config->config);
+        $this->twig->addGlobal("input", $this->input);
 
         // Add user function to twig
         if ($this->config->item('twig_user_functions')) {
@@ -41,6 +42,19 @@ class MY_Controller extends MX_Controller
 
         // Render twig view
         $this->twig->display($view, $data);
+    }
+
+    /**
+     * Add message to log
+     *
+     * @param type $message
+     * @param type $level
+     */
+    public function set_log($message, $level = 'error')
+    {
+        $logMessage = $message.'<br>File: <b>'.__FILE__.'</b><br>Line: <b>'.__LINE__.'</b>'.lang('exc_info');
+
+        log_message($level, $logMessage);
     }
 }
 
