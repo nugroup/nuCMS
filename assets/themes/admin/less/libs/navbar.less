@@ -1,0 +1,38 @@
+// main: nu.less
+
+// ----- top navbar
+.nuNavbar {
+    height: 80px;
+    background-color: @cBack2;
+    line-height: 80px;
+
+    .row {
+        padding: 0 20px;
+    }
+
+    .nuMenuBtn > span {
+        color: @cLines;
+
+        i {
+            font-size: 14px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        span {
+            font-size: @tHeader;
+            padding-left: 17px;
+            transition: all 0.3s;
+        }
+
+        &:hover {
+            color: @cBase1;
+            cursor: pointer;
+        }
+
+    }
+
+    .nuLogo {
+        @media all and (max-width: 768px) { text-align: right; }
+    }
+}

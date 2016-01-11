@@ -1,0 +1,14 @@
+<!-- dropdown actions -->
+<span class="txtUpper">{{ lang('components.per_page') }}:</span>
+<span class="btn-group nuDropdown">
+    <span data-toggle="dropdown" class="txtBig hoverLine">
+        {{ session.admin_per_page }}
+        <i class="fa fa-angle-down"></i>
+    </span>
+    <ul class="dropdown-menu dropdown-menu-right">
+        <li><a href="{{ admin_url('main/change_per_page/2') }}">2</a></li>
+        <li><a href="{{ admin_url('main/change_per_page/10') }}">10</a></li>
+        <li><a href="{{ admin_url('main/change_per_page/20') }}">20</a></li>
+        <li><a href="{{ admin_url('main/change_per_page/50') }}">50</a></li>
+    </ul>
+</span>

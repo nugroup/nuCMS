@@ -1,0 +1,163 @@
+// main: nu.less
+
+@menuColor1: #fff;
+@menuColor2: fadeOut(@menuColor1, 65%);
+@menuColor3: @cFun1;
+
+
+// ----- hide scrollbar
+.bodyHide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 98;
+    width: 100%;
+    height: 100%;
+    background: @cBack2;
+    opacity: 0;
+    transition: all 0.3s;
+    visibility: hidden;
+
+    &.bodyHideOn {
+        opacity: 0.9;
+        visibility: visible;
+    }
+}
+
+
+// ----- close menu
+.closeMenu {
+    position: absolute;
+    top: 25px;
+    left: 26px;
+    padding: 5px 10px;
+    font-size: 20px;
+    color: @menuColor1;
+    transition: all 0.6s;
+    transform: rotate(90deg);
+    opacity: 0.2;
+    cursor: pointer;
+}
+
+
+// ----- menu styles
+#menu {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    width: 0;
+    height: 100%;
+    box-shadow: 15px 0px 35px 0px rgba(0,0,0,0.1);
+    background: @menuColor3;
+    overflow: hidden;
+    transition: all 0.5s;
+
+    .menu {
+        margin-top: 30px;
+        padding: 50px 70px 50px 0;
+        overflow-y: auto;
+        height: 100%;
+        transition: all 0.5s;
+        transition-delay: 0.3s;
+        opacity: 0;
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+
+            li.head {
+                position: relative;
+                display: block;
+                margin-top: 25px;
+                margin-bottom: 5px;
+                color: @menuColor1;
+                text-transform: uppercase;
+                font-size: 11px;
+
+                span {
+                    position: relative;
+                    background: @menuColor3;
+                    padding-right: 15px;
+                    z-index: 2;
+                    color: @menuColor2;
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    bottom: 7px;
+                    left: 0;
+                    width: 100%;
+                    height: 1px;
+                    background: @menuColor2;
+                }
+            }
+
+            li {
+                white-space: nowrap;
+
+                a {
+                    display: block;
+                    padding: 5px 0;
+                    font-size: @tHeader;
+                    color: @menuColor1;
+                    transition: all 0.2s;
+
+                    i {
+                        width: 27px;
+                        font-size: 14px;
+                        color: @menuColor2;
+                        transition: all 0.2s;
+                    }
+
+                    &:hover {
+                        padding-left: 5px;
+                        i { color: @menuColor1; }
+                    }
+                }
+            }
+        }
+    }
+
+    // menu footer
+    .menuFooter {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        .txtUpper;
+        color: @menuColor1;
+        white-space: nowrap;
+        opacity: 0;
+        transition: all 0.5s;
+        transition-delay: 0.6s;
+
+        img {
+            padding: 0 10px 0 35px;
+        }
+    }
+
+    // menu animation
+    &.menuOpen {
+        width: 300px;
+        @media all and (max-width: 480px) { width: 100%; }
+
+        .closeMenu {
+            transform: rotate(0deg);
+            opacity: 1;
+        }
+
+        .menu {
+            padding: 50px 35px 50px 35px;
+            opacity: 1;
+        }
+
+        .menuFooter {
+            opacity: 1;
+        }
+    }
+}

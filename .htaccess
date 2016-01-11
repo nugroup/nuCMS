@@ -1,0 +1,28 @@
+#RewriteEngine on
+#RewriteCond $1 !^(index\.php|images|robots\.txt)
+#RewriteRule ^(.*)$ index.php/$1 [L]
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    #development
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REMOTE_ADDR} !^localhost
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+
+    #production
+    RewriteBase /nucms/
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+
+    ErrorDocument 404 /index.php
+
+</IfModule>

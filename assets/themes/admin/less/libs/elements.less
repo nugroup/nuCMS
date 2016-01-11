@@ -1,0 +1,379 @@
+// main: nu.less
+
+// ----- big input for search, titles etc.
+.bigInput {
+
+    div, input {
+        border: 1px solid @cLines;
+        background: none;
+        box-shadow: none;
+        padding-left: 25px;
+        padding-right: 20px;
+        height: 45px;
+        border-radius: 100px;
+        color: @cBase1;
+        box-sizing: border-box;
+        transition: all 0.3s;
+    }
+
+    div {
+        border-right: none;
+        .txtUpper;
+
+        i {
+            font-size: 18px;
+            color: @cLines;
+            transition: 0.3s;
+        }
+    }
+
+    input {
+        border-left: none;
+        padding-left: 0;
+        font-size: @tMain;
+
+        &:focus {
+            box-shadow: none;
+            border-color: @cLines;
+        }
+    }
+
+    .jsFocus {
+        border-color: @cBase2 !important;
+
+        i { color: @cBase2; }
+    }
+    
+    button{
+        background: none;
+    }
+}
+
+
+// ----- custom bootstrap dropdowns
+.nuDropdown {
+    vertical-align: inherit;
+    margin: 0 5px;
+
+    span {
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        background: @cBack2;
+        border: none;
+
+        li{
+            > a, > span, > button {
+                display: block;
+                padding: 10px 20px;
+                color: @cBase2;
+                transition: all 0.3s;
+                background: none;
+                border: none;
+                outline: none;
+
+                &:hover {
+                    color: @cBase1;
+                    background: @cFun1;
+                }
+
+                i {
+                    margin-right: 10px;
+                }
+            }
+            > button {
+                line-height: 12px;
+                text-align: left;
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+// ----- bootstrap dropdown as select
+.dropAsSelect {
+    display: block;
+    margin: 0;
+
+    span[data-toggle] {
+        position: relative;
+        display: block;
+        border-bottom: 1px solid @cLines;
+        height: 34px;
+        line-height: 34px;
+
+        i {
+            position: absolute;
+            top: 8px;
+            right: 0;
+        }
+    }
+
+    ul {
+        width: 100%;
+    }
+}
+
+
+// ----- custom boostrap buttons
+.btn {
+    // default btn styles
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 100px;
+    padding: 14px 30px;
+    border: 1px solid @cBase2;
+    background: none;
+    transition: all 0.3s;
+    outline: none;
+    line-height: 15px;
+    .txtUpper;
+    
+    &:link{
+        line-height: 15px;
+        .txtUpper;
+    }
+
+    span, i {
+        margin-right: 8px;
+    }
+
+    // more sizes
+    &.btn-sm { height: 35px; }
+    &.btn-xs { height: 25px; }
+
+    // color settings
+    &.btn-save   { .btnStyle(@cGreen); color: @cBase1; }
+    &.btn-blue   { .btnStyle(@cBlue); }
+    &.btn-green  { .btnStyle(@cGreen); }
+    &.btn-red    { .btnStyle(@cRed); }
+    &.btn-yellow { .btnStyle(@cYellow); }
+    &.btn-orange { .btnStyle(@cOrange); }
+
+    .btnStyle(@clr) {
+        border-color: @clr;
+        color: @clr;
+
+        &:hover, &:focus, &:active {
+            color: @cBack1;
+            background: @clr;
+        }
+    }
+
+    // gradient save button
+    &.btn-save {
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: inherit;
+            background-position: 0 0, 100% 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 1px;
+            background-image: linear-gradient(to right, @cFun1 0%, @cFun2 50%, @cFun1 100%), linear-gradient(to right, @cFun1 0%, @cFun2 50%, @cFun1 100%);
+            z-index: 50;
+            border-radius: 100px;
+            opacity: 0.6;
+        }
+        &:hover, &:focus, &:active {
+            outline: none;
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    // margins for buttons
+    &.btn-margin-left { margin-left: 10px; }
+    &.btn-margin-right { margin-right: 10px; }
+}
+
+
+// ----- custom bootstrap inputs
+.form-control {
+    position: relative;
+    padding: 0;
+    border: none;
+    box-shadow: inset 0px -1px 0px 0px @cLines;
+    border-radius: 0;
+    background: none;
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    background-image: linear-gradient(to right, @cFun1 0%, @cFun1 100%);
+    transition: all 0.3s;
+    .txtBig;
+
+    &:focus {
+        box-shadow: none;
+        border-color: inherit;
+        background-size: 100% 1px;
+    }
+
+    &.input-reverse {
+        box-shadow: inset 0px -1px 0px 0px fadeout(@cLines, 80%);
+        color: @cBase2;
+    }
+}
+
+
+// ----- input groups
+.input-group {
+    span {
+        background: none;
+        border: none;
+        padding: 2px 30px 0 0;
+        .txtUpper;
+    }
+}
+
+
+// ----- placeholder style
+.form-control::-webkit-input-placeholder { .txtUpper; padding-top: 3px; }
+.form-control:-moz-placeholder { .txtUpper; padding-top: 3px; }
+.form-control::-moz-placeholder { .txtUpper; padding-top: 3px; }
+.form-control:-ms-input-placeholder { .txtUpper; padding-top: 3px; }
+
+
+// ----- bootstrap custom forms group
+.form-horizontal {
+    .control-label {
+        .txtUpper;
+    }
+    .form-group {
+        min-height: 40px;
+    }
+}
+
+
+// ----- custom animated checkbox
+.superCheck {
+    display: block;
+    position: relative;
+    top: 10px;
+    width: 29px;
+    height: 13px;
+    border-radius: 50px;
+    box-shadow: inset 0px 0px 0px 1px @cLines;
+
+    span {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -2px;
+        left: -3px;
+        width: 17px;
+        height: 17px;
+        border-radius: 50px;
+        background: @cFun1;
+        transition: all 0.2s;
+    }
+
+    input { display: none; }
+
+    label {
+        display: block;
+        position: absolute;
+        top: -2px;
+        left: -3px;
+        width: 35px;
+        height: 17px;
+        opacity: 0;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    input[type=checkbox]:checked ~ span {
+        top: 2px;
+        left: 17px;
+        background: @cBase2;
+        width: 9px;
+        height: 9px;
+    }
+}
+
+
+// ----- custom animated radio
+.superRadio, .superMultiCheck {
+    position: relative;
+    padding-top: 7px;
+
+    label {
+        font-size: @tMain;
+        color: @cBase1;
+        font-weight: normal;
+        padding-left: 24px;
+    }
+
+    span {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        z-index: -1;
+        width: 12px;
+        height: 12px;
+        border: 1px solid @cBase2;
+        border-radius: 100px;
+        transition: all 0.3s;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 0;
+            height: 0;
+            opacity: 1;
+            background: @cFun1;
+            border-radius: 100px;
+            transition: all 0.3s;
+        }
+    }
+
+    input { display: none; }
+
+    input:checked + span {
+        border-color: @cFun1;
+        border: none;
+        background: @cFun1;
+
+        &::after {
+            top: -7px;
+            left: -7px;
+            width: 26px;
+            height: 26px;
+            opacity: 0;
+        }
+    }
+}
+
+
+// ----- textarea
+textarea.form-control {
+    padding: 15px;
+    font-size: @tMain;
+    border-top: 1px solid @cLines;
+    border-right: 1px solid @cLines;
+    border-left: 1px solid @cLines;
+
+    &:focus, &:active {
+        border-color: @cLines;
+    }
+}
+
+
+// ----- label
+label {
+    margin-bottom: 0;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+///
