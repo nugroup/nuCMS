@@ -26,6 +26,8 @@ $lang['menu.menu'] = 'Menu';
 $lang['menu.title'] = 'Menu';
 $lang['menu.users'] = 'Użytkownicy';
 $lang['menu.settings'] = 'Opcje';
+$lang['menu.configuration'] = 'Konfiguracja';
+$lang['menu.languages'] = 'Języki';
 $lang['menu.logout'] = 'Wyloguj';
 
 /* modal

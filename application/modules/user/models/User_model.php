@@ -1,12 +1,17 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class User_model extends MY_Model 
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+/**
+ * Class User_model
+ */
+class User_model extends MY_Model
 {
     public $table = 'nu_user';
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
-    
 
     function __construct()
     {
@@ -44,15 +49,13 @@ class User_model extends MY_Model
 
     public function generate_like_query($string)
     {
-        if($string)
-        {
+        if ($string) {
             $this->db->like('name', $string);
             $this->db->or_like('login', $string);
             $this->db->or_like('email', $string);
         }
     }
 }
-
 
 /* End of file Users_model.php */
 /* Location: ./application/modules/users/models/Users_model.php */
