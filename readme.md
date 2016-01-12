@@ -7,7 +7,7 @@ You can install this cms fast even on cheap hosting.
 
 - Clone git repository
 ```sh
-git clone git@github.com:xprezesx/fitCMS.git
+git clone git@github.com:nugroup/nuCMS.git
 ```
 
 - Install dependencies using composer
