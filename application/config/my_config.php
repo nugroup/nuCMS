@@ -10,9 +10,8 @@
 $config['theme'] = 'default';
 $config['images_url'] = base_url() . 'assets/themes/' . $config['theme'] . '/img/';
 
-/**
- * Twig
- */
+/* twig
+============================================================================= */
 $config['twig_config'] = [
     'paths' => [VIEWPATH.'themes/'.$config['theme'], VIEWPATH],
 ];

@@ -14,14 +14,6 @@ class Admin_user extends Backend_Controller
     {
         parent::__construct();
 
-        // View data
-        $this->data['nu_title'] = lang('user');
-        $this->data['subnav_active'] = array(
-            'index' => FALSE,
-            'add' => FALSE,
-            'edit' => FALSE
-        );
-
         // Load classes
         $this->load->model('user/user_model', 'user');
         $this->lang->load('user', config_item('selected_lang'));
@@ -44,7 +36,7 @@ class Admin_user extends Backend_Controller
             }
 
             // Set message and refresh the page
-            $this->session->set_flashdata('success', lang('delete_checked_items'));
+            $this->session->set_flashdata('success', lang('alert.success.delete_checked'));
             redirect(current_url());
         }
 
@@ -102,21 +94,21 @@ class Admin_user extends Backend_Controller
                 // Update
                 if ($this->user->update($dataUpdate, $id)) {
                     // Set informations
-                    $this->session->set_flashdata('success', lang('save_changes'));
+                    $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
 
                     // Redirect
-                    redirect(config_item('admin_url').'/user/edit/'.$id);
+                    redirect(admin_url('user/edit/'.$id));
                 }
             }
         }
 
         // Set view data
         $this->data['user'] = $user;
-        $this->data['subnav_active']['edit'] = TRUE;
-        $this->data['return_link'] = ($this->session->user_return_link) ? $this->session->user_return_link : config_item('admin_url').'users';
+        $this->data['subnav_active'] = 'edit';
+        $this->data['return_link'] = $this->getReturnLink($this->sessionName);
 
         // Load the view
-        $this->load->view('user/edit', $this->data);
+        $this->render('user/edit', $this->data);
     }
 
     /**
@@ -127,9 +119,10 @@ class Admin_user extends Backend_Controller
         // If post is send
         if ($this->input->post()) {
             $inserted_id = $this->user->from_form($this->user->get_rules('add'))->insert();
+
             if ($inserted_id) {
                 // Set informations
-                $this->session->set_flashdata('success', lang('success_add_user'));
+                $this->session->set_flashdata('success', lang('user.alert.success.add'));
 
                 // Redirect
                 redirect(config_item('admin_url').'/user');
@@ -137,11 +130,11 @@ class Admin_user extends Backend_Controller
         }
 
         // Set view data
-        $this->data['subnav_active']['add'] = TRUE;
-        $this->data['return_link'] = ($this->session->user_return_link) ? $this->session->user_return_link : config_item('admin_url').'user';
+        $this->data['subnav_active'] = 'add';
+        $this->data['return_link'] = $this->getReturnLink($this->sessionName);
 
         // Load the view
-        $this->load->view('user/add', $this->data);
+        $this->render('user/add', $this->data);
     }
 
     /**
@@ -160,18 +153,18 @@ class Admin_user extends Backend_Controller
                 try {
                     // Delete user
                     if (!$this->user->delete($id)) {
-                        throw new Exception(lang('user_delete_error'));
+                        throw new Exception(lang('user.alert.error.delete'));
                     }
 
                     // Set response data
-                    $result['message'] = lang('user_was_deleted');
+                    $result['message'] = lang('user.alert.success.delete');
                     $result['status'] = 1;
                 } catch (Exception $ex) {
                     // Log error message
                     log_message('error', "Line: ".__LINE__."\nFile: ".__FILE__."\n".$ex->getMessage());
 
                     // Set response data
-                    $result['message'] = lang('user_delete_error');
+                    $result['message'] = $ex->getMessage();
                     $result['status'] = 0;
                 }
             }

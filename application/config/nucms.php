@@ -13,32 +13,22 @@ $config['selected_lang'] = 'polish';                                            
 $config['images_url'] = base_url() . 'assets/themes/' . $config['theme'] . '/img/';
 $config['default_admin_per_page'] = 10;                                         // Default number of elements
 
-/**
- * Twig
- */
+/* twig
+============================================================================= */
 $config['twig_config'] = [
     'paths' => [VIEWPATH.'themes/'.$config['theme'], VIEWPATH],
 ];
 $config['twig_user_functions'] = ['asset', 'generate_menu', 'admin_url', 'flashdata'];
 
-/**
- * Users
- */
+/* users
+============================================================================= */
 $config['users_types'] = array(
     0 => lang('config.user_types.admin')
 );
 
-/**
- * Metatags
- */
+/* metatags
+============================================================================= */
 $config['metatags'] = [
     'title'   => 'nuCMS',
     'version' => 'v.0.1 alfa',
-];
-
-/**
- * Users
- */
-$config['users_types'] = [
-    0 => lang('admin')
 ];

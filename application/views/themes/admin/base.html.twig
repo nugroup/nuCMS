@@ -12,7 +12,12 @@
 
     <title>{{ config.metatags.title }} {{ config.metatags.version}}</title>
     <base href="{{ config.metatags.title }}{{ site_url() }}">
-    <link rel="shortcut icon" href="">
+    
+    <!-- FAVICO -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+
+    {% block stylesheet %}
 
     <!-- CSS STYLES -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -20,6 +25,8 @@
     <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/nu.css') }}" rel="stylesheet">
+
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,52 +69,64 @@
 
     {% endblock %}
 
+    {% block subnav %}{% endblock %}
+
     {% block alerts %}
 
-        <!-- alerts -->
-        {% if(validation_errors()) %}
+    <!-- alerts -->
+    <div class="container">
+        <div class="alerts">
+            {% if(validation_errors()) %}
 
-            <div class="alert alert-danger">
-                {{ validation_errors() | raw }}
-            </div>
+                <div class="alert alert-danger">
+                    {{ validation_errors() | raw }}
+                </div>
 
-        {% endif %}
+            {% endif %}
 
-        {% if (flashdata('error')) %}
+            {% if (flashdata('error')) %}
 
-            <div class="alert alert-danger">
-                {{ flashdata('error') }}
-            </div>
+                <div class="alert alert-danger">
+                    {{ flashdata('error') }}
+                </div>
 
-        {% endif %}
+            {% endif %}
 
-        {% if (flashdata('success')) %}
+            {% if (flashdata('success')) %}
 
-            <div class="alert alert-success">
-                {{ flashdata('success') }}
-            </div>
+                <div class="alert alert-success">
+                    {{ flashdata('success') }}
+                </div>
 
-        {% endif %}
+            {% endif %}
 
-        {% if (errors) is defined %}
+            {% if (errors) is defined %}
 
-            <div class="alert alert-danger">
-                {% for error in errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
+                <div class="alert alert-danger">
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
 
-        {% endif %}
+            {% endif %}
+        </div>
+    </div>
 
     {% endblock %}
 
+    <!-- margin -->
+    <div class="clearfix baseMargin"></div>
+
     {% block body %}{% endblock %}
 
+    <!-- margin -->
     <div class="clearfix baseMargin"></div>
 
     <footer id="footer">
 
     </footer>
+
+    {% block modal %}
 
     <!-- Modal -->
     <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -127,11 +146,17 @@
         </div>
     </div>
 
+    {% endblock %}
+
+    {% block javascript %}
+
     <!-- JS SCRIPTS -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/nu.js') }}"></script>
+
+    {% endblock %}
 
     <script type="text/javascript">
     <!--

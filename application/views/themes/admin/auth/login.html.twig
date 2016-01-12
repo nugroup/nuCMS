@@ -5,60 +5,60 @@
 
 {% block body %}
 
-    <div id="login-panel">
+<div id="login-panel">
 
-        <!-- logo -->
-        <div class="loginLogo">
-            <img src="{{ asset('img/nucms-logo-login.png') }}">
-        </div>
-
-        <!-- back to site -->
-        <div class="hidden-xs loginBack">
-            <a href="{{ site_url() }}"><i class="ion-ios-arrow-back"></i>{{ lang('auth.login.back_button') }}</a>
-        </div>
-
-        <!-- form -->
-        <div class="loginForm">
-
-            <!-- alerts -->
-            {% if(validation_errors()) %}
-
-                <div class="alert alert-danger">
-                    {{ validation_errors() | raw }}
-                </div>
-
-            {% endif %}
-
-            {% if (flashdata('error')) %}
-
-                <div class="alert alert-danger">
-                    {{ flashdata('error') }}
-                </div>
-
-            {% endif %}
-
-            {{ form_open('', {'class': 'form-horizontal'}) }}
-
-                <div class="input-group bigInput loginFormLogin">
-                    <div class="input-group-addon"><i class="ion ion-android-person"></i></div>
-                    {{ form_input({'name': 'email', 'class': 'form-control', 'placeholder': lang('auth.login.login') }) }}
-                </div>
-
-                <div class="input-group bigInput loginFormPass">
-                    <div class="input-group-addon"><i class="ion ion-locked"></i></div>
-                    {{ form_password({'name': 'password', 'id': 'password', 'class': 'form-control', 'placeholder': lang('auth.login.password') }) }}
-                </div>
-
-                <div class="loginFormBtn">
-                    <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('auth.login.button') }}</button>
-                    <div class="loginFormRemind">
-                        <a href="{{ admin_url('') }}">{{ lang('auth.login.remind_password') }}</a>
-                    </div>
-                </div>
-
-            {{ form_close() }}
-        </div>
-
+    <!-- logo -->
+    <div class="loginLogo">
+        <img src="{{ asset('img/nucms-logo-login.png') }}">
     </div>
+
+    <!-- back to site -->
+    <div class="hidden-xs loginBack">
+        <a href="{{ site_url() }}"><i class="ion-ios-arrow-back"></i>{{ lang('auth.login.back_button') }}</a>
+    </div>
+
+    <!-- form -->
+    <div class="loginForm">
+
+        <!-- alerts -->
+        {% if(validation_errors()) %}
+
+            <div class="alert alert-danger">
+                {{ validation_errors() | raw }}
+            </div>
+
+        {% endif %}
+
+        {% if (flashdata('error')) %}
+
+            <div class="alert alert-danger">
+                {{ flashdata('error') }}
+            </div>
+
+        {% endif %}
+
+        {{ form_open('', {'class': 'form-horizontal'}) }}
+
+            <div class="input-group bigInput loginFormLogin">
+                <div class="input-group-addon"><i class="ion ion-android-person"></i></div>
+                {{ form_input({'name': 'email', 'class': 'form-control', 'placeholder': lang('auth.login.login') }) }}
+            </div>
+
+            <div class="input-group bigInput loginFormPass">
+                <div class="input-group-addon"><i class="ion ion-locked"></i></div>
+                {{ form_password({'name': 'password', 'id': 'password', 'class': 'form-control', 'placeholder': lang('auth.login.password') }) }}
+            </div>
+
+            <div class="loginFormBtn">
+                <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('auth.login.button') }}</button>
+                <div class="loginFormRemind">
+                    <a href="{{ admin_url('') }}">{{ lang('auth.login.remind_password') }}</a>
+                </div>
+            </div>
+
+        {{ form_close() }}
+    </div>
+
+</div>
 
 {% endblock %}

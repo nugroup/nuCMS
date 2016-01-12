@@ -25,18 +25,18 @@ class User_model extends MY_Model
     {
         $rules = array();
 
-        $rules['name'] = array('field' => 'name', 'label' => lang('name'), 'rules' => 'required|trim|xss_clean');
+        $rules['name'] = array('field' => 'name', 'label' => lang('name'), 'rules' => 'trim|xss_clean');
 
         if ($action == 'add') {
-            $rules['login'] = array('field' => 'login', 'label' => lang('login'), 'rules' => 'my_unique_field['.$this->table.',login,id]|trim|required|xss_clean');
-            $rules['email'] = array('field' => 'email', 'label' => lang('email'), 'rules' => 'my_unique_field['.$this->table.',email,id]|trim|required|valid_email|xss_clean');
-            $rules['password'] = array('field' => 'password', 'label' => lang('password'), 'rules' => 'required|xss_clean');
-            $rules['password_repeat'] = array('field' => 'password_repeat', 'label' => lang('password_repeat'), 'rules' => 'required|matches[password]|xss_clean');
+            $rules['login'] = array('field' => 'login', 'label' => lang('user.form.login'), 'rules' => 'my_unique_field['.$this->table.',login,id]|trim|required|xss_clean');
+            $rules['email'] = array('field' => 'email', 'label' => lang('user.form.email'), 'rules' => 'my_unique_field['.$this->table.',email,id]|trim|required|valid_email|xss_clean');
+            $rules['password'] = array('field' => 'password', 'label' => lang('user.form.password'), 'rules' => 'required|xss_clean');
+            $rules['password_repeat'] = array('field' => 'password_repeat', 'label' => lang('user.form.password_repeat'), 'rules' => 'required|matches[password]|xss_clean');
         } else {
-            $rules['login'] = array('field' => 'login', 'label' => lang('login'), 'rules' => 'my_unique_field['.$this->table.',login,id,'.$id.']|trim|required|xss_clean');
-            $rules['email'] = array('field' => 'email', 'label' => lang('email'), 'rules' => 'my_unique_field['.$this->table.',email,id,'.$id.']|trim|required|valid_email|xss_clean');
-            $rules['password'] = array('field' => 'password', 'label' => lang('password'), 'rules' => 'xss_clean');
-            $rules['password_repeat'] = array('field' => 'password_repeat', 'label' => lang('password_repeat'), 'rules' => 'matches[password]|xss_clean');
+            $rules['login'] = array('field' => 'login', 'label' => lang('user.form.login'), 'rules' => 'my_unique_field['.$this->table.',login,id,'.$id.']|trim|required|xss_clean');
+            $rules['email'] = array('field' => 'email', 'label' => lang('user.form.email'), 'rules' => 'my_unique_field['.$this->table.',email,id,'.$id.']|trim|required|valid_email|xss_clean');
+            $rules['password'] = array('field' => 'password', 'label' => lang('user.form.password'), 'rules' => 'xss_clean');
+            $rules['password_repeat'] = array('field' => 'password_repeat', 'label' => lang('user.form.password_repeat'), 'rules' => 'matches[password]|xss_clean');
         }
 
         return $rules;
