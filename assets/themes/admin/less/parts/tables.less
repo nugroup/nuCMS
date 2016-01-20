@@ -22,6 +22,15 @@
                 vertical-align: middle;
                 height: 81px;
                 border-top: 1px solid fadeout(@cLines, 75%);
+
+                &.text-center {
+                    .superCheck {
+                        margin: 0 auto;
+                    }
+                }
+                .superCheck {
+                    top: 0;
+                }
             }
 
             &:hover {
@@ -130,6 +139,16 @@
         color: @cFun1;
         font-size: 24px;
         margin-top: 9px;
+    }
+
+    i {
+        z-index: 10;
+    }
+
+    .flag {
+        width: 16px;
+        .center-absolute(50%, 50%);
+        z-index: 0;
     }
 }
 

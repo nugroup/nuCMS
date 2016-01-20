@@ -249,6 +249,14 @@
     }
     .form-group {
         min-height: 40px;
+
+        i {
+            color: @cBase1;
+            font-size: 15px;
+            padding: 0 0 0 5px;
+            position: relative;
+            bottom: -1px;
+        }
     }
 }
 
@@ -267,12 +275,12 @@
         content: '';
         display: block;
         position: absolute;
-        top: -2px;
-        left: -3px;
-        width: 17px;
-        height: 17px;
-        border-radius: 50px;
-        background: @cFun1;
+        top: 2px;
+        left: 17px;
+        background: @cBase2;
+        width: 9px;
+        height: 9px;
+        .border-radius(50px);
         transition: all 0.2s;
     }
 
@@ -291,11 +299,11 @@
     }
 
     input[type=checkbox]:checked ~ span {
-        top: 2px;
-        left: 17px;
-        background: @cBase2;
-        width: 9px;
-        height: 9px;
+        top: -2px;
+        left: -3px;
+        width: 17px;
+        height: 17px;
+        background: @cFun1;
     }
 }
 

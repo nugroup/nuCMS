@@ -328,7 +328,6 @@ class MY_Model extends CI_Model
                     }
                 }
             }
-            
 
             if(!empty($row_fields_to_update))
             {

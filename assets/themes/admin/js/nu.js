@@ -72,4 +72,32 @@
         else checked_all = 1;
     });
 
+
+    // ----- Update boolean field in database by AJAX
+    $(document).on("click",'.change_bool',function(){
+
+        var actionUrl = $(this).attr('data-actionUrl').toString();
+        var fieldValue = $(this).prop('checked');
+        var fieldName = $(this).attr('data-name').toString();
+
+        if (fieldValue === true) {
+            var newValue = 1;
+        } else {
+            var newValue = 0;
+        }
+
+        $.post(actionUrl, { name: fieldName, value: newValue }, function(response){
+            if (parseInt(response.result !== 1)) {
+                alert("Error");
+            }
+        });
+
+    });
+
+
+    // -- run tooltip
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
 })();

@@ -47,7 +47,7 @@ function deleteItem(idItem, actionUrl, redirectUrl) {
 
         // Status 1 - SUCCESS
         if (parseInt(response.status) === 1) {
-            
+
             if(redirectUrl.toString() !== '') {
                 window.location.href = redirectUrl.toString();
             } else {
@@ -61,5 +61,29 @@ function deleteItem(idItem, actionUrl, redirectUrl) {
     });
 
     return false;
+
+}
+
+/**
+ * Update boolean field in database by AJAX
+ * 
+ * @param {string} actionUrl
+ * @param {boolean} fieldValue
+ * @param {string} fieldName
+ * @returns {undefined}
+ */
+function changeBoolean(actionUrl, fieldValue, fieldName) {
+
+    if (fieldValue === true) {
+        var newValue = 1;
+    } else {
+        var newValue = 0;
+    }
+
+    $.post(actionUrl, { name: fieldName, value: newValue }, function(response){
+        if (parseInt(response.result !== 1)) {
+            alert("Error");
+        }
+    });
 
 }

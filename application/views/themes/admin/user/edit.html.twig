@@ -2,73 +2,73 @@
 
 {% block subnav %}
 
-{% include 'user/subnav.html.twig' %}
+    {% include 'user/subnav.html.twig' %}
 
 {% endblock %}
 
 {% block body %}
 
-<div class="container">
+    <div class="container">
 
-    {{ form_open(current_url(), {'id': 'users-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+        {{ form_open(current_url(), {'id': 'users-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
-        <!-- margin -->
-        <div class="clearfix baseMargin"></div>
+            <!-- margin -->
+            <div class="clearfix baseMargin"></div>
 
-        <!-- login -->
-        <div class="form-group">
-            <label for="login" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.login') }}</label>
-            <div class="col-sm-5">
-                {{ form_input({'name': 'login', 'value': user.login, 'class': 'form-control', 'id': 'login', 'required': 'required'}) }}
-            </div>
-        </div>
-
-        <!-- email -->
-        <div class="form-group">
-            <label for="email" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.email') }}</label>
-            <div class="col-sm-5">
-                {{ form_input({'type': 'email', 'name': 'email', 'value': user.email, 'class': 'form-control', 'id': 'email', 'required': 'required'}) }}
-            </div>
-        </div>
-
-        <!-- name -->
-        <div class="form-group">
-            <label for="name" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.name') }}</label>
-            <div class="col-sm-5">
-                {{ form_input({'name': 'name', 'value': user.name, 'class': 'form-control', 'id': 'name'}) }}
-            </div>
-        </div>
-
-        <!-- password -->
-        <div class="form-group">
-            <label for="password" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.password') }}</label>
-            <div class="col-sm-5">
-                {{ form_password({'name': 'password', 'class': 'form-control', 'id': 'password'}) }}
-            </div>
-        </div>
-
-        <!-- password_repeat -->
-        <div class="form-group">
-            <label for="password_repeat" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.password_repeat') }}</label>
-            <div class="col-sm-5">
-                {{ form_password({'name': 'password_repeat', 'class': 'form-control', 'id': 'password_repeat'}) }}
-            </div>
-        </div>
-
-        <!-- margin -->
-        <div class="clearfix baseMargin"></div>
-
-        <!-- buttons -->
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="col-xs-12 text-center">
-                    <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('user.form.save') }}</button>
+            <!-- login -->
+            <div class="form-group">
+                <label for="login" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.login') }}</label>
+                <div class="col-sm-5">
+                    {{ form_input({'name': 'login', 'value': user.login, 'class': 'form-control', 'id': 'login', 'required': 'required'}) }}
                 </div>
             </div>
-        </div>
 
-    {{ form_close() }}
+            <!-- email -->
+            <div class="form-group">
+                <label for="email" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.email') }}</label>
+                <div class="col-sm-5">
+                    {{ form_input({'type': 'email', 'name': 'email', 'value': user.email, 'class': 'form-control', 'id': 'email', 'required': 'required'}) }}
+                </div>
+            </div>
 
-</div>
+            <!-- name -->
+            <div class="form-group">
+                <label for="name" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.name') }}</label>
+                <div class="col-sm-5">
+                    {{ form_input({'name': 'name', 'value': user.name, 'class': 'form-control', 'id': 'name'}) }}
+                </div>
+            </div>
+
+            <!-- password -->
+            <div class="form-group">
+                <label for="password" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.password') }}</label>
+                <div class="col-sm-5">
+                    {{ form_password({'name': 'password', 'class': 'form-control', 'id': 'password'}) }}
+                </div>
+            </div>
+
+            <!-- password_repeat -->
+            <div class="form-group">
+                <label for="password_repeat" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('user.form.password_repeat') }}</label>
+                <div class="col-sm-5">
+                    {{ form_password({'name': 'password_repeat', 'class': 'form-control', 'id': 'password_repeat'}) }}
+                </div>
+            </div>
+
+            <!-- margin -->
+            <div class="clearfix baseMargin"></div>
+
+            <!-- buttons -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-xs-12 text-center">
+                        <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('user.form.save') }}</button>
+                    </div>
+                </div>
+            </div>
+
+        {{ form_close() }}
+
+    </div>
 
 {% endblock %}

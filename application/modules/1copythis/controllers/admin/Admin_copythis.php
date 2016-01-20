@@ -18,8 +18,14 @@ class Admin_copythis extends Backend_Controller
         $this->load->model('copythis/copythis_model', 'copythis');
         $this->lang->load('copythis', config_item('selected_lang'));
     }
+
+    public function index()
+    {
+
+        // Load the view
+        $this->render('copythis/index', $this->data);
+    }
 }
 
 /* End of file Admin_copythis.php */
-/* Location: ./application/modules/c/controllers/admin/Admin_copythis.php */
-
+/* Location: ./application/modules/controllers/admin/Admin_copythis.php */

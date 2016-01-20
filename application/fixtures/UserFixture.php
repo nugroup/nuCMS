@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 require_once APPPATH.'/interfaces/FixturesInterface.php';
 
 /**
- * Class LoadUserData
+ * Class UserFixture
  */
 class UserFixture implements FixturesInterface
 {
@@ -38,7 +38,7 @@ class UserFixture implements FixturesInterface
 
             $data = [
                 'login' => strtolower($firstName),
-                'email' => strtolower($firstName).'@fitcms.pl',
+                'email' => strtolower($firstName).'@nucms.pl',
                 'name' => $firstName.' '.$lastName,
                 'password' => $pass,
             ];
