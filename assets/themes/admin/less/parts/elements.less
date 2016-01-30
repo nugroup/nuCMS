@@ -72,6 +72,7 @@
                 background: none;
                 border: none;
                 outline: none;
+                line-height: 20px;
 
                 &:hover {
                     color: @cBase1;
@@ -113,6 +114,21 @@
 
     ul {
         width: 100%;
+    }
+}
+.dropAsSelectInline {
+    display: inline-block;
+    margin: 0 5px;
+
+    span[data-toggle] {
+        display: inline-block;
+        border: none;
+
+        i {
+            position: relative;
+            top: auto;
+            right: auto;
+        }
     }
 }
 

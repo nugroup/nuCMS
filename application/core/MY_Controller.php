@@ -13,6 +13,11 @@ class MY_Controller extends MX_Controller
         $this->load->library('form_validation');
         $this->form_validation->CI = & $this;
 
+        // Check profiler status
+        if ($this->config->item('profiler') && ENVIRONMENT == 'development') {
+            $this->output->enable_profiler();
+        }
+
         parent::__construct();
     }
 
@@ -55,6 +60,41 @@ class MY_Controller extends MX_Controller
         $logMessage = $message.'<br>File: <b>'.__FILE__.'</b><br>Line: <b>'.__LINE__.'</b>'.lang('exc_info');
 
         log_message($level, $logMessage);
+    }
+
+    /**
+     * Transfer data from obj->{$fieldName} variable to obj
+     *
+     * @param array/object $data
+     * @return array/object
+     */
+    public function prepare_join_data($data, $fieldName)
+    {
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                if (isset($row->{$fieldName})) {
+                    unset($row->{$fieldName}->id);
+
+                    foreach ($row->{$fieldName} as $key => $value) {
+                        $row->{$key} = $value;
+                    }
+
+                    unset($row->{$fieldName});
+                }
+            }
+        } else {
+            if (isset($data->{$fieldName})) {
+                unset($data->{$fieldName}->id);
+
+                foreach ($data->{$fieldName} as $key => $value) {
+                    $data->{$key} = $value;
+                }
+
+                unset($data->{$fieldName});
+            }
+        }
+
+        return $data;
     }
 }
 

@@ -36,5 +36,7 @@ $lang['language.form.active'] = 'Aktywność';
 $lang['language.form.locale'] = 'Kod';
 $lang['language.form.folder_name'] = 'Nazwa folderu';
 
+/* form - info
+============================================================================= */
 $lang['language.form.locale.info'] = 'np. pl, en. Obrazek z flagą powinien nazywać się tak samo i mieć rozszerzenie "png" np. pl.png';
 $lang['language.form.folder_name.info'] = 'Folder z tłumaczeniami systemowymi';

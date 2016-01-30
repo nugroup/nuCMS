@@ -4,32 +4,33 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * Class Admin_language
+ * Class Admin_page
  */
-class Admin_language extends Backend_Controller
+class Admin_page extends Backend_Controller
 {
-    private $sessionName = 'language';
+    private $sessionName = 'page';
 
     public function __construct()
     {
         parent::__construct();
 
         // Load classes
-        $this->load->model('language/language_model', 'language');
-        $this->lang->load('language', config_item('selected_lang'));
+        $this->load->model('page/page_model', 'page');
+        $this->lang->load('page', $this->config->item('selected_lang'));
     }
 
     public function index()
     {
         // Set page
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
         $this->setReturnLink($this->sessionName);
 
         // Delete checked item
         if ($this->input->post('action') == 'delete_checked') {
             foreach ($this->input->post('check_item') as $item => $value) {
                 // Delete action
-                $this->language->delete($item);
+                $this->page->delete($item);
             }
 
             // Set message and refresh the page
@@ -38,58 +39,66 @@ class Admin_language extends Backend_Controller
         }
 
         // Get number of items for pager
-        $this->language->generate_like_query($this->input->get('string'));
-        $numberOfItems = $this->language->count();
+        $this->page_translations->generate_like_query($this->input->get('string'));
+        $numberOfItems = $this->page_translations
+            ->where('locale', $locale)
+            ->count();
 
         // Init pagination
         $paginationLimits = $this->initPagination($numberOfItems, $page);
 
-        // Get languages
-        $this->language->generate_like_query($this->input->get('string'));
-        $languages = $this->language->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])->get_all();
+        $this->page_translations->generate_like_query($this->input->get('string'));
+        $pages = $this->page_translations
+            ->where('locale', $locale)
+            ->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])
+            ->with_root()
+            ->get_all();
 
         // Set view data
-        $this->data['languages'] = $languages;
+        $this->data['pages'] = $this->prepare_join_data($pages, 'root');
         $this->data['pager'] = $this->pagination->create_links();
         $this->data['subnav_active'] = 'index';
+        $this->data['selected_language'] = $this->data['system_languages_by_locale'][$locale]->name;
 
         // Load the view
-        $this->render('language/index', $this->data);
+        $this->render('page/index', $this->data);
     }
 
     /**
-     * Edit single language
+     * Edit single page
      *
      * @param int $id
      */
     public function edit($id)
     {
-        $language = $this->language->get($id);
-        if (!$language) {
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+
+        $page = $this->page_translations->where(['page_id' => $id, 'locale' => $locale])->get();
+        if (!$page) {
             show_404();
         }
 
         // If post is send
         if ($this->input->post()) {
 
-            $result = $this->language->from_form($this->language->get_rules('update'), [], array('id' => $id))->update();
+            $result = $this->page_translations->from_form($this->page->get_rules('update'), [], ['page_id' => $id, 'locale' => $locale])->update();
 
             if ($result) {
                 // Set informations
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
 
                 // Redirect
-                redirect(admin_url('language/edit/'.$id));
+                redirect(admin_url('page/edit/'.$id));
             }
         }
 
         // Set view data
-        $this->data['language'] = $language;
+        $this->data['page'] = $page;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
 
         // Load the view
-        $this->render('language/edit', $this->data);
+        $this->render('page/edit', $this->data);
     }
 
     /**
@@ -97,25 +106,57 @@ class Admin_language extends Backend_Controller
      */
     public function add()
     {
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+
         // If post is send
         if ($this->input->post()) {
-            $inserted_id = $this->language->from_form($this->language->get_rules('add'), ['active' => (int) $this->input->post('active')])->insert();
+
+            // Validate form
+            $this->form_validation->set_rules($this->page->get_rules('add'));
+            $inserted_id = false;
+
+            // Insert page root
+            if ($this->form_validation->run() == true) {
+                $inserted_id = $this->page->insert([]);
+            }
 
             if ($inserted_id) {
+                // Insert
+                $insertedTranslate = false;
+                foreach ($this->data['system_languages'] as $language) {
+                    $insertedTranslate = $this->page_translations
+                        ->from_form(
+                            $this->page->get_rules('add'),
+                            [
+                                'locale'  => $language->locale,
+                                'page_id' => $inserted_id,
+                                'active'  => (int) $this->input->post('active'),
+                            ]
+                        )
+                        ->insert();
+
+                    if (!$insertedTranslate) {
+                        break;
+                    }
+                }
+
                 // Set informations
-                $this->session->set_flashdata('success', lang('language.alert.success.add'));
+                if ($insertedTranslate) {
+                    $this->session->set_flashdata('success', lang('language.alert.success.add'));
+                }
 
                 // Redirect
-                redirect(admin_url('language'));
+                redirect(admin_url('page'));
             }
         }
 
         // Set view data
         $this->data['subnav_active'] = 'add';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
+        $this->data['selected_language'] = $this->data['system_languages_by_locale'][$locale]->name;
 
         // Load the view
-        $this->render('language/add', $this->data);
+        $this->render('page/add', $this->data);
     }
 
     /**
@@ -137,7 +178,7 @@ class Admin_language extends Backend_Controller
         $data[$name] = $value;
 
         // Update the view
-        if ($this->language->update($data, (int) $id)) {
+        if ($this->page_translations->update($data, (int) $id)) {
             echo $this->db->last_query();
             $result = ['result' => 1];
         } else {
@@ -165,7 +206,7 @@ class Admin_language extends Backend_Controller
             if ($id > 0) {
                 try {
                     // Delete language
-                    if (!$this->language->delete($id)) {
+                    if (!$this->page->delete($id)) {
                         throw new Exception(lang('language.alert.error.delete'));
                     }
 
@@ -190,5 +231,5 @@ class Admin_language extends Backend_Controller
     }
 }
 
-/* End of file Admin_language.php */
-/* Location: ./application/modules/controllers/admin/Admin_language.php */
+/* End of file Admin_page.php */
+/* Location: ./application/modules/controllers/admin/Admin_page.php */

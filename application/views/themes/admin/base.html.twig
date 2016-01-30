@@ -12,7 +12,7 @@
 
     <title>{{ config.metatags.title }} {{ config.metatags.version}}</title>
     <base href="{{ config.metatags.title }}{{ site_url() }}">
-    
+
     <!-- FAVICO -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
@@ -25,6 +25,7 @@
     <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/nu.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nu-blox.min.css') }}" rel="stylesheet">
 
     {% endblock %}
 
@@ -40,26 +41,26 @@
 
     {% block navbar %}
 
-    <!-- navbar -->
-    <div class="container-fluid nuNavbar">
-        <div class="row">
+        <!-- navbar -->
+        <div class="container-fluid nuNavbar">
+            <div class="row">
 
-            <!-- menu btn + location -->
-            <div class="col-xs-9 col-sm-5 nuMenuBtn">
-                <span class="menuTrigger"><i class="fa fa-bars"></i><span>{{ lang('text.menu') }}</span></span>
+                <!-- menu btn + location -->
+                <div class="col-xs-9 col-sm-5 nuMenuBtn">
+                    <span class="menuTrigger"><i class="fa fa-bars"></i><span>{{ lang('text.menu') }}</span></span>
+                </div>
+
+                <!-- logo -->
+                <div class="col-xs-3 col-sm-2 text-center nuLogo">
+                    <a href="{{ admin_url() }}">
+                        <img src="{{ asset('img/nucms-logo.png') }}" alt="{{ config.metatags.title }}">
+                    </a>
+                </div>
+
             </div>
-
-            <!-- logo -->
-            <div class="col-xs-3 col-sm-2 text-center nuLogo">
-                <a href="{{ admin_url() }}">
-                    <img src="{{ asset('img/nucms-logo.png') }}" alt="{{ config.metatags.title }}">
-                </a>
-            </div>
-
         </div>
-    </div>
 
-    <div class="clearfix hidden-xs"></div>
+        <div class="clearfix hidden-xs"></div>
 
     {% endblock %}
 
@@ -73,44 +74,44 @@
 
     {% block alerts %}
 
-    <!-- alerts -->
-    <div class="container">
-        <div class="alerts">
-            {% if(validation_errors()) %}
+        <!-- alerts -->
+        <div class="container">
+            <div class="alerts">
+                {% if(validation_errors()) %}
 
-                <div class="alert alert-danger">
-                    {{ validation_errors() | raw }}
-                </div>
+                    <div class="alert alert-danger">
+                        {{ validation_errors() | raw }}
+                    </div>
 
-            {% endif %}
+                {% endif %}
 
-            {% if (flashdata('error')) %}
+                {% if (flashdata('error')) %}
 
-                <div class="alert alert-danger">
-                    {{ flashdata('error') }}
-                </div>
+                    <div class="alert alert-danger">
+                        {{ flashdata('error') }}
+                    </div>
 
-            {% endif %}
+                {% endif %}
 
-            {% if (flashdata('success')) %}
+                {% if (flashdata('success')) %}
 
-                <div class="alert alert-success">
-                    {{ flashdata('success') }}
-                </div>
+                    <div class="alert alert-success">
+                        {{ flashdata('success') }}
+                    </div>
 
-            {% endif %}
+                {% endif %}
 
-            {% if (errors) is defined %}
+                {% if (errors) is defined %}
 
-                <div class="alert alert-danger">
-                    {% for error in errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
+                    <div class="alert alert-danger">
+                        {% for error in errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
 
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
-    </div>
 
     {% endblock %}
 
@@ -128,23 +129,23 @@
 
     {% block modal %}
 
-    <!-- Modal -->
-    <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{{ modal.title ? modal.title : lang('modal.alert') }}</h4>
-                </div>
-                <div class="modal-body">
+        <!-- Modal -->
+        <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{ modal.title ? modal.title : lang('modal.alert') }}</h4>
+                    </div>
+                    <div class="modal-body">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('modal.close') }}</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('modal.close') }}</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     {% endblock %}
 
@@ -152,6 +153,7 @@
     {% block javascript %}
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/nu.js') }}"></script>
@@ -171,5 +173,6 @@
     })();
     //-->
     </script>
+
     </body>
 </html>

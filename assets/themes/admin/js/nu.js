@@ -22,7 +22,7 @@
         var icon = span.find('i');
         var input = $(this).closest('.dropAsSelect').find('input');
         input.val(value);
-        span.html(title).append(icon);
+        span.html(title+' ').append(icon);
     });
 
 
@@ -98,6 +98,15 @@
     // -- run tooltip
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
+    });
+
+
+    // -- submit language select
+    $(document).on("click",'.submitOnClick',function(){
+
+        $('#toolbar-form').submit();
+        return false;
+
     });
 
 })();

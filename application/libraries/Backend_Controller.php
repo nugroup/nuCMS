@@ -14,10 +14,8 @@ class Backend_Controller extends MY_Controller
     {
         parent::__construct();
 
-        // Set and Load languages
-        $this->session->set_userdata('id_lang', 1);
-        $this->lang->load('nucms', config_item('selected_lang'));
-        $this->data['id_lang'] = 1;
+        // Set admin language
+        $this->setLanguage();
 
         // Load needed config
         $this->load->config('nucms');
@@ -30,6 +28,9 @@ class Backend_Controller extends MY_Controller
             $this->session->set_userdata('admin_per_page', $this->config->item('default_admin_per_page'));
         }
 
+        // Get languages list
+        $this->getSystemLanguagesList();
+
         // Url exceptions
         $exception_uris = array(
             config_item('admin_folder').'/auth/login',
@@ -37,12 +38,15 @@ class Backend_Controller extends MY_Controller
             config_item('admin_folder').'/auth/remember'
         );
 
-        if (in_array(uri_string(), $exception_uris) == FALSE) {
+        if (in_array(uri_string(), $exception_uris) == false) {
             // Check if login
-            if ($this->auth->logged_in() == FALSE) {
-                redirect(base_url(config_item('admin_folder').'/auth/login'));
+            if ($this->auth->logged_in() == false) {
+                redirect(admin_url('auth/login'));
             }
         }
+
+        // Get nublox templatet into variable
+        $this->data['nublox'] = $this->load->view('nublox/nu-blox.tpl.php', [], true);
     }
 
     /**
@@ -102,6 +106,46 @@ class Backend_Controller extends MY_Controller
         }
 
         return $this->config->item('admin_url').'/'.$controllerName;
+    }
+
+    /**
+     * Get all languages created in language model
+     */
+    public function getSystemLanguagesList()
+    {
+        $this->load->model('language/language_model', 'language');
+        $languages = $this->language->get_all();
+        if ($languages) {
+            foreach ($languages as $language) {
+                $locales[$language->locale] = $language;
+            }
+
+            $this->data['system_languages'] = $languages;
+            $this->data['system_languages_by_locale'] = $locales;
+        } else {
+            $this->data['system_languages'] = false;
+            $this->data['system_languages_by_locale'] = false;
+        }
+    }
+
+    /**
+     * Set admin laguage by session
+     */
+    public function setLanguage()
+    {
+        $this->load->model('language/language_model', 'language');
+
+        // Set session if not exist
+        if (!$this->session->admin_language) {
+            $this->session->set_userdata('admin_language', 1);
+        }
+
+        // Set config
+        $this->config->set_item('selected_lang', 'polish');
+        $this->config->set_item('selected_locale', 'pl');
+
+        // Load language file
+        $this->lang->load('nucms', config_item('selected_lang'));
     }
 }
 

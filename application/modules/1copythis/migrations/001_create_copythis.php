@@ -3,7 +3,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Class Migration_Create_user
+ * Class Migration_Create_copythis
  */
 class Migration_Create_copythis extends CI_Migration
 {
