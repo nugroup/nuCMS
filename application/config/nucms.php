@@ -13,7 +13,7 @@ $config['selected_lang'] = 'polish';                                            
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Backend_Controller)
 $config['images_url'] = base_url() . 'assets/themes/' . $config['theme'] . '/img/';
 $config['default_admin_per_page'] = 10;                                         // Default number of elements
-$config['profiler'] = true;                                                    // Enable/Disable CodeIgniter profiler
+$config['profiler'] = true;                                                     // Enable/Disable CodeIgniter profiler
 
 /* twig
 ============================================================================= */
@@ -34,3 +34,7 @@ $config['metatags'] = [
     'title'   => 'nuCMS',
     'version' => 'v.0.1 alfa',
 ];
+
+/* pages
+============================================================================= */
+$config['pages_route_controller'] = 'pages/show/';

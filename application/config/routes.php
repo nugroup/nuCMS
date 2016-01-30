@@ -56,6 +56,11 @@ $route['admin/([a-zA-Z_-]+)/(.+)'] = '$1/admin/admin_$1/$2';
 $route['admin/([a-zA-Z_-]+)'] = '$1/admin/admin_$1/index';
 $route['admin'] = "main/admin/admin_main";
 
+// dynamic routes genereted by routes_model
+if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {
+    include_once APPPATH . 'cache/dynamic_routes.php';
+}
+
 $route['default_controller'] = 'bootstrap/bootstrap';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

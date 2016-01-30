@@ -20,6 +20,11 @@ class Backend_Controller extends MY_Controller
         // Load needed config
         $this->load->config('nucms');
 
+        // Check profiler status
+        if ($this->config->item('profiler') && ENVIRONMENT == 'development') {
+            $this->output->enable_profiler();
+        }
+
         // Load needed models
         $this->load->model('auth/auth_model', 'auth');
 

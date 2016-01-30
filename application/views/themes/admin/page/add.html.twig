@@ -80,18 +80,15 @@
                             </span>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <div class="col-sm-4 control-label">{{ lang('page.form.meta_title') }}</div>
+                        <label for="slug" class="col-sm-4 control-label">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.slug.info') }}">
+                                {{ lang('page.form.slug') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
                         <div class="col-sm-8">
-                            {{ form_input({'name': 'meta_title', 'value': set_value('meta_title'), 'class': 'form-control', 'id': 'meta_title'}) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-4 control-label">{{ lang('page.form.meta_keywords') }}</div>
-                        <div class="col-sm-8">
-                            {{ form_input({'name': 'meta_keywords', 'value': set_value('meta_keywords'), 'class': 'form-control', 'id': 'meta_keywords'}) }}
+                            {{ form_input({'name': 'slug', 'value': set_value('slug'), 'class': 'form-control', 'id': 'slug'}) }}
                         </div>
                     </div>
 
@@ -100,11 +97,41 @@
                 <div class="col-xs-6">
 
                     <div class="form-group">
-                        <div class="col-sm-3 control-label">{{ lang('page.form.meta_description') }}</div>
-                        <div class="col-sm-9">
+                        <label for="meta_title" class="col-sm-4 control-label">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_title.info') }}">
+                                {{ lang('page.form.meta_title') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        <div class="col-sm-8">
+                            {{ form_input({'name': 'meta_title', 'value': set_value('meta_title'), 'class': 'form-control', 'id': 'meta_title'}) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="meta_keywords" class="col-sm-4 control-label">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_keywords.info') }}">
+                                {{ lang('page.form.meta_keywords') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        <div class="col-sm-8">
+                            {{ form_input({'name': 'meta_keywords', 'value': set_value('meta_keywords'), 'class': 'form-control', 'id': 'meta_keywords'}) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="meta_description" class="col-sm-4 control-label">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_description.info') }}">
+                                {{ lang('page.form.meta_description') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        <div class="col-sm-8">
                             {{ form_textarea({'name': 'meta_description', 'value': set_value('meta_description'), 'class': 'form-control', 'id': 'meta_description', 'rows': 6}) }}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -37,3 +37,11 @@ $lang['page.form.active'] = 'Aktywność';
 $lang['page.form.meta_title'] = 'tytuł SEO';
 $lang['page.form.meta_keywords'] = 'słowa kluczowe SEO';
 $lang['page.form.meta_description'] = 'opis SEO';
+$lang['page.form.slug'] = 'Adres URL';
+
+/* form - info
+============================================================================= */
+$lang['page.form.slug.info'] = 'Adres URL pod którym widoczna będzie strona';
+$lang['page.form.meta_title.info'] = 'Tytuł strony dla wyszukiwarek<br>(Maks. 50 znaków)';
+$lang['page.form.meta_keywords.info'] = 'Słowa kluczowe oddzielaj znakiem ","';
+$lang['page.form.meta_description.info'] = 'Opis strony dla wyszukiwarek<br>(Maks. 160 znaków)';

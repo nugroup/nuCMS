@@ -16,6 +16,7 @@ class Admin_page extends Backend_Controller
 
         // Load classes
         $this->load->model('page/page_model', 'page');
+        $this->load->model('route/route_model', 'route');
         $this->lang->load('page', $this->config->item('selected_lang'));
     }
 
@@ -29,7 +30,7 @@ class Admin_page extends Backend_Controller
         // Delete checked item
         if ($this->input->post('action') == 'delete_checked') {
             foreach ($this->input->post('check_item') as $item => $value) {
-                // Delete action
+                // Delete page
                 $this->page->delete($item);
             }
 
@@ -72,16 +73,10 @@ class Admin_page extends Backend_Controller
     public function edit($id)
     {
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
-
         $where = [
             'page_id' => $id,
             'locale' => $locale
         ];
-
-        $page = $this->page_translations->where($where)->get();
-        if (!$page) {
-            show_404();
-        }
 
         // If post is send
         if ($this->input->post()) {
@@ -90,13 +85,27 @@ class Admin_page extends Backend_Controller
                 ->from_form($this->page->get_rules('update'), [], $where)
                 ->update();
 
-            if ($result) {
+            $pageUrl = $this->config->item('pages_route_controller').$id.'/'.$locale;
+
+            // Update route
+            $routeData = [
+                'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $pageUrl),
+            ];
+            $resultRoute = $this->route->update($routeData, ['url' => $pageUrl]);
+
+            if ($result && $resultRoute) {
+
                 // Set informations
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
 
                 // Redirect
                 redirect(admin_url('page/edit/'.$id));
             }
+        }
+
+        $page = $this->page_translations->where($where)->get();
+        if (!$page) {
+            show_404();
         }
 
         // Set view data
@@ -129,15 +138,18 @@ class Admin_page extends Backend_Controller
             }
 
             if ($inserted_id) {
-                // Insert
                 $insertedTranslate = false;
+
+                $i = 1;
                 foreach ($this->data['system_languages'] as $language) {
+
+                    // Insert translate
                     $insertedTranslate = $this->page_translations
                         ->from_form(
                             $this->page->get_rules('add'), [
-                            'locale' => $language->locale,
-                            'page_id' => $inserted_id,
-                            'active' => (int) $this->input->post('active'),
+                                'locale' => $language->locale,
+                                'page_id' => $inserted_id,
+                                'active' => (int) $this->input->post('active'),
                             ]
                         )
                         ->insert();
@@ -145,6 +157,25 @@ class Admin_page extends Backend_Controller
                     if (!$insertedTranslate) {
                         break;
                     }
+
+                    // Insert translate route
+                    $pageUrl = $this->config->item('pages_route_controller').$inserted_id.'/'.$language->locale;
+                    $slug = ($this->input->post('slug')) ? $this->input->post('slug') : $this->input->post('title');
+
+                    if ($i > 1) {
+                        $slug .= '-'.$language->locale;
+                    }
+
+                    // Add route
+                    $routeData = [
+                        'slug'   => $this->route->prepare_unique_slug($slug),
+                        'url'    => $pageUrl,
+                        'locale' => $language->locale,
+                    ];
+                    $this->route->insert($routeData);
+
+                    $i++;
+
                 }
 
                 // Set informations

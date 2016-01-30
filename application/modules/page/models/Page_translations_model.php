@@ -12,6 +12,7 @@ class Page_translations_model extends MY_Model
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
+    public $after_get = ['get_route'];
 
     function __construct()
     {
@@ -54,13 +55,55 @@ class Page_translations_model extends MY_Model
     /**
      * Generate query from search string
      *
-     * @param type $string
+     * @param string $string
      */
     public function generate_like_query($string)
     {
         if ($string) {
             $this->db->like('title', $string);
         }
+    }
+
+    /**
+     * Get page route
+     *
+     * @param type $data
+     * @return type
+     */
+    public function get_route($data)
+    {
+        // Load routes model
+        $CI =& get_instance();
+        $CI->load->model('route/route_model', 'route');
+
+        if (!isset($data[0])) {
+
+            $pageUrl = config_item('pages_route_controller').$data['page_id'].'/'.$data['locale'];
+            $route = $CI->route
+                ->fields('slug')
+                ->where(['url' => $pageUrl])
+                ->get();
+
+            if ($route) {
+                $data['slug'] = $route->slug;
+                $data['token'] = $this->generate_token($data);
+            }
+
+        }
+
+        return $data;
+    }
+
+    /**
+     * Generate token for page preview
+     *
+     * @param object $page
+     * @return string
+     */
+    public function generate_token($page)
+    {
+        $pageObject = (object) $page;
+        return md5($pageObject->slug);
     }
 }
 

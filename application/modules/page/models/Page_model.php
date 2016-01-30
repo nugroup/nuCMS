@@ -3,15 +3,18 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
+require_once APPPATH.'/interfaces/RouteModelInterface.php';
+
 /**
  * Class Page_model
  */
-class Page_model extends MY_Model
+class Page_model extends MY_Model implements RouteModelInterface
 {
     public $table = 'nu_page';
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
+    public $before_delete = ['delete_route'];
 
     function __construct()
     {
@@ -56,6 +59,21 @@ class Page_model extends MY_Model
         $rules['meta_description'] = array('field' => 'meta_description', 'label' => lang('page.form.meta_description'), 'rules' => 'max_length[160]|trim|xss_clean');
 
         return $rules;
+    }
+
+    /**
+     * Delete records from route table
+     *
+     * @param array $data
+     */
+    public function delete_route($data)
+    {
+        $this->db->like('url', config_item('pages_route_controller').$data['id']);
+        $this->db->delete('nu_route');
+
+        $CI =& get_instance();
+        $CI->load->model('route/route_model', 'route');
+        $CI->route->save_routes();
     }
 }
 

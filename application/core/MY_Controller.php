@@ -13,11 +13,6 @@ class MY_Controller extends MX_Controller
         $this->load->library('form_validation');
         $this->form_validation->CI = & $this;
 
-        // Check profiler status
-        if ($this->config->item('profiler') && ENVIRONMENT == 'development') {
-            $this->output->enable_profiler();
-        }
-
         parent::__construct();
     }
 
