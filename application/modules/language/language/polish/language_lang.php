@@ -13,8 +13,9 @@ $lang['language.subnav.edit'] = 'Edytuj język';
 
 /* text
 ============================================================================= */
-$lang['language.text.confirm_delete'] = 'Czy napewno chcesz usunąć ten język?';
+$lang['language.text.confirm_delete'] = 'Czy napewno chcesz usunąć ten język?<br>Po usunięciu języka zostanie też usunięte wszystko co było powiązane<br>(np. strony w wybranym języku)';
 $lang['language.text.no_records'] = 'Nie znaleziono żadnych języków';
+$lang['language.text.delete'] = 'Usuń język';
 
 /* list
 ============================================================================= */

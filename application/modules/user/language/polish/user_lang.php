@@ -15,6 +15,7 @@ $lang['user.subnav.edit'] = 'Edytuj użytkownika';
 ============================================================================= */
 $lang['user.text.confirm_delete'] = 'Czy napewno chcesz usunąć tego użytkownika?';
 $lang['user.text.no_records'] = 'Nie znaleziono żadnych użytkowników';
+$lang['user.text.delete'] = 'Usuń użytkownika';
 
 /* list
 ============================================================================= */

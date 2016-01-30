@@ -11,11 +11,11 @@ function showConfirmModal(element) {
     var actionUrl = element.attr('href');
     var redirectUrl = element.attr('data-redirectUrl');
     var confirmMsg = element.attr('data-confirmMsg');
-    
+
     if(jQuery.type(redirectUrl) === "undefined"){
         redirectUrl = '';
     }
-    
+
     // Prepare modal content
     var buttons = '<a href="javascript:void(0);" onclick="deleteItem(' + idItem + ', \'' + actionUrl + '\', \'' + redirectUrl + '\');" class="btn btn-success">Tak</a><button type="button" class="btn btn-danger" data-dismiss="modal">Nie</button>';
     var content = '<div class="modal-confirm"><div>' + confirmMsg + '</div>' + buttons + '</div>';

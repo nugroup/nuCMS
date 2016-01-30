@@ -73,7 +73,12 @@ class Admin_page extends Backend_Controller
     {
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
 
-        $page = $this->page_translations->where(['page_id' => $id, 'locale' => $locale])->get();
+        $where = [
+            'page_id' => $id,
+            'locale' => $locale
+        ];
+
+        $page = $this->page_translations->where($where)->get();
         if (!$page) {
             show_404();
         }
@@ -81,7 +86,9 @@ class Admin_page extends Backend_Controller
         // If post is send
         if ($this->input->post()) {
 
-            $result = $this->page_translations->from_form($this->page->get_rules('update'), [], ['page_id' => $id, 'locale' => $locale])->update();
+            $result = $this->page_translations
+                ->from_form($this->page->get_rules('update'), [], $where)
+                ->update();
 
             if ($result) {
                 // Set informations
@@ -96,6 +103,7 @@ class Admin_page extends Backend_Controller
         $this->data['page'] = $page;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
+        $this->data['selected_language'] = $this->data['system_languages_by_locale'][$locale]->name;
 
         // Load the view
         $this->render('page/edit', $this->data);
@@ -126,11 +134,10 @@ class Admin_page extends Backend_Controller
                 foreach ($this->data['system_languages'] as $language) {
                     $insertedTranslate = $this->page_translations
                         ->from_form(
-                            $this->page->get_rules('add'),
-                            [
-                                'locale'  => $language->locale,
-                                'page_id' => $inserted_id,
-                                'active'  => (int) $this->input->post('active'),
+                            $this->page->get_rules('add'), [
+                            'locale' => $language->locale,
+                            'page_id' => $inserted_id,
+                            'active' => (int) $this->input->post('active'),
                             ]
                         )
                         ->insert();

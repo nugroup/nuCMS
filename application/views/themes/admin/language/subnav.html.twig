@@ -15,6 +15,9 @@
                     </li>
                 {% elseif (subnav_active == 'edit') %}
                     <li>
+                        <a href="{{ admin_url('language/add') }}">{{ lang('language.subnav.add') }}</a>
+                    </li>
+                    <li>
                         <span class="active">
                             {{ lang('language.subnav.edit') }} <a href="{{ return_link }}"><i class="ion ion-android-close"></i></a>
                         </span>
