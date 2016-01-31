@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * Migration class only for CLI
+ * Migrate class only for CLI
  */
 class Migrate extends MX_Controller
 {
@@ -89,4 +89,4 @@ class Migrate extends MX_Controller
 }
 
 /* End of file Migrations.php */
-/* Location: ./application/modules/migration/controllers/Migrations.php */
+/* Location: ./application/modules/migrate/controllers/Migrate.php */

@@ -234,4 +234,4 @@ class Admin_page extends Backend_Controller
 }
 
 /* End of file Admin_page.php */
-/* Location: ./application/modules/controllers/admin/Admin_page.php */
+/* Location: ./application/modules/page/controllers/admin/Admin_page.php */

@@ -61,6 +61,6 @@ if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {
     include_once APPPATH . 'cache/dynamic_routes.php';
 }
 
-$route['default_controller'] = 'bootstrap/bootstrap';
+$route['default_controller'] = 'main/homepage';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

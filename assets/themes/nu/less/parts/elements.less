@@ -1,0 +1,20 @@
+// main file: ../style.less
+
+/* =heads
+==============================================================================*/
+.headClass() {
+    font-family: @headFontFamily;
+    font-size: 50px;
+    text-transform: uppercase;
+    line-height: 54px;
+    margin: 0 0 60px 0;
+    color: lighten(@baseTextColor, 20%);
+
+    &.medium {
+        font-size: 30px;
+        line-height: 40px;
+    }
+}
+.headClass {
+    .headClass();
+}

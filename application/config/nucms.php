@@ -20,7 +20,14 @@ $config['profiler'] = false;                                                    
 $config['twig_config'] = [
     'paths' => [VIEWPATH.'themes/'.$config['theme'], VIEWPATH],
 ];
-$config['twig_user_functions'] = ['asset', 'generate_menu', 'admin_url', 'flashdata', 'obj_to_options_array', 'current_full_url'];
+$config['twig_user_functions'] = [
+    'asset',
+    'generate_menu',
+    'admin_url',
+    'flashdata',
+    'obj_to_options_array',
+    'current_full_url'
+];
 
 /* users
 ============================================================================= */

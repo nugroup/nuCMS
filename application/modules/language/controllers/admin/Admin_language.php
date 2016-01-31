@@ -191,4 +191,4 @@ class Admin_language extends Backend_Controller
 }
 
 /* End of file Admin_language.php */
-/* Location: ./application/modules/controllers/admin/Admin_language.php */
+/* Location: ./application/modules/language/controllers/admin/Admin_language.php */

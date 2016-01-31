@@ -28,4 +28,4 @@ class Admin_copythis extends Backend_Controller
 }
 
 /* End of file Admin_copythis.php */
-/* Location: ./application/modules/controllers/admin/Admin_copythis.php */
+/* Location: ./application/modules/copythis/controllers/admin/Admin_copythis.php */
