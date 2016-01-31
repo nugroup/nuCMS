@@ -162,6 +162,46 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
         return $data;
     }
+
+    /**
+     * Create route from pages
+     */
+    public function update_routes()
+    {
+        $CI =& get_instance();
+        $CI->load->model('route/route_model', 'route');
+
+        $CI->route->after_create = [];
+        $CI->route->after_update = [];
+        $CI->route->after_delete = [];
+
+        $pages = $this->get_all();
+        if ($pages) {
+            foreach($pages as $page) {
+                $pageUrl = $CI->config->item('pages_route_controller').$page->page_id.'/'.$page->locale;
+                $routeData = $CI->route->where(['url' => $pageUrl])->count();
+
+                if ($page->locale != config_item('default_locale')) {
+                    $pageSlug = $CI->route->prepare_unique_slug($page->title.'-'.$page->locale);
+                } else {
+                    $pageSlug = $CI->route->prepare_unique_slug($page->title);
+                }
+
+                if ($routeData <= 0) {
+                    $routesData = [
+                        'slug' => $pageSlug,
+                        'url' => $pageUrl,
+                        'locale' => $page->locale,
+                        'module' => 'page',
+                        'primary_key' => $page->page_id,
+                    ];
+                    $this->route->insert($routesData);
+                }
+            }
+        }
+
+        $CI->route->save_routes();
+    }
 }
 
 /* End of file Page_translations_model.php */

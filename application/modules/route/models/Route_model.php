@@ -9,6 +9,7 @@ if (!defined('BASEPATH'))
 class Route_model extends MY_Model
 {
     public $table = 'nu_route';
+    public $primary_key = 'primary_key';
     public $after_create = ['save_routes'];
     public $after_update = ['save_routes'];
     public $after_delete = ['save_routes'];

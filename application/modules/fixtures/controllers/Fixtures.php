@@ -4,7 +4,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * Class Admin_fixtures
+ * Class Fixtures
  */
 class Fixtures extends MX_Controller
 {
@@ -33,13 +33,22 @@ class Fixtures extends MX_Controller
         echo "\n";
 
         $files = directory_map(APPPATH.'/fixtures');
+
         if ($files) {
+
+            sort($files);
+
             foreach ($files as $file) {
-                $className = str_replace('.php', '', $file);
+                include(APPPATH.'/fixtures/'.$file);
+
+                $exFileName = explode('_', $file);
+                $className = str_replace('.php', '', $exFileName[1]);
                 $fixturesClass = new $className();
                 $fixturesClass->load();
+
                 echo $className." was loaded.\n";
             }
+
         }
 
         echo "\n";

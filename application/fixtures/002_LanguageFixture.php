@@ -15,7 +15,9 @@ class LanguageFixture implements FixturesInterface
         $CI = & get_instance();
         $CI->load->model('language/language_model', 'language');
 
+        $CI->db->query('SET FOREIGN_KEY_CHECKS = 0');
         $CI->db->query('TRUNCATE TABLE nu_language');
+        $CI->db->query('SET FOREIGN_KEY_CHECKS = 1');
 
         $data = [
             [

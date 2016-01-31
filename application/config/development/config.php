@@ -1,15 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function autoLoadFixtures($class)
-{
-    if (strpos($class, 'CI_') !== 0)
-    {
-        @include_once(APPPATH . 'fixtures/' . $class . '.php');
-    }
-}
-spl_autoload_register("autoLoadFixtures");
-
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
