@@ -18,23 +18,23 @@ class Page_model extends MY_Model implements RouteModelInterface
 
     function __construct()
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         $CI->load->model('language/language_model', 'language');
         $CI->load->model('page/page_translations_model', 'page_translations');
 
         // Relations
         $this->has_one['translation'] = array(
-            'foreign_model'=>'Page_translations_model',
-            'foreign_table'=>'nu_page_translations',
-            'foreign_key'=>'page_id',
-            'local_key'=>'id'
+            'foreign_model' => 'Page_translations_model',
+            'foreign_table' => 'nu_page_translations',
+            'foreign_key' => 'page_id',
+            'local_key' => 'id'
         );
 
         $this->has_many['translations'] = array(
-            'foreign_model'=>'Page_translations_model',
-            'foreign_table'=>'nu_page_translations',
-            'foreign_key'=>'page_id',
-            'local_key'=>'id'
+            'foreign_model' => 'Page_translations_model',
+            'foreign_table' => 'nu_page_translations',
+            'foreign_key' => 'page_id',
+            'local_key' => 'id'
         );
 
         parent::__construct();
@@ -61,12 +61,12 @@ class Page_model extends MY_Model implements RouteModelInterface
      */
     public function delete_route($data)
     {
-        $this->db->like('url', config_item('pages_route_controller').$data['id']);
-        $this->db->delete('nu_route');
-
-        $CI =& get_instance();
+        $CI = & get_instance();
         $CI->load->model('route/route_model', 'route');
-        $CI->route->save_routes();
+        $CI->route->delete([
+            'module' => 'page',
+            'primary_key' => $data['id'],
+        ]);
     }
 }
 

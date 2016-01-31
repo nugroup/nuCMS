@@ -110,6 +110,8 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
                 'slug' => $CI->route->prepare_unique_slug($slug),
                 'url' => $pageUrl,
                 'locale' => $language->locale,
+                'module' => 'page',
+                'primary_key' => $page_id,
             ];
             $CI->route->insert($routeData);
 

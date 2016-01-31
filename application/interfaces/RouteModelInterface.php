@@ -9,12 +9,12 @@ interface RouteModelInterface
      * You have to run this function on before_delete/after_delete event
      * example:
      *
-        $this->db->like('url', config_item('pages_route_controller').$data['id']);
-        $this->db->delete('nu_route');
-
-        $CI =& get_instance();
+        $CI = & get_instance();
         $CI->load->model('route/route_model', 'route');
-        $CI->route->save_routes();
+        $CI->route->delete([
+            'module' => 'page',
+            'primary_key' => $data['id'],
+        ]);
      *
      * @param array $data
      */

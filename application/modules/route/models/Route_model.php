@@ -30,7 +30,7 @@ class Route_model extends MY_Model
         $this->load->helper('file');
         $fileName = APPPATH.'cache/dynamic_routes.php';
         $routes = $this->get_all();
-        
+
         if ($routes) {
             $data[] = "<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');";
 
