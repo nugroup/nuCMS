@@ -57,4 +57,3 @@ class Fixtures extends MX_Controller
 
 /* End of file Fixtures.php */
 /* Location: ./application/modules/fixtures/controllers/Fixtures.php */
-

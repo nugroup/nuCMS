@@ -209,11 +209,11 @@ class Admin_page extends Backend_Controller
                 try {
                     // Delete language
                     if (!$this->page->delete($id)) {
-                        throw new Exception(lang('language.alert.error.delete'));
+                        throw new Exception(lang('page.alert.error.delete'));
                     }
 
                     // Set response data
-                    $result['message'] = lang('language.alert.success.delete');
+                    $result['message'] = lang('page.alert.success.delete');
                     $result['status'] = 1;
                 } catch (Exception $ex) {
                     // Log error message

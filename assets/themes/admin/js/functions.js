@@ -11,7 +11,6 @@ function showConfirmModal(element) {
     var actionUrl = element.attr('href');
     var redirectUrl = element.attr('data-redirectUrl');
     var confirmMsg = element.attr('data-confirmMsg');
-
     if(jQuery.type(redirectUrl) === "undefined"){
         redirectUrl = '';
     }
@@ -41,7 +40,7 @@ function showConfirmModal(element) {
 function deleteItem(idItem, actionUrl, redirectUrl) {
 
     // Make ajax request
-    $.post(actionUrl, {id_item: idItem, redirect_url: redirectUrl}, function(results){
+    $.post(actionUrl, {id_item: idItem}, function(results){
 
         var response = results.results;
 

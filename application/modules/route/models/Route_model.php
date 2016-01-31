@@ -41,10 +41,10 @@ class Route_model extends MY_Model
 
             $output = implode("\n", $data);
             write_file($fileName, $output);
-            chmod($fileName, 0777);
+            @chmod($fileName, 0777);
         } else {
             write_file($fileName, '');
-            chmod($fileName, 0777);
+            @chmod($fileName, 0777);
         }
     }
 

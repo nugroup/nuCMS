@@ -52,7 +52,7 @@ class MY_Controller extends MX_Controller
      */
     public function set_log($message, $level = 'error')
     {
-        $logMessage = $message.'<br>File: <b>'.__FILE__.'</b><br>Line: <b>'.__LINE__.'</b>'.lang('exc_info');
+        $logMessage = $message.'<br>File: <b>'.__FILE__.'</b><br>Line: <b>'.__LINE__.'</b>';
 
         log_message($level, $logMessage);
     }
