@@ -125,11 +125,8 @@ class Backend_Controller extends MY_Controller
                 $locales[$language->locale] = $language;
             }
 
-            $this->data['system_languages'] = $languages;
-            $this->data['system_languages_by_locale'] = $locales;
-        } else {
-            $this->data['system_languages'] = false;
-            $this->data['system_languages_by_locale'] = false;
+            $this->config->set_item('system_languages', $languages);
+            $this->config->set_item('system_languages_by_locale', $locales);
         }
     }
 

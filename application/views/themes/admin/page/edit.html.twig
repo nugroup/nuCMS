@@ -9,12 +9,12 @@
 {% block body %}
 
     <div class="container">
-        
+
         {% include 'page/toolbar.html.twig' %}
 
     </div>
 
-    {{ form_open(current_url(), {'id': 'page-add-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+    {{ form_open(current_full_url(), {'id': 'page-add-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
     <div class="container">
 

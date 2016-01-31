@@ -6,8 +6,9 @@
 interface RouteModelInterface
 {
     /**
-     * You have to run this function on before/after delete
+     * You have to run this function on before_delete/after_delete event
      * example:
+     *
         $this->db->like('url', config_item('pages_route_controller').$data['id']);
         $this->db->delete('nu_route');
 

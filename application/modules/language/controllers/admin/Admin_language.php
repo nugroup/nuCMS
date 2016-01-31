@@ -174,7 +174,7 @@ class Admin_language extends Backend_Controller
                     $result['status'] = 1;
                 } catch (Exception $ex) {
                     // Log error message
-                    log_message('error', "Line: ".__LINE__."\nFile: ".__FILE__."\n".$ex->getMessage());
+                    $this->set_log($ex->getMessage());
 
                     // Set response data
                     $result['message'] = $ex->getMessage();

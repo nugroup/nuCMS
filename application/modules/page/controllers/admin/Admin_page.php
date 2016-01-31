@@ -20,6 +20,9 @@ class Admin_page extends Backend_Controller
         $this->lang->load('page', $this->config->item('selected_lang'));
     }
 
+    /**
+     * List of pages
+     */
     public function index()
     {
         // Set page
@@ -59,7 +62,7 @@ class Admin_page extends Backend_Controller
         $this->data['pages'] = $this->prepare_join_data($pages, 'root');
         $this->data['pager'] = $this->pagination->create_links();
         $this->data['subnav_active'] = 'index';
-        $this->data['selected_language'] = $this->data['system_languages_by_locale'][$locale]->name;
+        $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
 
         // Load the view
         $this->render('page/index', $this->data);
@@ -81,13 +84,13 @@ class Admin_page extends Backend_Controller
         // If post is send
         if ($this->input->post()) {
 
+            // Update page translation
             $result = $this->page_translations
-                ->from_form($this->page->get_rules('update'), [], $where)
+                ->from_form($this->page_translations->get_rules('update'), [], $where)
                 ->update();
 
-            $pageUrl = $this->config->item('pages_route_controller').$id.'/'.$locale;
-
             // Update route
+            $pageUrl = $this->config->item('pages_route_controller').$id.'/'.$locale;
             $routeData = [
                 'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $pageUrl),
             ];
@@ -112,7 +115,8 @@ class Admin_page extends Backend_Controller
         $this->data['page'] = $page;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
-        $this->data['selected_language'] = $this->data['system_languages_by_locale'][$locale]->name;
+        $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
+        $this->data['locale'] = $locale;
 
         // Load the view
         $this->render('page/edit', $this->data);
@@ -123,13 +127,11 @@ class Admin_page extends Backend_Controller
      */
     public function add()
     {
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
-
         // If post is send
         if ($this->input->post()) {
 
             // Validate form
-            $this->form_validation->set_rules($this->page->get_rules('add'));
+            $this->form_validation->set_rules($this->page_translations->get_rules('add'));
             $inserted_id = false;
 
             // Insert page root
@@ -138,45 +140,8 @@ class Admin_page extends Backend_Controller
             }
 
             if ($inserted_id) {
-                $insertedTranslate = false;
-
-                $i = 1;
-                foreach ($this->data['system_languages'] as $language) {
-
-                    // Insert translate
-                    $insertedTranslate = $this->page_translations
-                        ->from_form(
-                            $this->page->get_rules('add'), [
-                                'locale' => $language->locale,
-                                'page_id' => $inserted_id,
-                                'active' => (int) $this->input->post('active'),
-                            ]
-                        )
-                        ->insert();
-
-                    if (!$insertedTranslate) {
-                        break;
-                    }
-
-                    // Insert translate route
-                    $pageUrl = $this->config->item('pages_route_controller').$inserted_id.'/'.$language->locale;
-                    $slug = ($this->input->post('slug')) ? $this->input->post('slug') : $this->input->post('title');
-
-                    if ($i > 1) {
-                        $slug .= '-'.$language->locale;
-                    }
-
-                    // Add route
-                    $routeData = [
-                        'slug'   => $this->route->prepare_unique_slug($slug),
-                        'url'    => $pageUrl,
-                        'locale' => $language->locale,
-                    ];
-                    $this->route->insert($routeData);
-
-                    $i++;
-
-                }
+                // Insert all translations
+                $insertedTranslate = $this->page_translations->insert_all_translations($inserted_id);
 
                 // Set informations
                 if ($insertedTranslate) {
@@ -191,7 +156,6 @@ class Admin_page extends Backend_Controller
         // Set view data
         $this->data['subnav_active'] = 'add';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
-        $this->data['selected_language'] = $this->data['system_languages_by_locale'][$locale]->name;
 
         // Load the view
         $this->render('page/add', $this->data);
@@ -253,7 +217,7 @@ class Admin_page extends Backend_Controller
                     $result['status'] = 1;
                 } catch (Exception $ex) {
                     // Log error message
-                    log_message('error', "Line: ".__LINE__."\nFile: ".__FILE__."\n".$ex->getMessage());
+                    $this->set_log($ex->getMessage());
 
                     // Set response data
                     $result['message'] = $ex->getMessage();

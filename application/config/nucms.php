@@ -20,7 +20,7 @@ $config['profiler'] = true;                                                     
 $config['twig_config'] = [
     'paths' => [VIEWPATH.'themes/'.$config['theme'], VIEWPATH],
 ];
-$config['twig_user_functions'] = ['asset', 'generate_menu', 'admin_url', 'flashdata', 'obj_to_options_array'];
+$config['twig_user_functions'] = ['asset', 'generate_menu', 'admin_url', 'flashdata', 'obj_to_options_array', 'current_full_url'];
 
 /* users
 ============================================================================= */
@@ -35,6 +35,12 @@ $config['metatags'] = [
     'version' => 'v.0.1 alfa',
 ];
 
+/* languages
+============================================================================= */
+$config['system_languages'] = [];
+$config['system_languages_by_locale'] = [];
+
 /* pages
 ============================================================================= */
 $config['pages_route_controller'] = 'pages/show/';
+

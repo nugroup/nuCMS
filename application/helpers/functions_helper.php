@@ -78,3 +78,19 @@ if ( ! function_exists('prepareURL'))
         return $sText;
     }
 }
+
+if ( ! function_exists('current_full_url'))
+{
+    /**
+     * Get current url with GET query
+     *
+     * @return string
+     */
+    function current_full_url()
+    {
+        $CI =& get_instance();
+
+        $url = $CI->config->site_url($CI->uri->uri_string());
+        return $_SERVER['QUERY_STRING'] ? $url.'?'.$_SERVER['QUERY_STRING'] : $url;
+    }
+}
