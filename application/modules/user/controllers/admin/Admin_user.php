@@ -15,8 +15,8 @@ class Admin_user extends Backend_Controller
         parent::__construct();
 
         // Load classes
-        $this->load->model('user/user_model', 'user');
         $this->lang->load('user', config_item('selected_lang'));
+        $this->load->model('user/user_model', 'user');
     }
 
     /**
@@ -118,7 +118,7 @@ class Admin_user extends Backend_Controller
     {
         // If post is send
         if ($this->input->post()) {
-            $inserted_id = $this->user->from_form($this->user->get_rules('add'))->insert();
+            $inserted_id = $this->user->from_form($this->user->get_rules('insert'))->insert();
 
             if ($inserted_id) {
                 // Set informations

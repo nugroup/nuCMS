@@ -1525,6 +1525,7 @@ class MY_Model extends CI_Model
     public function set_cache($string, $seconds = 86400)
     {
         $prefix = (strlen($this->cache_prefix)>0) ? $this->cache_prefix.'_' : '';
+        $prefix .= $this->table.'_';
         $this->_cache = array('cache_name' => $prefix.$string,'seconds'=>$seconds);
         return $this;
     }
@@ -1605,9 +1606,17 @@ class MY_Model extends CI_Model
      */
     private function _set_connection()
     {
-        //unset($this->db);
-        isset($this->_database_connection) ? $this->load->database($this->_database_connection) : $this->load->database();
-        $this->_database = $this->db;
+        if(isset($this->_database_connection))
+            {
+                $this->_database = $this->load->database($this->_database_connection,TRUE);
+            }
+            else
+            {
+                $this->load->database();
+                $this->_database =$this->db;
+            }
+            // This may not be required 
+            return $this;
     }
 
     /*

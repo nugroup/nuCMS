@@ -51,4 +51,3 @@ $config['system_languages_by_locale'] = [];
 /* pages
 ============================================================================= */
 $config['pages_route_controller'] = 'page/show/';
-

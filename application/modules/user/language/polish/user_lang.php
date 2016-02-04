@@ -25,6 +25,7 @@ $lang['user.list.login'] = 'Login';
 
 /* form
 ============================================================================= */
+$lang['user.form.name'] = 'Imię / Nazwisko';
 $lang['user.form.login'] = 'Login';
 $lang['user.form.email'] = 'E-mail';
 $lang['user.form.name'] = 'Imię / Nazwisko';

@@ -32,7 +32,7 @@ class User_model extends MY_Model
 
         $rules['name'] = array('field' => 'name', 'label' => lang('name'), 'rules' => 'trim|xss_clean');
 
-        if ($action == 'add') {
+        if ($action == 'insert') {
             $rules['login'] = array('field' => 'login', 'label' => lang('user.form.login'), 'rules' => 'my_unique_field['.$this->table.',login,id]|trim|required|xss_clean');
             $rules['email'] = array('field' => 'email', 'label' => lang('user.form.email'), 'rules' => 'my_unique_field['.$this->table.',email,id]|trim|required|valid_email|xss_clean');
             $rules['password'] = array('field' => 'password', 'label' => lang('user.form.password'), 'rules' => 'required|xss_clean');

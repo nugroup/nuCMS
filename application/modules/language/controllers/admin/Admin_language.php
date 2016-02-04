@@ -15,8 +15,8 @@ class Admin_language extends Backend_Controller
         parent::__construct();
 
         // Load classes
-        $this->load->model('language/language_model', 'language');
         $this->lang->load('language', config_item('selected_lang'));
+        $this->load->model('language/language_model', 'language');
     }
 
     public function index()
@@ -72,7 +72,7 @@ class Admin_language extends Backend_Controller
         // If post is send
         if ($this->input->post()) {
 
-            $result = $this->language->from_form($this->language->get_rules('update'), [], array('id' => $id))->update();
+            $result = $this->language->from_form(NULL, [], array('id' => $id))->update();
 
             if ($result) {
                 // Set informations
@@ -99,7 +99,7 @@ class Admin_language extends Backend_Controller
     {
         // If post is send
         if ($this->input->post()) {
-            $inserted_id = $this->language->from_form($this->language->get_rules('add'), ['active' => (int) $this->input->post('active')])->insert();
+            $inserted_id = $this->language->from_form()->insert();
 
             if ($inserted_id) {
                 // Set informations
@@ -127,9 +127,6 @@ class Admin_language extends Backend_Controller
      */
     public function update_active($id)
     {
-        // unset template (we dont need to load footer)
-        $this->output->unset_template();
-
         $name = $this->input->post('name');
         $value = (int) $this->input->post('value');
 
@@ -138,7 +135,6 @@ class Admin_language extends Backend_Controller
 
         // Update the view
         if ($this->language->update($data, (int) $id)) {
-            echo $this->db->last_query();
             $result = ['result' => 1];
         } else {
             $result = ['result' => 0];

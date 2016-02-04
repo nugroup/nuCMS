@@ -118,7 +118,6 @@ class Backend_Controller extends MY_Controller
      */
     public function getSystemLanguagesList()
     {
-        $this->load->model('language/language_model', 'language');
         $languages = $this->language->get_all();
         if ($languages) {
             foreach ($languages as $language) {
@@ -135,8 +134,6 @@ class Backend_Controller extends MY_Controller
      */
     public function setLanguage()
     {
-        $this->load->model('language/language_model', 'language');
-
         // Set session if not exist
         if (!$this->session->admin_language) {
             $this->session->set_userdata('admin_language', 1);
@@ -148,6 +145,8 @@ class Backend_Controller extends MY_Controller
 
         // Load language file
         $this->lang->load('nucms', config_item('selected_lang'));
+        $this->lang->load('language/language', config_item('selected_lang'));
+        $this->load->model('language/language_model', 'language');
     }
 }
 

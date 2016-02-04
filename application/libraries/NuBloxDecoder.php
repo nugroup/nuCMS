@@ -10,6 +10,13 @@ class NuBloxDecoder
 {
     private $defaultCol = 12;
 
+    /**
+     * Decode init function
+     *
+     * @param json/object $content
+     * @param string $format
+     * @return string
+     */
     public function decode($content, $format = 'json')
     {
         $result = '';
@@ -71,7 +78,7 @@ class NuBloxDecoder
         $col_lg = (isset($module->colSize)) ? ' col-lg-'.$module->colSize : '';
         $col_md = (isset($module->col_md)) ? ' col-md-'.$module->col_md : '';
         $col_sm = (isset($module->col_sm)) ? ' col-sm-'.$module->col_sm : '';
-        $col_xs = (isset($module->col_sm)) ? ' col-xs-'.$module->col_sm : '';
+        $col_xs = (isset($module->col_xs)) ? ' col-xs-'.$module->col_xs : '';
 
         $result = '';
 
