@@ -153,9 +153,6 @@ class Admin_language extends Backend_Controller
      */
     public function delete()
     {
-        // Unset template
-        $this->output->unset_template();
-
         if ($this->input->post('id_item')) {
             $id = $this->input->post('id_item');
             if ($id > 0) {

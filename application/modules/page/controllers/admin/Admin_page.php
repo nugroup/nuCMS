@@ -170,9 +170,6 @@ class Admin_page extends Backend_Controller
      */
     public function update_active($id)
     {
-        // unset template (we dont need to load footer)
-        $this->output->unset_template();
-
         $name = $this->input->post('name');
         $value = (int) $this->input->post('value');
 
@@ -200,9 +197,6 @@ class Admin_page extends Backend_Controller
      */
     public function delete()
     {
-        // Unset template
-        $this->output->unset_template();
-
         if ($this->input->post('id_item')) {
             $id = $this->input->post('id_item');
             if ($id > 0) {
