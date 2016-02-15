@@ -4,9 +4,38 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e2d50b34cd54755990d0198f69a33603",
-    "content-hash": "31a7caad4ab6ba67621dd54b7b61c3e5",
+    "hash": "c372e3bfb8169e5be6fd99e2ac2dc837",
+    "content-hash": "f30f6e18e1180939577f044ec285d8b3",
     "packages": [
+        {
+            "name": "codeigniter/framework",
+            "version": "3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bcit-ci/CodeIgniter.git",
+                "reference": "ac067858c21250dd8c60cdc1f9bc12ba2ff82755"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/ac067858c21250dd8c60cdc1f9bc12ba2ff82755",
+                "reference": "ac067858c21250dd8c60cdc1f9bc12ba2ff82755",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "1.1.*"
+            },
+            "type": "project",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The CodeIgniter framework",
+            "homepage": "https://codeigniter.com",
+            "time": "2016-01-13 00:09:27"
+        },
         {
             "name": "fzaninotto/faker",
             "version": "v1.5.0",
@@ -60,61 +89,17 @@
             "time": "2015-05-29 06:29:14"
         },
         {
-            "name": "kenjis/codeigniter-ss-twig",
-            "version": "v0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kenjis/codeigniter-ss-twig.git",
-                "reference": "47dce229fb45680ba291404f5d1534da9d151936"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kenjis/codeigniter-ss-twig/zipball/47dce229fb45680ba291404f5d1534da9d151936",
-                "reference": "47dce229fb45680ba291404f5d1534da9d151936",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "twig/twig": "~1.20"
-            },
-            "require-dev": {
-                "codeigniter/framework": "3.0.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kenji Suzuki",
-                    "homepage": "https://github.com/kenjis/codeigniter-ss-twig"
-                }
-            ],
-            "description": "A Simple and Secure Twig integration for CodeIgniter 3.0",
-            "keywords": [
-                "codeigniter",
-                "twig"
-            ],
-            "time": "2015-11-17 03:43:39"
-        },
-        {
             "name": "twig/twig",
-            "version": "v1.23.1",
+            "version": "v1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d9b6333ae8dd2c8e3fd256e127548def0bc614c6"
+                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d9b6333ae8dd2c8e3fd256e127548def0bc614c6",
-                "reference": "d9b6333ae8dd2c8e3fd256e127548def0bc614c6",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
+                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
                 "shasum": ""
             },
             "require": {
@@ -127,7 +112,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.23-dev"
+                    "dev-master": "1.24-dev"
                 }
             },
             "autoload": {
@@ -162,7 +147,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-11-05 12:49:06"
+            "time": "2016-01-25 21:22:18"
         }
     ],
     "packages-dev": [],

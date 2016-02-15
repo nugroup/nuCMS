@@ -8,19 +8,27 @@
  * @copyright  2015 Kenji Suzuki
  * @link       https://github.com/kenjis/codeigniter-ss-twig
  */
-// If you don't use Composer, uncomment below
-/*
-  require_once APPPATH . 'third_party/Twig-1.xx.x/lib/Twig/Autoloader.php';
-  Twig_Autoloader::register();
- */
 class Twig
 {
     private $config = [];
     private $functions_asis = [
-        'base_url', 'site_url', 'current_url', 'lang', 'validation_errors'
+        'base_url',
+        'site_url',
+        'current_url',
+        'lang',
+        'validation_errors'
     ];
     private $functions_safe = [
-        'form_open', 'form_close', 'form_error', 'form_textarea', 'form_dropdown', 'set_value', 'form_hidden', 'form_input', 'form_password', 'form_checkbox'
+        'form_open',
+        'form_close',
+        'form_error',
+        'form_textarea',
+        'form_dropdown',
+        'form_hidden',
+        'form_input',
+        'form_password',
+        'form_checkbox',
+        'set_value',
     ];
 
     /**

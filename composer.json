@@ -1,12 +1,23 @@
 {
-	"description" : "nuCMS - revolution CMS",
-	"name" : "nuCMS",
-	"license": "MIT",
-	"require": {
-		"php": ">=5.2.4",
-		"fzaninotto/faker": "^1.5",
-		"kenjis/codeigniter-ss-twig": "^0.1.0"
-	},
-	"require-dev": {
-	}
+    "description" : "nuCMS - revolution CMS",
+    "name" : "nuCMS",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.2.4",
+        "codeigniter/framework": "^3.0",
+        "fzaninotto/faker": "^1.5",
+        "twig/twig": "^1.24"
+    },
+    "require-dev": {
+    },
+    "authors": [
+        {
+            "name": "Jacek Bednarek",
+            "email": "jacek.bednarek1991@gmail.com"
+        },
+        {
+            "name": "Szymon Kulczyński",
+            "email": "sz.kulczy@gmail.com"
+        }
+    ]
 }
