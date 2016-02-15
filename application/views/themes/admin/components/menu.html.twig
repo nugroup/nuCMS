@@ -14,17 +14,22 @@
 
         <ul>
             <li class="head"><span>{{ lang('menu.content') }}</span></li>
-            <li><a href="{{ admin_url('pages') }}"><i class="ion ion-ios-paper-outline"></i>{{ lang('menu.pages') }}</a></li>
-            <li><a href="{{ admin_url('templates') }}"><i class="fa fa-align-left"></i>{{ lang('menu.templates') }}</a></li>
-            <li><a href="{{ admin_url('modules') }}"><i class="fa fa-puzzle-piece"></i>{{ lang('menu.modules') }}</a></li>
+            <li><a href="{{ admin_url('page') }}"><i class="ion ion-ios-paper-outline"></i>{{ lang('menu.pages') }}</a></li>
+            <li><a href="{{ admin_url('template') }}"><i class="fa fa-align-left"></i>{{ lang('menu.templates') }}</a></li>
+            <li><a href="{{ admin_url('module') }}"><i class="fa fa-puzzle-piece"></i>{{ lang('menu.modules') }}</a></li>
         </ul>
 
         <ul>
             <li class="head"><span>{{ lang('menu.other') }}</span></li>
-            <li><a href="{{ admin_url('files') }}"><i class="ion ion-image"></i>{{ lang('menu.files') }}</a></li>
+            <li><a href="{{ admin_url('file') }}"><i class="ion ion-image"></i>{{ lang('menu.files') }}</a></li>
             <li><a href="{{ admin_url('menu') }}"><i class="ion ion-compass"></i>{{ lang('menu.menu') }}</a></li>
             <li><a href="{{ admin_url('user') }}"><i class="ion ion-android-person"></i>{{ lang('menu.users') }}</a></li>
-            <li><a href="{{ admin_url('settings') }}"><i class="ion ion-gear-a"></i>{{ lang('menu.settings') }}</a></li>
+        </ul>
+
+        <ul>
+            <li class="head"><span>{{ lang('menu.configuration') }}</span></li>
+            <li><a href="{{ admin_url('language') }}"><i class="fa fa-language"></i>{{ lang('menu.languages') }}</a></li>
+            <li><a href="{{ admin_url('setting') }}"><i class="ion ion-gear-a"></i>{{ lang('menu.settings') }}</a></li>
             <li><a href="{{ admin_url('auth/logout') }}"><i class="ion ion-power"></i>{{ lang('menu.logout') }}</a></li>
         </ul>
 
@@ -33,7 +38,7 @@
     <!-- menu footer -->
     <div class="menuFooter">
         <img src="{{ asset('img/nucms-logo.png') }}" alt="{{ config.metatags.title }}">
-        {{ "now"|date("Y") }} &copy; {{ config.metatags.title }}
+        2015 - {{ "now"|date("Y") }} &copy; {{ config.metatags.title }}
     </div>
 
 </div>

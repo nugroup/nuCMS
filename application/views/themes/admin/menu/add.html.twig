@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block subnav %}
+
+    {% include 'menu/subnav.html.twig' %}
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        {{ form_open(current_url(), {'id': 'menu-add-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
+
+        <!-- name -->
+        <div class="form-group">
+            <label for="name" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('menu.form.name') }}</label>
+            <div class="col-sm-5">
+                {{ form_input({'name': 'name', 'value': set_value('name'), 'class': 'form-control', 'id': 'name', 'required': 'required' }) }}
+            </div>
+        </div>
+
+        <!-- active -->
+        <div class="form-group">
+            <label for="active" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('menu.form.active') }}</label>
+            <div class="col-sm-5">
+                <span class="superCheck">
+                    <label for="active"></label>
+                    {{ form_checkbox({'name': 'active', 'id': 'active'}, 1, set_value('active')) }}
+                    <span></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- position -->
+        <div class="form-group">
+            <div class="col-sm-2 col-sm-offset-2 control-label">{{ lang('menu.form.position') }}</div>
+            <div class="col-sm-5">
+                <span class="btn-group nuDropdown dropAsSelect">
+                    <span data-toggle="dropdown" class="txtBig" aria-expanded="false">({{ lang('text.choose') }}) <i class="fa fa-angle-down"></i></span>
+                    <ul class="dropdown-menu" style="display: none;">
+                        <li data-value=""><span>({{ lang('text.choose') }})</span></li>
+                        {% for key, value in config.menu.positions %}
+
+                            <li data-value="{{ key }}"><span>{{ value }}</span></li>
+
+                        {% endfor %}
+                    </ul>
+                    <input type="hidden" name="position" value="">
+                </span>
+            </div>
+        </div>
+
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-12 text-center">
+                    <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('text.add') }}</button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_close() }}
+
+    </div>
+
+{% endblock %}

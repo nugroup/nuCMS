@@ -9,11 +9,18 @@
 
                 {% if subnav_active == 'add' %}
                     <li>
-                        <span class="active">{{ lang('user.subnav.add') }}</span>
+                        <span class="active">
+                            {{ lang('user.subnav.add') }} <a href="{{ return_link }}"><i class="ion ion-android-close"></i></a>
+                        </span>
                     </li>
                 {% elseif (subnav_active == 'edit') %}
                     <li>
-                        <span class="active"><a href="{{ admin_url('user/edit') }}">{{ lang('user.subnav.edit') }}</a></span>
+                        <a href="{{ admin_url('user/add') }}">{{ lang('user.subnav.add') }}</a>
+                    </li>
+                    <li>
+                        <span class="active">
+                            {{ lang('user.subnav.edit') }} <a href="{{ return_link }}"><i class="ion ion-android-close"></i></a>
+                        </span>
                     </li>
                 {% else %}
                     <li>

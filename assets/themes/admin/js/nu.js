@@ -22,7 +22,7 @@
         var icon = span.find('i');
         var input = $(this).closest('.dropAsSelect').find('input');
         input.val(value);
-        span.html(title).append(icon);
+        span.html(title+' ').append(icon);
     });
 
 
@@ -70,6 +70,45 @@
 
         if(checked_all === 1) checked_all = 0;
         else checked_all = 1;
+    });
+
+
+    // ----- Update boolean field in database by AJAX
+    $(document).on("click",'.change_bool',function(){
+
+        var actionUrl = $(this).attr('data-actionUrl').toString();
+        var fieldValue = $(this).prop('checked');
+        var fieldName = $(this).attr('data-name').toString();
+
+        if (fieldValue === true) {
+            var newValue = 1;
+        } else {
+            var newValue = 0;
+        }
+
+        $.post(actionUrl, { name: fieldName, value: newValue }, function(response){
+            if (parseInt(response.result !== 1)) {
+                alert("Error");
+            }
+        });
+
+    });
+
+
+    // -- run tooltip
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            html: true
+        });
+    });
+
+
+    // -- submit language select
+    $(document).on("click",'.submitOnClick',function(){
+
+        $('#toolbar-form').submit();
+        return false;
+
     });
 
 })();

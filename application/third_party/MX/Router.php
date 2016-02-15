@@ -49,12 +49,12 @@ class MX_Router extends CI_Router
 	{
 		if ($this->translate_uri_dashes === TRUE)
 		{
-			foreach(range(0, 2) as $v)
+			foreach(range(0, 4) as $v)
 			{
 				isset($segments[$v]) && $segments[$v] = str_replace('-', '_', $segments[$v]);
 			}
 		}
-		
+
 		$segments = $this->locate($segments);
 
 		if($this->located == -1)

@@ -12,6 +12,9 @@ $lang['text.language'] = 'Język';
 $lang['text.checked_items'] = 'zaznaczone';
 $lang['text.choose'] = 'wybierz';
 $lang['text.delete'] = 'usuń';
+$lang['text.add'] = 'Dodaj';
+$lang['text.save'] = 'Zapisz';
+
 
 /* menu
 ============================================================================= */
@@ -26,6 +29,8 @@ $lang['menu.menu'] = 'Menu';
 $lang['menu.title'] = 'Menu';
 $lang['menu.users'] = 'Użytkownicy';
 $lang['menu.settings'] = 'Opcje';
+$lang['menu.configuration'] = 'Konfiguracja';
+$lang['menu.languages'] = 'Języki';
 $lang['menu.logout'] = 'Wyloguj';
 
 /* modal
@@ -46,11 +51,13 @@ $lang['language.english'] = 'Angielski';
 ============================================================================= */
 $lang['config.user_types.admin'] = 'Administrator';
 
-/* users
+/* alerts
 ============================================================================= */
-$lang['admin'] = 'Administrator';
-$lang['view_tools'] = 'wyświetl';
-$lang['language'] = 'język';
+$lang['alert.success.delete_checked'] = 'Usunięto zaznaczone elementy';
+$lang['alert.no_records'] = 'Brak elementów';
+$lang['alert.success.saved_changes'] = 'Zapisano zmiany';
+
+
 
 /* actions
 ============================================================================= */
@@ -62,9 +69,6 @@ $lang['add'] = 'Dodaj';
 
 /* alerts
 ============================================================================= */
-$lang['no_records'] = 'Brak elementów';
-$lang['delete_checked_items'] = 'Usunięto zaznaczone elementy';
-$lang['save_changes'] = 'Zapisano zmiany';
 
 /* form validations
 ============================================================================= */

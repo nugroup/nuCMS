@@ -8,25 +8,34 @@
  * @copyright  2015 Kenji Suzuki
  * @link       https://github.com/kenjis/codeigniter-ss-twig
  */
-// If you don't use Composer, uncomment below
-/*
-  require_once APPPATH . 'third_party/Twig-1.xx.x/lib/Twig/Autoloader.php';
-  Twig_Autoloader::register();
- */
 class Twig
 {
     private $config = [];
     private $functions_asis = [
-        'base_url', 'site_url', 'current_url', 'lang', 'validation_errors'
+        'base_url',
+        'site_url',
+        'current_url',
+        'lang',
+        'validation_errors'
     ];
     private $functions_safe = [
-        'form_open', 'form_close', 'form_error', 'set_value', 'form_hidden', 'form_input', 'form_password', 'form_checkbox'
+        'form_open',
+        'form_close',
+        'form_error',
+        'form_textarea',
+        'form_dropdown',
+        'form_hidden',
+        'form_input',
+        'form_password',
+        'form_checkbox',
+        'set_value',
     ];
 
     /**
      * @var bool Whether added CodeIgniter functions or not
      */
     private $add_ci_functions = FALSE;
+    private $add_user_functions_bool = FALSE;
 
     /**
      * @var Twig_Environment
@@ -37,7 +46,7 @@ class Twig
      * @var Twig_Loader_Filesystem
      */
     private $loader;
-    
+
     private $add_user_functions = [];
 
     public function __construct($params = [])
@@ -51,7 +60,7 @@ class Twig
         $this->config = array_merge($this->config, $params);
     }
 
-    protected function resetTwig()
+    public function resetTwig()
     {
         $this->twig = null;
         $this->createTwig();
@@ -94,7 +103,7 @@ class Twig
 
     /**
      * Registers a Global
-     * 
+     *
      * @param string $name  The global name
      * @param mixed  $value The global value
      */
@@ -106,7 +115,7 @@ class Twig
 
     /**
      * Renders Twig Template and Set Output
-     * 
+     *
      * @param string $view   Template filename without `.twig`
      * @param array  $params Array of parameters to pass to the template
      */
@@ -219,6 +228,11 @@ class Twig
      */
     private function addUserFunctions()
     {
+        // Runs only once
+        if ($this->add_user_functions_bool) {
+            return;
+        }
+
         foreach ($this->add_user_functions as $function) {
             if (function_exists($function)) {
                 $this->twig->addFunction(
@@ -228,5 +242,7 @@ class Twig
                 );
             }
         }
+
+        $this->add_user_functions_bool = TRUE;
     }
 }

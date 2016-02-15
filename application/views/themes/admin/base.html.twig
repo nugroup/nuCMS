@@ -12,14 +12,22 @@
 
     <title>{{ config.metatags.title }} {{ config.metatags.version}}</title>
     <base href="{{ config.metatags.title }}{{ site_url() }}">
-    <link rel="shortcut icon" href="">
+
+    <!-- FAVICO -->
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
 
     <!-- CSS STYLES -->
+    {% block stylesheet %}
+
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/nu.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/nu-blox.min.css') }}" rel="stylesheet">
+
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,26 +41,26 @@
 
     {% block navbar %}
 
-    <!-- navbar -->
-    <div class="container-fluid nuNavbar">
-        <div class="row">
+        <!-- navbar -->
+        <div class="container-fluid nuNavbar">
+            <div class="row">
 
-            <!-- menu btn + location -->
-            <div class="col-xs-9 col-sm-5 nuMenuBtn">
-                <span class="menuTrigger"><i class="fa fa-bars"></i><span>{{ lang('text.menu') }}</span></span>
+                <!-- menu btn + location -->
+                <div class="col-xs-9 col-sm-5 nuMenuBtn">
+                    <span class="menuTrigger"><i class="fa fa-bars"></i><span>{{ lang('text.menu') }}</span></span>
+                </div>
+
+                <!-- logo -->
+                <div class="col-xs-3 col-sm-2 text-center nuLogo">
+                    <a href="{{ admin_url() }}">
+                        <img src="{{ asset('img/nucms-logo.png') }}" alt="{{ config.metatags.title }}">
+                    </a>
+                </div>
+
             </div>
-
-            <!-- logo -->
-            <div class="col-xs-3 col-sm-2 text-center nuLogo">
-                <a href="{{ admin_url() }}">
-                    <img src="{{ asset('img/nucms-logo.png') }}" alt="{{ config.metatags.title }}">
-                </a>
-            </div>
-
         </div>
-    </div>
 
-    <div class="clearfix hidden-xs"></div>
+        <div class="clearfix hidden-xs"></div>
 
     {% endblock %}
 
@@ -62,76 +70,95 @@
 
     {% endblock %}
 
+    {% block subnav %}{% endblock %}
+
     {% block alerts %}
 
         <!-- alerts -->
-        {% if(validation_errors()) %}
+        <div class="container">
+            <div class="alerts">
+                {% if(validation_errors()) %}
 
-            <div class="alert alert-danger">
-                {{ validation_errors() | raw }}
+                    <div class="alert alert-danger">
+                        {{ validation_errors() | raw }}
+                    </div>
+
+                {% endif %}
+
+                {% if (flashdata('error')) %}
+
+                    <div class="alert alert-danger">
+                        {{ flashdata('error') }}
+                    </div>
+
+                {% endif %}
+
+                {% if (flashdata('success')) %}
+
+                    <div class="alert alert-success">
+                        {{ flashdata('success') }}
+                    </div>
+
+                {% endif %}
+
+                {% if (errors) is defined %}
+
+                    <div class="alert alert-danger">
+                        {% for error in errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+
+                {% endif %}
             </div>
-
-        {% endif %}
-
-        {% if (flashdata('error')) %}
-
-            <div class="alert alert-danger">
-                {{ flashdata('error') }}
-            </div>
-
-        {% endif %}
-
-        {% if (flashdata('success')) %}
-
-            <div class="alert alert-success">
-                {{ flashdata('success') }}
-            </div>
-
-        {% endif %}
-
-        {% if (errors) is defined %}
-
-            <div class="alert alert-danger">
-                {% for error in errors %}
-                    <p>{{ error }}</p>
-                {% endfor %}
-            </div>
-
-        {% endif %}
+        </div>
 
     {% endblock %}
 
+    <!-- margin -->
+    <div class="clearfix baseMargin"></div>
+
     {% block body %}{% endblock %}
 
+    <!-- margin -->
     <div class="clearfix baseMargin"></div>
 
     <footer id="footer">
 
     </footer>
 
-    <!-- Modal -->
-    <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{{ modal.title ? modal.title : lang('modal.alert') }}</h4>
-                </div>
-                <div class="modal-body">
+    {% block modal %}
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('modal.close') }}</button>
+        <!-- Modal -->
+        <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{ modal.title ? modal.title : lang('modal.alert') }}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('modal.close') }}</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    {% endblock %}
 
     <!-- JS SCRIPTS -->
+    {% block javascript %}
+
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/nu.js') }}"></script>
+
+    {% endblock %}
 
     <script type="text/javascript">
     <!--
@@ -146,5 +173,6 @@
     })();
     //-->
     </script>
+
     </body>
 </html>

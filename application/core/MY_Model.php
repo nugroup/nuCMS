@@ -34,6 +34,8 @@
  *              If given an array as parameter, it tells MY_Model, that the first element is a created_at field type, the second element is a updated_at field type (and the third element is a deleted_at field type)
  *          $this->soft_deletes = FALSE;
  *              Enables (TRUE) or disables (FALSE) the "soft delete" on records. Default is FALSE
+ *          $this->timestamps_format = 'Y-m-d H:i:s'
+ *              You can at any time change the way the timestamp is created (the default is the MySQL standard datetime format) by modifying this variable. You can choose between whatever format is acceptable by the php function date() (default is 'Y-m-d H:i:s'), or 'timestamp' (UNIX timestamp)
  *          $this->return_as = 'object' | 'array'
  *              Allows the model to return the results as object or as array
  *          $this->has_one['phone'] = 'Phone_model' or $this->has_one['phone'] = array('Phone_model','foreign_key','local_key');
@@ -114,6 +116,7 @@ class MY_Model extends CI_Model
      * Enables created_at and updated_at fields
      */
     protected $timestamps = TRUE;
+    protected $timestamps_format = 'Y-m-d H:i:s';
 
     protected $_created_at_field;
     protected $_updated_at_field;
@@ -185,6 +188,12 @@ class MY_Model extends CI_Model
         $this->_fetch_table();
         $this->pagination_delimiters = (isset($this->pagination_delimiters)) ? $this->pagination_delimiters : array('<span>','</span>');
         $this->pagination_arrows = (isset($this->pagination_arrows)) ? $this->pagination_arrows : array('&lt;','&gt;');
+        /* These below are implementation examples for before_create and before_update triggers.
+        Their respective functions - add_creator() and add_updater() - can be found at the end of the model.
+        They add user id on create and update. If you comment this out don't forget to do the same for the methods()
+        $this->before_create[]='add_creator';
+        $this->before_create[]='add_updater';
+        */
     }
 
     public function _get_table_fields()
@@ -284,6 +293,10 @@ class MY_Model extends CI_Model
         {
             $data = json_decode(json_encode($data), FALSE);
         }
+        if(isset($this->_select))
+		{
+			$this->_select = '*';
+		}
         return $data;
     }
 
@@ -304,7 +317,14 @@ class MY_Model extends CI_Model
         $this->load->library('form_validation');
         if(!isset($rules))
         {
-            $rules = $this->rules;
+            if(empty($row_fields_to_update))
+            {
+                $rules = $this->rules['insert'];
+            }
+            else
+            {
+                $rules = $this->rules['update'];
+            }
         }
         $this->form_validation->set_rules($rules);
         if($this->form_validation->run())
@@ -328,7 +348,6 @@ class MY_Model extends CI_Model
                     }
                 }
             }
-            
 
             if(!empty($row_fields_to_update))
             {
@@ -383,9 +402,9 @@ class MY_Model extends CI_Model
         // if the array is not a multidimensional one...
         if($multi === FALSE)
         {
-            if($this->timestamps === TRUE || is_array($this->timestamps))
+            if($this->timestamps !== FALSE)
             {
-                $data[$this->_created_at_field] = date('Y-m-d H:i:s');
+                $data[$this->_created_at_field] = $this->_the_timestamp();
             }
             $data = $this->trigger('before_create',$data);
             if($this->_database->insert($this->table, $data))
@@ -402,9 +421,9 @@ class MY_Model extends CI_Model
             $return = array();
             foreach($data as $row)
             {
-                if($this->timestamps === TRUE || is_array($this->timestamps))
+                if($this->timestamps !== FALSE)
                 {
-                    $row[$this->_created_at_field] = date('Y-m-d H:i:s');
+                    $row[$this->_created_at_field] = $this->_the_timestamp();
                 }
                 $row = $this->trigger('before_create',$row);
                 if($this->_database->insert($this->table,$row))
@@ -456,9 +475,9 @@ class MY_Model extends CI_Model
         // if the array is not a multidimensional one...
         if($multi === FALSE)
         {
-            if($this->timestamps === TRUE || is_array($this->timestamps))
+            if($this->timestamps !== FALSE)
             {
-                $data[$this->_updated_at_field] = date('Y-m-d H:i:s');
+                $data[$this->_updated_at_field] = $this->_the_timestamp();
             }
             $data = $this->trigger('before_update',$data);
             if($this->validated === FALSE && count($this->row_fields_to_update))
@@ -504,9 +523,9 @@ class MY_Model extends CI_Model
             $rows = 0;
             foreach($data as $row)
             {
-                if($this->timestamps === TRUE || is_array($this->timestamps))
+                if($this->timestamps !== FALSE)
                 {
-                    $row[$this->_updated_at_field] = date('Y-m-d H:i:s');
+                    $row[$this->_updated_at_field] = $this->_the_timestamp();
                 }
                 $row = $this->trigger('before_update',$row);
                 if(is_array($column_name_where))
@@ -555,7 +574,10 @@ class MY_Model extends CI_Model
     {
         if($this->soft_deletes===TRUE)
         {
-            $this->_where_trashed();
+        	if(debug_backtrace()[1]['function']!='force_delete')
+        	{
+        		$this->_where_trashed();
+        	}
         }
 
         if(is_array($field_or_array))
@@ -678,6 +700,33 @@ class MY_Model extends CI_Model
      */
     public function delete($where = NULL)
     {
+        if(!empty($this->before_delete) || !empty($this->before_soft_delete) || !empty($this->after_delete) || !empty($this->after_soft_delete) || ($this->soft_deletes === TRUE))
+        {
+            $to_update = array();
+            if(isset($where))
+            {
+                $this->where($where);
+            }
+            $query = $this->_database->get($this->table);
+            foreach($query->result() as $row)
+            {
+                $to_update[] = array($this->primary_key => $row->{$this->primary_key});
+            }
+            if(!empty($this->before_soft_delete))
+            {
+            	foreach($to_update as &$row)
+            	{
+            		$row = $this->trigger('before_soft_delete',$row);
+            	}
+            }
+            if(!empty($this->before_delete))
+            {
+            	foreach($to_update as &$row)
+            	{
+            		$row = $this->trigger('before_delete',$row);
+            	}
+            }
+        }
         if(isset($where))
         {
             $this->where($where);
@@ -685,20 +734,16 @@ class MY_Model extends CI_Model
         $affected_rows = 0;
         if($this->soft_deletes === TRUE)
         {
-            $query = $this->_database->get($this->table);
-
-            foreach($query->result() as $row)
-            {
-                $to_update[] = array($this->primary_key => $row->{$this->primary_key});
-            }
             if(isset($to_update))
             {
+
                 foreach($to_update as &$row)
                 {
                     //$row = $this->trigger('before_soft_delete',$row);
-                    $row[$this->_deleted_at_field] = date('Y-m-d H:i:s');
+                    $row[$this->_deleted_at_field] = $this->_the_timestamp();
                 }
                 $affected_rows = $this->_database->update_batch($this->table, $to_update, $this->primary_key);
+                $to_update['affected_rows'] = $affected_rows;
                 $this->trigger('after_soft_delete',$to_update);
             }
             return $affected_rows;
@@ -707,7 +752,14 @@ class MY_Model extends CI_Model
         {
             if($this->_database->delete($this->table))
             {
-                return $this->_database->affected_rows();
+                $affected_rows = $this->_database->affected_rows();
+                if(!empty($this->after_delete))
+                {
+                    $to_update['affected_rows'] = $affected_rows;
+                    $to_update = $this->trigger('after_delete',$to_update);
+                    $affected_rows = $to_update;
+                }
+                return $affected_rows;
             }
         }
         return FALSE;
@@ -774,6 +826,7 @@ class MY_Model extends CI_Model
         return FALSE;
     }
 
+
     /**
      * public function get()
      * Retrieves one row from table.
@@ -782,13 +835,7 @@ class MY_Model extends CI_Model
      */
     public function get($where = NULL)
     {
-        if(isset($this->_cache) && !empty($this->_cache))
-        {
-            $this->load->driver('cache');
-            $cache_name = $this->_cache['cache_name'];
-            $seconds = $this->_cache['seconds'];
-            $data = $this->cache->{$this->cache_driver}->get($cache_name);
-        }
+        $data = $this->_get_from_cache();
 
         if(isset($data) && $data !== FALSE)
         {
@@ -821,11 +868,7 @@ class MY_Model extends CI_Model
                 $row = $this->trigger('after_get', $row);
                 $row =  $this->_prep_after_read(array($row),FALSE);
                 $row = $row[0];
-                if(isset($cache_name) && isset($seconds))
-                {
-                    $this->cache->{$this->cache_driver}->save($cache_name, $data, $seconds);
-                    $this->_reset_cache($cache_name);
-                }
+                $this->_write_to_cache($row);
                 return $row;
             }
             else
@@ -843,13 +886,7 @@ class MY_Model extends CI_Model
      */
     public function get_all($where = NULL)
     {
-        if(isset($this->_cache) && !empty($this->_cache))
-        {
-            $this->load->driver('cache');
-            $cache_name = $this->_cache['cache_name'];
-            $seconds = $this->_cache['seconds'];
-            $data = $this->cache->{$this->cache_driver}->get($cache_name);
-        }
+        $data = $this->_get_from_cache();
 
         if(isset($data) && $data !== FALSE)
         {
@@ -863,7 +900,11 @@ class MY_Model extends CI_Model
             {
                 $this->where($where);
             }
-            if($this->_select)
+            elseif($this->soft_deletes===TRUE)
+            {
+                $this->_where_trashed();
+            }
+            if(isset($this->_select))
             {
                 $this->_database->select($this->_select);
             }
@@ -880,11 +921,7 @@ class MY_Model extends CI_Model
                 $data = $query->result_array();
                 $data = $this->trigger('after_get', $data);
                 $data = $this->_prep_after_read($data,TRUE);
-                if(isset($cache_name) && isset($seconds))
-                {
-                    $this->cache->{$this->cache_driver}->save($cache_name, $data, $seconds);
-                    $this->_reset_cache($cache_name);
-                }
+                $this->_write_to_cache($data);
                 return $data;
             }
             else
@@ -984,10 +1021,12 @@ class MY_Model extends CI_Model
             $foreign_table = $relation['foreign_table'];
             $type = $relation['relation'];
             $relation_key = $relation['relation_key'];
-            if($type=='many_to_many_pivot')
+            if($type=='has_many_pivot')
             {
                 $pivot_table = $relation['pivot_table'];
                 $pivot_local_key = $relation['pivot_local_key'];
+                $pivot_foreign_key = $relation['pivot_foreign_key'];
+                $get_relate = $relation['get_relate'];
             }
 
 
@@ -1032,10 +1071,10 @@ class MY_Model extends CI_Model
                         }
 
                     }
-                    if($request['parameters']['fields']=='*count*')
-                    {
-                        $sub_results->group_by('`' . $foreign_table . '`.`' . $foreign_key . '`');
-                    }
+                    if(array_key_exists('fields',$request['parameters']) && ($request['parameters']['fields']=='*count*'))
+	            {
+	               	$sub_results->group_by('`' . $foreign_table . '`.`' . $foreign_key . '`');
+	            }
                     if(array_key_exists('where',$request['parameters']) || array_key_exists('non_exclusive_where',$request['parameters']))
                     {
                         $the_where = array_key_exists('where', $request['parameters']) ? 'where' : 'non_exclusive_where';
@@ -1046,10 +1085,10 @@ class MY_Model extends CI_Model
             }
             else
             {
-                $this->_database->join($pivot_table, $foreign_table.'.'.$foreign_key.' = '.$pivot_table.'.'.singular($foreign_table).'_'.$foreign_key, 'left');
-                $this->_database->join($this->table, $pivot_table.'.'.singular($this->table).'_'.$local_key.' = '.$this->table.'.'.$local_key,'left');
+                $this->_database->join($pivot_table, $foreign_table.'.'.$foreign_key.' = '.$pivot_table.'.'.$pivot_foreign_key, 'left');
+                $this->_database->join($this->table, $pivot_table.'.'.$pivot_local_key.' = '.$this->table.'.'.$local_key,'left');
                 $this->_database->select($foreign_table.'.'.$foreign_key);
-                $this->_database->select($pivot_table.'.'.singular($this->table).'_'.$local_key);
+                $this->_database->select($pivot_table.'.'.$pivot_local_key);
                 if(!empty($request['parameters']))
                 {
                     if(array_key_exists('fields',$request['parameters']))
@@ -1092,7 +1131,7 @@ class MY_Model extends CI_Model
                     if(isset($pivot_table))
                     {
                         $the_local_key = $result_array[singular($this->table) . '_' . $local_key];
-                        if(isset($relation['get_relate']) and $relation['get_relate'] === true)
+                        if(isset($get_relate) and $get_relate === TRUE)
                         {
                             $subs[$the_local_key][$the_foreign_key] = $this->{$relation['foreign_model']}->where($local_key, $result[$local_key])->get();
                         }
@@ -1206,7 +1245,7 @@ class MY_Model extends CI_Model
                         {
                             if($this->_is_assoc($relation))
                             {
-                                $foreign_model = $relation['model'];
+                                $foreign_model = $relation['foreign_model'];
                                 if(array_key_exists('foreign_table',$relation))
                                 {
                                     $foreign_table = $relation['foreign_table'];
@@ -1455,9 +1494,38 @@ class MY_Model extends CI_Model
         return $this;
     }
 
+    protected function _get_from_cache($cache_name = NULL)
+    {
+        if(isset($cache_name) || (isset($this->_cache) && !empty($this->_cache)))
+        {
+            $this->load->driver('cache');
+            $cache_name = isset($cache_name) ? $cache_name : $this->_cache['cache_name'];
+            $data = $this->cache->{$this->cache_driver}->get($cache_name);
+            return $data;
+        }
+    }
+
+    protected function _write_to_cache($data, $cache_name = NULL)
+    {
+        if(isset($cache_name) || (isset($this->_cache) && !empty($this->_cache)))
+        {
+            $this->load->driver('cache');
+            $cache_name = isset($cache_name) ? $cache_name : $this->_cache['cache_name'];
+            $seconds = $this->_cache['seconds'];
+            if(isset($cache_name) && isset($seconds))
+            {
+                $this->cache->{$this->cache_driver}->save($cache_name, $data, $seconds);
+                $this->_reset_cache($cache_name);
+                return TRUE;
+            }
+            return FALSE;
+        }
+    }
+
     public function set_cache($string, $seconds = 86400)
     {
         $prefix = (strlen($this->cache_prefix)>0) ? $this->cache_prefix.'_' : '';
+        $prefix .= $this->table.'_';
         $this->_cache = array('cache_name' => $prefix.$string,'seconds'=>$seconds);
         return $this;
     }
@@ -1504,7 +1572,7 @@ class MY_Model extends CI_Model
      */
     private function _set_timestamps()
     {
-        if($this->timestamps === TRUE || is_array($this->timestamps))
+        if($this->timestamps !== FALSE)
         {
             $this->_created_at_field = (is_array($this->timestamps) && isset($this->timestamps[0])) ? $this->timestamps[0] : 'created_at';
             $this->_updated_at_field = (is_array($this->timestamps) && isset($this->timestamps[1])) ? $this->timestamps[1] : 'updated_at';
@@ -1514,15 +1582,41 @@ class MY_Model extends CI_Model
     }
 
     /**
+     * private function _the_timestamp()
+     *
+     * returns a value representing the date/time depending on the timestamp format choosed
+     * @return string
+     */
+    private function _the_timestamp()
+    {
+        if($this->timestamps_format=='timestamp')
+        {
+            return time();
+        }
+        else
+        {
+            return date($this->timestamps_format);
+        }
+    }
+
+    /**
      * private function _set_connection()
      *
      * Sets the connection to database
      */
     private function _set_connection()
     {
-        //unset($this->db);
-        isset($this->_database_connection) ? $this->load->database($this->_database_connection) : $this->load->database();
-        $this->_database = $this->db;
+        if(isset($this->_database_connection))
+            {
+                $this->_database = $this->load->database($this->_database_connection,TRUE);
+            }
+            else
+            {
+                $this->load->database();
+                $this->_database =$this->db;
+            }
+            // This may not be required 
+            return $this;
     }
 
     /*
@@ -1683,7 +1777,7 @@ class MY_Model extends CI_Model
         $parent_class = get_parent_class($this);
         if ($parent_class !== FALSE && !method_exists($parent_class, $method) && !method_exists($this,$method))
         {
-         echo 'No method with that name ('.$method.') in MY_Model or CI_Model.';
+            echo 'No method with that name ('.$method.') in MY_Model or CI_Model.';
         }
     }
 
@@ -1705,4 +1799,20 @@ class MY_Model extends CI_Model
     private function _is_assoc(array $array) {
         return (bool)count(array_filter(array_keys($array), 'is_string'));
     }
+    
+    /*
+    public function add_creator($data)
+    {
+    	$data['created_by'] = $_SESSION['user_id'];
+    	return $data;
+    }
+    */
+    
+    /*
+    public function add_updater($data)
+    {
+	    $data['updated_by'] = $_SESSION['user_id'];
+	    return $data;
+    }
+    */
 }

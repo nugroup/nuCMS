@@ -1,8 +1,18 @@
-<!-- dropdown actions -->
-<span class="txtUpper">{{ lang('text.language') }}:</span>
-<span class="btn-group nuDropdown">
-    <span data-toggle="dropdown" class="txtBig hoverLine">{{ lang('language.polish') }} <i class="fa fa-angle-down"></i></span>
-    <ul class="dropdown-menu">
-        <li><a href="#">{{ lang('language.polish') }}</a></li>
-    </ul>
-</span>
+{% if (config.system_languages) %}
+
+    <!-- dropdown actions -->
+    <span class="txtUpper">{{ lang('text.language') }}:</span>
+    <span class="btn-group nuDropdown dropAsSelect dropAsSelectInline">
+        <span data-toggle="dropdown" class="txtBig" aria-expanded="false">{{ selected_language ? selected_language : '' }} <i class="fa fa-angle-down"></i></span>
+
+        <ul class="dropdown-menu" style="display: none;">
+            {% for language in config.system_languages %}
+
+                <li data-value="{{ language.locale }}" class="submitOnClick"><span>{{ language.name }}</span></li>
+
+            {% endfor %}
+        </ul>
+        {{ form_hidden('locale', input.get('locale')) }}
+    </span>
+
+{% endif %}

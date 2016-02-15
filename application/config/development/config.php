@@ -1,14 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function autoLoadFixtures($class)
+function nuAutoLoad($class)
 {
-    if (strpos($class, 'CI_') !== 0)
-    {
-        @include_once(APPPATH . 'fixtures/' . $class . '.php');
-    }
+    @include_once(APPPATH . 'nucms/libraries/' . $class . '.php');
 }
-spl_autoload_register("autoLoadFixtures");
+spl_autoload_register("nuAutoLoad");
+$config['first_run'] = true;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +26,22 @@ spl_autoload_register("autoLoadFixtures");
 */
 $config['base_url'] = 'http://localhost/nucms';
 $config['base_url_301'] = 'http://localhost';
+
+
+/*
+|--------------------------------------------------------------------------
+| Modules locations
+|--------------------------------------------------------------------------
+|
+| These are the folders where your modules are located. You may define an
+| absolute path to the location or a relative path starting from the root
+| directory.
+|
+*/
+$config['modules_locations'] = array(
+    APPPATH.'nucms/modules/' => '../nucms/modules/',
+    APPPATH.'modules/' => '../modules/',
+);
 
 /*
 |--------------------------------------------------------------------------
@@ -104,7 +118,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------

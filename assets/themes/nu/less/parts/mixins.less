@@ -1,0 +1,60 @@
+// main file: ../style.less
+
+// =mixins
+//============================================================================*/
+.centerAbsolute(@top: 50%, @left: 50%) {
+    position: absolute;
+    top: @top;
+    left: @left;
+    transform: translate(-@left, -@top);
+    -moz-transform: translate(-@left, -@top);
+    -webkit-transform: translate(-@left, -@top);
+}
+
+.borderRadius(@size: 50%) {
+    -webkit-border-radius: @size;
+    -moz-border-radius: @size;
+    border-radius: @size;
+}
+
+.transition(@time: 0.5s, @item: All, @effect: ease) {
+    transition: @item @time @effect;
+    -webkit-transition: @item @time @effect;
+    -moz-transition: @item @time @effect;
+    -o-transition: @item @time @effect;
+}
+
+.placeholder(@font_weight: normal, @color: #d3d3d3, @font_size: 14px) {
+    *::-webkit-input-placeholder {
+        color: @color !important;
+        font-weight: @font_weight;
+        font-size: @font_size;
+    }
+    *:-moz-placeholder {
+        color: @color !important;
+        font-weight: @font_weight;
+        font-size: @font_size;
+    }
+    *::-moz-placeholder {
+        color: @color !important;
+        font-weight: @font_weight;
+        font-size: @font_size;
+    }
+    *:-ms-input-placeholder {
+        color: @color !important;
+        font-weight: @font_weight;
+        font-size: @font_size;
+    }
+}
+
+.boxShadow(@inset: ~'', @distance_x: 0, @distance_y: 0, @blur: 20px, @spread: 0, @color: none) {
+    -moz-box-shadow: @inset @distance_x @distance_y @blur @spread @color;
+    -webkit-box-shadow: @inset @distance_x @distance_y @blur @spread @color;
+    box-shadow: @inset @distance_x @distance_y @blur @spread @color;
+}
+
+.multipleColumn(@col: 1) {
+    -webkit-column-count: @col;
+    -moz-column-count: @col;
+    column-count: @col;
+}

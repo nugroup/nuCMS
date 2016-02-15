@@ -7,7 +7,9 @@ class MY_Controller extends MX_Controller
 {
     public function __construct()
     {
-        $this->db->query("SET NAMES 'utf8'");
+        if ($this->config->item('first_run')) {
+            $this->db->query("SET NAMES 'utf8'");
+        }
 
         // Load needed library
         $this->load->library('form_validation');
@@ -22,7 +24,7 @@ class MY_Controller extends MX_Controller
      * @param string $view
      * @param array $data
      */
-    public function render($view, $data)
+    public function render($view, $data, $return = false)
     {
         // Enable twig library and set config
         $this->load->library('twig', $this->config->item('twig_config'));
@@ -41,7 +43,11 @@ class MY_Controller extends MX_Controller
         }
 
         // Render twig view
-        $this->twig->display($view, $data);
+        if ($return) {
+            return $this->twig->render($view, $data);
+        } else {
+            $this->twig->display($view, $data);
+        }
     }
 
     /**
@@ -52,9 +58,44 @@ class MY_Controller extends MX_Controller
      */
     public function set_log($message, $level = 'error')
     {
-        $logMessage = $message.'<br>File: <b>'.__FILE__.'</b><br>Line: <b>'.__LINE__.'</b>'.lang('exc_info');
+        $logMessage = $message.'<br>File: <b>'.__FILE__.'</b><br>Line: <b>'.__LINE__.'</b>';
 
         log_message($level, $logMessage);
+    }
+
+    /**
+     * Transfer data from obj->{$fieldName} variable to obj
+     *
+     * @param array/object $data
+     * @return array/object
+     */
+    public function prepare_join_data($data, $fieldName)
+    {
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                if (isset($row->{$fieldName})) {
+                    unset($row->{$fieldName}->id);
+
+                    foreach ($row->{$fieldName} as $key => $value) {
+                        $row->{$key} = $value;
+                    }
+
+                    unset($row->{$fieldName});
+                }
+            }
+        } else {
+            if (isset($data->{$fieldName})) {
+                unset($data->{$fieldName}->id);
+
+                foreach ($data->{$fieldName} as $key => $value) {
+                    $data->{$key} = $value;
+                }
+
+                unset($data->{$fieldName});
+            }
+        }
+
+        return $data;
     }
 }
 

@@ -73,7 +73,6 @@ if( ! isset($_SERVER['REMOTE_ADDR']))
             }
         }
 	define('ENVIRONMENT', $env);
-//	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
 /*
  *---------------------------------------------------------------
@@ -118,7 +117,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
-	$system_path = 'system';
+	$system_path = 'vendor/codeigniter/framework/system';
 
 /*
  *---------------------------------------------------------------
