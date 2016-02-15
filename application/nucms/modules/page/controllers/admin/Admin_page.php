@@ -17,7 +17,7 @@ class Admin_page extends Backend_Controller
         // Load classes
         $this->load->model('page/page_model', 'page');
         $this->load->model('route/route_model', 'route');
-        $this->lang->load('page', $this->config->item('selected_lang'));
+        $this->lang->load('page/page', $this->config->item('selected_lang'));
     }
 
     /**
@@ -145,7 +145,7 @@ class Admin_page extends Backend_Controller
 
                 // Set informations
                 if ($insertedTranslate) {
-                    $this->session->set_flashdata('success', lang('language.alert.success.add'));
+                    $this->session->set_flashdata('success', lang('page.alert.success.add'));
                 }
 
                 // Redirect

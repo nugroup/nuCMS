@@ -7,7 +7,9 @@ class MY_Controller extends MX_Controller
 {
     public function __construct()
     {
-        $this->db->query("SET NAMES 'utf8'");
+        if ($this->config->item('first_run')) {
+            $this->db->query("SET NAMES 'utf8'");
+        }
 
         // Load needed library
         $this->load->library('form_validation');
@@ -22,7 +24,7 @@ class MY_Controller extends MX_Controller
      * @param string $view
      * @param array $data
      */
-    public function render($view, $data)
+    public function render($view, $data, $return = false)
     {
         // Enable twig library and set config
         $this->load->library('twig', $this->config->item('twig_config'));
@@ -41,7 +43,11 @@ class MY_Controller extends MX_Controller
         }
 
         // Render twig view
-        $this->twig->display($view, $data);
+        if ($return) {
+            return $this->twig->render($view, $data);
+        } else {
+            $this->twig->display($view, $data);
+        }
     }
 
     /**

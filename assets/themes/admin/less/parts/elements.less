@@ -259,10 +259,10 @@
 
 
 // ----- bootstrap custom forms group
+.control-label {
+    .txtUpper;
+}
 .form-horizontal {
-    .control-label {
-        .txtUpper;
-    }
     .form-group {
         min-height: 40px;
 
@@ -405,4 +405,32 @@ label {
     margin: 50px 0 0 0;
 }
 
-///
+// ----- panel
+.panel-group {
+    .panel {
+        .border-radius(0);
+    }
+}
+.panel {
+    background: none;
+}
+.panel-default {
+    border-color: @cLines;
+
+    >.panel-heading {
+        background: lighten(@cBack1, 10%);
+        color: @cBase1;
+        padding: 0;
+        .border-radius(0);
+
+        a {
+            padding: 10px 15px;
+            display: block;
+            color: @cBase1;
+            text-decoration: none;
+        }
+    }
+    .panel-body {
+        border-top: none !important;
+    }
+}

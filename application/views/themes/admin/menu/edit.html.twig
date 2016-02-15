@@ -10,7 +10,13 @@
 
     <div class="container">
 
-        {{ form_open(current_url(), {'id': 'menu-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+        {% include 'menu/toolbar.html.twig' %}
+
+    </div>
+
+    <div class="container">
+
+        {{ form_open(current_full_url(), {'id': 'menu-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
         <!-- margin -->
         <div class="clearfix baseMargin"></div>
@@ -39,21 +45,7 @@
         <div class="form-group">
             <div class="col-sm-2 col-sm-offset-2 control-label">{{ lang('menu.form.position') }}</div>
             <div class="col-sm-5">
-                <span class="btn-group nuDropdown dropAsSelect">
-                    <span data-toggle="dropdown" class="txtBig" aria-expanded="false">
-                        {{ attribute(config.menu.positions, menu.position) | default('--'~lang('text.choose')~'--') }}
-                        <i class="fa fa-angle-down"></i>
-                    </span>
-                    <ul class="dropdown-menu" style="display: none;">
-                        <li data-value=""><span>({{ lang('text.choose') }})</span></li>
-                        {% for key, value in config.menu.positions %}
-
-                            <li data-value="{{ key }}"><span>{{ value }}</span></li>
-
-                        {% endfor %}
-                    </ul>
-                    <input type="hidden" name="position" value="{{ menu.position }}">
-                </span>
+                {{ form_nu_dropdown({'name': 'position', 'required': 'required'}, config.menu.positions, menu.position) | raw }}
             </div>
         </div>
 
@@ -64,6 +56,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="col-xs-12 text-center">
+                    <a href="{{ admin_url('menu/delete') }}" rel="{{ menu.id }}" class="btn btn-red btn-margin-left btn-margin-right deleteRecord" data-confirmMsg="{{ lang('menu.text.confirm_delete') }}" data-redirectUrl="{{ admin_url('menu') }}"><i class="ion ion-android-delete tableActions-delete"></i>{{ lang('menu.text.delete') }}</a>
                     <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('text.save') }}</button>
                 </div>
             </div>
@@ -71,6 +64,167 @@
 
         {{ form_close() }}
 
+        {{ form_open(current_url(), {'id': 'menu-items-form', 'novalidate': 'novalidate'}) }}
+
+        <!-- menu items -->
+        <br><br>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="ion ion-link"></i> {{ lang('menu.type.static_url') }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="add_name_1" class="col-xs-12 control-label">{{ lang('menu.form.name') }}:</label>
+                                    <div class="col-xs-12">
+                                        {{ form_input({'name': 'name', 'class': 'form-control add_menu_item_1', 'id': 'add_name_1', 'required': 'required' }) }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="add_url_1" class="col-xs-12 control-label">{{ lang('menu.form.slug') }}:</label>
+                                    <div class="col-xs-12">
+                                        {{ form_input({'name': 'url', 'class': 'form-control add_menu_item_1', 'id': 'add_url_1', 'required': 'required' }) }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <button type="submit" class="btn btn-save menu_add" data-menu_type="1">{{ lang('text.add') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="ion ion-link"></i> {{ lang('menu.type.pages') }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="add_name_2" class="col-xs-12 control-label">{{ lang('menu.form.name') }}:</label>
+                                    <div class="col-xs-12">
+                                        {{ form_input({'name': 'name', 'class': 'form-control add_menu_item_2', 'id': 'add_name_2', 'required': 'required' }) }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        {{ form_nu_dropdown({'class': 'form-control add_menu_item_2', 'name': 'add_primary_key_2', 'required': 'required'}, pages_options) | raw }}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <button type="submit" class="btn btn-save menu_add" data-menu_type="2">{{ lang('text.add') }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-8">
+                <div id="menu-items">
+                    {{ menu_items_controller.lists(menu.id, locale) | raw }}
+                </div><!--/menu-items-->
+            </div>
+        </div>
+
+        {{ form_close() }}
+
     </div>
+
+{% endblock %}
+
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/jquery.mjs.nestedSortable.js') }}"></script>
+    <script>
+
+        // -- run nested sortable after load
+        runNestedSortable('{{ admin_url('menu-items/save-sort') }}');
+
+        // -- add menu item
+        $(document).on('click', '.menu_add', function() {
+
+            var menuType = parseInt($(this).attr('data-menu_type'));
+            var postData = '&data[type]='+menuType;
+
+            $('.add_menu_item_'+menuType).each(function(){
+                var key = $(this).attr('name').toString();
+                var value = $(this).val().toString();
+
+                if(value !== '') {
+                    postData += '&data[' + key + ']=' + value;
+                }
+            });
+
+            $.post('{{ admin_url('menu-items/add/')~menu.id~'?locale='~locale }}', postData, function (response) {
+                console.log(response);
+                if (parseInt(response.result) === 1) {
+                    $("#menu-items").load('{{ admin_url('menu-items/lists/'~menu.id~'/'~locale) }}', function() {
+                        $('#menu-items-form input').val('');
+                        runNestedSortable('{{ admin_url('menu-items/save-sort') }}');
+                    });
+                }
+            });
+
+            return false;
+
+        });
+
+        // -- save menu item
+        $(document).on('click', '.menu_save', function() {
+
+            var menuType = parseInt($(this).attr('data-menu_type'));
+            var idItem = parseInt($(this).attr('data-id'));
+            var postData = '';
+
+            $('.menu_item_'+idItem).each(function(){
+                var key = $(this).attr('name').toString();
+                var value = $(this).val().toString();
+
+                if(value !== '') {
+                    postData += '&data[' + key + ']=' + value;
+                }
+            });
+
+            $.post("{{ admin_url('menu-items/save/') }}"+idItem, postData, function(response) {
+                if (parseInt(response.result) === 1) { 
+                    $('#item_'+idItem+' .menu_item_name').html($('.menu_item_'+idItem+'[name="name"]').val());
+                    $('#menu_content_'+idItem).slideUp();
+                }
+            });
+
+            return false;
+
+        });
+
+        // -- toggle menu item
+        $(document).on('click', '.menu-items .toggle', function() {
+
+            var contentId = $(this).attr('data-contentId');
+            $(contentId).slideToggle();
+
+        });
+
+    </script>
 
 {% endblock %}

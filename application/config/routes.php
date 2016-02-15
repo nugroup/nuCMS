@@ -50,17 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-$route['admin/([a-zA-Z_-]+)_([a-zA-Z_-]+)/(.+)'] = '$1/admin/admin_$1_$2/$3';
-$route['admin/([a-zA-Z_-]+)_([a-zA-Z_-]+)'] = '$1/admin/admin_$1_$2/index';
-$route['admin/([a-zA-Z_-]+)/(.+)'] = '$1/admin/admin_$1/$2';
-$route['admin/([a-zA-Z_-]+)'] = '$1/admin/admin_$1/index';
-$route['admin'] = "main/admin/admin_main";
+// nucms routes
+include(APPPATH.'nucms/config/routes.php');
 
-// dynamic routes genereted by routes_model
-if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {
-    include_once APPPATH . 'cache/dynamic_routes.php';
-}
+// public routes
+
 
 $route['default_controller'] = 'main/homepage';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;

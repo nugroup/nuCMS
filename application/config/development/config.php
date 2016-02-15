@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+function nuAutoLoad($class)
+{
+    @include_once(APPPATH . 'nucms/libraries/' . $class . '.php');
+}
+spl_autoload_register("nuAutoLoad");
+$config['first_run'] = true;
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -19,6 +26,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['base_url'] = 'http://localhost/nucms';
 $config['base_url_301'] = 'http://localhost';
+
+
+/*
+|--------------------------------------------------------------------------
+| Modules locations
+|--------------------------------------------------------------------------
+|
+| These are the folders where your modules are located. You may define an
+| absolute path to the location or a relative path starting from the root
+| directory.
+|
+*/
+$config['modules_locations'] = array(
+    APPPATH.'nucms/modules/' => '../nucms/modules/',
+    APPPATH.'modules/' => '../modules/',
+);
 
 /*
 |--------------------------------------------------------------------------

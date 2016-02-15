@@ -86,3 +86,27 @@ function changeBoolean(actionUrl, fieldValue, fieldName) {
     });
 
 }
+
+
+/**
+ * Run nested sortable
+ *
+ * @param {string} actionUrl
+ */
+function runNestedSortable(actionUrl) {
+
+    // Sortable
+    $('.menu-items').nestedSortable({
+        handle: 'div.handler',
+        listType: 'ol',
+        items: 'li',
+        helper: 'clone',
+        toleranceElement: '> div',
+        placeholder: 'sortable-placeholder',
+        relocate: function () {
+            var oSortable = $('.menu-items').nestedSortable('toArray');
+            $.post(actionUrl, {sortable: oSortable}, function (data) {});
+        }
+    });
+
+}

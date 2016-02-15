@@ -65,15 +65,10 @@ class Admin_menu extends Backend_Controller
      */
     public function edit($id)
     {
-        $menu = $this->menu->get($id);
-        if (!$menu) {
-            show_404();
-        }
-
         // If post is send
         if ($this->input->post()) {
 
-            $result = $this->menu->from_form(NULL, [], array('id' => $id))->update();
+            $result = $this->menu->from_form(NULL, NULL, array('id' => $id))->update();
 
             if ($result) {
                 // Set informations
@@ -84,10 +79,27 @@ class Admin_menu extends Backend_Controller
             }
         }
 
+        $menu = $this->menu->get($id);
+        if (!$menu) {
+            show_404();
+        }
+
+        $this->load->module('menu/admin/admin_menu_items'); // Load menu_items controller
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+
+        // Get pages list
+        $pages = $this->page_translations
+            ->where('locale', $locale)
+            ->get_all();
+
         // Set view data
         $this->data['menu'] = $menu;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
+        $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
+        $this->data['locale'] = $locale;
+        $this->data['menu_items_controller'] = $this->admin_menu_items;
+        $this->data['pages_options'] = obj_to_options_array($pages, 'id', 'title');
 
         // Load the view
         $this->render('menu/edit', $this->data);

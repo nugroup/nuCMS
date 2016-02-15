@@ -34,7 +34,9 @@ class Backend_Controller extends MY_Controller
         }
 
         // Get languages list
-        $this->getSystemLanguagesList();
+        if ($this->config->item('first_run')) {
+            $this->getSystemLanguagesList();
+        }
 
         // Url exceptions
         $exception_uris = array(
@@ -52,6 +54,8 @@ class Backend_Controller extends MY_Controller
 
         // Get nublox templatet into variable
         $this->data['nublox'] = $this->load->view('nublox/nu-blox.tpl.php', [], true);
+
+        $this->config->set_item('first_run', false);
     }
 
     /**

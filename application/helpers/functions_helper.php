@@ -1,6 +1,37 @@
 <?php
 
-if ( ! function_exists('extension')) 
+if ( ! function_exists('dump')) 
+{
+    /**
+     * Dump helper. Functions to dump variables to the screen, in a nicley formatted manner.
+     *
+     * @param mixed $var
+     * @param string $label
+     * @param boolean $echo
+     * @return string
+     */
+    function dump ($var, $label = 'Dump', $echo = TRUE)
+    {
+        // Store dump in variable 
+        ob_start();
+        print_r($var);
+        $output = ob_get_clean();
+
+        // Add formatting
+        $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
+        $output = '<pre style="background: #FFFEEF; color: #000; border: 1px dotted #000; padding: 10px; margin: 10px 0; text-align: left;">' . $label . ' => ' . $output . '</pre>';
+
+        // Output
+        if ($echo == TRUE) {
+            echo $output;
+        }
+        else {
+            return $output;
+        }
+    }
+}
+
+if ( ! function_exists('extension'))
 {
     /**
      * Get extension from string
@@ -92,5 +123,81 @@ if ( ! function_exists('current_full_url'))
 
         $url = $CI->config->site_url($CI->uri->uri_string());
         return $_SERVER['QUERY_STRING'] ? $url.'?'.$_SERVER['QUERY_STRING'] : $url;
+    }
+}
+
+if ( ! function_exists('obj_to_options_array'))
+{
+    /**
+     * Prepare options for form select from object
+     *
+     * @param object $stdObj
+     * @param string $primary_key
+     * @param string $value_key
+     * @return array
+     */
+    function obj_to_options_array($stdObj, $primary_key, $value_key)
+    {
+        $result = array('' => lang('text.choose'));
+
+        if($stdObj) {
+            foreach($stdObj as $obj) {
+                $result[$obj->{$primary_key}] = $obj->{$value_key};
+            }
+        }
+
+        return $result;
+    }
+}
+
+if ( ! function_exists('form_nu_dropdown'))
+{
+    /**
+     * Generate select dropdown in nuCMS style
+     *
+     * @param array $data
+     * @param array $options
+     * @param int $selected
+     * @return string
+     */
+    function form_nu_dropdown($data, $options, $selected = null)
+    {
+        $result = '';
+
+        if ($selected != null) {
+            $selectedText = $options[$selected];
+            $hiddenValue = $selected;
+        } else {
+            $selectedText = lang('text.choose');
+            $hiddenValue = '';
+        }
+
+        // class
+        if (isset($data['class'])) {
+            $hiddenClass = ' class="'.$data['class'].'"';
+        } else {
+            $hiddenClass = '';
+        }
+
+        // required
+        if (isset($data['required'])) {
+            $hiddenRequired = ' required="'.$data['required'].'"';
+        } else {
+            $hiddenRequired = '';
+        }
+
+        $result .= '<span class="btn-group nuDropdown dropAsSelect">';
+            $result .= '<span data-toggle="dropdown" class="txtBig" aria-expanded="false">';
+                $result .= $selectedText.'<i class="fa fa-angle-down"></i>';
+            $result .= '</span>';
+            $result .= '<ul class="dropdown-menu" style="display: none;">';
+                foreach ($options as $key => $value) {
+                    $result .= '<li data-value="'.$key.'"><span>'.$value.'</span></li>';
+                }
+            $result .= '</ul>';
+            $result .= '<input type="hidden" name="'.$data['name'].'"'.$hiddenClass.' value="'.$hiddenValue.'"'.$hiddenRequired.'>';
+        $result .= '</span>';
+
+        return $result;
     }
 }
