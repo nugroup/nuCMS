@@ -14,6 +14,7 @@ $lang['text.choose'] = 'wybierz';
 $lang['text.delete'] = 'usuń';
 $lang['text.add'] = 'Dodaj';
 $lang['text.save'] = 'Zapisz';
+$lang['text.cancel'] = 'Anuluj';
 
 
 /* menu

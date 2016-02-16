@@ -146,6 +146,7 @@
     transition: all 0.3s;
     outline: none;
     line-height: 15px;
+    outline: none;
     .txtUpper;
 
     &:link{
@@ -158,10 +159,14 @@
     }
 
     // more sizes
-    &.btn-sm { height: 35px; }
+    &.btn-sm {
+        height: 35px;
+        padding: 10px 30px;
+    }
     &.btn-xs { height: 25px; }
 
     // color settings
+    &.btn-default{ .btnStyle(lighten(@cBack2, 10%)); }
     &.btn-save   { .btnStyle(@cGreen); color: @cBase1; }
     &.btn-blue   { .btnStyle(@cBlue); }
     &.btn-green  { .btnStyle(@cGreen); }

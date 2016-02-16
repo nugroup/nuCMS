@@ -3,19 +3,18 @@
     'use strict';
 
     // ----- extra bootstrap dropdown
-    $('.nuDropdown')
-    .on('show.bs.dropdown', function(e){
+    $(document).on('show.bs.dropdown', '.nuDropdown', function(e) {
         var list = $(this).find('.dropdown-menu').first().stop(true, true);
         list.slideDown(200);
-    })
-    .on('hide.bs.dropdown', function(e){
+    });
+    $(document).on('hide.bs.dropdown', '.nuDropdown', function(e) {
         var list = $(this).find('.dropdown-menu').first().stop(true, true);
         list.slideUp(200);
     });
 
-
     // ----- bootstrap dropdown as select
-    $('.dropAsSelect').find('.dropdown-menu').children('li').on('click', function() {
+    $(document).on('click', '.dropAsSelect .dropdown-menu li', function() {
+
         var value = $(this).attr('data-value');
         var title = $(this).find('span').html();
         var span = $(this).closest('.dropAsSelect').find('span[data-toggle]');
@@ -23,8 +22,8 @@
         var input = $(this).closest('.dropAsSelect').find('input');
         input.val(value);
         span.html(title+' ').append(icon);
-    });
 
+    });
 
     // ----- bootstrap big input group focus
     $('.bigInput input')
@@ -49,9 +48,11 @@
 
 
     // ----- show delete confirm modal window
-    $('.deleteRecord').click(function(){
+    $(document).on('click', '.deleteRecord', function() {
+
         showConfirmModal($(this));
         return false;
+
     });
 
 

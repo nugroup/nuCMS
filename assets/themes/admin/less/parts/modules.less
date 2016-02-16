@@ -1,0 +1,106 @@
+// main: nu.less
+
+// ----- page
+.nuModuleEdit {
+    background: @cBase1;
+    padding-top: @baseMargin;
+    padding-bottom: @baseMargin;
+}
+
+
+// ----- menu
+.menu-items {
+    list-style: none;
+    padding: 0;
+
+    > li {
+        color: @cBase1;
+
+        a {
+            color: @cBase1;
+        }
+        .handler {
+            font-size: 15px;
+            background: lighten(@cBack1, 5%);
+            display: block;
+            padding: 16px 20px;
+            margin: 0 0 1px 0;
+            cursor: move;
+            position: relative;
+            .border-radius(3px);
+
+            i {
+                &.ico {
+                    width: 15px;
+                    margin: 0 20px 0 0;
+                    color: @cBase2;
+                }
+            }
+            .icons {
+                position: absolute;
+                right: 10px;
+                top: 8px;
+            }
+        }
+        .content {
+            display: none;
+            margin: -10px 0 10px 0;
+            border: 1px solid @cLines;
+            border-top: none;
+            padding: 15px;
+        }
+    }
+    ol {
+        list-style: none;
+    }
+
+    .tableActions {
+
+        .icos(@clr,@size) {
+            position: relative;
+            margin-left: 5px;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            font-size: @size;
+            color: @clr;
+
+            &:hover {
+                &::after {
+                    width: inherit;
+                    height: inherit;
+                    background: fade(@clr, 0);
+                }
+            }
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+                width: 0;
+                height: 0;
+                border-radius: 100px;
+                border: 1px solid @clr;
+                background: @clr;
+                transition: all 0.2s;
+            }
+        }
+
+        &-edit { // use it on '<i>' as class: tableActions-edit
+            .icos(@cGreen,14px);
+        }
+
+        &-delete { // use it on '<i>' as class: tableActions-delete
+            .icos(@cRed,14px);
+        }
+
+    }
+}
+.addItem {
+    display: none;
+}

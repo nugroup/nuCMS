@@ -16,6 +16,8 @@ $lang['menu.subnav.edit'] = 'Edytuj menu';
 $lang['menu.text.confirm_delete'] = 'Czy na pewno chcesz usunąć to menu?';
 $lang['menu.text.no_records'] = 'Nie znaleziono żadnych menu';
 $lang['menu.text.delete'] = 'Usuń menu';
+$lang['menu.text.add_slug'] = 'Dodaj link';
+$lang['menu.text.add_page'] = 'Dodaj stronę';
 $lang['menu.item.text.confirm_delete'] = 'Czy na pewno chcesz usunąć ten element z menu';
 
 /* list
@@ -40,6 +42,7 @@ $lang['menu.form.position'] = 'Pozycja';
 $lang['menu.form.active'] = 'Aktywność';
 $lang['menu.form.slug'] = 'Adres URL';
 $lang['menu.form.locale'] = 'Język';
+$lang['menu.form.page'] = 'Strona';
 
 /* types
 ============================================================================= */

@@ -40,13 +40,8 @@ class Admin_menu_items extends Backend_Controller
 
         $menu_items_parents = $this->menu_items->prepare_parent_array($menu_items);
 
-        // Get pages list
-        $pages = $this->page_translations
-            ->where('locale', $locale)
-            ->get_all();
-
         // Set view data
-        $data['menu_items'] = generate_menu_tree($menu_items_parents, 0, [], 100, 0, ['pages' => obj_to_options_array($pages, 'id', 'title')]);
+        $data['menu_items'] = generate_menu_tree($menu_items_parents, 0, [], 100, 0);
 
         if ($this->input->is_ajax_request()) {
             $this->render('menu/items/index', $data);
@@ -57,13 +52,16 @@ class Admin_menu_items extends Backend_Controller
 
     /**
      * Add new menu item
+     * 
+     * @param int $menu_id
+     * @return boolean
      */
     public function add($menu_id)
     {
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
 
         // Clean data
-        $insertData = $this->security->xss_clean($this->input->post('data'));
+        $insertData = $this->security->xss_clean($this->input->post());
         $insertData['menu_id'] = (int) $menu_id;
         $insertData['locale'] = $locale;
 
@@ -82,14 +80,42 @@ class Admin_menu_items extends Backend_Controller
     }
 
     /**
+     * Edit menu item view (AJAX)
+     *
+     * @param int $id
+     * @return boolean/html
+     */
+    public function edit($id, $localeCode)
+    {
+        $locale = ($localeCode) ? $localeCode : config_item('selected_locale');
+
+        $menuItem = $this->menu_items->get($id);
+        if (!$menuItem) {
+            return false;
+        }
+
+        // Get pages list
+        $pages = $this->page_translations
+            ->where('locale', $locale)
+            ->get_all();
+
+        $this->render('menu/items/edit', [
+            'menu_item' => $menuItem,
+            'pages_options' => obj_to_options_array($pages, 'id', 'title'),
+        ]);
+
+        return false;
+    }
+
+    /**
      * Save menu item action (AJAX)
-     * 
+     *
      * @param type $id
      * @return boolean
      */
     public function save($id)
     {
-        $data = $this->security->xss_clean($this->input->post('data'));
+        $data = $this->security->xss_clean($this->input->post());
 
         // Update
         if ($this->menu_items->update($data, $id)) {
