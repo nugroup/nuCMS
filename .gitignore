@@ -1,6 +1,5 @@
 /.git/
 application/logs/*
-!/logs/index.html
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
