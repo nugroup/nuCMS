@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Show modal with confirm button
  * 
@@ -93,10 +95,10 @@ function changeBoolean(actionUrl, fieldValue, fieldName) {
  *
  * @param {string} actionUrl
  */
-function runNestedSortable(actionUrl) {
+function runNestedSortable(element, actionUrl) {
 
     // Sortable
-    $('.menu-items').nestedSortable({
+    $(element).nestedSortable({
         handle: 'div.handler',
         listType: 'ol',
         items: 'li',
@@ -104,9 +106,19 @@ function runNestedSortable(actionUrl) {
         toleranceElement: '> div',
         placeholder: 'sortable-placeholder',
         relocate: function () {
-            var oSortable = $('.menu-items').nestedSortable('toArray');
-            $.post(actionUrl, {sortable: oSortable}, function (data) {});
+            var oSortable = $(element).nestedSortable('serialize');
+
+            if (actionUrl.toString() !== '') {
+                $.post(actionUrl, {sortable: oSortable}, function (data) {});
+            } else {
+                $('#nested_order').val(oSortable);
+            }
         }
     });
+
+    var orderInput = $('#nested_order');
+    if(orderInput.length <= 0) {
+        $(element).append('<input type="hidden" name="nested_order" id="nested_order" value="">');
+    }
 
 }

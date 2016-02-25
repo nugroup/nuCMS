@@ -51,11 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // nucms routes
-include(APPPATH.'nucms/config/routes.php');
+include_once NUPATH.'/config/routes.php';
 
 // public routes
+// -- here you cana create own routes
 
-
-$route['default_controller'] = 'main/homepage';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;

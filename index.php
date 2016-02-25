@@ -1,9 +1,23 @@
 <?php
+/*
+ *---------------------------------------------------------------
+ * Default timezone
+ *---------------------------------------------------------------
+ *
+ * This variable contain the default timezone.
+ */
 date_default_timezone_set('Europe/Amsterdam');
-if( ! isset($_SERVER['REMOTE_ADDR']))
-{
-    $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-}
+
+/*
+ *---------------------------------------------------------------
+ * nuCMS FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "nuCMS" folder.
+ * Include the path if the folder is not in the same directory
+ * as this file.
+ */
+define('NUPATH', __DIR__.'/nucms');
 
 /**
  * CodeIgniter

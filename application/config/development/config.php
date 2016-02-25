@@ -1,11 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function nuAutoLoad($class)
-{
-    @include_once(APPPATH . 'nucms/libraries/' . $class . '.php');
-}
-spl_autoload_register("nuAutoLoad");
+/*
+|--------------------------------------------------------------------------
+| Modules locations
+|--------------------------------------------------------------------------
+|
+| Variables with we need to set to true durning first run
+| (we can use this config variable to disable action after run Modules in Modules)
+|
+*/
 $config['first_run'] = true;
 
 /*
@@ -39,7 +43,7 @@ $config['base_url_301'] = 'http://localhost';
 |
 */
 $config['modules_locations'] = array(
-    APPPATH.'nucms/modules/' => '../nucms/modules/',
+    APPPATH.'../nucms/modules/' => '../../nucms/modules/',
     APPPATH.'modules/' => '../modules/',
 );
 
