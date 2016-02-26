@@ -188,7 +188,7 @@ if ( ! function_exists('form_nu_dropdown'))
 
         $result .= '<span class="btn-group nuDropdown dropAsSelect">';
             $result .= '<span data-toggle="dropdown" class="txtBig" aria-expanded="false">';
-                $result .= $selectedText.'<i class="fa fa-angle-down"></i>';
+                $result .= '<span data-name="'.$data['name'].'">'.$selectedText.'</span><i class="fa fa-angle-down"></i>';
             $result .= '</span>';
             $result .= '<ul class="dropdown-menu" style="display: none;">';
                 foreach ($options as $key => $value) {

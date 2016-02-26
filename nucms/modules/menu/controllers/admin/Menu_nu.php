@@ -17,11 +17,15 @@ class Menu_nu extends Backend_Controller
         // Load classes
         $this->lang->load('menu', config_item('selected_lang'));
         $this->config->load('menu/menu', TRUE);
+        $this->load->helper('menu/menu');
         $this->load->model('menu/menu_model', 'menu');
         $this->load->model('menu/menu_items_model', 'menu_items');
         $this->load->model('page/page_translations_model', 'page_translations');
     }
 
+    /**
+     * Menus list
+     */
     public function index()
     {
         // Set page
@@ -67,8 +71,32 @@ class Menu_nu extends Backend_Controller
      */
     public function edit($id)
     {
+        $menu = $this->menu->get($id);
+        if (!$menu) {
+            show_404();
+        }
+
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+
+        // Get max menu items id
+        $menuItemsMaxId = $this->menu_items->get_max_id();
+
         // If post is send
         if ($this->input->post()) {
+            // Save all menu items
+            if ($this->input->post('menu_items')) {
+                foreach ($this->input->post('menu_items') as $item) {
+                    $data = $item;
+                    $data['locale'] = $locale;
+                    $data['menu_id'] = $id;
+
+                    if ((int) $item['id'] > $menuItemsMaxId) {
+                        $this->menu_items->insert($data);
+                    } else {
+                        $this->menu_items->update($data, $item['id']);
+                    }
+                }
+            }
 
             $result = $this->menu->from_form(NULL, NULL, array('id' => $id))->update();
 
@@ -77,6 +105,13 @@ class Menu_nu extends Backend_Controller
             parse_str($this->input->post('nested_order'), $orders);
             if (isset($orders['item'])) {
                 $this->menu_items->save_sort($orders['item']);
+            }
+
+            // Delete items
+            if ($this->input->post('menu_items_delete')) {
+                foreach ($this->input->post('menu_items_delete') as $item) {
+                    $this->menu_items->delete($item);
+                }
             }
 
             if ($result !== '') {
@@ -88,18 +123,19 @@ class Menu_nu extends Backend_Controller
             }
         }
 
-        $menu = $this->menu->get($id);
-        if (!$menu) {
-            show_404();
-        }
-
         $this->load->module('menu/admin/menu_items_nu'); // Load menu_items controller
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
 
         // Get pages list
         $pages = $this->page_translations
             ->where('locale', $locale)
             ->get_all();
+
+        // Get menu items
+        $menu_items = $this->menu_items
+            ->where(['menu_id' => $id, 'locale' => $locale])
+            ->order_by('sort')
+            ->get_all();
+        $menu_items_parents = $this->menu_items->prepare_parent_array($menu_items);
 
         // Set view data
         $this->data['menu'] = $menu;
@@ -107,7 +143,8 @@ class Menu_nu extends Backend_Controller
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
         $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
         $this->data['locale'] = $locale;
-        $this->data['menu_items_controller'] = $this->menu_items_nu;
+        $this->data['menu_items'] = generate_menu_tree($menu_items_parents, 0, [], 100, 0);
+        $this->data['menu_items_max_id'] = $menuItemsMaxId;
         $this->data['pages_options'] = obj_to_options_array($pages, 'id', 'title');
 
         // Load the view

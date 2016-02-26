@@ -2,4 +2,19 @@
 
     {{ menu_items | raw }}
 
+    <!-- ghost element for insert new element with jquery -->
+    <li id="item_0" data-id="0" class="ghost" style="display: none;">
+        <div class="handler ui-sortable-handle">
+            <i class="fa fa-link ico"></i>
+            <span class="menu_item_name">adsfads</span>
+            <div class="icons">
+                <a href="javascript: void(0)" rel="0" class="menuEdit">
+                    <i class="ion ion-android-create tableActions-edit"></i>
+                </a>
+                <a rel="0" class="menuDelete">
+                    <i class="ion ion-android-delete tableActions-delete"></i>
+                </a>
+            </div>
+        </div>
+    </li>
 </ol>

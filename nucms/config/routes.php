@@ -21,6 +21,11 @@ foreach ($config['modules_ok'] as $moduleName => $module) {
     }
 
 }
+//
+//echo '<pre>';
+//print_r($route);
+//echo '</pre>';
+//die();
 
 // dynamic routes genereted by routes_model
 if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {

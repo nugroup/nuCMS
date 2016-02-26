@@ -24,11 +24,21 @@ if ( ! function_exists('generate_menu_tree'))
         {
             foreach ($items[$id_parent] as $item)
             {
+                $dataAttr = '';
+                $tmpItem = clone $item;
+                unset($tmpItem->sort);
+                unset($tmpItem->locale);
+                unset($tmpItem->menu_id);
+                unset($tmpItem->id_parent);
+                foreach ($tmpItem as $key => $value) {
+                    $dataAttr .= ' data-'.$key.'="'.$value.'"';
+                }
+
                 // Items with children
                 if(isset($items[$item->id]) && count($items[$item->id]) > 0)
                 {
-                    $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
-                        $result .= generate_menu_item_handler($item, $data_arrays);
+                    $result .= '<li id="item_' . $item->id. '"'.$dataAttr.'>' . PHP_EOL;
+                        $result .= generate_menu_item_handler($item);
                         $result .= '<ol class="subtree">' . PHP_EOL;
                             $result .= generate_menu_tree($items, $item->id, $active_path, $max_level, $level + 1, $data_arrays);
                         $result .= '</ol>' . PHP_EOL;
@@ -37,7 +47,7 @@ if ( ! function_exists('generate_menu_tree'))
                 // Items without children
                 else
                 {
-                    $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
+                    $result .= '<li id="item_' . $item->id. '"'.$dataAttr.'>' . PHP_EOL;
                         $result .= generate_menu_item_handler($item, $data_arrays);
                     $result .= '</li>' . PHP_EOL;
                 }
@@ -48,9 +58,15 @@ if ( ! function_exists('generate_menu_tree'))
     }
 }
 
-if ( ! function_exists('generate_menu_item_content'))
+if ( ! function_exists('generate_menu_item_handler'))
 {
-    function generate_menu_item_handler($item, $data_arrays)
+    /**
+     * Generate menu item handler for nested sortable
+     *
+     * @param object $item
+     * @return string
+     */
+    function generate_menu_item_handler($item)
     {
         $icons = array(
             1 => '<i class="fa fa-link ico"></i>',
@@ -65,7 +81,7 @@ if ( ! function_exists('generate_menu_item_content'))
 
             $result .= '<div class="icons">';
                 $result .= '<a href="javascript: void(0)" rel="'.$item->id.'" class="menuEdit"><i class="ion ion-android-create tableActions-edit"></i></a>';
-                $result .= '<a rel="'.$item->id.'" href="'.admin_url('menu-items/delete').'" class="deleteRecord" data-toggle="tooltip" data-placement="top" title="" data-confirmMsg="'.lang('menu.item.text.confirm_delete').'">';
+                $result .= '<a rel="'.$item->id.'" class="menuDelete">';
                     $result .= '<i class="ion ion-android-delete tableActions-delete"></i>';
                 $result .= '</a>';
             $result .= '</div>';

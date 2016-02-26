@@ -21,94 +21,21 @@
             <div class="col-sm-6">
 
                 <div id="menu-items">
-                    {{ menu_items_controller.lists(menu.id, locale) | raw }}
+                    {% include 'menu/items/index.html.twig' %}
                 </div><!--/menu-items-->
 
             </div>
             <div class="col-sm-6">
 
                 <div class="editBox">
-                    <!-- add item buttons -->
-                    <div class="addButtons text-right">
-                        <button class="btn btn-orange" type="button" data-type="1">{{ lang('menu.text.add_slug') }}</button>
-                        <button class="btn btn-orange" type="button" data-type="2">{{ lang('menu.text.add_page') }}</button>
-                    </div>
 
                     <div class="addItemsInputs form-horizontal">
-
-                        <!-- add item type 1 -->
-                        <div class="addItem type1">
-
-                            {{ form_open(current_full_url(), {'id': 'menu-add-form-1', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
-
-                                <div class="actionsButtons text-right">
-                                    <button type="button" class="btn btn-default btn-sm closeAddItem">{{ lang('text.cancel') }}</button>
-                                    <button type="button" class="btn btn-save btn-sm menuAdd" data-menu_type="1">{{ lang('text.add') }}</button>
-                                </div>
-
-                                <!-- margin -->
-                                <div class="clearfix baseMargin"></div>
-
-                                <div class="form-group">
-                                    <label for="add_name_1" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
-                                    <div class="col-sm-9">
-                                        {{ form_input({'name': 'name', 'class': 'form-control add_menu_item_1', 'id': 'add_name_1', 'required': 'required' }) }}
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="add_url_1" class="col-sm-3 control-label">{{ lang('menu.form.slug') }}:</label>
-                                    <div class="col-sm-9">
-                                        {{ form_input({'name': 'url', 'class': 'form-control add_menu_item_1', 'id': 'add_url_1', 'required': 'required' }) }}
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                                {{ form_hidden('type', 1) }}
-
-                            {{ form_close() }}
-
-                        </div>
-
-                        <!-- add item type 2 -->
-                        <div class="addItem type2">
-
-                            {{ form_open(current_full_url(), {'id': 'menu-add-form-2', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
-
-                                <div class="actionsButtons text-right">
-                                    <button type="button" class="btn btn-default btn-sm closeAddItem">{{ lang('text.cancel') }}</button>
-                                    <button type="button" class="btn btn-save btn-sm menuAdd" data-menu_type="2">{{ lang('text.add') }}</button>
-                                </div>
-
-                                <!-- margin -->
-                                <div class="clearfix baseMargin"></div>
-
-                                <div class="form-group">
-                                    <label for="add_name_2" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
-                                    <div class="col-sm-9">
-                                        {{ form_input({'name': 'name', 'class': 'form-control add_menu_item_2', 'id': 'add_name_2', 'required': 'required' }) }}
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="add_url_1" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
-                                    <div class="col-sm-9">
-                                        {{ form_nu_dropdown({'class': 'form-control add_menu_item_2', 'name': 'primary_key', 'required': 'required'}, pages_options) | raw }}
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                                {{ form_hidden('type', 2) }}
-
-                            {{ form_close() }}
-
-                        </div>
-
+                        {% include 'menu/items/add.html.twig' %}
                     </div>
 
-                    <div class="editItemInputs form-horizontal"></div>
+                    <div class="editItemInputs form-horizontal">
+                        {% include 'menu/items/edit.html.twig' %}
+                    </div><!--/.editItemInputs-->
                 </div>
 
                 <!-- margin -->
@@ -152,12 +79,13 @@
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-right">
                             <a href="{{ admin_url('menu/delete') }}" rel="{{ menu.id }}" class="btn btn-red btn-margin-left btn-margin-right deleteRecord" data-confirmMsg="{{ lang('menu.text.confirm_delete') }}" data-redirectUrl="{{ admin_url('menu') }}"><i class="ion ion-android-delete tableActions-delete"></i>{{ lang('menu.text.delete') }}</a>
-                            <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('text.save') }}</button>
+                            <button id="edit-menu-submit" class="btn btn-save" type="button"><i class="ion ion-checkmark"></i>{{ lang('text.save') }}</button>
                         </div>
                     </div>
                 </div>
 
                 <input type="hidden" name="nested_order" id="nested_order" value="">
+                <input type="hidden" id="menu_items_max_id" value="{{ menu_items_max_id }}">
 
                 {{ form_close() }}
 
@@ -183,80 +111,168 @@
         runNestedSortable('.menu-items', '');
 
         // -- add menu item
-        $(document).on('click', '.menuAdd', function() {
+        $(document).on('click', '.menuAdd', function () {
 
             var type = parseInt($(this).attr('data-menu_type'));
-            var data = $('#menu-add-form-'+type).serialize();
+            var dataArray = $('#menu-add-form-' + type).serializeArray();
+            var maxId = parseInt($('#menu_items_max_id').val());
+            var newId = maxId+1;
+            var typeIco = $('#menu-add-form-' + type).find('*[name="type_ico"]').val().toString();
 
-            $.post('{{ admin_url('menu/menu-items/add/')~menu.id~'?locale='~locale }}', data, function (response) {
+            // Copy item element
+            var newItem = $('.menu-items').children('li').last().clone().insertBefore('.menu-items .ghost');
+            newItem.find('.menu_item_name').html(dataArray[0].value);
 
-                if (parseInt(response.result) === 1) {
+            // Remove data from copy
+            var oldData = $(newItem).data(), i;
+            var keys = $.map(oldData , function(value, key) { return key; });
+            for(i = 0; i < keys.length; i++) {
+                newItem.removeAttr("data-" + keys[i]);
+            }
+            newItem.removeData();
 
-                    $("#menu-items").load('{{ admin_url('menu-items/lists/'~menu.id~'/'~locale) }}', function() {
-                        $('.addItem').hide();
-                        $('.addButtons').show();
-                        runNestedSortable('.menu-items', '');
-                    });
-
+            // Add new data
+            newItem.attr('data-id', 0);
+            newItem.data('id', newId);
+            newItem.attr('id', 'item_'+(maxId+1));
+            for (row in dataArray) {
+                if (dataArray[row].name.toString() !== 'type_ico') {
+                    newItem.attr('data-'+dataArray[row].name, dataArray[row].value);
+                    newItem.data(dataArray[row].name, dataArray[row].value);
                 }
+            }
 
-            });
+            // Set new id, icon
+            newItem.find('.menuEdit').attr('rel', newId);
+            newItem.find('.menuDelete').attr('rel', newId);
+            newItem.find('.ico').attr('class', '').addClass(typeIco+' ico');
+
+            // Remove children
+            newItem.children('ol').remove();
+            newItem.removeClass('ghost');
+            newItem.show();
+            runNestedSortable('.menu-items', '');
+
+            // Change next id number
+            $('#menu_items_max_id').val(newId);
+
+            $('.addItem').hide();
+            $('.addButtons').show();
 
             return false;
 
         });
 
+        // -- delete menu item
+        $(document).on('click', '.menuDelete', function () {
+
+            var itemId = parseInt($(this).attr('rel'));
+            $('#item_'+itemId).remove();
+            $('#menu-edit-form').append('<input type="hidden" name="menu_items_delete['+itemId+']" value="'+itemId+'">');
+
+            // Get sort
+            var oSortable = $('.menu-items').nestedSortable('serialize');
+            $('#nested_order').val(oSortable);
+
+        });
+
         // -- save menu item
-        $(document).on('click', '.menuSave', function() {
+        $(document).on('click', '.menuSave', function () {
 
-            var data = $('#menu-item-edit-form').serialize();
-            var idItem = parseInt($(this).attr('data-id'));
+            var type = parseInt($(this).attr('data-type'));
+            var dataArray = $('#menu-edit-form-'+type).serializeArray();
+            var idItem = parseInt($('#menu-edit-form-'+type).find('*[name="id"]').val());
+            var itemElement = $('#item_'+idItem);
 
-            $.post("{{ admin_url('menu/menu-items/save/') }}"+idItem, data, function(response) {
-                console.log(response);
-                if (parseInt(response.result) === 1) { 
+            // Change data value
+            for (row in dataArray) {
+                console.log(dataArray[row].name+' = '+dataArray[row].value);
+                itemElement.attr('data-'+dataArray[row].name, dataArray[row].value);
+                itemElement.data(dataArray[row].name, dataArray[row].value);
+            }
 
-                    $('#item_'+idItem).find('.menu_item_name').html($('#edit_name').val());
+            // Change name
+            itemElement.find('.menu_item_name').html(dataArray[0].value);
 
-                    $('.addItem').hide();
-                    $('.addButtons').show();
-                    $('.editItemInputs').html('');
-
-                }
-            });
+            // Close edit inputs
+            $('.editItem').hide();
+            $('.addButtons').show();
 
             return false;
 
         });
 
         // -- edit menu item
-        $(document).on('click', '.menuEdit', function() {
+        $(document).on('click', '.menuEdit', function () {
 
-            var id = parseInt($(this).attr('rel'));
+            var itemId = parseInt($(this).attr('rel'));
+            var element = $('#item_'+itemId);
+            var type = parseInt(element.attr('data-type'));
+            var dataElements = [];
 
-            $('.editItemInputs').html('');
+            // Insert value from data item
+            var data = $(element).data(), i;
+            var keys = $.map(data , function(value, key) { return key; });
+            for(i = 0; i < keys.length; i++) {
 
-            $('.editItemInputs').load('{{ admin_url('menu/menu-items/edit/') }}'+id+'/{{ locale }}', function(response) {
-                $('.addButtons').hide();
-            });
+                var value = element.data(keys[i]);
+                $('.editItem.type' + type).find('*[name="'+keys[i]+'"]').val(value);
+
+                // Set value for dropdown
+                if (keys[i].toString() === 'primary_key') {
+                    var selectedValue = $('.editItem.type' + type).find('li[data-value="'+value+'"]').text();
+                    $('.editItem.type' + type).find('span[data-name="'+keys[i].toString()+'"]').html(selectedValue);
+                }
+
+            }
+
+            // show edit form
+            $('.editItem').hide();
+            $('.editItem.type' + type).show();
+            $('.addButtons').hide();
 
         });
 
         // -- show add inputs
-        $(document).on('click', '.addButtons button', function() {
+        $(document).on('click', '.addButtons button', function () {
 
             var type = parseInt($(this).attr('data-type'));
-            $('.addItem.type'+type).show();
+            $('.addItem.type' + type).show();
             $('.addButtons').hide();
 
         });
 
         // -- close add inputs
-        $(document).on('click', '.closeAddItem', function() {
+        $(document).on('click', '.closeAddItem', function () {
 
             $('.addItem').hide();
             $('.addButtons').show();
-            $('.editItemInputs').html('');
+
+        });
+
+        // -- close edit inputs
+        $(document).on('click', '.closeEditItem', function () {
+
+            $('.editItem').hide();
+            $('.addButtons').show();
+
+        });
+
+        // -- submit form with all data
+        $('#edit-menu-submit').click(function () {
+
+            var dataArray = [];
+            $('.menu-items li:not(.ghost)').each(function () {
+
+                jQuery.removeData( this, "nestedSortableItem" );
+                var tmpData = $(this).data();
+                for (rowData in tmpData) {
+                    $('#menu-edit-form').append('<input type="hidden" name="menu_items['+tmpData['id']+']['+rowData+']" value="'+tmpData[rowData]+'">');
+                }
+
+            });
+
+            $('#menu-edit-form').submit();
 
         });
 

@@ -1,49 +1,67 @@
-{{ form_open(current_full_url(), {'id': 'menu-item-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+<div class="editItem type1" style="display: none;">
 
-<div class="editItem">
+    {{ form_open(current_full_url(), {'id': 'menu-edit-form-1', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
-    <div class="actionsButtons text-right">
-        <button type="button" class="btn btn-default btn-sm closeAddItem">{{ lang('text.cancel') }}</button>
-        <button type="button" class="btn btn-save btn-sm menuSave" data-id="{{ menu_item.id }}">{{ lang('text.save') }}</button>
-    </div>
-
-    <!-- margin -->
-    <div class="clearfix baseMargin"></div>
-
-    <div class="form-group">
-        <label for="edit_name" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
-        <div class="col-sm-9">
-            {{ form_input({'name': 'name', 'class': 'form-control', 'id': 'edit_name', 'required': 'required', 'value': menu_item.name }) }}
+        <div class="actionsButtons text-right">
+            <button type="button" class="btn btn-default btn-sm closeEditItem">{{ lang('text.cancel') }}</button>
+            <button type="button" class="btn btn-save btn-sm menuSave" data-type="1">{{ lang('text.save') }}</button>
         </div>
-        <div class="clearfix"></div>
-    </div>
 
-    {# menu item type 1 #}
-    {% if menu_item.type == 1 %}
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
 
-    <div class="form-group">
-        <label for="edit_url" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
-        <div class="col-sm-9">
-            {{ form_input({'name': 'url', 'class': 'form-control', 'id': 'edit_url', 'required': 'required', 'value': menu_item.url }) }}
+        <div class="form-group">
+            <label for="edit_name" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
+            <div class="col-sm-9">
+                {{ form_input({'name': 'name', 'class': 'form-control', 'required': 'required', 'value': '' }) }}
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-    </div>
 
-    {% endif %}
-
-    {# menu item type 2 #}
-    {% if menu_item.type == 2 %}
-
-    <div class="form-group">
-        <label for="edit_primary_key" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
-        <div class="col-sm-9">
-            {{ form_nu_dropdown({'class': 'form-control', 'name': 'primary_key', 'id': 'edit_primary_key', 'required': 'required'}, pages_options, menu_item.primary_key) | raw }}
+        <div class="form-group">
+            <label for="edit_url" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
+            <div class="col-sm-9">
+                {{ form_input({'name': 'url', 'class': 'form-control', 'required': 'required', 'value': '' }) }}
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>
-    </div>
 
-    {% endif %}
+        {{ form_hidden('id', '') }}
 
-</div>
+    {{ form_close() }}
 
-{{ form_close() }}
+</div><!--/.editItem type1-->
+
+<div class="editItem type2" style="display: none;">
+
+    {{ form_open(current_full_url(), {'id': 'menu-edit-form-2', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+
+        <div class="actionsButtons text-right">
+            <button type="button" class="btn btn-default btn-sm closeEditItem">{{ lang('text.cancel') }}</button>
+            <button type="button" class="btn btn-save btn-sm menuSave" data-type="2">{{ lang('text.save') }}</button>
+        </div>
+
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
+
+        <div class="form-group">
+            <label for="edit_name" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
+            <div class="col-sm-9">
+                {{ form_input({'name': 'name', 'class': 'form-control', 'required': 'required', 'value': '' }) }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="edit_primary_key" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
+            <div class="col-sm-9">
+                {{ form_nu_dropdown({'class': 'form-control', 'name': 'primary_key', 'required': 'required'}, pages_options, '') | raw }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        {{ form_hidden('id', '') }}
+
+    {{ form_close() }}
+
+</div><!--/.editItem type2-->

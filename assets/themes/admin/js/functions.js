@@ -101,7 +101,7 @@ function runNestedSortable(element, actionUrl) {
     $(element).nestedSortable({
         handle: 'div.handler',
         listType: 'ol',
-        items: 'li',
+        items: 'li:not(.ghost)',
         helper: 'clone',
         toleranceElement: '> div',
         placeholder: 'sortable-placeholder',

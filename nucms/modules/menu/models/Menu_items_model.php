@@ -84,6 +84,21 @@ class Menu_items_model extends MY_Model
             }
         }
     }
+
+    /**
+     * Get max menu items id
+     *
+     * @return boolean
+     */
+    public function get_max_id()
+    {
+        $result = $this->db->query('SELECT `AUTO_INCREMENT` as next_id FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME =  "'.$this->table.'"')->row();
+        if ($result) {
+            return $result->next_id;
+        }
+
+        return false;
+    }
 }
 
 /* End of file Menu_items_model.php */
