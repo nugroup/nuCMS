@@ -8,6 +8,7 @@
 $config['theme'] = 'nu';
 $config['selected_lang'] = 'polish';                                            // Selected lang (can be change on begin in Frontend_Controller)
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
+$config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
 
 /* twig
 ============================================================================= */
@@ -20,5 +21,6 @@ $config['twig_user_functions'] = [
     'admin_url',
     'flashdata',
     'obj_to_options_array',
-    'current_full_url'
+    'current_full_url',
+    'widget',
 ];

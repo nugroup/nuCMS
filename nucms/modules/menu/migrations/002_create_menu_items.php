@@ -32,6 +32,11 @@ class Migration_Create_menu_items extends CI_Migration
                 'null' => TRUE,
                 'unsigned' => TRUE
             ),
+            'module' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => NULL
+            ),
             'url' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
@@ -42,6 +47,11 @@ class Migration_Create_menu_items extends CI_Migration
                 'constraint' => 5,
                 'null' => TRUE,
                 'unsigned' => TRUE
+            ),
+            'target' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '10',
+                'default' => NULL
             ),
             'sort' => array(
                 'type' => 'INT',
@@ -70,6 +80,8 @@ class Migration_Create_menu_items extends CI_Migration
 
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('nu_menu_items');
+        $this->dbforge->add_key('module');
+        $this->dbforge->add_key('primary_key');
 
         $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_menu_id_FK` FOREIGN KEY (`menu_id`) REFERENCES `nu_menu` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
         $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_id_parent_FK` FOREIGN KEY (`id_parent`) REFERENCES `nu_menu_items` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');

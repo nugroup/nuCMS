@@ -19,6 +19,17 @@ class Menu_model extends MY_Model
 
         $this->timestamps = FALSE;
 
+        $CI = & get_instance();
+        $CI->load->model('menu/menu_items_model', 'menu_items');
+
+        // Relations
+        $this->has_many['items'] = array(
+            'foreign_model' => 'Menu_items_model',
+            'foreign_table' => 'nu_menu_items',
+            'foreign_key' => 'menu_id',
+            'local_key' => 'id'
+        );
+
         // rules
         $this->rules = [
             'insert' => [

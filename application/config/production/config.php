@@ -17,8 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = '';
-$config['base_url_301'] = '';
+$config['base_url'] = 'http://kulek.eu/nutest';
+$config['base_url_301'] = 'http://kulek.eu';
 
 /*
 |--------------------------------------------------------------------------

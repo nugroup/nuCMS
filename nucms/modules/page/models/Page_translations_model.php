@@ -142,13 +142,16 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         // Load routes model
         $CI = & get_instance();
         $CI->load->model('route/route_model', 'route');
-
         if (!isset($data[0])) {
 
-            $pageUrl = config_item('pages_route_controller').$data['page_id'].'/'.$data['locale'];
+//            $pageUrl = config_item('pages_route_controller').$data['page_id'].'/'.$data['locale'];
+//            $route = $CI->route
+//                ->fields('slug')
+//                ->where(['url' => $pageUrl])
+//                ->get();
             $route = $CI->route
                 ->fields('slug')
-                ->where(['url' => $pageUrl])
+                ->where(['module' => 'page', 'primary_key' => $data['page_id'], 'locale' => $data['locale']])
                 ->get();
 
             if ($route) {

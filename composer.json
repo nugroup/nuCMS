@@ -6,6 +6,7 @@
     "require": {
         "php": ">=5.2.4",
         "codeigniter/framework": "^3.0",
+        "myth/bay": "dev-develop",
         "fzaninotto/faker": "^1.5",
         "twig/twig": "^1.24"
     },

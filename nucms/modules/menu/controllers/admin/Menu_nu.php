@@ -85,10 +85,14 @@ class Menu_nu extends Backend_Controller
         if ($this->input->post()) {
             // Save all menu items
             if ($this->input->post('menu_items')) {
+                // Get config types modules
+                $typesModules = $this->config->item('types_modules', 'menu');
+
                 foreach ($this->input->post('menu_items') as $item) {
                     $data = $item;
                     $data['locale'] = $locale;
                     $data['menu_id'] = $id;
+                    $data['module'] = (isset($typesModules[$data['type']])) ? $typesModules[$data['type']] : null;
 
                     if ((int) $item['id'] > $menuItemsMaxId) {
                         $this->menu_items->insert($data);
@@ -145,7 +149,7 @@ class Menu_nu extends Backend_Controller
         $this->data['locale'] = $locale;
         $this->data['menu_items'] = generate_menu_tree($menu_items_parents, 0, [], 100, 0);
         $this->data['menu_items_max_id'] = $menuItemsMaxId;
-        $this->data['pages_options'] = obj_to_options_array($pages, 'id', 'title');
+        $this->data['pages_options'] = obj_to_options_array($pages, 'page_id', 'title');
 
         // Load the view
         $this->render('menu/edit', $this->data);
@@ -243,5 +247,5 @@ class Menu_nu extends Backend_Controller
     }
 }
 
-/* End of file Admin_menu.php */
-/* Location: ./application/modules/menu/controllers/admin/Admin_menu.php */
+/* End of file Menu_nu.php */
+/* Location: ./application/modules/menu/controllers/admin/Menu_nu.php */

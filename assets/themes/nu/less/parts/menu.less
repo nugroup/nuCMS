@@ -1,0 +1,49 @@
+// main file: ../style.less
+
+/* =menuTop
+==============================================================================*/
+#topMenuCollapse {
+    float: right;
+}
+#menuTop {
+    > li {
+        > a {
+            color: lighten(@baseTextColor, 20%);
+            padding: 28px 15px 32px 15px;
+
+            &:hover, &:focus, &:active, &.active {
+                background: none;
+            }
+        }
+
+        &:hover, &:focus, &:active, &.active {
+            a {
+                background: none;
+                color: @baseColor2;
+            }
+        }
+    }
+}
+
+/* =menuFooter
+==============================================================================*/
+#menuFooter {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+
+    li {
+        display: inline-block;
+
+        a {
+            color: lighten(@baseTextColor, 20%);
+            padding: 0 15px;
+        }
+        &:hover, &:focus, &:active, &.active {
+            a {
+                background: none;
+                color: @baseColor2;
+            }
+        }
+    }
+}

@@ -10,18 +10,29 @@
         <!-- margin -->
         <div class="clearfix baseMargin"></div>
 
+        <!-- name -->
         <div class="form-group">
-            <label for="edit_name" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
+            <label for="edit_name_1" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
             <div class="col-sm-9">
-                {{ form_input({'name': 'name', 'class': 'form-control', 'required': 'required', 'value': '' }) }}
+                {{ form_input({'name': 'name', 'class': 'form-control', 'id': 'edit_name_1', 'required': 'required', 'value': '' }) }}
             </div>
             <div class="clearfix"></div>
         </div>
 
+        <!-- target -->
         <div class="form-group">
-            <label for="edit_url" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
+            <label for="edit_target_2" class="col-sm-3 control-label">{{ lang('menu.form.target') }}:</label>
             <div class="col-sm-9">
-                {{ form_input({'name': 'url', 'class': 'form-control', 'required': 'required', 'value': '' }) }}
+                {{ form_nu_dropdown({'class': 'form-control', 'name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- slug -->
+        <div class="form-group">
+            <label for="edit_slug_1" class="col-sm-3 control-label">{{ lang('menu.form.slug') }}:</label>
+            <div class="col-sm-9">
+                {{ form_input({'name': 'slug', 'class': 'form-control', 'id': 'edit_slug_1', 'required': 'required', 'value': '' }) }}
             </div>
             <div class="clearfix"></div>
         </div>
@@ -44,14 +55,25 @@
         <!-- margin -->
         <div class="clearfix baseMargin"></div>
 
+        <!-- name -->
         <div class="form-group">
-            <label for="edit_name" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
+            <label for="edit_name_2" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
             <div class="col-sm-9">
-                {{ form_input({'name': 'name', 'class': 'form-control', 'required': 'required', 'value': '' }) }}
+                {{ form_input({'name': 'name', 'class': 'form-control', 'id': 'edit_name_2', 'required': 'required', 'value': '' }) }}
             </div>
             <div class="clearfix"></div>
         </div>
 
+        <!-- target -->
+        <div class="form-group">
+            <label for="edit_target_2" class="col-sm-3 control-label">{{ lang('menu.form.target') }}:</label>
+            <div class="col-sm-9">
+                {{ form_nu_dropdown({'class': 'form-control', 'name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- primary_key -->
         <div class="form-group">
             <label for="edit_primary_key" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
             <div class="col-sm-9">

@@ -186,13 +186,12 @@
 
             // Change data value
             for (row in dataArray) {
-                console.log(dataArray[row].name+' = '+dataArray[row].value);
                 itemElement.attr('data-'+dataArray[row].name, dataArray[row].value);
                 itemElement.data(dataArray[row].name, dataArray[row].value);
             }
 
             // Change name
-            itemElement.find('.menu_item_name').html(dataArray[0].value);
+            itemElement.children('.handler').find('.menu_item_name').html(dataArray[0].value);
 
             // Close edit inputs
             $('.editItem').hide();
@@ -219,7 +218,7 @@
                 $('.editItem.type' + type).find('*[name="'+keys[i]+'"]').val(value);
 
                 // Set value for dropdown
-                if (keys[i].toString() === 'primary_key') {
+                if (keys[i].toString() === 'primary_key' || keys[i].toString() === 'target') {
                     var selectedValue = $('.editItem.type' + type).find('li[data-value="'+value+'"]').text();
                     $('.editItem.type' + type).find('span[data-name="'+keys[i].toString()+'"]').html(selectedValue);
                 }

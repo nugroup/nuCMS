@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c372e3bfb8169e5be6fd99e2ac2dc837",
-    "content-hash": "f30f6e18e1180939577f044ec285d8b3",
+    "hash": "b379bf6241352ea785f88f1c1c6a5ffc",
+    "content-hash": "d3ab76c0a409e4f55c5deb66829301f5",
     "packages": [
         {
             "name": "codeigniter/framework",
@@ -89,6 +89,45 @@
             "time": "2015-05-29 06:29:14"
         },
         {
+            "name": "myth/bay",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/newmythmedia/bay.git",
+                "reference": "e2ccd66a4ed0589fc038cfda0cf3dac994861727"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newmythmedia/bay/zipball/e2ccd66a4ed0589fc038cfda0cf3dac994861727",
+                "reference": "e2ccd66a4ed0589fc038cfda0cf3dac994861727",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Myth\\Bay\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lonnie Ezell",
+                    "homepage": "http://newmythmedia.com"
+                }
+            ],
+            "description": "Provides a simple mechanism for inserting view partials rendered in other classes. Can be used to provide a 'widgets' implementation or similar.",
+            "homepage": "https://github.com/newmythmedia/bay",
+            "keywords": [
+                "Cell",
+                "component",
+                "view"
+            ],
+            "time": "2016-01-16 04:53:29"
+        },
+        {
             "name": "twig/twig",
             "version": "v1.24.0",
             "source": {
@@ -153,7 +192,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "myth/bay": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

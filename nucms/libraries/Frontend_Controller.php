@@ -15,7 +15,7 @@ class Frontend_Controller extends NU_Controller
         parent::__construct();
 
         // Load needed config
-        $this->load->config('my_config');
+        $this->load->config('app');
 
         // Load language file
         $this->lang->load('www', config_item('selected_lang'));
@@ -30,6 +30,11 @@ class Frontend_Controller extends NU_Controller
                 'description' => '',
             ]
         ];
+
+        // Check profiler status
+        if ($this->config->item('profiler') && ENVIRONMENT == 'development') {
+            $this->output->enable_profiler();
+        }
 
         $this->config->set_item('first_run', false);
     }

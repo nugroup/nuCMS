@@ -43,6 +43,9 @@ $lang['menu.form.active'] = 'Aktywność';
 $lang['menu.form.slug'] = 'Adres URL';
 $lang['menu.form.locale'] = 'Język';
 $lang['menu.form.page'] = 'Strona';
+$lang['menu.form.target'] = 'Otwieraj w';
+$lang['menu.form.target.self'] = 'W tym samym oknie';
+$lang['menu.form.target.blank'] = 'W nowym oknie';
 
 /* types
 ============================================================================= */

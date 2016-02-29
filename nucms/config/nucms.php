@@ -26,7 +26,8 @@ $config['twig_user_functions'] = [
     'flashdata',
     'obj_to_options_array',
     'current_full_url',
-    'form_nu_dropdown'
+    'form_nu_dropdown',
+    'widget'
 ];
 
 /* users

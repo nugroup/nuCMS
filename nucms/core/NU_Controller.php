@@ -13,6 +13,7 @@ class NU_Controller extends MX_Controller
         $this->load->add_package_path(NUPATH.'/');
 
         // Config
+        $this->load->config('app');
         $this->load->config('modules');
 
         // Helpers
@@ -20,6 +21,7 @@ class NU_Controller extends MX_Controller
         $this->load->helper('security');
         $this->load->helper('url');
         $this->load->helper('functions');
+        $this->load->helper('widget');
 
         // libraires
         $this->load->library('form_validation');
