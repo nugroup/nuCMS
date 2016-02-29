@@ -17,7 +17,7 @@
 
         var value = $(this).attr('data-value');
         var title = $(this).find('span').html();
-        var span = $(this).closest('.dropAsSelect').find('span[data-toggle]');
+        var span = $(this).closest('.dropAsSelect').find('span[data-toggle] span');
         var icon = span.find('i');
         var input = $(this).closest('.dropAsSelect').find('input');
         input.val(value);

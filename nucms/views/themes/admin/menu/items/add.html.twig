@@ -17,6 +17,7 @@
     <!-- margin -->
     <div class="clearfix baseMargin"></div>
 
+    <!-- name -->
     <div class="form-group">
         <label for="add_name_1" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
         <div class="col-sm-9">
@@ -25,10 +26,20 @@
         <div class="clearfix"></div>
     </div>
 
+    <!-- target -->
     <div class="form-group">
-        <label for="add_url_1" class="col-sm-3 control-label">{{ lang('menu.form.slug') }}:</label>
+        <label for="edit_target_2" class="col-sm-3 control-label">{{ lang('menu.form.target') }}:</label>
         <div class="col-sm-9">
-            {{ form_input({'name': 'url', 'class': 'form-control add_menu_item_1', 'id': 'add_url_1', 'required': 'required' }) }}
+            {{ form_nu_dropdown({'class': 'form-control', 'name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- slug -->
+    <div class="form-group">
+        <label for="add_slug_1" class="col-sm-3 control-label">{{ lang('menu.form.slug') }}:</label>
+        <div class="col-sm-9">
+            {{ form_input({'name': 'slug', 'class': 'form-control add_menu_item_1', 'id': 'add_slug_1', 'required': 'required' }) }}
         </div>
         <div class="clearfix"></div>
     </div>
@@ -53,6 +64,7 @@
     <!-- margin -->
     <div class="clearfix baseMargin"></div>
 
+    <!-- name -->
     <div class="form-group">
         <label for="add_name_2" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
         <div class="col-sm-9">
@@ -61,6 +73,16 @@
         <div class="clearfix"></div>
     </div>
 
+    <!-- target -->
+    <div class="form-group">
+        <label for="edit_target_2" class="col-sm-3 control-label">{{ lang('menu.form.target') }}:</label>
+        <div class="col-sm-9">
+            {{ form_nu_dropdown({'class': 'form-control', 'name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- primary_key -->
     <div class="form-group">
         <label for="add_url_1" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
         <div class="col-sm-9">

@@ -3,6 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
+| Modules locations
+|--------------------------------------------------------------------------
+|
+| Variables with we need to set to true durning first run
+| (we can use this config variable to disable action after run Modules in Modules)
+|
+*/
+$config['first_run'] = true;
+
+/*
+|--------------------------------------------------------------------------
 | Base Site URL
 |--------------------------------------------------------------------------
 |

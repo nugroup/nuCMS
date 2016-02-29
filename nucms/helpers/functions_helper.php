@@ -190,7 +190,7 @@ if ( ! function_exists('form_nu_dropdown'))
             $result .= '<span data-toggle="dropdown" class="txtBig" aria-expanded="false">';
                 $result .= '<span data-name="'.$data['name'].'">'.$selectedText.'</span><i class="fa fa-angle-down"></i>';
             $result .= '</span>';
-            $result .= '<ul class="dropdown-menu" style="display: none;">';
+            $result .= '<ul class="dropdown-menu" style="display: none;" data-name="'.$data['name'].'">';
                 foreach ($options as $key => $value) {
                     $result .= '<li data-value="'.$key.'"><span>'.$value.'</span></li>';
                 }

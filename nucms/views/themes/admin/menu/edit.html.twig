@@ -219,7 +219,8 @@
 
                 // Set value for dropdown
                 if (keys[i].toString() === 'primary_key' || keys[i].toString() === 'target') {
-                    var selectedValue = $('.editItem.type' + type).find('li[data-value="'+value+'"]').text();
+                    var selectedValue = $('.editItem.type'+type+' ul[data-name="'+keys[i].toString()+'"]').find('li[data-value="'+value+'"]').text();
+                    console.log(selectedValue);
                     $('.editItem.type' + type).find('span[data-name="'+keys[i].toString()+'"]').html(selectedValue);
                 }
 
