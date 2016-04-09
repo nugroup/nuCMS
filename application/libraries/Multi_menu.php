@@ -442,9 +442,13 @@ class Multi_menu {
 		        }
 		        else 
 		        {
+                                if (strpos($slug, 'http') > -1) {
+                                    $href    = $slug;
+                                } else {
+                                    $href    = site_url($slug);
+                                }
 		        	$tag_open    = $this->item_tag_open;
-					$href        = site_url($slug);
-					$item_anchor = $this->item_anchor;
+                                $item_anchor = $this->item_anchor;
 		        }
 				$html .= $this->set_active($tag_open, $slug);
 				if (substr_count($item_anchor, '%s') == 3) {

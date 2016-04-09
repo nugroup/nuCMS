@@ -28,7 +28,7 @@ $config['first_run'] = true;
 | environments.
 |
 */
-$config['base_url'] = 'http://kulek.eu/nutest';
+$config['base_url'] = 'http://kulek.eu/nucms';
 $config['base_url_301'] = 'http://kulek.eu';
 
 /*

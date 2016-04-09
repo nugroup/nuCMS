@@ -33,26 +33,6 @@ class Menu_items_model extends MY_Model
     }
 
     /**
-     * Prepare parent array for tree
-     *
-     * @param array $items
-     * @return type
-     */
-    public function prepare_parent_array($items)
-    {
-        $result = array();
-
-        if ($items) {
-            foreach ($items as $item) {
-                $item->id_parent = (int) $item->id_parent; // Convert NULL to INT
-                $result[$item->id_parent][] = $item;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Update sort after insert
      *
      * @param int $insertedId

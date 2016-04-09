@@ -93,6 +93,7 @@ class Menu_nu extends Backend_Controller
                     $data['locale'] = $locale;
                     $data['menu_id'] = $id;
                     $data['module'] = (isset($typesModules[$data['type']])) ? $typesModules[$data['type']] : null;
+                    $data['parent_id'] = ($item['parent_id'] != 0) ? $item['parent_id'] : null; 
 
                     if ((int) $item['id'] > $menuItemsMaxId) {
                         $this->menu_items->insert($data);
@@ -139,7 +140,7 @@ class Menu_nu extends Backend_Controller
             ->where(['menu_id' => $id, 'locale' => $locale])
             ->order_by('sort')
             ->get_all();
-        $menu_items_parents = $this->menu_items->prepare_parent_array($menu_items);
+        $menu_items_parents = prepare_parent_array($menu_items);
 
         // Set view data
         $this->data['menu'] = $menu;

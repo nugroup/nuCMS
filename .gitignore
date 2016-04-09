@@ -10,3 +10,6 @@ application/cache/*
 
 uploads/*
 !uploads/index.html
+
+application/config/production/*
+!application/config/production/config.php
