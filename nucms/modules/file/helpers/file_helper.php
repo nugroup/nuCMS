@@ -30,7 +30,7 @@ if ( ! function_exists('generate_folder_tree'))
                 if(isset($items[$item->id]) && count($items[$item->id]) > 0)
                 {
                     $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="ico">'.$ico.'</a>' . PHP_EOL;
+                        $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="name txtBig">'.$item->name.'</a>' . PHP_EOL;
                         $result .= '<ul class="subtree">' . PHP_EOL;
                             $result .= generate_files_folder_tree($items, $item->id, $active_path, $max_level, $level + 1);
@@ -41,7 +41,7 @@ if ( ! function_exists('generate_folder_tree'))
                 else
                 {
                     $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="ico">'.$ico.'</a>' . PHP_EOL;
+                        $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="name txtBig">'.$item->name.'</a>' . PHP_EOL;
                     $result .= '</li>' . PHP_EOL;
                 }

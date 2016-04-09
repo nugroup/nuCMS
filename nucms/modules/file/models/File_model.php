@@ -45,10 +45,9 @@ class File_model extends MY_Model
      * @param int $id_parent
      * @return type1
      */
-    public function get_folders($id_parent = null)
+    public function get_folders()
     {
         $where = [
-            'parent_id' => $id_parent,
             'type'      => 1
         ];
         $folders = $this->get_all($where);

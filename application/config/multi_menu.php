@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // $config["menu_id"]               = 'id';
 // $config["menu_label"]            = 'name';
-$config["menu_parent"] = 'id_parent';
+$config["menu_parent"] = 'parent_id';
 // $config["menu_icon"] 			 = 'icon';
 $config["menu_key"] = 'slug';
 $config["menu_order"] = 'sort';

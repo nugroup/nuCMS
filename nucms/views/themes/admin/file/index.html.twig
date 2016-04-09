@@ -59,13 +59,13 @@
                 </div>
 
                 <!-- fileUploadBox -->
-                <div class="fileUploadBox" style="position: relative;">
+                <div id="myDropzone" class="dropzone fileUploadBox">
                     <div class="inside">
                         <i class="fa fa-upload"></i>
                         <div class="information txtBig">{{ lang('file.text.uploader') }}</div>
                     </div>
 
-                    <div id="myDropzone"></div>
+                    <div class="myDropzoneClear"><i class="fa fa-times"></i> {{ lang('file.text.clear_files') }}</div>
                 </div>
 
                 <!-- filesList -->
@@ -179,11 +179,12 @@
     <script>
 
         // -- dropzone
+        Dropzone.autoDiscover = false;
         $("#myDropzone").dropzone({
             maxFilesize: {{ config.upload_max_file_size }},
             url: "{{ config.upload_action }}",
             paramName: "file",
-            autoProcessQueue: false,
+            autoProcessQueue: true,
             success: function (file, response) {
                 console.log(response);
                {#if (splitResponse[0] == 1) {
@@ -192,7 +193,18 @@
                } else {
                    return file.previewElement.classList.add("dz-error");
                }#}
-           }
+            },
+            init: function() {
+                var myDropzone = this;
+
+                $('.myDropzoneClear').on("click", function(e) {
+                    myDropzone.removeAllFiles(true);
+                });
+
+                this.on("error", function(file, response) {
+                    //handle errors here
+                });
+            }
         });
 
     </script>

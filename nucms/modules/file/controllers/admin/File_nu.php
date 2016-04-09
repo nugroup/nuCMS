@@ -55,7 +55,7 @@ class File_nu extends Backend_Controller
             );
 
             // Insert data
-            if ($this->files->insert($data)) {
+            if ($this->file->insert($data)) {
                 $result = ['result' => 1];
             }
         } else {

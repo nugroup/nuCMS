@@ -105,11 +105,29 @@
 
 
     // -- submit language select
-    $(document).on("click",'.submitOnClick',function(){
+    $(document).on("click", '.submitOnClick', function(){
 
         $('#toolbar-form').submit();
         return false;
 
     });
+
+
+    // ------- FILE MANAGER
+    $(document).on("click",'.fileShowUpload',function(){
+
+        $('.fileUploadBox').toggle();
+        return false;
+
+    });
+
+    // -- file tree
+    $(document).on("click", '.openSubTree', function(){
+
+        $(this).parent().children('ul').slideToggle('fast');
+        $(this).children('i').toggleClass('fa-folder-open-o');
+
+    });
+
 
 })();

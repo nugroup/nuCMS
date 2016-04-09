@@ -15,7 +15,7 @@ $lang['text.delete'] = 'usuń';
 $lang['text.add'] = 'Dodaj';
 $lang['text.save'] = 'Zapisz';
 $lang['text.cancel'] = 'Anuluj';
-
+$lang['text.confirm'] = 'Zatwierdź';
 
 /* menu
 ============================================================================= */
