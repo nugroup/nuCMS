@@ -47,16 +47,29 @@ class File_model extends MY_Model
      */
     public function get_folders()
     {
-        $where = [
-            'type'      => 1
-        ];
-        $folders = $this->get_all($where);
+        $folders = $this->db
+            ->select('*, id AS folder_id, (SELECT COUNT(*) FROM nu_file WHERE parent_id = folder_id AND type = 0) AS files_in_folder')
+            ->where('parent_id IS NULL AND type = 1')
+            ->get($this->table)
+            ->result();
 
         if ($folders) {
             return prepare_parent_array($folders);
         }
 
         return false;
+    }
+
+    /**
+     * Generate like query for search action
+     *
+     * @param string $string
+     */
+    public function generate_like_query($string)
+    {
+        if ($string) {
+            $this->db->like('name', $string);
+        }
     }
 }
 

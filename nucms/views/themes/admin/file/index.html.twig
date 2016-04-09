@@ -99,6 +99,7 @@
          *
          * @param {int} parentId
          * @param {string} url
+         * @param {string} suffix
          */
         function loadFilesList(parentId, url, suffix) {
 
@@ -127,15 +128,21 @@
             return false;
 
         });
-        
+
         /**
          * Search action
          */
         $(document).on('keyup', '#filesSearchInput', function () {
 
-{#            var url = $('#files-manager-search-url').val().toString();#}
-            var stringValue = $(this).val().toString();
-            $('#files-manager-content').load(url+'?string='+stringValue);
+            var searchString = $(this).val().toString();
+
+            if (searchString !== '') {
+                loadFilesList(0, '', '?string='+searchString);
+                $('.folderTree li').removeClass('active');
+            } else {
+                loadFilesList(0, '');
+                $('.folderTree li').first().addClass('active');
+            }
 
             return false;
 

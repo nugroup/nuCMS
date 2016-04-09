@@ -26,8 +26,11 @@ class File_nu extends Backend_Controller
     public function index()
     {
         // Get folder list and prepare html tree
+        $filesInHomeFolder = $this->file
+            ->where(['parent_id' => null, 'type' => 0])
+            ->count();
         $folders = $this->file->get_folders();
-        $files_folders_tree = generate_files_folder_tree($folders, 0, [0], 100, 0);
+        $files_folders_tree = generate_files_folder_tree($folders, 0, [0], 100, 0, ['files_in_home_folder' => $filesInHomeFolder]);
 
         // Set view data
         $this->data['folders'] = $folders;
@@ -51,12 +54,20 @@ class File_nu extends Backend_Controller
         // Get files list
         $where = [
             'type' => 0,
-            'parent_id' => ($parent_id > 0) ? (int) $parent_id : null
         ];
+
+        if ($this->input->get('string')) {
+            $this->file->generate_like_query($this->input->get('string'));
+        } else {
+            $where['parent_id'] = ($parent_id != 0) ? (int) $parent_id : null;
+        }
+
         $numberOfItems = $this->file
             ->where($where)
             ->count();
         $paginationLimits = $this->initPagination($numberOfItems, $page, 9, admin_url('file/files_list/'.$parent_id));
+
+        $this->file->generate_like_query($this->input->get('string'));
         $files = $this->file
             ->where($where)
             ->order_by('created_at', 'DESC')
@@ -91,7 +102,7 @@ class File_nu extends Backend_Controller
         if ($upload_data) {
             // Set data to insert
             $data = array(
-                'name'           => $upload_data['orig_name'],
+                'name'           => $upload_data['file_name'],
                 'filename'       => $upload_data['file_name'],
                 'size'           => $upload_data['file_size'],
                 'description'    => $upload_data['client_name'],

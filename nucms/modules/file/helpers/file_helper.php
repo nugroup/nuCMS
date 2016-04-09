@@ -14,7 +14,7 @@ if ( ! function_exists('generate_folder_tree')) {
      * @param int $max_level - maximum level
      * @param int $level - current level
      */
-    function generate_files_folder_tree($items, $parent_id, $active_path = array(), $max_level = 100, $level = 0)
+    function generate_files_folder_tree($items, $parent_id, $active_path = array(), $max_level = 100, $level = 0, $additionalData = array())
     {
         $result = '';
         $parent_id = (int) $parent_id;
@@ -24,10 +24,11 @@ if ( ! function_exists('generate_folder_tree')) {
             // home folder
             if ($parent_id == 0) {
                 $activeHome = (in_array(0, $active_path)) ? ' class="active"' : '';
+                $fileInHomeFolder = (isset($additionalData['files_in_home_folder'])) ? $additionalData['files_in_home_folder'] : 0;
 
                 $result .= '<li id="item_0"'.$activeHome.'>' . PHP_EOL;
                     $result .= '<a href="javascript:void(0);" class="ico openSubTree"><i class="fa fa-folder-o"></i></a>' . PHP_EOL;
-                    $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="0">'.lang('file.text.home_folder').'</a>' . PHP_EOL;
+                    $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="0">'.lang('file.text.home_folder').' ('.$fileInHomeFolder.')</a>' . PHP_EOL;
                 $result .= '</li>' . PHP_EOL;
             }
 
@@ -41,7 +42,7 @@ if ( ! function_exists('generate_folder_tree')) {
                 {
                     $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.'</a>' . PHP_EOL;
+                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.' ('.$item->files_in_folder.')</a>' . PHP_EOL;
                         $result .= '<ul class="subtree">' . PHP_EOL;
                             $result .= generate_files_folder_tree($items, $item->id, $active_path, $max_level, $level + 1);
                         $result .= '</ul>' . PHP_EOL;
@@ -52,7 +53,7 @@ if ( ! function_exists('generate_folder_tree')) {
                 {
                     $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.'</a>' . PHP_EOL;
+                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.' ('.$item->files_in_folder.')</a>' . PHP_EOL;
                     $result .= '</li>' . PHP_EOL;
                 }
             }
