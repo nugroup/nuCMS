@@ -28,7 +28,7 @@ $config['first_run'] = true;
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/nucms';
+$config['base_url'] = 'http://localhost/nucms/';
 $config['base_url_301'] = 'http://localhost';
 
 

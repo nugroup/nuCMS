@@ -1,0 +1,37 @@
+<div class="row">
+    {% for file in files %}
+
+        <div class="col-sm-4">
+            <div class="file">
+                <div class="thumb">
+                    {{ generate_thumbnail(file, '', file.alt, file.title) | raw }}
+                </div>
+                <div class="name txtBig">{{ file.name }}</div>
+                <div class="details">
+                    <p>rozmiar: {{ file.size }}kb</p>
+                    <p>data dodania: {{ file.created_at | date('Y-m-d')}}</p>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info margin0">{{ lang('file.text.no_records') }}</div>
+
+    {% endfor %}
+</div>
+
+<!-- margin -->
+<div class="clearfix baseMargin-mini"></div>
+
+<!-- table bottom -->
+<div class="row tableBottom">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-4 text-right">
+
+        <!-- pagination -->
+        <nav class="filesListPagination">
+            {{ pager | raw }}
+        </nav>
+
+    </div>
+</div>

@@ -8,20 +8,35 @@
     margin: 60px 0 0 0;
 
     .file {
-        margin: 0 0 45px 0;
+        margin: 0 0 30px 0;
 
         .thumb {
             height: 200px;
             position: relative;
             overflow: hidden;
+            border: 1px solid @cLines;
             .border-radius(0);
 
+            i {
+                font-size: 50px;
+                color: @cGreen;
+                opacity: 0.5;
+                .center-absolute();
+            }
             img {
                 .center-absolute();
             }
         }
         .name {
             margin: 20px 0 0 0;
+        }
+        .details {
+            margin: 5px 0 0 0;
+
+            p {
+                margin: 0;
+                line-height: 15px;
+            }
         }
     }
 }
@@ -59,8 +74,8 @@
     z-index: 10;
 
     &.dropzone {
-        .dz-default {
-            display: none;
+        .dz-message {
+            margin: 0;
         }
         .dz-preview {
             &.dz-image-preview {
@@ -100,21 +115,20 @@
                 margin: 0 0 0 15px;
             }
         }
+        .subtree {
+            /*display: none;*/
+            list-style: none;
+            padding: 8px 0 0 30px;
+        }
         &:hover, &:focus, &:active, &.active {
             text-decoration: none;
             outline: none;
 
             > a {
                 outline: none;
-                color: @cGreen;
+                color: @cGreen !important;
                 text-decoration: none;
             }
-        }
-
-        .subtree {
-            display: none;
-            list-style: none;
-            padding: 8px 0 0 30px;
         }
     }
 }

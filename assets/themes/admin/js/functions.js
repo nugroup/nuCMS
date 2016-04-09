@@ -122,3 +122,17 @@ function runNestedSortable(element, actionUrl) {
     }
 
 }
+
+/**
+ * Animated scroll to element
+ *
+ * @returns {$.fn}
+ */
+$.fn.goTo = function() {
+
+    $('html, body').animate({
+        scrollTop: $(this).offset().top + 'px'
+    }, 'fast');
+
+    return this;
+}

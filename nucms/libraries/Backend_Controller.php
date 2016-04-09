@@ -60,22 +60,27 @@ class Backend_Controller extends NU_Controller
 
     /**
      * Initialize default pagination
-     *
+     * 
      * @param int $numberOfItems number of all items for pagination
+     * @param int $page
+     * @param int $perPage
+     * @param string $base_url
      * @return array return array with keys: 'limit' and 'limit_offset'
      */
-    public function initPagination($numberOfItems, $page = 1, $perPage = 0, $suffixUrl = '')
+    public function initPagination($numberOfItems, $page = 1, $perPage = 0, $base_url = '')
     {
         if ($this->session->userdata('admin_per_page') && $perPage == 0) {
             $perPage = $this->session->userdata('admin_per_page');
         }
+        
+        $pager_url = ($base_url != '') ? $base_url : current_url();
 
         // Load pagination library
         $this->load->library('pagination');
 
         // Set paginaton config
         $config = [
-            'base_url' => current_url().$suffixUrl,
+            'base_url' => $pager_url,
             'total_rows' => $numberOfItems,
             'per_page' => $perPage,
             'page_query_string' => TRUE,

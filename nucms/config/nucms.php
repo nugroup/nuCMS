@@ -28,7 +28,8 @@ $config['twig_user_functions'] = [
     'obj_to_options_array',
     'current_full_url',
     'form_nu_dropdown',
-    'widget'
+    'widget',
+    'generate_thumbnail'
 ];
 
 /* users

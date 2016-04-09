@@ -20,14 +20,18 @@ class File_nu extends Backend_Controller
         $this->lang->load('file', config_item('selected_lang'));
     }
 
+    /**
+     * File manager index view
+     */
     public function index()
     {
         // Get folder list and prepare html tree
         $folders = $this->file->get_folders();
-        $files_folders_tree = generate_files_folder_tree($folders, 0, [], 100, 0);
+        $files_folders_tree = generate_files_folder_tree($folders, 0, [0], 100, 0);
 
         // Set view data
         $this->data['folders'] = $folders;
+        $this->data['files_list'] = $this->files_list(0, 1);
         $this->data['files_folders_tree'] = $files_folders_tree;
 
         // Load the view
@@ -35,10 +39,51 @@ class File_nu extends Backend_Controller
     }
 
     /**
+     * Files list in file manager (subview, loaded by AJAX)
+     *
+     * @param int $parent_id
+     */
+    public function files_list($parent_id = 0, $return = 0)
+    {
+        // Set default variables
+        $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
+
+        // Get files list
+        $where = [
+            'type' => 0,
+            'parent_id' => ($parent_id > 0) ? (int) $parent_id : null
+        ];
+        $numberOfItems = $this->file
+            ->where($where)
+            ->count();
+        $paginationLimits = $this->initPagination($numberOfItems, $page, 9, admin_url('file/files_list/'.$parent_id));
+        $files = $this->file
+            ->where($where)
+            ->order_by('created_at', 'DESC')
+            ->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])
+            ->get_all();
+
+        // Set view data
+        $data['files'] = $files;
+        $data['pager'] = $this->pagination->create_links();
+
+        // Load the view
+        if ($return == 1) {
+            return $this->render('file/list', $data, true);
+        } else {
+            $this->render('file/list', $data);
+        }
+    }
+
+    /**
      * Import photos by AJAX - DROPZONE
      */
     public function upload()
     {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
         // Run upload data method from upload controller
         $this->load->library('upload_nu');
         $upload_data = $this->upload_nu->do_upload($this->config->item('upload_folder'));
@@ -46,17 +91,24 @@ class File_nu extends Backend_Controller
         if ($upload_data) {
             // Set data to insert
             $data = array(
-                'real_file_name' => $upload_data['orig_name'],
-                'file_name'      => $upload_data['file_name'],
+                'name'           => $upload_data['orig_name'],
+                'filename'       => $upload_data['file_name'],
                 'size'           => $upload_data['file_size'],
                 'description'    => $upload_data['client_name'],
                 'alt'            => $upload_data['client_name'],
                 'title'          => $upload_data['client_name'],
             );
 
+            if ((int) $this->input->post('parent_id')) {
+                $data['parent_id'] = (int) $this->input->post('parent_id');
+            }
+
             // Insert data
             if ($this->file->insert($data)) {
-                $result = ['result' => 1];
+                $result = [
+                    'result' => 1,
+                    'parent_id' => (int) $this->input->post('parent_id')
+                ];
             }
         } else {
             $result = [

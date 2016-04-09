@@ -25,7 +25,7 @@ class Page_nu extends Backend_Controller
      */
     public function index()
     {
-        // Set page
+        // Set default variables
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
         $this->setReturnLink($this->sessionName);
