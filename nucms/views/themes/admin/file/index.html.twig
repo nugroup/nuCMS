@@ -1,103 +1,169 @@
 {% extends 'base.html.twig' %}
 
-{% block subnav %}
-
-    {% include 'page/subnav.html.twig' %}
-
-{% endblock %}
-
 {% block body %}
 
 <!-- page list -->
 <div class="container">
 
-    <!-- toolbar-->
-    {% include 'page/toolbar.html.twig' %}
-
-    {% if (pages) %}
-
-        {{ form_open() }}
+    <!-- fileManager -->
+    <div id="fileManager">
 
         <div class="row">
-            <div class="col-xs-12">
-                <table class="table firstIsIcon lastIsIcon">
-                    <thead>
-                        <tr>
-                            <th><i class="check_all ion ion-checkmark"></i></th>
-                            <th class="txtUpper">{{ lang('page.list.title') }}</th>
-                            <th class="txtUpper">{{ lang('page.list.created_at') }}</th>
-                            <th class="txtUpper" style="width: 50px;">{{ lang('page.list.active') }}</th>
-                            <th style="width: 110px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for page in pages %}
-                            <tr id="item_{{ page.page_id }}">
-                                <td>
-                                    <label class="checkboxIcon">
-                                        {{ form_checkbox({'name': 'check_item['~page.page_id~']', 'class': 'check_item', 'value': 1}) }}
-                                        <i class="ion ion-checkmark"></i>
-                                        <i class="ion ion-ios-paper-outline"></i>
-                                    </label>
-                                </td>
-                                <td><div class="txtBig">{{ page.title }}</div></td>
-                                <td>{{ page.created_at }}</td>
-                                    <td class="text-center">
-                                        <span class="superCheck">
-                                            <label for="active_{{ page.id }}"></label>
-                                            {{ form_checkbox({'id': 'active_'~page.id, 'class': 'change_bool', 'data-name': 'active', 'data-actionUrl': admin_url('page/update_active/'~page.id)}, 1, page.active) }}
-                                            <span></span>
-                                        </span>
-                                    </td>
-                                <td>
-                                    <a href="{{ admin_url('page/edit/'~page.page_id) }}"><i class="ion ion-android-create tableActions-edit"></i></a>
-                                    <a href="{{ admin_url('page/delete') }}" rel="{{ page.page_id }}" class="deleteRecord" data-confirmMsg="{{ lang('page.text.confirm_delete') }}"><i class="ion ion-android-delete tableActions-delete"></i></a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            <div class="col-sm-3">
 
-        <!-- margin -->
-        <div class="clearfix baseMargin-mini"></div>
+                <button class="btn btn-save btn-sm fileShowUpload" type="button"><i class="fa fa-arrow-down"></i>{{ lang('file.text.add_files') }}</button><br><br>
+                <button class="btn btn-save btn-sm fildFolderAdd" type="button"><i class="fa fa-plus"></i>{{ lang('file.text.add_folder') }}</button>
 
-        <!-- table bottom -->
-        <div class="row tableBottom">
-            <div class="col-xs-12 col-sm-4">
-
-                <!-- dropdown actions -->
-                <span class="txtUpper">{{ lang('text.checked_items') }}:</span>
-                <span class="btn-group dropup nuDropdown">
-                    <span data-toggle="dropdown" class="txtBig hoverLine">{{ lang('text.choose') }} <i class="fa fa-angle-up"></i></span>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <button type="submit" name="action" value="delete_checked"><i class="ion ion-android-delete"></i>{{ lang('text.delete') }}</button>
-                        </li>
+                <!-- folderTree -->
+                <div class="folderTreeBox">
+                    <ul class="folderTree">
+                        {{ files_folders_tree | raw }}
                     </ul>
-                </span>
+                </div>
 
             </div>
-            <div class="col-xs-12 col-sm-8 text-right">
+            <div class="col-sm-9">
 
-                <!-- pagination -->
-                <nav>
-                    {{ pager | raw }}
-                </nav>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <!-- dropdown actions -->
+                        <div class="inLine">
+                            <span class="txtUpper">{{ lang('text.checked_items') }}:</span>
+                            <span class="btn-group dropdown nuDropdown">
+                                <span data-toggle="dropdown" class="txtBig hoverLine">{{ lang('text.choose') }} <i class="fa fa-angle-down"></i></span>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button type="submit" name="action" value="delete_checked"><i class="ion ion-android-delete"></i>{{ lang('text.delete') }}</button>
+                                    </li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- search input -->
+                        <div class="input-group bigInput">
+                            <div class="input-group-addon">
+                                <button type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                            {{ form_input({'name': 'string', 'class': 'form-control', 'value': input.get('string')}) }}
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="text-right">
+                            <button class="btn btn-save" type="button"><i class="fa fa-check"></i>{{ lang('text.confirm') }}</button>
+                            <button class="btn btn-red btn-circle btn-margin-left" type="button"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- fileUploadBox -->
+                <div class="fileUploadBox" style="position: relative;">
+                    <div class="inside">
+                        <i class="fa fa-upload"></i>
+                        <div class="information txtBig">{{ lang('file.text.uploader') }}</div>
+                    </div>
+
+                    <div id="myDropzone"></div>
+                </div>
+
+                <!-- filesList -->
+                <div class="filesList">
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img1.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img2.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img3.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img4.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img1.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img2.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img3.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img4.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img1.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img2.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img3.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="file">
+                                <div class="thumb"><img src="{{ asset('img/files/img4.jpg') }}"></div>
+                                <div class="name txtBig">Ja jebe co zdjęcie.jpg</div>
+                                <div class="details">rozmiar: 500kb, data dodania: 22.22.2015</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
         </div>
 
-        {{ form_close() }}
-
-    {% else %}
-
-    <div class="alert alert-info">
-        {{ lang('page.text.no_records') }}
     </div>
-
-    {% endif %}
 
     <!-- margin -->
     <div class="clearfix baseMargin"></div>
@@ -109,16 +175,24 @@
 {% block javascript %}
 
     {{ parent() }}
+
     <script>
 
-        $(document).on("click",'.change_bool',function(){
-
-            var actionUrl = $(this).attr('data-actionUrl').toString();
-            var fieldValue = $(this).prop('checked');
-            var fieldName = $(this).attr('data-name').toString();
-
-            changeBoolean(actionUrl, fieldValue, fieldName);
-
+        // -- dropzone
+        $("#myDropzone").dropzone({
+            maxFilesize: {{ config.upload_max_file_size }},
+            url: "{{ config.upload_action }}",
+            paramName: "file",
+            autoProcessQueue: false,
+            success: function (file, response) {
+                console.log(response);
+               {#if (splitResponse[0] == 1) {
+                   file.previewElement.querySelector(".dz-remove").remove();
+                   file.previewElement.classList.add("dz-success");
+               } else {
+                   return file.previewElement.classList.add("dz-error");
+               }#}
+           }
         });
 
     </script>

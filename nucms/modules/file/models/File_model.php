@@ -4,11 +4,11 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * Class Copythis_model
+ * Class File_model
  */
-class Copythis_model extends MY_Model
+class File_model extends MY_Model
 {
-    public $table = 'nu_copythis';
+    public $table = 'nu_file';
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
@@ -17,7 +17,7 @@ class Copythis_model extends MY_Model
     {
         parent::__construct();
 
-        $this->timestamps = FALSE;
+        $this->timestamps = true;
     }
 
     /**
@@ -31,14 +31,35 @@ class Copythis_model extends MY_Model
         $rules = array();
 
         if ($action == 'add') {
-            $rules['name'] = array('field' => 'name', 'label' => lang('copythis.form.name'), 'rules' => 'required|trim|xss_clean');
+            $rules['name'] = array('field' => 'name', 'label' => lang('file.form.name'), 'rules' => 'required|trim|xss_clean');
         } else {
 
         }
 
         return $rules;
     }
+
+    /**
+     * Get folder lists
+     *
+     * @param int $id_parent
+     * @return type1
+     */
+    public function get_folders($id_parent = null)
+    {
+        $where = [
+            'parent_id' => $id_parent,
+            'type'      => 1
+        ];
+        $folders = $this->get_all($where);
+
+        if ($folders) {
+            return prepare_parent_array($folders);
+        }
+
+        return false;
+    }
 }
 
-/* End of file Copythis_model.php */
-/* Location: ./application/modules/copythis/models/Copythis_model.php */
+/* End of file File_model.php */
+/* Location: ./application/modules/file/models/File_model.php */

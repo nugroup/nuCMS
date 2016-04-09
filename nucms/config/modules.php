@@ -77,4 +77,13 @@ $config['modules'] = [
             ],
         ],
     ],
+    'file' => [
+        'routes' => [
+            'admin_file' => [
+                'route' => 'file',
+                'controller' => 'admin/file_nu',
+                'admin' => true
+            ],
+        ],
+    ],
 ];
