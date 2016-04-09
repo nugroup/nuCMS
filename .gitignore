@@ -7,3 +7,6 @@ application/cache/*
 /application/config/production/*
 /vendor/*
 /upload_files/*
+
+uploads/*
+!uploads/index.html
