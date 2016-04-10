@@ -12,7 +12,16 @@
                 <div class="col-sm-3">
 
                     <button class="btn btn-save btn-sm fileShowUpload" type="button"><i class="fa fa-arrow-down"></i>{{ lang('file.text.add_files') }}</button><br><br>
-                    <button class="btn btn-save btn-sm fildFolderAdd" type="button"><i class="fa fa-plus"></i>{{ lang('file.text.add_folder') }}</button>
+                    
+                    <span class="btn-group dropdown nuDropdown">
+                        <span data-toggle="dropdown" class="txtBig hoverLine">{{ lang('file.text.directory') }} <i class="fa fa-angle-down"></i></span>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <button type="button" name="action" id="fileFolderAdd" value="delete_checked"><i class="fa fa-plus"></i>{{ lang('text.add') }}</button>
+                                <button type="button" name="action" id="fileFolderDelete" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
+                            </li>
+                        </ul>
+                    </span>
 
                     <!-- folderTree -->
                     <div class="folderTreeBox">
@@ -23,7 +32,6 @@
 
                 </div>
                 <div class="col-sm-9">
-                    {{ form_open(current_url(), 'id="files-list-form"') }}
 
                     <div class="row">
                         <div class="col-sm-4">
@@ -34,7 +42,7 @@
                                     <span data-toggle="dropdown" class="txtBig hoverLine">{{ lang('text.choose') }} <i class="fa fa-angle-down"></i></span>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button type="submit" name="action" value="delete_checked"><i class="ion ion-android-delete"></i>{{ lang('text.delete') }}</button>
+                                            <button type="button" name="action" id="fileDeleteChecked" value="delete_checked"><i class="ion ion-android-delete"></i>{{ lang('text.delete') }}</button>
                                         </li>
                                     </ul>
                                 </span>
@@ -75,7 +83,6 @@
                     </div>
 
                     {{ form_input({'type': 'hidden', 'name': 'parent_id', 'class': 'form-control', 'id': 'parent_id_hidden'}) }}
-                    {{ form_close() }}
                 </div>
             </div>
 
@@ -119,6 +126,63 @@
 
         }
 
+        // -- show upload area
+        $(document).on("click",'.fileShowUpload',function(){
+
+            $('.fileUploadBox').toggle();
+            return false;
+
+        });
+
+        // -- file tree
+        $(document).on("click", '.openSubTree', function(){
+
+            $(this).parent().children('ul').slideToggle('fast');
+            $(this).children('i').toggleClass('fa-folder-open-o');
+
+        });
+
+        // -- files delete checked
+        $(document).on("click", '#fileDeleteChecked', function(){
+
+            var filesFormData = $('#files-list-form').serialize();
+
+            $.post('{{ admin_url('file/delete_checked') }}', filesFormData, function(response) {
+
+                if (parseInt(response.result) === 1) {
+                    var parentId = parseInt($('#parent_id_hidden').val());
+                    loadFilesList(parentId, '');
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+            return false;
+
+        });
+
+        // -- add folder action
+        $(document).on('click', '#fileFolderAdd', function () {
+
+            var parentId = parseInt($('#parent_id_hidden').val());
+
+            $.post('{{ admin_url('file/add_folder') }}/'+parentId, function(response) {
+
+                console.log(response);
+                if (parseInt(response.result) === 1) {
+
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+            return false;
+
+        });
+
+
         // -- files list ajax pagination
         $(document).on('click', '.filesListPagination a', function () {
 
@@ -129,9 +193,7 @@
 
         });
 
-        /**
-         * Search action
-         */
+        // -- search action
         $(document).on('keyup', '#filesSearchInput', function () {
 
             var searchString = $(this).val().toString();
@@ -171,10 +233,8 @@
 
                 var parentId = parseInt($('#parent_id_hidden').val());
                 loadFilesList(parentId, '');
-                console.log(response);
 
                 if (parseInt(response.result) === 1) {
-{#                    file.previewElement.querySelector(".dz-remove").remove();#}
                     file.previewElement.classList.add("dz-success");
                 } else {
 

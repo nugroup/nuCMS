@@ -131,6 +131,72 @@ class File_nu extends Backend_Controller
         header('Content-Type: application/json');
         echo json_encode($result);
     }
+
+    /**
+     * Delete checked files
+     *
+     * @throws Exception
+     */
+    public function delete_checked()
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
+        if ($this->input->post('files')) {
+            try {
+
+                foreach ($this->input->post('files') as $file) {
+                    if (!$this->file->delete($file)) {
+                        throw new Exception(lang('file.alert.error.delete'));
+                    }
+                }
+
+                $result = [
+                    'result' => 1,
+                ];
+
+            } catch (Exception $exc) {
+
+                $result = [
+                    'result' => 0,
+                    'errors' => $exc->getMessage()
+                ];
+
+            }
+
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+
+    public function add_folder($parent_id = 0)
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
+        $data = [
+            'type'      => 1,
+            'name'      => lang('file.text.new_folder'),
+            'parent_id' => ($parent_id > 0) ? (int) $parent_id : null,
+        ];
+
+        if ($this->file->insert($data)) {
+            $result = [
+                'result' => 1,
+            ];
+        } else {
+            $result = [
+                'result' => 0,
+                'errors' => lang('file.alert.error.add_folder')
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
 }
 
 /* End of file File_nu.php */

@@ -22,7 +22,7 @@ class Auth_nu extends Backend_Controller
     {
         // Redirect if logged in
         if ($this->auth->logged_in() === TRUE) {
-            redirect(config_item('admin_folder'));
+            redirect(admin_url('page'));
         }
 
         // Set up the form
@@ -36,12 +36,12 @@ class Auth_nu extends Backend_Controller
         if ($this->form_validation->run() == TRUE) {
             // If success
             if ($this->auth->login()) {
-                redirect(config_item('admin_folder'));
+                redirect(admin_url('page'));
             }
             // If error
             else {
                 $this->session->set_flashdata('error', lang('auth.login.error.login'));
-                redirect(config_item('admin_folder').'/auth/login', 'refresh');
+                redirect(admin_url('auth/login'));
             }
         }
 

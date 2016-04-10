@@ -22,6 +22,7 @@ class NU_Controller extends MX_Controller
         $this->load->helper('url');
         $this->load->helper('functions');
         $this->load->helper('widget');
+        $this->load->helper('paths');
 
         // libraires
         $this->load->library('form_validation');

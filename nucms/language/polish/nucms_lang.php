@@ -11,7 +11,7 @@ $lang['text.menu'] = 'Menu';
 $lang['text.language'] = 'Język';
 $lang['text.checked_items'] = 'zaznaczone';
 $lang['text.choose'] = 'wybierz';
-$lang['text.delete'] = 'usuń';
+$lang['text.delete'] = 'Usuń';
 $lang['text.add'] = 'Dodaj';
 $lang['text.save'] = 'Zapisz';
 $lang['text.cancel'] = 'Anuluj';
@@ -57,8 +57,6 @@ $lang['config.user_types.admin'] = 'Administrator';
 $lang['alert.success.delete_checked'] = 'Usunięto zaznaczone elementy';
 $lang['alert.no_records'] = 'Brak elementów';
 $lang['alert.success.saved_changes'] = 'Zapisano zmiany';
-
-
 
 /* actions
 ============================================================================= */

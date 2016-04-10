@@ -1,25 +1,32 @@
-<div class="row">
-    {% for file in files %}
+{{ form_open(current_url(), 'id="files-list-form"') }}
 
-        <div class="col-sm-4">
-            <div class="file">
-                <div class="thumb">
-                    {{ generate_thumbnail(file, '', file.alt, file.title) | raw }}
-                </div>
-                <div class="name txtBig">{{ file.name }}</div>
-                <div class="details">
-                    <p>rozmiar: {{ file.size }}kb</p>
-                    <p>data dodania: {{ file.created_at | date('Y-m-d')}}</p>
+    <div class="row">
+        {% for file in files %}
+
+            <div class="col-sm-4">
+                <div class="file">
+                    <div class="thumb">
+                        <a href="{{ site_url(config.upload_folder~'/'~file.filename) }}" target="_blank">
+                            {{ generate_thumbnail(file, '', file.alt, file.title) | raw }}
+                        </a>
+                    </div>
+                    <div class="name txtBig">{{ file.name }}</div>
+                    <div class="details">
+                        <p>rozmiar: {{ file.size }}kb</p>
+                        <p>data dodania: {{ file.created_at | date('Y-m-d')}}</p>
+                    </div>
+                    {{ form_checkbox({'name': 'files[]', 'value': file.id}) }}
                 </div>
             </div>
-        </div>
 
-    {% else %}
+        {% else %}
 
-        <div class="alert alert-info margin0">{{ lang('file.text.no_records') }}</div>
+            <div class="alert alert-info margin0">{{ lang('file.text.no_records') }}</div>
 
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
+
+{{ form_close() }}
 
 <!-- margin -->
 <div class="clearfix baseMargin-mini"></div>

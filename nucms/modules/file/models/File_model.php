@@ -12,6 +12,7 @@ class File_model extends MY_Model
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
+    public $before_delete = array('delete_file');
 
     function __construct()
     {
@@ -49,7 +50,7 @@ class File_model extends MY_Model
     {
         $folders = $this->db
             ->select('*, id AS folder_id, (SELECT COUNT(*) FROM nu_file WHERE parent_id = folder_id AND type = 0) AS files_in_folder')
-            ->where('parent_id IS NULL AND type = 1')
+            ->where('type', 1)
             ->get($this->table)
             ->result();
 
@@ -69,6 +70,22 @@ class File_model extends MY_Model
     {
         if ($string) {
             $this->db->like('name', $string);
+        }
+    }
+
+    /**
+     * Delete file from server (BEFORE_DELETE EVENT)
+     *
+     * @param array $data
+     */
+    protected function delete_file($data)
+    {
+        if (isset($data['id'])) {
+            $file = $this->get((int) $data['id']);
+
+            if ($file && file_exists(FCPATH.config_item('upload_folder').'/'.$file->filename)) {
+                unlink(FCPATH.config_item('upload_folder').'/'.$file->filename);
+            }
         }
     }
 }

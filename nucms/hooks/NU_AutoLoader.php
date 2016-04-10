@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 /**
  * Bootstrap loader for nuCMS
  *
- * @author nuGroup
+ * @author nugato
  */
 class NU_AutoLoader
 {
