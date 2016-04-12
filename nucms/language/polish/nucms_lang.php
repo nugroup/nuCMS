@@ -19,6 +19,7 @@ $lang['text.confirm'] = 'Zatwierdź';
 
 /* menu
 ============================================================================= */
+$lang['menu.page_preview'] = 'Podgląd strony';
 $lang['menu.desktop'] = 'Pulpit';
 $lang['menu.pages'] = 'Strony';
 $lang['menu.content'] = 'tresc';

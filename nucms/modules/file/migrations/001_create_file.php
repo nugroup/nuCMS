@@ -29,8 +29,8 @@ class Migration_Create_file extends CI_Migration
             'type' => array(
                 'type' => 'TINYINT',
                 'constraint' => 1,
-                'null' => TRUE,
-                'unsigned' => TRUE
+                'unsigned' => TRUE,
+                'default' => 0,
             ),
             'size' => array(
                 'type' => 'decimal',

@@ -19,19 +19,19 @@ if ( ! function_exists('generate_folder_tree')) {
         $result = '';
         $parent_id = (int) $parent_id;
 
+        // home folder
+        if ($parent_id == 0) {
+            $activeHome = (in_array(0, $active_path)) ? ' class="active"' : '';
+            $fileInHomeFolder = (isset($additionalData['files_in_home_folder'])) ? $additionalData['files_in_home_folder'] : 0;
+
+            $result .= '<li id="item_0"'.$activeHome.'>' . PHP_EOL;
+                $result .= '<a href="javascript:void(0);" class="ico openSubTree"><i class="fa fa-folder-o"></i></a>' . PHP_EOL;
+                $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="0">'.lang('file.text.home_folder').' ('.$fileInHomeFolder.')</a>' . PHP_EOL;
+            $result .= '</li>' . PHP_EOL;
+        }
+
         if(isset($items[$parent_id]) && $max_level > $level)
         {
-            // home folder
-            if ($parent_id == 0) {
-                $activeHome = (in_array(0, $active_path)) ? ' class="active"' : '';
-                $fileInHomeFolder = (isset($additionalData['files_in_home_folder'])) ? $additionalData['files_in_home_folder'] : 0;
-
-                $result .= '<li id="item_0"'.$activeHome.'>' . PHP_EOL;
-                    $result .= '<a href="javascript:void(0);" class="ico openSubTree"><i class="fa fa-folder-o"></i></a>' . PHP_EOL;
-                    $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="0">'.lang('file.text.home_folder').' ('.$fileInHomeFolder.')</a>' . PHP_EOL;
-                $result .= '</li>' . PHP_EOL;
-            }
-
             // files folder
             foreach ($items[$parent_id] as $item)
             {

@@ -21,15 +21,7 @@ class Frontend_Controller extends NU_Controller
         $this->lang->load('www', config_item('selected_lang'));
 
         // Set default data
-        $this->data = [
-            'metatags' => [
-                'robots' => '',
-                'googlebot' => '',
-                'title' => '',
-                'keywords' => '',
-                'description' => '',
-            ]
-        ];
+        $this->set_setting();
 
         // Check profiler status
         if ($this->config->item('profiler') && ENVIRONMENT == 'development') {
@@ -54,6 +46,37 @@ class Frontend_Controller extends NU_Controller
         }
         if ($metatags->meta_description != '') {
             $this->data['metatags']['description'] = $metatags->meta_description;
+        }
+    }
+
+    /**
+     * Set default setting from db
+     */
+    public function set_setting()
+    {
+        $this->load->model('setting/setting_model', 'setting');
+
+        $this->data = [
+            'metatags' => [
+                'robots' => '',
+                'googlebot' => '',
+                'title' => '',
+                'keywords' => '',
+                'description' => '',
+            ]
+        ];
+
+        $settings = $this->setting_translations
+            ->where('locale', 'pl')
+            ->with_root()
+            ->get();
+
+        if ($settings) {
+            $settings = prepare_join_data($settings, 'root');
+
+            $this->data['metatags']['title'] = $settings->meta_title;
+            $this->data['metatags']['keywords'] = $settings->meta_keywords;
+            $this->data['metatags']['description'] = $settings->meta_description;
         }
     }
 }
