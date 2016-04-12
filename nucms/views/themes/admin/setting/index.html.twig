@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block subnav %}
+
+    {% include 'setting/subnav.html.twig' %}
+
+{% endblock %}
+
+{% block body %}
+
+    <!-- setting list -->
+    <div class="container">
+
+        <!-- toolbar-->
+        {% include 'setting/toolbar.html.twig' %}
+
+        {{ form_open(current_full_url(), {'id': 'setting-index-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+
+        <div class="row">
+            <div class="col-sm-6">
+
+                <!-- meta_title -->
+                <div class="form-group">
+                    <label for="meta_title" class="col-sm-4 control-label">
+                        <span data-toggle="tooltip" data-placement="top" title="{{ lang('setting.form.meta_title.info') }}">
+                            {{ lang('setting.form.meta_title') }}
+                            <i class="fa fa-info-circle"></i>
+                        </span>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_input({'name': 'meta_title', 'value': setting.meta_title, 'class': 'form-control', 'id': 'meta_title'}) }}
+                    </div>
+                </div>
+
+                <!-- meta_keywords -->
+                <div class="form-group">
+                    <label for="meta_keywords" class="col-sm-4 control-label">
+                        <span data-toggle="tooltip" data-placement="top" title="{{ lang('setting.form.meta_keywords.info') }}">
+                            {{ lang('setting.form.meta_keywords') }}
+                            <i class="fa fa-info-circle"></i>
+                        </span>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_input({'name': 'meta_keywords', 'value': setting.meta_keywords, 'class': 'form-control', 'id': 'meta_keywords'}) }}
+                    </div>
+                </div>
+
+                <!-- meta_description -->
+                <div class="form-group">
+                    <label for="meta_description" class="col-sm-4 control-label">
+                        <span data-toggle="tooltip" data-placement="top" title="{{ lang('setting.form.meta_description.info') }}">
+                            {{ lang('setting.form.meta_description') }}
+                            <i class="fa fa-info-circle"></i>
+                        </span>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_textarea({'name': 'meta_description', 'value': setting.meta_description, 'class': 'form-control', 'id': 'meta_description', 'rows': 6}) }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+
+                <!-- social_facebook -->
+                <div class="form-group">
+                    <label for="social_facebook" class="col-sm-4 control-label">
+                        {{ lang('setting.form.social_facebook') }}
+                        <i class="fa fa-facebook-f"></i>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_input({'name': 'social_facebook', 'value': setting.social_facebook, 'class': 'form-control', 'id': 'social_facebook'}) }}
+                    </div>
+                </div>
+
+                <!-- social_twitter -->
+                <div class="form-group">
+                    <label for="social_twitter" class="col-sm-4 control-label">
+                        {{ lang('setting.form.social_twitter') }}
+                        <i class="fa fa-twitter"></i>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_input({'name': 'social_twitter', 'value': setting.social_twitter, 'class': 'form-control', 'id': 'social_twitter'}) }}
+                    </div>
+                </div>
+
+                <!-- social_youtube -->
+                <div class="form-group">
+                    <label for="social_youtube" class="col-sm-4 control-label">
+                        {{ lang('setting.form.social_youtube') }}
+                        <i class="fa fa-youtube"></i>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_input({'name': 'social_youtube', 'value': setting.social_youtube, 'class': 'form-control', 'id': 'social_youtube'}) }}
+                    </div>
+                </div>
+
+                <!-- social_google -->
+                <div class="form-group">
+                    <label for="social_google" class="col-sm-4 control-label">
+                        {{ lang('setting.form.social_google') }}
+                        <i class="fa fa-google-plus"></i>
+                    </label>
+                    <div class="col-sm-8">
+                        {{ form_input({'name': 'social_google', 'value': setting.social_google, 'class': 'form-control', 'id': 'social_google'}) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-12 text-center">
+                    <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('text.save') }}</button>
+                </div>
+            </div>
+        </div>
+
+        {{ form_close() }}
+
+    </div>
+
+{% endblock %}

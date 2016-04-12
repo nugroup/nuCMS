@@ -86,4 +86,13 @@ $config['modules'] = [
             ],
         ],
     ],
+    'setting' => [
+        'routes' => [
+            'admin_setting' => [
+                'route' => 'setting',
+                'controller' => 'admin/setting_nu',
+                'admin' => true
+            ],
+        ],
+    ],
 ];
