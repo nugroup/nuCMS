@@ -3,9 +3,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Class Migration_Create_copythis
+ * Class Migration_Create_file
  */
-class Migration_Create_copythis extends CI_Migration
+class Migration_Create_file extends CI_Migration
 {
     public function up()
     {
@@ -69,7 +69,7 @@ class Migration_Create_copythis extends CI_Migration
 
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('nu_file');
-        $this->db->query('ALTER TABLE `nu_file` ADD CONSTRAINT `nu_file_parent_id_FK` FOREIGN KEY (`parent_id`) REFERENCES `no_file` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
+        $this->db->query('ALTER TABLE `nu_file` ADD CONSTRAINT `nu_file_parent_id_FK` FOREIGN KEY (`parent_id`) REFERENCES `nu_file` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
     }
 
     public function down()
@@ -79,4 +79,4 @@ class Migration_Create_copythis extends CI_Migration
 }
 
 /* End of file 001_create_file.php */
-/* Location: ./application/modules/copythis/migrations/001_create_file.php */
+/* Location: ./application/modules/file/migrations/001_create_file.php */

@@ -5,10 +5,6 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* copythis
-============================================================================= */
-$lang['copythis'] = '';
-
 /* text
 ============================================================================= */
 $lang['file.text.home_folder'] = 'HOME';

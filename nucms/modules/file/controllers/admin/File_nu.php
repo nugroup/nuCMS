@@ -28,7 +28,7 @@ class File_nu extends Backend_Controller
         // Get folder list and prepare html tree
         $filesInHomeFolder = $this->file
             ->where(['parent_id' => null, 'type' => 0])
-            ->count();
+            ->count_rows();
         $folders = $this->file->get_folders();
         $files_folders_tree = generate_files_folder_tree($folders, 0, [0], 100, 0, ['files_in_home_folder' => $filesInHomeFolder]);
 
@@ -64,7 +64,7 @@ class File_nu extends Backend_Controller
 
         $numberOfItems = $this->file
             ->where($where)
-            ->count();
+            ->count_rows();
         $paginationLimits = $this->initPagination($numberOfItems, $page, 9, admin_url('file/files_list/'.$parent_id));
 
         $this->file->generate_like_query($this->input->get('string'));
@@ -133,7 +133,7 @@ class File_nu extends Backend_Controller
     }
 
     /**
-     * Delete checked files
+     * Delete checked files (AJAX)
      *
      * @throws Exception
      */
@@ -171,6 +171,11 @@ class File_nu extends Backend_Controller
         echo json_encode($result);
     }
 
+    /**
+     * Add folder by parent_id (AJAX)
+     *
+     * @param int $parent_id
+     */
     public function add_folder($parent_id = 0)
     {
         if (!$this->input->is_ajax_request()) {

@@ -46,7 +46,7 @@ class Menu_nu extends Backend_Controller
 
         // Get number of items for pager
         $this->menu->generate_like_query($this->input->get('string'));
-        $numberOfItems = $this->menu->count();
+        $numberOfItems = $this->menu->count_rows();
 
         // Init pagination
         $paginationLimits = $this->initPagination($numberOfItems, $page);

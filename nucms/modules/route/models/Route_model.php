@@ -63,7 +63,7 @@ class Route_model extends MY_Model
         $slugTmp = $slugOk;
 
         $i = 0;
-        while ($route = $this->where(['slug' => $slugTmp, 'url !=' => $url])->count()) {
+        while ($route = $this->where(['slug' => $slugTmp, 'url !=' => $url])->count_rows()) {
             $i++;
             $slugTmp = $slugOk.'-'.$i;
         }

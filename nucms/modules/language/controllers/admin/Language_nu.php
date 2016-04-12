@@ -39,7 +39,7 @@ class Language_nu extends Backend_Controller
 
         // Get number of items for pager
         $this->language->generate_like_query($this->input->get('string'));
-        $numberOfItems = $this->language->count();
+        $numberOfItems = $this->language->count_rows();
 
         // Init pagination
         $paginationLimits = $this->initPagination($numberOfItems, $page);

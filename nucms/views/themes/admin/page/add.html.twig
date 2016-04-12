@@ -30,16 +30,6 @@
             </div>
         </div>
 
-        <!-- margin -->
-        <div class="clearfix baseMargin"></div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <div id="nuBlox"></div>
-                {{ form_textarea({'name': 'content', 'value': set_value('content'), 'class': 'form-control hidden', 'id': 'content'}) }}
-            </div>
-        </div>
-
     </div>
 
     <!-- margin -->
@@ -52,7 +42,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="nuBlox-edit"></div>
+                    {{ form_textarea({'name': 'content', 'value': page.content, 'class': 'form-control tinyEditor', 'id': 'content'}) }}
                     </div>
                 </div>
             </div>
@@ -163,19 +153,6 @@
 
     {{ parent() }}
 
-    <!-- nuBlox -->
-    <script src="{{ asset('js/nublox/handlebars-v4.0.5.js') }}"></script>
-    <script src="{{ asset('js/nublox/jquery.serialize-object.min.js') }}"></script>
-    <script src="{{ asset('js/nublox/nu-blox.min.js') }}"></script>
-
-    {{ nublox | raw }}
-
-    <script>
-        $('#nuBlox').nuBlox({
-            json: '#content', // input or textarea for JSON output
-            modules: ['row', 'html', 'icon'], // available modules
-            edit: '.nuBlox-edit' // edit modules div - default: lightbox editing
-        });
-    </script>
+    {% include('components/tiny_mce.html.twig') %}
 
 {% endblock %}

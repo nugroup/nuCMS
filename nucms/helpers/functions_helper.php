@@ -207,3 +207,40 @@ if (!function_exists('prepare_parent_array')) {
         return $result;
     }
 }
+
+if (!function_exists('prepare_join_data')) {
+    /**
+     * Transfer data from obj->{$fieldName} variable to obj
+     *
+     * @param array/object $data
+     * @return array/object
+     */
+    function prepare_join_data($data, $fieldName)
+    {
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                if (isset($row->{$fieldName})) {
+                    unset($row->{$fieldName}->id);
+
+                    foreach ($row->{$fieldName} as $key => $value) {
+                        $row->{$key} = $value;
+                    }
+
+                    unset($row->{$fieldName});
+                }
+            }
+        } else {
+            if (isset($data->{$fieldName})) {
+                unset($data->{$fieldName}->id);
+
+                foreach ($data->{$fieldName} as $key => $value) {
+                    $data->{$key} = $value;
+                }
+
+                unset($data->{$fieldName});
+            }
+        }
+
+        return $data;
+    }
+}

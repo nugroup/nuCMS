@@ -42,7 +42,7 @@ class User_nu extends Backend_Controller
 
         // Get number of items for pager
         $this->user->generate_like_query($this->input->get('string'));
-        $numberOfItems = $this->user->count();
+        $numberOfItems = $this->user->count_rows();
 
         // Init pagination
         $paginationLimits = $this->initPagination($numberOfItems, $page);
