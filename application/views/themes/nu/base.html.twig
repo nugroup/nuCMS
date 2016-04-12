@@ -84,7 +84,7 @@
     {% block body %}{% endblock %}
 
     <footer id="footer">
-        
+
         {{
             widget('Menu_widget::display', {
                 'position': 2,
@@ -98,6 +98,22 @@
         <span class="copyright">
             Copyright &copy; 2016 nuGroup
         </span>
+
+        <div class="socials">
+            {% if socials.facebook %}
+                <a href="{{ socials.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
+            {% endif %}
+            {% if socials.twitter %}
+                <a href="{{ socials.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+            {% endif %}
+            {% if socials.youtube %}
+                <a href="{{ socials.youtube }}" target="_blank"><i class="fa fa-youtube"></i></a>
+            {% endif %}
+            {% if socials.google %}
+                <a href="{{ socials.google }}" target="_blank"><i class="fa fa-google-plus"></i></a>
+            {% endif %}
+
+        </div>
     </footer>
 
     {% block javascript %}

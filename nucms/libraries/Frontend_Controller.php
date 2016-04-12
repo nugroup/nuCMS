@@ -77,6 +77,13 @@ class Frontend_Controller extends NU_Controller
             $this->data['metatags']['title'] = $settings->meta_title;
             $this->data['metatags']['keywords'] = $settings->meta_keywords;
             $this->data['metatags']['description'] = $settings->meta_description;
+
+            $this->data['socials'] = [
+                'facebook' => $settings->social_facebook,
+                'twitter'  => $settings->social_twitter,
+                'youtube'  => $settings->social_youtube,
+                'google'   => $settings->social_google,
+            ];
         }
     }
 }
