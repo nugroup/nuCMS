@@ -46,7 +46,7 @@ class Page_nu extends Backend_Controller
         $this->page_translations->generate_like_query($this->input->get('string'));
         $numberOfItems = $this->page_translations
             ->where('locale', $locale)
-            ->count();
+            ->count_rows();
 
         // Init pagination
         $paginationLimits = $this->initPagination($numberOfItems, $page);
@@ -55,11 +55,11 @@ class Page_nu extends Backend_Controller
         $pages = $this->page_translations
             ->where('locale', $locale)
             ->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])
-            ->with_root()
+            ->with_root('order_by:created_at,desc')
             ->get_all();
 
         // Set view data
-        $this->data['pages'] = $this->prepare_join_data($pages, 'root');
+        $this->data['pages'] = prepare_join_data($pages, 'root');
         $this->data['pager'] = $this->pagination->create_links();
         $this->data['subnav_active'] = 'index';
         $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
@@ -100,10 +100,10 @@ class Page_nu extends Backend_Controller
 
                 // Set informations
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
-
-                // Redirect
-                redirect(admin_url('page/edit/'.$id));
             }
+
+            // Redirect
+            redirect(admin_url('page/edit/'.$id));
         }
 
         $page = $this->page_translations->where($where)->get();

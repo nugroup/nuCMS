@@ -180,7 +180,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         if ($pages) {
             foreach($pages as $page) {
                 $pageUrl = $CI->config->item('pages_route_controller').$page->page_id.'/'.$page->locale;
-                $routeData = $CI->route->where(['url' => $pageUrl])->count();
+                $routeData = $CI->route->where(['url' => $pageUrl])->count_rows();
 
                 if ($page->locale != config_item('default_locale')) {
                     $pageSlug = $CI->route->prepare_unique_slug($page->title.'-'.$page->locale);
