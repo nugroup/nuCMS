@@ -19,7 +19,7 @@ $config['profiler'] = false;                                                    
 ============================================================================= */
 $config['twig_config'] = [
     'paths' => [NUPATH.'/views/themes/'.$config['theme'], VIEWPATH],
-    'cache' => false,
+//    'cache' => true,
 ];
 $config['twig_user_functions'] = [
     'asset',

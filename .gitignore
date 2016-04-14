@@ -13,3 +13,4 @@ uploads/*
 
 application/config/production/*
 !application/config/production/config.php
+!application/config/production/app.php
