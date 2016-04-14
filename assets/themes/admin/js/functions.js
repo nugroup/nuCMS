@@ -13,7 +13,7 @@ function showConfirmModal(element) {
     var actionUrl = element.attr('href');
     var redirectUrl = element.attr('data-redirectUrl');
     var confirmMsg = element.attr('data-confirmMsg');
-    if(jQuery.type(redirectUrl) === "undefined"){
+    if (jQuery.type(redirectUrl) === "undefined") {
         redirectUrl = '';
     }
 
@@ -42,17 +42,17 @@ function showConfirmModal(element) {
 function deleteItem(idItem, actionUrl, redirectUrl) {
 
     // Make ajax request
-    $.post(actionUrl, {id_item: idItem}, function(results){
+    $.post(actionUrl, {id_item: idItem}, function (results) {
 
         var response = results.results;
 
         // Status 1 - SUCCESS
         if (parseInt(response.status) === 1) {
 
-            if(redirectUrl.toString() !== '') {
+            if (redirectUrl.toString() !== '') {
                 window.location.href = redirectUrl.toString();
             } else {
-                $('#item_' + idItem).fadeOut(300, function() {
+                $('#item_' + idItem).fadeOut(300, function () {
                     $(this).remove();
                     $("#my_modal").modal("hide");
                 });
@@ -81,7 +81,7 @@ function changeBoolean(actionUrl, fieldValue, fieldName) {
         var newValue = 0;
     }
 
-    $.post(actionUrl, { name: fieldName, value: newValue }, function(response){
+    $.post(actionUrl, {name: fieldName, value: newValue}, function (response) {
         if (parseInt(response.result !== 1)) {
             alert("Error");
         }
@@ -117,7 +117,7 @@ function runNestedSortable(element, actionUrl) {
     });
 
     var orderInput = $('#nested_order');
-    if(orderInput.length <= 0) {
+    if (orderInput.length <= 0) {
         $(element).append('<input type="hidden" name="nested_order" id="nested_order" value="">');
     }
 
@@ -128,7 +128,7 @@ function runNestedSortable(element, actionUrl) {
  *
  * @returns {$.fn}
  */
-$.fn.goTo = function() {
+$.fn.goTo = function () {
 
     $('html, body').animate({
         scrollTop: $(this).offset().top + 'px'

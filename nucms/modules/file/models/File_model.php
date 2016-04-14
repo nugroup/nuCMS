@@ -10,34 +10,16 @@ class File_model extends MY_Model
 {
     public $table = 'nu_file';
     public $primary_key = 'id';
-    public $fillable = array();
-    public $protected = array();
-    public $before_delete = array('delete_file');
+    public $fillable = [];
+    public $protected = [];
+    public $before_delete = ['delete_file', 'delete_files_from_folder'];
+    public $rules = [];
 
     function __construct()
     {
         parent::__construct();
 
         $this->timestamps = true;
-    }
-
-    /**
-     * Get validations rules
-     *
-     * @param string $action
-     * @return array
-     */
-    public function get_rules($action = '', $id = 0)
-    {
-        $rules = array();
-
-        if ($action == 'add') {
-            $rules['name'] = array('field' => 'name', 'label' => lang('file.form.name'), 'rules' => 'required|trim|xss_clean');
-        } else {
-
-        }
-
-        return $rules;
     }
 
     /**
@@ -81,12 +63,40 @@ class File_model extends MY_Model
     protected function delete_file($data)
     {
         if (isset($data['id'])) {
-            $file = $this->get((int) $data['id']);
+            $file = $this
+                ->where(['id' => (int) $data['id'], 'type' => 0])
+                ->get();
 
             if ($file && file_exists(FCPATH.config_item('upload_folder').'/'.$file->filename)) {
                 unlink(FCPATH.config_item('upload_folder').'/'.$file->filename);
             }
         }
+
+        return $data;
+    }
+
+    /**
+     * Delete files from server by parent_id (BEFORE_DELETE EVENT)
+     *
+     * @param array $data
+     */
+    protected function delete_files_from_folder($data)
+    {
+        if (isset($data['id'])) {
+            $files = $this
+                ->where(['parent_id' => (int) $data['id'], 'type' => 0])
+                ->get_all();
+
+            if ($files) {
+                foreach ($files as $file) {
+                    if (file_exists(FCPATH.config_item('upload_folder').'/'.$file->filename)) {
+                        unlink(FCPATH.config_item('upload_folder').'/'.$file->filename);
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 }
 

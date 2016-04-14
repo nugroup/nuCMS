@@ -13,21 +13,19 @@
 
                     <button class="btn btn-save btn-sm fileShowUpload" type="button"><i class="fa fa-arrow-down"></i>{{ lang('file.text.add_files') }}</button><br><br>
 
-                    {#<span class="btn-group dropdown nuDropdown">
+                    <span class="btn-group dropdown nuDropdown">
                         <span data-toggle="dropdown" class="txtBig hoverLine">{{ lang('file.text.directory') }} <i class="fa fa-angle-down"></i></span>
                         <ul class="dropdown-menu">
                             <li>
-                                <button type="button" name="action" id="fileFolderAdd" value="delete_checked"><i class="fa fa-plus"></i>{{ lang('text.add') }}</button>
-                                <button type="button" name="action" id="fileFolderDelete" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
+                                <button type="button" id="fileFolderAdd"><i class="fa fa-plus"></i>{{ lang('text.add') }}</button>
+                                <button type="button" id="fileFolderDelete"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
                             </li>
                         </ul>
-                    </span>#}
+                    </span>
 
-                    <!-- folderTree -->
-                    <div class="folderTreeBox">
-                        <ul class="folderTree">
-                            {{ files_folders_tree | raw }}
-                        </ul>
+                    <!-- foldersList -->
+                    <div id="foldersList">
+                        {{ folders_list | raw }}
                     </div>
 
                 </div>
@@ -61,8 +59,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="text-right">
-{#                                <button class="btn btn-save" type="button"><i class="fa fa-check"></i>{{ lang('text.confirm') }}</button>#}
-{#                                <button class="btn btn-red btn-circle btn-margin-left" type="button"><i class="fa fa-times"></i></button>#}
+                                {#                                <button class="btn btn-save" type="button"><i class="fa fa-check"></i>{{ lang('text.confirm') }}</button>#}
+                                {#                                <button class="btn btn-red btn-circle btn-margin-left" type="button"><i class="fa fa-times"></i></button>#}
                             </div>
                         </div>
                     </div>
@@ -111,13 +109,13 @@
         function loadFilesList(parentId, url, suffix) {
 
             if (url.toString() !== '') {
-                $("#filesList").load(url+suffix, function () {
+                $("#filesList").load(url + suffix, function () {
 
                     $('body').goTo();
 
                 });
             } else {
-                $("#filesList").load('{{ admin_url('file/files_list') }}/' + parentId+suffix, function () {
+                $("#filesList").load('{{ admin_url('file/files_list') }}/' + parentId + suffix, function () {
 
                     $('body').goTo();
 
@@ -126,8 +124,21 @@
 
         }
 
+        /**
+         * Load folders list view
+         *
+         * @param {int} activeId
+         */
+        function loadFoldersList(activeId) {
+
+            $("#foldersList").load('{{ admin_url('file/folders_list') }}/' + activeId, function (response) {
+                console.log(response);
+            });
+
+        }
+
         // -- show upload area
-        $(document).on("click",'.fileShowUpload',function(){
+        $(document).on("click", '.fileShowUpload', function () {
 
             $('.fileUploadBox').toggle();
             return false;
@@ -135,23 +146,24 @@
         });
 
         // -- file tree
-        $(document).on("click", '.openSubTree', function(){
+        $(document).on("click", '.openSubTree', function () {
 
             $(this).parent().children('ul').slideToggle('fast');
             $(this).children('i').toggleClass('fa-folder-open-o');
 
         });
 
-        // -- files delete checked
-        $(document).on("click", '#fileDeleteChecked', function(){
+        // -- delete checked files
+        $(document).on("click", '#fileDeleteChecked', function () {
 
             var filesFormData = $('#files-list-form').serialize();
 
-            $.post('{{ admin_url('file/delete_checked') }}', filesFormData, function(response) {
+            $.post('{{ admin_url('file/delete_checked') }}', filesFormData, function (response) {
 
                 if (parseInt(response.result) === 1) {
                     var parentId = parseInt($('#parent_id_hidden').val());
                     loadFilesList(parentId, '');
+                    loadFoldersList(parentId);
                 } else {
                     alert(response.errors);
                 }
@@ -167,11 +179,10 @@
 
             var parentId = parseInt($('#parent_id_hidden').val());
 
-            $.post('{{ admin_url('file/add_folder') }}/'+parentId, function(response) {
+            $.post('{{ admin_url('file/add_folder') }}/' + parentId, function (response) {
 
-                console.log(response);
                 if (parseInt(response.result) === 1) {
-
+                    loadFoldersList(parentId);
                 } else {
                     alert(response.errors);
                 }
@@ -182,6 +193,29 @@
 
         });
 
+        // -- delete folder action
+        $(document).on('click', '#fileFolderDelete', function () {
+
+            if(confirm('{{ lang('file.text.folder_confirm_delete') }}')) {
+
+                var folderId = parseInt($('#parent_id_hidden').val());
+
+                $.post('{{ admin_url('file/delete_folder') }}/' + folderId, function (response) {
+
+                    if (parseInt(response.result) === 1) {
+                        loadFilesList(0, '');
+                        loadFoldersList(0);
+                    } else {
+                        alert(response.errors);
+                    }
+
+                });
+
+            }
+
+            return false;
+
+        });
 
         // -- files list ajax pagination
         $(document).on('click', '.filesListPagination a', function () {
@@ -199,7 +233,7 @@
             var searchString = $(this).val().toString();
 
             if (searchString !== '') {
-                loadFilesList(0, '', '?string='+searchString);
+                loadFilesList(0, '', '?string=' + searchString);
                 $('.folderTree li').removeClass('active');
             } else {
                 loadFilesList(0, '');
@@ -226,16 +260,18 @@
         Dropzone.autoDiscover = false;
         $("#myDropzone").dropzone({
             maxFilesize:{{ config.upload_max_file_size }},
-            url: "{{ config.upload_action }}",
+                    url: "{{ config.upload_action }}",
             paramName: "file",
             autoProcessQueue: true,
             success: function (file, response) {
 
                 var parentId = parseInt($('#parent_id_hidden').val());
                 loadFilesList(parentId, '');
+                loadFoldersList(parentId);
 
                 if (parseInt(response.result) === 1) {
                     file.previewElement.classList.add("dz-success");
+
                 } else {
 
                     if (response.errors) {

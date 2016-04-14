@@ -35,12 +35,19 @@ if ( ! function_exists('generate_folder_tree')) {
             // files folder
             foreach ($items[$parent_id] as $item)
             {
-                $ico = (in_array($item->id, $active_path)) ? '<i class="fa fa-folder-open-o"></i>' : '<i class="fa fa-folder-o"></i>';
+                // Set active class and ico
+                if (in_array($item->id, $active_path)) {
+                    $activeClass = ' class="active"';
+                    $ico = '<i class="fa fa-folder-open-o"></i>';
+                } else {
+                    $activeClass = '';
+                    $ico = '<i class="fa fa-folder-o"></i>';
+                }
 
                 // Items with children
                 if(isset($items[$item->id]) && count($items[$item->id]) > 0)
                 {
-                    $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
+                    $result .= '<li id="item_' . $item->id. '"'.$activeClass.'>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.' ('.$item->files_in_folder.')</a>' . PHP_EOL;
                         $result .= '<ul class="subtree">' . PHP_EOL;
@@ -51,7 +58,7 @@ if ( ! function_exists('generate_folder_tree')) {
                 // Items without children
                 else
                 {
-                    $result .= '<li id="item_' . $item->id. '">' . PHP_EOL;
+                    $result .= '<li id="item_' . $item->id. '"'.$activeClass.'>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.' ('.$item->files_in_folder.')</a>' . PHP_EOL;
                     $result .= '</li>' . PHP_EOL;

@@ -15,6 +15,7 @@ $lang['file.text.clear_files'] = 'Wyczyść';
 $lang['file.text.no_records'] = 'Nie znaleziono żadnych plików';
 $lang['file.text.directory'] = 'Folder';
 $lang['file.text.new_folder'] = 'Nowy folder';
+$lang['file.text.folder_confirm_delete'] = 'Czy napewno chcesz usunąć ten folder?';
 
 /* dropzone
 ============================================================================= */
@@ -25,3 +26,4 @@ $lang['file.dropzone.response_error'] = 'Wystąpił błąd serwera. Kod błędu:
 ============================================================================= */
 $lang['file.alert.error.delete'] = 'Nie udało się usunąć pliku.';
 $lang['file.alert.error.add_folder'] = 'Nie udało się dodać folderu.';
+$lang['file.alert.error.delete_folder'] = 'Nie udało się usunąć folderu';
