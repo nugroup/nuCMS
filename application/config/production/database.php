@@ -63,11 +63,11 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-        'dsn'      => 'mysql:host=sql.serwer1597361.home.pl;dbname=18087390_nucms',
-	'hostname' => '18087390_nucms',
-	'username' => '18087390_nucms',
-	'password' => 'n_DdnY#fJhfa',
-	'database' => 'default',
+        'dsn'      => 'mysql:host=##HOST##;dbname=##DBNAME##',
+        //	'hostname' => 'localhost',
+ 	'username' => '##USERNAME##',
+ 	'password' => '##PASSWORD##',
+ 	'database' => '##DBNAME##',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
