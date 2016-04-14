@@ -1,16 +1,29 @@
-/.git/
-application/logs/*
+.DS_Store
+
+application/config/production/database.php
+
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
-/nbproject/*
-/application/config/production/*
-/vendor/*
-/upload_files/*
+
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
 
 uploads/*
 !uploads/index.html
 
-application/config/production/*
-!application/config/production/config.php
-!application/config/production/app.php
+/.git/
+/vendor/
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+## Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
