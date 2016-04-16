@@ -24,7 +24,7 @@ class Setting_nu extends Backend_Controller
      */
     public function index()
     {
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $settings = $this->setting_translations
             ->where('locale', $locale)
             ->with_root()

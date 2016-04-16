@@ -35,7 +35,7 @@
                             {% for language in languages %}
                                 <tr id="item_{{ language.id }}">
                                     <td>
-                                        <label class="checkboxIcon">
+                                        <label class="checkboxIcon{{ language.default == 1 ? ' default' : '' }}">
                                             {{ form_checkbox({'name': 'check_item['~language.id~']', 'class': 'check_item', 'value': 1}) }}
                                             <i class="ion ion-checkmark"></i>
                                             <img class="flag" src="{{ asset('img/flags/'~language.locale~'.png') }}" alt="{{ locale.name }}">

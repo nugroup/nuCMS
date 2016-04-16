@@ -72,6 +72,11 @@ class Language_nu extends Backend_Controller
         // If post is send
         if ($this->input->post()) {
 
+            // Uncheck all language as default if default is checked in current
+            if ($this->input->post('default')) {
+                $this->language->update(['default' => 0]);
+            }
+
             $result = $this->language->from_form(NULL, [], array('id' => $id))->update();
 
             if ($result) {
@@ -99,6 +104,11 @@ class Language_nu extends Backend_Controller
     {
         // If post is send
         if ($this->input->post()) {
+            // Uncheck all language as default if default is checked in current
+            if ($this->input->post('default')) {
+                $this->language->update(['default' => 0]);
+            }
+
             $inserted_id = $this->language->from_form()->insert();
 
             if ($inserted_id) {

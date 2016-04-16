@@ -23,12 +23,14 @@ class LanguageFixture implements FixturesInterface
                 'locale'      => 'pl',
                 'folder_name' => 'polish',
                 'active'      => 1,
+                'default'     => 1,
             ],
             [
                 'name'        => 'Angielski',
                 'locale'      => 'en',
                 'folder_name' => 'english',
                 'active'      => 1,
+                'default'     => 0,
             ],
         ];
 

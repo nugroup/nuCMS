@@ -35,6 +35,23 @@
                 </div>
             </div>
 
+            <!-- default -->
+            <div class="form-group">
+                <label for="default" class="col-sm-2 col-sm-offset-2 control-label">
+                    <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.default.info') }}">
+                        {{ lang('language.form.default') }}
+                        <i class="fa fa-info-circle"></i>
+                    </span>
+                </label>
+                <div class="col-sm-5">
+                    <span class="superCheck">
+                        <label for="default"></label>
+                        {{ form_checkbox({'name': 'default', 'id': 'default'}, 1, set_value('default')) }}
+                        <span></span>
+                    </span>
+                </div>
+            </div>
+
             <!-- locale -->
             <div class="form-group">
                 <label for="locale" class="col-sm-2 col-sm-offset-2 control-label">

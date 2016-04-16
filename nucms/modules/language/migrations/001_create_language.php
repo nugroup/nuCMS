@@ -35,6 +35,10 @@ class Migration_Create_language extends CI_Migration
                 'type' => 'BOOLEAN',
                 'default' => 0
             ),
+            'default' => array(
+                'type' => 'BOOLEAN',
+                'default' => 0
+            ),
         ));
 
         $this->dbforge->add_key('id', TRUE);

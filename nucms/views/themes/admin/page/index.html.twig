@@ -50,7 +50,7 @@
                                         </span>
                                     </td>
                                 <td>
-                                    <a href="{{ admin_url('page/edit/'~page.page_id) }}"><i class="ion ion-android-create tableActions-edit"></i></a>
+                                    <a href="{{ admin_url('page/edit/'~page.page_id~'?locale='~locale) }}"><i class="ion ion-android-create tableActions-edit"></i></a>
                                     <a href="{{ admin_url('page/delete') }}" rel="{{ page.page_id }}" class="deleteRecord" data-confirmMsg="{{ lang('page.text.confirm_delete') }}"><i class="ion ion-android-delete tableActions-delete"></i></a>
                                 </td>
                             </tr>

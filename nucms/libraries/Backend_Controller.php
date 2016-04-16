@@ -131,6 +131,9 @@ class Backend_Controller extends NU_Controller
         if ($languages) {
             foreach ($languages as $language) {
                 $locales[$language->locale] = $language;
+                if ($language->default == 1) {
+                    $this->config->set_item('default_locale', $language->locale);
+                }
             }
 
             $this->config->set_item('system_languages', $languages);

@@ -27,7 +27,7 @@ class Page_nu extends Backend_Controller
     {
         // Set default variables
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
 
         // Delete checked item
@@ -61,6 +61,7 @@ class Page_nu extends Backend_Controller
         // Set view data
         $this->data['pages'] = prepare_join_data($pages, 'root');
         $this->data['pager'] = $this->pagination->create_links();
+        $this->data['locale'] = $locale;
         $this->data['subnav_active'] = 'index';
         $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
 
@@ -75,7 +76,7 @@ class Page_nu extends Backend_Controller
      */
     public function edit($id)
     {
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('selected_locale');
+        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $where = [
             'page_id' => $id,
             'locale' => $locale
