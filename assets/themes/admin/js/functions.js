@@ -54,10 +54,18 @@ function deleteItem(idItem, actionUrl, redirectUrl) {
             } else {
                 $('#item_' + idItem).fadeOut(300, function () {
                     $(this).remove();
-                    $("#my_modal").modal("hide");
                 });
             }
+
+            $("#my_modal").modal("hide");
+
+        } else {
+
+            $("#my_modal").modal("hide");
+            alert(response.errors);
+
         }
+
 
     });
 

@@ -167,21 +167,31 @@ class Language_nu extends Backend_Controller
             $id = $this->input->post('id_item');
             if ($id > 0) {
                 try {
+                    $language = $this->language->get($id);
+
+                    if ($language && $language->default == 1) {
+                        throw new Exception(lang('language.alert.error.delete_default'));
+                    }
+
                     // Delete language
                     if (!$this->language->delete($id)) {
                         throw new Exception(lang('language.alert.error.delete'));
                     }
 
                     // Set response data
-                    $result['message'] = lang('language.alert.success.delete');
-                    $result['status'] = 1;
+                    $result = [
+                        'status'  => 1,
+                        'message' => lang('language.alert.success.delete')
+                    ];
                 } catch (Exception $ex) {
                     // Log error message
                     $this->set_log($ex->getMessage());
 
                     // Set response data
-                    $result['message'] = $ex->getMessage();
-                    $result['status'] = 0;
+                    $result = [
+                        'status' => 0,
+                        'errors' => $ex->getMessage(),
+                    ];
                 }
             }
         }

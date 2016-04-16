@@ -29,6 +29,7 @@ $lang['language.list.active'] = 'Aktywność';
 $lang['language.alert.success.add'] = 'Dodano nowy język';
 $lang['language.alert.success.delete'] = 'Usunięto język';
 $lang['language.alert.error.delete'] = 'Nie udało się usunąć języka';
+$lang['language.alert.error.delete_default'] = 'Nie można usunąć domyślnego języka.';
 
 /* form
 ============================================================================= */
