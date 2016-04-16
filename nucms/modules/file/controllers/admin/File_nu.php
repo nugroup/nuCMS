@@ -25,18 +25,9 @@ class File_nu extends Backend_Controller
      */
     public function index()
     {
-        // Get folder list and prepare html tree
-//        $filesInHomeFolder = $this->file
-//            ->where(['parent_id' => null, 'type' => 0])
-//            ->count_rows();
-//        $folders = $this->file->get_folders();
-//        $files_folders_tree = generate_files_folder_tree($folders, 0, [0], 100, 0, ['files_in_home_folder' => $filesInHomeFolder]);
-
         // Set view data
-//        $this->data['folders'] = $folders;
         $this->data['files_list'] = $this->files_list(0, 1);
         $this->data['folders_list'] = $this->folders_list(0, 1);
-//        $this->data['files_folders_tree'] = $files_folders_tree;
 
         // Load the view
         $this->render('file/index', $this->data);
@@ -202,33 +193,6 @@ class File_nu extends Backend_Controller
     }
 
     /**
-     * Delete folder by id (AJAX)
-     *
-     * @param int $id
-     */
-    public function delete_folder($id)
-    {
-        if (!$this->input->is_ajax_request()) {
-            show_404();
-        }
-
-        if ($this->file->delete($id)) {
-            $result = [
-                'result' => 1,
-            ];
-        } else {
-            $this->set_log(lang('ile.alert.error.delete_folder'));
-            $result = [
-                'result' => 0,
-                'errors' => lang('file.alert.error.delete_folder')
-            ];
-        }
-
-        header('Content-Type: application/json');
-        echo json_encode($result);
-    }
-
-    /**
      * Add folder by parent_id (AJAX)
      *
      * @param int $parent_id
@@ -254,6 +218,64 @@ class File_nu extends Backend_Controller
             $result = [
                 'result' => 0,
                 'errors' => lang('file.alert.error.add_folder')
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+    
+    /**
+     * Save folder name (AJAX)
+     *
+     * @param int $id
+     */
+    public function save_folder($id)
+    {
+        if (!$this->input->is_ajax_request() || !$this->input->post()) {
+            show_404();
+        }
+
+        $data = [
+            'name' => $this->input->post('name'),
+        ];
+
+        if ($this->file->update($data, (int) $id)) {
+            $result = [
+                'result' => 1,
+            ];
+        } else {
+            $this->set_log(lang('file.alert.error.save_folder'));
+            $result = [
+                'result' => 0,
+                'errors' => lang('file.alert.error.save_folder')
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+
+    /**
+     * Delete folder by id (AJAX)
+     *
+     * @param int $id
+     */
+    public function delete_folder($id)
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
+        if ($this->file->delete($id)) {
+            $result = [
+                'result' => 1,
+            ];
+        } else {
+            $this->set_log(lang('ile.alert.error.delete_folder'));
+            $result = [
+                'result' => 0,
+                'errors' => lang('file.alert.error.delete_folder')
             ];
         }
 

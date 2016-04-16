@@ -18,6 +18,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <button type="button" id="fileFolderAdd"><i class="fa fa-plus"></i>{{ lang('text.add') }}</button>
+                                <button type="button" id="fileFolderEdit"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</button>
                                 <button type="button" id="fileFolderDelete"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
                             </li>
                         </ul>
@@ -193,10 +194,43 @@
 
         });
 
+        // -- edit folder action
+        $(document).on('click', '#fileFolderEdit', function () {
+
+            var folderId = parseInt($('#parent_id_hidden').val());
+
+            $('.fileFolderName[data-parent_id="' + folderId + '"]').hide();
+            $('.filefolderInput[data-parent_id="' + folderId + '"]').css('display', 'block').focus();
+            hideNuDropdown();
+
+            return false;
+
+        });
+
+        $(document).on('change', '.filefolderInput', function () {
+
+            var folderId = parseInt($(this).attr('data-parent_id'));
+            var newValue = $(this).val().toString();
+            var thisObj = $(this);
+
+            $.post('{{ admin_url('file/save_folder') }}/' + folderId, {name: newValue}, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    thisObj.hide();
+                    $('.fileFolderName[data-parent_id="' + folderId + '"]').children('.insideName').html(newValue);
+                    $('.fileFolderName[data-parent_id="' + folderId + '"]').show();
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+        });
+
         // -- delete folder action
         $(document).on('click', '#fileFolderDelete', function () {
 
-            if(confirm('{{ lang('file.text.folder_confirm_delete') }}')) {
+            if (confirm('{{ lang('file.text.folder_confirm_delete') }}')) {
 
                 var folderId = parseInt($('#parent_id_hidden').val());
 
@@ -205,6 +239,7 @@
                     if (parseInt(response.result) === 1) {
                         loadFilesList(0, '');
                         loadFoldersList(0);
+                        hideNuDropdown();
                     } else {
                         alert(response.errors);
                     }

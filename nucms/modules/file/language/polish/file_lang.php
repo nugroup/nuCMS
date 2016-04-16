@@ -26,4 +26,5 @@ $lang['file.dropzone.response_error'] = 'Wystąpił błąd serwera. Kod błędu:
 ============================================================================= */
 $lang['file.alert.error.delete'] = 'Nie udało się usunąć pliku.';
 $lang['file.alert.error.add_folder'] = 'Nie udało się dodać folderu.';
+$lang['file.alert.error.save_folder'] = 'Nie udało się zapisać folderu';
 $lang['file.alert.error.delete_folder'] = 'Nie udało się usunąć folderu';

@@ -89,6 +89,9 @@ function changeBoolean(actionUrl, fieldValue, fieldName) {
 
 }
 
+function hideNuDropdown() {
+    $('.dropdown-menu').slideUp(200);
+}
 
 /**
  * Run nested sortable

@@ -49,7 +49,8 @@ if ( ! function_exists('generate_folder_tree')) {
                 {
                     $result .= '<li id="item_' . $item->id. '"'.$activeClass.'>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.' ('.$item->files_in_folder.')</a>' . PHP_EOL;
+                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList fileFolderName" data-parent_id="'.$item->id.'"><span class="insideName">'.$item->name.'</span> ('.$item->files_in_folder.')</a>' . PHP_EOL;
+                        $result .= form_input(['class' => 'form-control filefolderInput', 'value' => $item->name, 'data-parent_id' => $item->id]);
                         $result .= '<ul class="subtree">' . PHP_EOL;
                             $result .= generate_files_folder_tree($items, $item->id, $active_path, $max_level, $level + 1);
                         $result .= '</ul>' . PHP_EOL;
@@ -60,7 +61,8 @@ if ( ! function_exists('generate_folder_tree')) {
                 {
                     $result .= '<li id="item_' . $item->id. '"'.$activeClass.'>' . PHP_EOL;
                         $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="'.$item->id.'">'.$item->name.' ('.$item->files_in_folder.')</a>' . PHP_EOL;
+                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList fileFolderName" data-parent_id="'.$item->id.'"><span class="insideName">'.$item->name.'</span> ('.$item->files_in_folder.')</a>' . PHP_EOL;
+                        $result .= form_input(['class' => 'form-control filefolderInput', 'value' => $item->name, 'data-parent_id' => $item->id]);
                     $result .= '</li>' . PHP_EOL;
                 }
             }
