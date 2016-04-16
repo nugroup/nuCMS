@@ -50,6 +50,7 @@ function deleteItem(idItem, actionUrl, redirectUrl) {
         if (parseInt(response.status) === 1) {
 
             if (redirectUrl.toString() !== '') {
+                showBeforeUnload = false;
                 window.location.href = redirectUrl.toString();
             } else {
                 $('#item_' + idItem).fadeOut(300, function () {
@@ -104,6 +105,7 @@ function hideNuDropdown() {
 /**
  * Run nested sortable
  *
+ * @param {object} element
  * @param {string} actionUrl
  */
 function runNestedSortable(element, actionUrl) {

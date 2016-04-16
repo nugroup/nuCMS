@@ -124,3 +124,17 @@
     </div>
 
 {% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#setting-index-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
+
+{% endblock %}

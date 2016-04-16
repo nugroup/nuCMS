@@ -14,7 +14,7 @@
 
     </div>
 
-    {{ form_open(current_full_url(), {'id': 'page-add-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+    {{ form_open(current_full_url(), {'id': 'page-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
     <div class="container">
 
@@ -154,5 +154,13 @@
     {{ parent() }}
 
     {% include('components/tiny_mce.html.twig') %}
+
+    <script>
+
+        $(document).on('change', '#page-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
 
 {% endblock %}

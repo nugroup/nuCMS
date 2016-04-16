@@ -12,87 +12,101 @@
 
         {{ form_open(current_url(), {'id': 'language-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
-            <!-- margin -->
-            <div class="clearfix baseMargin"></div>
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
 
-            <!-- name -->
-            <div class="form-group">
-                <label for="name" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('language.form.name') }}</label>
-                <div class="col-sm-5">
-                    {{ form_input({'name': 'name', 'value': language.name, 'class': 'form-control', 'id': 'name', 'required': 'required' }) }}
+        <!-- name -->
+        <div class="form-group">
+            <label for="name" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('language.form.name') }}</label>
+            <div class="col-sm-5">
+                {{ form_input({'name': 'name', 'value': language.name, 'class': 'form-control', 'id': 'name', 'required': 'required' }) }}
+            </div>
+        </div>
+
+        <!-- active -->
+        <div class="form-group">
+            <label for="active" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('language.form.active') }}</label>
+            <div class="col-sm-5">
+                <span class="superCheck">
+                    <label for="active"></label>
+                    {{ form_checkbox({'name': 'active', 'id': 'active'}, 1, language.active) }}
+                    <span></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- default -->
+        <div class="form-group">
+            <label for="default" class="col-sm-2 col-sm-offset-2 control-label">
+                <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.default.info') }}">
+                    {{ lang('language.form.default') }}
+                    <i class="fa fa-info-circle"></i>
+                </span>
+            </label>
+            <div class="col-sm-5">
+                <span class="superCheck">
+                    <label for="default"></label>
+                    {{ form_checkbox({'name': 'default', 'id': 'default'}, 1, language.default) }}
+                    <span></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- locale -->
+        <div class="form-group">
+            <label for="locale" class="col-sm-2 col-sm-offset-2 control-label">
+                <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.locale.info') }}">
+                    {{ lang('language.form.locale') }}
+                    <i class="fa fa-info-circle"></i>
+                </span>
+            </label>
+            <div class="col-sm-5">
+                {{ form_input({'name': 'locale', 'value': language.locale, 'class': 'form-control', 'id': 'locale', 'required': 'required' }) }}
+            </div>
+        </div>
+
+        <!-- folder_name -->
+        <div class="form-group">
+            <label for="folder_name" class="col-sm-2 col-sm-offset-2 control-label">
+                <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.folder_name.info') }}">
+                    {{ lang('language.form.folder_name') }}
+                    <i class="fa fa-info-circle"></i>
+                </span>
+            </label>
+            <div class="col-sm-5">
+                {{ form_input({'name': 'folder_name', 'value': language.folder_name, 'class': 'form-control', 'id': 'folder_name', 'required': 'required' }) }}
+            </div>
+        </div>
+
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
+
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-12 text-center">
+                    <a href="{{ admin_url('language/delete') }}" rel="{{ language.id }}" class="btn btn-red btn-margin-left btn-margin-right deleteRecord" data-confirmMsg="{{ lang('language.text.confirm_delete') }}" data-redirectUrl="{{ admin_url('language') }}"><i class="ion ion-android-delete tableActions-delete"></i>{{ lang('language.text.delete') }}</a>
+                    <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('text.save') }}</button>
                 </div>
             </div>
-
-            <!-- active -->
-            <div class="form-group">
-                <label for="active" class="col-sm-2 col-sm-offset-2 control-label">{{ lang('language.form.active') }}</label>
-                <div class="col-sm-5">
-                    <span class="superCheck">
-                        <label for="active"></label>
-                        {{ form_checkbox({'name': 'active', 'id': 'active'}, 1, language.active) }}
-                        <span></span>
-                    </span>
-                </div>
-            </div>
-
-            <!-- default -->
-            <div class="form-group">
-                <label for="default" class="col-sm-2 col-sm-offset-2 control-label">
-                    <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.default.info') }}">
-                        {{ lang('language.form.default') }}
-                        <i class="fa fa-info-circle"></i>
-                    </span>
-                </label>
-                <div class="col-sm-5">
-                    <span class="superCheck">
-                        <label for="default"></label>
-                        {{ form_checkbox({'name': 'default', 'id': 'default'}, 1, language.default) }}
-                        <span></span>
-                    </span>
-                </div>
-            </div>
-
-            <!-- locale -->
-            <div class="form-group">
-                <label for="locale" class="col-sm-2 col-sm-offset-2 control-label">
-                    <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.locale.info') }}">
-                        {{ lang('language.form.locale') }}
-                        <i class="fa fa-info-circle"></i>
-                    </span>
-                </label>
-                <div class="col-sm-5">
-                    {{ form_input({'name': 'locale', 'value': language.locale, 'class': 'form-control', 'id': 'locale', 'required': 'required' }) }}
-                </div>
-            </div>
-
-            <!-- folder_name -->
-            <div class="form-group">
-                <label for="folder_name" class="col-sm-2 col-sm-offset-2 control-label">
-                    <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.folder_name.info') }}">
-                        {{ lang('language.form.folder_name') }}
-                        <i class="fa fa-info-circle"></i>
-                    </span>
-                </label>
-                <div class="col-sm-5">
-                    {{ form_input({'name': 'folder_name', 'value': language.folder_name, 'class': 'form-control', 'id': 'folder_name', 'required': 'required' }) }}
-                </div>
-            </div>
-
-            <!-- margin -->
-            <div class="clearfix baseMargin"></div>
-
-            <!-- buttons -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="col-xs-12 text-center">
-                        <a href="{{ admin_url('language/delete') }}" rel="{{ language.id }}" class="btn btn-red btn-margin-left btn-margin-right deleteRecord" data-confirmMsg="{{ lang('language.text.confirm_delete') }}" data-redirectUrl="{{ admin_url('language') }}"><i class="ion ion-android-delete tableActions-delete"></i>{{ lang('language.text.delete') }}</a>
-                        <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('text.save') }}</button>
-                    </div>
-                </div>
-            </div>
+        </div>
 
         {{ form_close() }}
 
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#language-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
 
 {% endblock %}

@@ -107,6 +107,10 @@
     <script src="{{ asset('js/jquery.mjs.nestedSortable.js') }}"></script>
     <script>
 
+        $(document).on('change', '#menu-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
         // -- run nested sortable after load
         runNestedSortable('.menu-items', '');
 
@@ -159,6 +163,8 @@
             $('.addItem').hide();
             $('.addButtons').show();
 
+            showBeforeUnload = true;
+
             return false;
 
         });
@@ -173,6 +179,8 @@
             // Get sort
             var oSortable = $('.menu-items').nestedSortable('serialize');
             $('#nested_order').val(oSortable);
+
+            showBeforeUnload = true;
 
         });
 
@@ -196,6 +204,8 @@
             // Close edit inputs
             $('.editItem').hide();
             $('.addButtons').show();
+
+            showBeforeUnload = true;
 
             return false;
 

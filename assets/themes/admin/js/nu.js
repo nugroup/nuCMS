@@ -1,19 +1,40 @@
-;(function() {
+'use strict';
 
-    'use strict';
+// Global variables
+var showBeforeUnload = false;
+
+;
+(function () {
+
+    // ----- check changes before leaving page
+    $(window).bind('beforeunload', function (e) {
+
+        if (showBeforeUnload === true) {
+            return "AAA";
+        }
+
+    });
+    // ----- uncheck beforeUnload event when we submit the form
+    $(document).on('submit', 'form', function () {
+
+        showBeforeUnload = false;
+
+    });
+
 
     // ----- extra bootstrap dropdown
-    $(document).on('show.bs.dropdown', '.nuDropdown', function(e) {
+    $(document).on('show.bs.dropdown', '.nuDropdown', function (e) {
         var list = $(this).find('.dropdown-menu').first().stop(true, true);
         list.slideDown(200);
     });
-    $(document).on('hide.bs.dropdown', '.nuDropdown', function(e) {
+    $(document).on('hide.bs.dropdown', '.nuDropdown', function (e) {
         var list = $(this).find('.dropdown-menu').first().stop(true, true);
         list.slideUp(200);
     });
 
+
     // ----- bootstrap dropdown as select
-    $(document).on('click', '.dropAsSelect .dropdown-menu li', function() {
+    $(document).on('click', '.dropAsSelect .dropdown-menu li', function () {
 
         var value = $(this).attr('data-value');
         var title = $(this).find('span').html();
@@ -21,34 +42,35 @@
         var icon = span.find('i');
         var input = $(this).closest('.dropAsSelect').find('input');
         input.val(value);
-        span.html(title+' ').append(icon);
+        span.html(title + ' ').append(icon);
 
     });
+
 
     // ----- bootstrap big input group focus
     $('.bigInput input')
-    .focus( function() {
-        $(this).addClass('jsFocus').prev().addClass('jsFocus');
-    })
-    .blur( function() {
-        $(this).removeClass('jsFocus').prev().removeClass('jsFocus');
-    });
+            .focus(function () {
+                $(this).addClass('jsFocus').prev().addClass('jsFocus');
+            })
+            .blur(function () {
+                $(this).removeClass('jsFocus').prev().removeClass('jsFocus');
+            });
 
 
     // ----- open/close menu
-    $('.menuTrigger').on('click', function(){
+    $('.menuTrigger').on('click', function () {
         $('.bodyHide').addClass('bodyHideOn');
         $('#menu').addClass('menuOpen');
     });
 
-    $('.closeMenu, .bodyHide').on('click', function(){
+    $('.closeMenu, .bodyHide').on('click', function () {
         $('.bodyHide').removeClass('bodyHideOn');
         $('#menu').removeClass('menuOpen');
     });
 
 
     // ----- show delete confirm modal window
-    $(document).on('click', '.deleteRecord', function() {
+    $(document).on('click', '.deleteRecord', function () {
 
         showConfirmModal($(this));
         return false;
@@ -58,24 +80,26 @@
 
     // ----- check all items
     var checked_all = 0;
-    $('.check_all').click(function(){
-        if(checked_all === 0){
-            $('.check_item').each(function(){
+    $('.check_all').click(function () {
+        if (checked_all === 0) {
+            $('.check_item').each(function () {
                 $(this).prop('checked', true);
             });
         } else {
-            $('.check_item').each(function(){
+            $('.check_item').each(function () {
                 $(this).prop('checked', false);
             });
         }
 
-        if(checked_all === 1) checked_all = 0;
-        else checked_all = 1;
+        if (checked_all === 1)
+            checked_all = 0;
+        else
+            checked_all = 1;
     });
 
 
     // ----- Update boolean field in database by AJAX
-    $(document).on("click",'.change_bool',function(){
+    $(document).on("click", '.change_bool', function () {
 
         var actionUrl = $(this).attr('data-actionUrl').toString();
         var fieldValue = $(this).prop('checked');
@@ -87,7 +111,7 @@
             var newValue = 0;
         }
 
-        $.post(actionUrl, { name: fieldName, value: newValue }, function(response){
+        $.post(actionUrl, {name: fieldName, value: newValue}, function (response) {
             if (parseInt(response.result !== 1)) {
                 alert("Error");
             }
@@ -105,7 +129,7 @@
 
 
     // -- submit language select
-    $(document).on("click", '.submitOnClick', function(){
+    $(document).on("click", '.submitOnClick', function () {
 
         $('#toolbar-form').submit();
         return false;

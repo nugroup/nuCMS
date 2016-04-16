@@ -10,7 +10,7 @@
 
     <div class="container">
 
-        {{ form_open(current_url(), {'id': 'users-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+        {{ form_open(current_url(), {'id': 'user-edit-form', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
 
             <!-- margin -->
             <div class="clearfix baseMargin"></div>
@@ -71,5 +71,19 @@
         {{ form_close() }}
 
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#user-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
 
 {% endblock %}
