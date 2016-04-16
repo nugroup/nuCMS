@@ -10,7 +10,7 @@ var showBeforeUnload = false;
     $(window).bind('beforeunload', function (e) {
 
         if (showBeforeUnload === true) {
-            return "AAA";
+            return "Nie zapisano zmian. Czy na pewno chcesz opuścić tę stronę?";
         }
 
     });
