@@ -97,9 +97,9 @@
 
         {% else %}
 
-        <div class="alert alert-info">
-            {{ lang('language.text.no_records') }}
-        </div>
+            <div class="alert alert-info">
+                {{ lang('language.text.no_records') }}
+            </div>
 
         {% endif %}
 
@@ -115,7 +115,7 @@
     {{ parent() }}
     <script>
 
-        $(document).on("click",'.change_bool',function(){
+        $(document).on("click", '.change_bool', function () {
 
             var actionUrl = $(this).attr('data-actionUrl').toString();
             var fieldValue = $(this).prop('checked');

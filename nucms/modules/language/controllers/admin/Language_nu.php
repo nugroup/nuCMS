@@ -19,6 +19,9 @@ class Language_nu extends Backend_Controller
         $this->load->model('language/language_model', 'language');
     }
 
+    /**
+     * List of languages
+     */
     public function index()
     {
         // Set page
@@ -109,14 +112,20 @@ class Language_nu extends Backend_Controller
                 $this->language->update(['default' => 0]);
             }
 
-            $inserted_id = $this->language->from_form()->insert();
+            // Additional data
+            $additional_data = [
+                'active'  => (int) $this->input->post('active'),
+                'default' => (int) $this->input->post('default'),
+            ];
+
+            $inserted_id = $this->language->from_form(null, $additional_data)->insert();
 
             if ($inserted_id) {
                 // Set informations
                 $this->session->set_flashdata('success', lang('language.alert.success.add'));
 
                 // Redirect
-                redirect(admin_url('language'));
+                redirect(admin_url('language/update_translations/'.$inserted_id));
             }
         }
 
@@ -154,6 +163,108 @@ class Language_nu extends Backend_Controller
         echo json_encode($result);
 
         return FALSE;
+    }
+
+    /**
+     * Update translations elements view
+     *
+     * @param int $id
+     */
+    public function update_translations($id)
+    {
+        $language = $this->language->get($id);
+        if (!$language) {
+            show_404();
+        }
+
+        // Set view data
+        $this->data['language'] = $language;
+
+        // Load the view
+        $this->render('language/update_translations', $this->data);
+    }
+
+    /**
+     * Update translations elements action
+     * 50 items from 1 table on 1 reload
+     *
+     * @param int $id
+     * @param int $limit
+     */
+    public function update_translations_action($id, $limit = 50)
+    {
+        $language = $this->language->get($id);
+        if (!$language) {
+            show_404();
+        }
+
+        $done = true;
+
+        // Start update all translations table set in config
+        foreach ($this->config->item('languages_tables') as $table) {
+            $model_name = str_replace('nu_', '', $table);
+            $this->load->model($model_name.'/'.$model_name.'_model', $model_name);
+            $table_name = $table.'_translations';
+            $model_translation_name = $model_name.'_translations';
+
+            // Get empty elements
+            $root_translations = $this->db
+                ->select('A.*')
+                ->from($table_name.' as A')
+                ->where('locale', config_item('default_locale'))
+                ->where('NOT EXISTS (SELECT `'.$model_name.'_id` FROM `'.$table_name.'` WHERE `locale` = "'.$language->locale.'" AND `'.$model_name.'_id` = `A`.`'.$model_name.'_id`)', null, false)
+                ->limit($limit)
+                ->get()
+                ->result();
+
+            try {
+
+                if ($root_translations) {
+                    $done = false;
+
+                    foreach ($root_translations as $row) {
+                        // Change needed values
+                        $tmpRow = $row;
+                        unset($tmpRow->id);
+                        if (isset($tmpRow->active)) {
+                            $tmpRow->active = 0;
+                        }
+                        $tmpRow->locale = $language->locale;
+
+                        // Insert translation
+                        if (!$this->{$model_translation_name}->insert($tmpRow)) {
+                            throw new Exception(lang('language.alert.error.insert_translation'));
+                        }
+                    }
+
+                }
+
+            } catch (Exception $exc) {
+
+                // Error
+                $this->set_log($exc->getMessage());
+                $result = [
+                    'result' => 0,
+                    'errors' => $exc->getMessage()
+                ];
+
+            }
+        }
+
+        if ($done) {
+            // Success
+            $result = [
+                'result' => 1,
+            ];
+        } else {
+            // In progress ...
+            $result = [
+                'result' => 2,
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
     }
 
     /**

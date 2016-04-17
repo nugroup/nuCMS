@@ -16,6 +16,7 @@ $lang['language.subnav.edit'] = 'Edytuj język';
 $lang['language.text.confirm_delete'] = 'Czy napewno chcesz usunąć ten język?<br>Po usunięciu języka zostanie też usunięte wszystko co było powiązane<br>(np. strony w wybranym języku)';
 $lang['language.text.no_records'] = 'Nie znaleziono żadnych języków';
 $lang['language.text.delete'] = 'Usuń język';
+$lang['language.text.in_progress'] = 'Trwa aktualizacja elementów językowych. Proszę czekać...';
 
 /* list
 ============================================================================= */
@@ -30,6 +31,8 @@ $lang['language.alert.success.add'] = 'Dodano nowy język';
 $lang['language.alert.success.delete'] = 'Usunięto język';
 $lang['language.alert.error.delete'] = 'Nie udało się usunąć języka';
 $lang['language.alert.error.delete_default'] = 'Nie można usunąć domyślnego języka.';
+$lang['language.alert.error.insert_translation'] = 'Wystąpił błąd podczas aktualizacji brakujących elementów językowych.';
+$lang['langauge.alert.success.update_translations'] = 'Wszystkie elementy językowe zostały utworzone';
 
 /* form
 ============================================================================= */
