@@ -57,7 +57,7 @@ class Menu_items_model extends MY_Model
                 foreach ($data as $key => $parent) {
                     $id_parent = ((int)$parent == 0) ? NULL : (int) $parent;
 
-                    $data = array('id_parent' => $id_parent, 'sort' => $i);
+                    $data = array('parent_id' => $id_parent, 'sort' => $i);
                     $this->menu_items->update($data, $key);
                     $i++;
                 }

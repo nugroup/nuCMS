@@ -77,7 +77,6 @@ class Menu_nu extends Backend_Controller
         }
 
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
-
         // Get max menu items id
         $menuItemsMaxId = $this->menu_items->get_max_id();
 
@@ -87,7 +86,6 @@ class Menu_nu extends Backend_Controller
             if ($this->input->post('menu_items')) {
                 // Get config types modules
                 $typesModules = $this->config->item('types_modules', 'menu');
-
                 foreach ($this->input->post('menu_items') as $item) {
                     $data = $item;
                     $data['locale'] = $locale;
