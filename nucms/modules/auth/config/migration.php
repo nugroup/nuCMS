@@ -5,4 +5,4 @@ $config['migration_version'] = 1;
         
 $config['migration_path'] = '../migrations/';
 
-/* End of file application/modules/users/config/migration.php */
+/* End of file application/modules/auth/config/migration.php */

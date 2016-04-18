@@ -10,7 +10,9 @@ class NU_Controller extends MX_Controller
     {
         parent::__construct();
 
-        $this->load->add_package_path(NUPATH.'/');
+        // Add new package folder
+        $this->load->add_package_path(NUPATH.'/', TRUE);
+        $this->load->add_package_path(NUPATH.'/modules/auth/', TRUE);
 
         // Config
         $this->load->config('app');
@@ -26,6 +28,7 @@ class NU_Controller extends MX_Controller
 
         // libraires
         $this->load->library('form_validation');
+        $this->load->library('auth/ion_auth');
 
         $this->db->query("SET NAMES 'utf8'");
 

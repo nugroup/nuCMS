@@ -5,6 +5,6 @@ $config['migration_version'] = 1;
         
 //$config['migration_path'] = '../migrations/';
 
-$config['migration_path'] = APPPATH . 'migrations/';
+$config['migration_path'] = NUPATH . '/migrations/';
 
 /* End of file application/modules/migrate/config/migration.php */

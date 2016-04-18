@@ -37,11 +37,11 @@
 
         {% endif %}
 
-        {{ form_open('', {'class': 'form-horizontal'}) }}
+        {{ form_open(admin_url('auth/login'), {'class': 'form-horizontal'}) }}
 
             <div class="input-group bigInput loginFormLogin">
                 <div class="input-group-addon"><i class="ion ion-android-person"></i></div>
-                {{ form_input({'name': 'email', 'class': 'form-control', 'placeholder': lang('auth.login.login') }) }}
+                {{ form_input({'name': 'identity', 'class': 'form-control', 'placeholder': lang('auth.login.identity') }) }}
             </div>
 
             <div class="input-group bigInput loginFormPass">
@@ -52,7 +52,7 @@
             <div class="loginFormBtn">
                 <button class="btn btn-save" type="submit"><i class="ion ion-checkmark"></i>{{ lang('auth.login.button') }}</button>
                 <div class="loginFormRemind">
-{#                    <a href="{{ admin_url('') }}">{{ lang('auth.login.remind_password') }}</a>#}
+                    <a href="{{ admin_url('auth/forgot_password') }}">{{ lang('auth.login.remind_password') }}</a>
                 </div>
             </div>
 

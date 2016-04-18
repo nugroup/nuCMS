@@ -25,9 +25,6 @@ class Backend_Controller extends NU_Controller
             $this->output->enable_profiler();
         }
 
-        // Load needed models
-        $this->load->model('auth/auth_model', 'auth');
-
         // Set number of elements per page
         if (!$this->session->admin_per_page) {
             $this->session->set_userdata('admin_per_page', $this->config->item('default_admin_per_page'));
@@ -47,7 +44,8 @@ class Backend_Controller extends NU_Controller
 
         if (in_array(uri_string(), $exception_uris) == false) {
             // Check if login
-            if ($this->auth->logged_in() == false) {
+            if (!$this->ion_auth->logged_in())
+            {
                 redirect(admin_url('auth/login'));
             }
         }
