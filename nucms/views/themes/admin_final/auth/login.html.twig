@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}{% endblock %}
+{% block action_bar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block body %}
+
+    <!-- back -->
+    <div class="nuLogin-head">
+        <a href="{{ site_url() }}"><i class="fa fa-angle-left"></i>{{ lang('auth.login.back_button') }}</a>
+    </div>
+
+    <div class="nuLogin-wrapper">
+
+        <!-- alerts -->
+        {% if(validation_errors()) %}
+
+            <div class="alert alert-danger">
+                {{ validation_errors() | raw }}
+            </div>
+
+        {% endif %}
+
+        {% if (flashdata('error')) %}
+
+            <div class="alert alert-danger">
+                {{ flashdata('error') }}
+            </div>
+
+        {% endif %}
+
+        <div class="nuLogin-box">
+
+            <!-- nu logo -->
+            <div class="nuLogin-logo">
+                <img src="{{ asset('img/nu_white.png') }}" alt="nucms">
+            </div>
+
+            <div class="nuLogin-form">
+
+                <!-- login form -->
+                <div class="form-login">
+
+                    {{ form_open(admin_url('auth/login')) }}
+
+                    <div class="form-group">
+                        <label for="identity">{{ lang('auth.form.login.identity') }}</label>
+                        {{ form_input({'name': 'identity', 'class': 'form-control', 'placeholder': lang('auth.form.login.identity'), 'value': set_value('identity')}) }}
+                        <span class="nuFocusLine nuFocusLineDarken"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">{{ lang('auth.form.login.password') }}</label>
+                        {{ form_password({'name': 'password', 'id': 'password', 'class': 'form-control', 'placeholder': lang('auth.form.login.password') }) }}
+                        <span class="nuFocusLine nuFocusLineDarken"></span>
+                    </div>
+
+                    <div class="nuLogin-buttons">
+                        <ul class="nuButtonsList nuButtonsList nuFormDark">
+                            <li><button class="btn btn-primary btn-squere remindTrigger" type="button"><i class="fa fa-question"></i></button></li><!--
+                            --><li><button class="btn btn-primary" type="submit"><i class="fa fa-lock"></i> {{ lang('auth.login.button') }}</button></li>
+                        </ul>
+                    </div>
+
+                    {{ form_close() }}
+
+                </div>
+
+                <!-- reminder form -->
+                <div class="form-remind">
+                    <div class="nuForm-remindtxt">
+                        {{ lang('auth.form.remember.info') | raw }}
+                    </div>
+
+                    {{ form_open(admin_url('auth/remind')) }}
+
+                    <div class="form-group">
+                        <label for="fil1">E-mail</label>
+                        <input id="fil1" type="text" class="form-control" placeholder="e-mail">
+                        <span class="nuFocusLine nuFocusLineDarken"></span>
+                    </div>
+
+                    <div class="nuLogin-buttons">
+                        <ul class="nuButtonsList nuButtonsList nuFormDark">
+                            <li><button class="btn btn-primary btn-squere remindTrigger" type="button"><i class="fa fa-angle-left"></i></button></li><!--
+                            --><li><button class="btn btn-primary" type="submit"><i class="fa fa-send"></i> Wyślij</button></li>
+                        </ul>
+                    </div>
+
+                    {{ form_close() }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- copyright -->
+        <div class="nuLogin-footer">
+            &copy; {{ config.copyright.date }} by <a href="{{ config.copyright.company_website }}" target="_blank">{{ config.copyright.company_name }}</a>
+        </div>
+
+    </div>
+
+{% endblock %}

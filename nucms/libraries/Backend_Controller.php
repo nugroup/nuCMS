@@ -25,11 +25,6 @@ class Backend_Controller extends NU_Controller
             $this->output->enable_profiler();
         }
 
-        // Set number of elements per page
-        if (!$this->session->admin_per_page) {
-            $this->session->set_userdata('admin_per_page', $this->config->item('default_admin_per_page'));
-        }
-
         // Get languages list
         if ($this->config->item('first_run')) {
             $this->getSystemLanguagesList();
@@ -67,10 +62,10 @@ class Backend_Controller extends NU_Controller
      */
     public function initPagination($numberOfItems, $page = 1, $perPage = 0, $base_url = '')
     {
-        if ($this->session->userdata('admin_per_page') && $perPage == 0) {
-            $perPage = $this->session->userdata('admin_per_page');
+        if ($perPage == 0) {
+            $perPage = $this->config->item('default_admin_per_page');
         }
-        
+
         $pager_url = ($base_url != '') ? $base_url : current_url();
 
         // Load pagination library

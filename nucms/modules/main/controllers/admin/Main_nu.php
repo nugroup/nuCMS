@@ -23,26 +23,6 @@ class Main_nu extends Backend_Controller
     {
         $this->render('main/dashboard', $this->data);
     }
-
-    /**
-     * Change number of elements per page
-     *
-     * @param type $number
-     */
-    public function change_per_page($number, $redirect = 1)
-    {
-        // Set admin_per_page session
-        $this->session->set_userdata('admin_per_page', $number);
-
-        if ((int) $redirect == 1) {
-            // Redirect to http_referrer
-            $this->load->library('user_agent');
-            $referrerUrl = $this->agent->referrer();
-            $exUrl = explode('?', $referrerUrl);
-
-            redirect($exUrl[0]);
-        }
-    }
 }
 
 /* End of file Admin.php */

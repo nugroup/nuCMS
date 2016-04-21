@@ -8,12 +8,12 @@ if (!defined('BASEPATH'))
  */
 class Auth_nu extends Backend_Controller
 {
+
     public function __construct()
     {
         parent::__construct();
-		
+
         $this->lang->load('auth/auth');
-        $this->load->model('auth/auth_model', 'auth');
     }
 
     /**
@@ -28,8 +28,8 @@ class Auth_nu extends Backend_Controller
 
         // Set up the form
         $rules = array(
-            'identity' => array('field' => 'identity', 'label' => lang('auth.login.identity'), 'rules' => 'trim|required|xss_clean'),
-            'password' => array('field' => 'password', 'label' => lang('auth.login.password'), 'rules' => 'trim|required')
+            'identity' => array('field' => 'identity', 'label' => lang('auth.form.login.identity'), 'rules' => 'trim|required|xss_clean'),
+            'password' => array('field' => 'password', 'label' => lang('auth.form.login.password'), 'rules' => 'trim|required')
         );
         $this->form_validation->set_rules($rules);
 

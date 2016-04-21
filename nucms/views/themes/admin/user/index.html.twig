@@ -41,7 +41,7 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <div class="txtBig">{{ user.name }}</div>
+                                    <div class="txtBig">{{ user.first_name~' '~user.last_name }}</div>
                                     {{ attribute(config.users_types, user.type) }}
                                 </td>
                                 <td>{{ user.email }}</td>

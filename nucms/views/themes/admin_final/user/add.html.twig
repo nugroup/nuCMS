@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('user') }}">{{ lang('user.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('user/add') }}" class="nuNavActive">{{ lang('user.nav.add') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_open(current_url(), {'id': 'users-add-form', 'novalidate': 'novalidate'}) }}
+
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> {{ lang('text.add') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                            {{ form_input({'type': 'email', 'name': 'email', 'value': set_value('email'), 'class': 'form-control', 'id': 'email', 'placeholder': lang('user.form.email'),  'required': 'required'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- /head -->
+
+    <!-- content -->
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            <div class="row tab-pane fade in active" role="tabpanel" id="settings">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('user.head.data') }}:</div>
+                    <!-- /header -->
+
+                    <!-- first_name -->
+                    <div class="form-group">
+                        <label for="first_name">{{ lang('user.form.first_name') }}:</label>
+                        {{ form_input({'name': 'first_name', 'value': set_value('first_name'), 'class': 'form-control', 'id': 'first_name'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /first_name -->
+
+                    <!-- last_name -->
+                    <div class="form-group">
+                        <label for="last_name">{{ lang('user.form.last_name') }}:</label>
+                        {{ form_input({'name': 'last_name', 'value': set_value('last_name'), 'class': 'form-control', 'id': 'last_name'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /last_name -->
+
+                    <!-- password -->
+                    <div class="form-group">
+                        <label for="password">{{ lang('user.form.password') }}:</label>
+                        {{ form_password({'name': 'password', 'class': 'form-control', 'id': 'password', 'required': 'required'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /password-->
+
+                    <!-- password_repeat -->
+                    <div class="form-group">
+                        <label for="password_repeat">{{ lang('user.form.password') }}:</label>
+                        {{ form_password({'name': 'password_repeat', 'class': 'form-control', 'id': 'password_repeat', 'required': 'required'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /password_repeat-->
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('user.head.groups') }}:</div>
+                    <!-- /header -->
+
+                    <!-- checkbox group -->
+                    <label>{{ lang('user.head.groups') }}:</label>
+                    <div class="nuCategoryList">
+                        <ul>
+                            {% for group in groups %}
+
+                                <li>
+                                    <span class="nuCheckGroup">
+                                        <label class="nuCheck">
+                                            {{ form_input({'type': 'checkbox', 'name': 'groups[]', 'value': group.id, 'id': 'group_'~group.id}) }}<span></span></label>
+                                        <label for="{{ 'group_'~group.id }}">{{ group.description }}</label>
+                                    </span>
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- /checkbox group -->
+
+                </div>
+            </div>
+
+            <div class="row tab-pane fade" role="tabpanel" id="modules">
+                <div class="col-xs-12">
+                    aaaa
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /content -->
+
+    {{ form_close() }}
+
+{% endblock %}

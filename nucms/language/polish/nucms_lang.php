@@ -17,24 +17,26 @@ $lang['text.save'] = 'Zapisz';
 $lang['text.cancel'] = 'Anuluj';
 $lang['text.confirm'] = 'Zatwierdź';
 $lang['text.edit'] = 'Edytuj';
+$lang['text.filter'] = 'Filtruj';
 
 /* menu
 ============================================================================= */
 $lang['menu.page_preview'] = 'Podgląd strony';
 $lang['menu.desktop'] = 'Pulpit';
 $lang['menu.pages'] = 'Strony';
-$lang['menu.content'] = 'tresc';
+$lang['menu.pages.list'] = 'Lista stron';
+$lang['menu.pages.add'] = 'Dodaj nową';
 $lang['menu.templates'] = 'Szablony';
 $lang['menu.modules'] = 'Moduly';
-$lang['menu.other'] = 'inne';
 $lang['menu.files'] = 'Pliki';
-$lang['menu.menu'] = 'Menu';
-$lang['menu.title'] = 'Menu';
 $lang['menu.users'] = 'Użytkownicy';
+$lang['menu.users.list'] = 'Lista użytkowników';
+$lang['menu.users.add'] = 'Dodaj nowego';
+$lang['menu.menu'] = 'Menu';
 $lang['menu.settings'] = 'Opcje';
-$lang['menu.configuration'] = 'Konfiguracja';
 $lang['menu.languages'] = 'Języki';
 $lang['menu.logout'] = 'Wyloguj';
+$lang['menu.favourite'] = 'Ulubione';
 
 /* modal
 ============================================================================= */

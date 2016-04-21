@@ -9,14 +9,17 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* auth
+/* text
 ============================================================================= */
-$lang['auth.login.identity'] = 'Email';
-$lang['auth.login.password'] = 'Hasło';
-$lang['auth.login.button'] = 'Zaloguj się';
+$lang['auth.login.button'] = 'Zaloguj';
 $lang['auth.login.back_button'] = 'powrót do strony';
-$lang['auth.login.remind_password'] = 'Przypomnij hasło';
-$lang['auth.login.error.login'] = 'Podano błedne dane do logowania.';
+
+/* form
+============================================================================= */
+$lang['auth.form.login.identity'] = 'Email';
+$lang['auth.form.login.password'] = 'Hasło';
+$lang['auth.form.remember.email'] = "Email";
+$lang['auth.form.remember.info'] = '<b>Przypomnij hasło.</b> Wpisz swój adres e-mail aby otrzymać wiadomość z hasłem.';
 
 // Login
 $lang['login_heading'] = 'Login';

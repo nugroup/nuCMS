@@ -135,7 +135,7 @@ class Migration_Install_ion_auth extends CI_Migration
                 'type' => 'VARCHAR',
                 'constraint' => '20',
                 'null' => TRUE
-            )
+            ),
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('nu_user');
@@ -145,7 +145,7 @@ class Migration_Install_ion_auth extends CI_Migration
             'id' => '1',
             'ip_address' => '127.0.0.1',
             'username' => 'admin',
-            'password' => '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36',
+            'password' => '$2y$08$XBYkjVL2h6fhm0oeOXP4TOwBu4x6rmKH.UT2u4VhtQRnb0tY297By', // admin#123
             'salt' => '',
             'email' => 'admin@nucms.com',
             'activation_code' => '',
@@ -230,6 +230,10 @@ class Migration_Install_ion_auth extends CI_Migration
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('nu_login_attempt');
+
+        // foreign key for user_group
+        $this->db->query('ALTER TABLE `nu_user_group` ADD CONSTRAINT `nu_user_group_user_id_FK` FOREIGN KEY (`user_id`) REFERENCES `nu_user` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
+        $this->db->query('ALTER TABLE `nu_user_group` ADD CONSTRAINT `nu_user_group_group_id_FK` FOREIGN KEY (`group_id`) REFERENCES `nu_group` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
     }
 
     public function down()

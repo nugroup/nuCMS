@@ -17,7 +17,7 @@ class User_model extends MY_Model
     {
         parent::__construct();
 
-        $this->timestamps = FALSE;
+        $this->timestamps = true;
     }
 
     /**
@@ -33,12 +33,10 @@ class User_model extends MY_Model
         $rules['name'] = array('field' => 'name', 'label' => lang('name'), 'rules' => 'trim|xss_clean');
 
         if ($action == 'insert') {
-            $rules['login'] = array('field' => 'login', 'label' => lang('user.form.login'), 'rules' => 'my_unique_field['.$this->table.',login,id]|trim|required|xss_clean');
             $rules['email'] = array('field' => 'email', 'label' => lang('user.form.email'), 'rules' => 'my_unique_field['.$this->table.',email,id]|trim|required|valid_email|xss_clean');
             $rules['password'] = array('field' => 'password', 'label' => lang('user.form.password'), 'rules' => 'required|xss_clean');
             $rules['password_repeat'] = array('field' => 'password_repeat', 'label' => lang('user.form.password_repeat'), 'rules' => 'required|matches[password]|xss_clean');
         } else {
-            $rules['login'] = array('field' => 'login', 'label' => lang('user.form.login'), 'rules' => 'my_unique_field['.$this->table.',login,id,'.$id.']|trim|required|xss_clean');
             $rules['email'] = array('field' => 'email', 'label' => lang('user.form.email'), 'rules' => 'my_unique_field['.$this->table.',email,id,'.$id.']|trim|required|valid_email|xss_clean');
             $rules['password'] = array('field' => 'password', 'label' => lang('user.form.password'), 'rules' => 'xss_clean');
             $rules['password_repeat'] = array('field' => 'password_repeat', 'label' => lang('user.form.password_repeat'), 'rules' => 'matches[password]|xss_clean');
@@ -50,8 +48,9 @@ class User_model extends MY_Model
     public function generate_like_query($string)
     {
         if ($string) {
-            $this->db->like('name', $string);
-            $this->db->or_like('login', $string);
+            $this->db->like('first_name', $string);
+            $this->db->or_like('last_name', $string);
+            $this->db->or_like('username', $string);
             $this->db->or_like('email', $string);
         }
     }
