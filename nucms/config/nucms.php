@@ -37,7 +37,8 @@ $config['twig_user_functions'] = [
     'current_full_url',
     'form_nu_dropdown',
     'widget',
-    'generate_thumbnail'
+    'generate_thumbnail',
+    'sort_header',
 ];
 
 /* users

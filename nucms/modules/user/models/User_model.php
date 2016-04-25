@@ -45,6 +45,11 @@ class User_model extends MY_Model
         return $rules;
     }
 
+    /**
+     * Prepare like and order_by query from $_GET
+     *
+     * @param string $string
+     */
     public function generate_like_query($string)
     {
         if ($string) {
@@ -52,6 +57,10 @@ class User_model extends MY_Model
             $this->db->or_like('last_name', $string);
             $this->db->or_like('username', $string);
             $this->db->or_like('email', $string);
+        }
+
+        if ($this->input->get('sort') && $this->input->get('sort_type')) {
+            $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
         }
     }
 }
