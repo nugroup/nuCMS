@@ -16,14 +16,6 @@ class Migration_Create_page extends CI_Migration
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'created_at' => array(
-                'type' => 'DATETIME',
-                'null' => TRUE
-            ),
-            'updated_at' => array(
-                'type' => 'DATETIME',
-                'null' => TRUE
-            ),
         ));
 
         $this->dbforge->add_key('id', TRUE);

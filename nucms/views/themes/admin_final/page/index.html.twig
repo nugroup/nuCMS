@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('page') }}" class="nuNavActive">{{ lang('page.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('page/add') }}">{{ lang('page.nav.add') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block action_bar_content %}
+
+    {{ form_open(current_url(), 'method="get"') }}
+
+    <div class="row nuActions">
+
+        <div class="col-xs-12 col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+            <ul class="nuButtonsList nuButtonsList-padding">
+                <li><a href="{{ admin_url('page') }}" class="btn btn-primary btn-squere"><i class="fa fa-remove"></i></a></li>
+                <li><button class="btn btn-success" type="submit"><i class="fa fa-filter"></i> {{ lang('text.filter') }}</button></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12 col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-8 col-lg-pull-4">
+
+            <div class="row nuFormInline">
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        <label for="language">{{ lang('page.filter.label.language') }}</label>
+                        {{ form_dropdown('locale', obj_to_options_array(config.system_languages, 'locale', 'name'), input.get.locale, 'class="form-control"') }}
+                    </div>
+                </div>
+                <div class="col-xs-6 nuFormInlice-col">
+                    <div class="form-group">
+                        <label for="fil_string">{{ lang('page.filter.label.string') }}</label>
+                        {{ form_input({'name': 'string', 'id': 'fil_string', 'class': 'form-control', 'value': input.get('string'), 'placeholder': lang('page.filter.label.string')}) }}
+                    </div>
+                </div>
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        {% include 'components/per_page_select.html.twig' %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- content -->
+    <div id="nuList" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer">
+
+            {% if (pages) %}
+
+            {{ form_open() }}
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><label class="nuCheck"><input type="checkbox" class="checkAll"><span></span></label></th>
+                                <th></th>
+                                <th>{{ sort_header('title', lang('page.list.title')) | raw }}</th>
+                                <th class="hidden-xs hidden-sm">{{ sort_header('created_at', lang('page.list.created_at')) | raw }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for page in pages %}
+
+                            <tr id="item_{{ page.id }}">
+                                <td class="colCheck">
+                                    <label class="nuCheck">
+                                        {{ form_checkbox({'name': 'check_item['~page.id~']', 'class': 'check_item', 'value': 1}) }}
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td class="colGraph">
+                                    <div class="listCircle">
+                                        <svg class="circle" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 283.5 283.5" style="enable-background:new 0 0 283.5 283.5;" xml:space="preserve">
+                                            <circle class="nuCircle_bg" cx="141.7" cy="141.7" r="122"/>
+                                            <circle data-nucircle-id="xyz" data-nucircle-type="circle" data-nucircle-value="{{ page.seo_progress }}" class="nuCircle_main" cx="141.7" cy="141.7" r="122"/>
+                                        </svg>
+                                    </div>
+                                </td>
+                                <td class="colTitle">
+                                    <a href="{{ admin_url('page/edit/'~page.id~'?locale='~locale) }}">{{ page.title }}</a>
+                                </td>
+                                <td class="hidden-xs hidden-sm colCreated">{{ page.created_at | date('Y-m-d') }}</td>
+                                <td class="colIco">
+                                    <ul class="nuButtonsList">
+                                        <li>
+                                            <div class="dropdown">
+                                                <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a href="{{ admin_url('page/edit/'~page.id~'?locale='~locale) }}"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li>
+                                                        <a href="{{ admin_url('page/delete') }}" rel="{{ page.id }}" class="deleteRecord" data-confirmMsg="{{ lang('page.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="row table-foot">
+                <div class="col-xs-12 col-sm-3 col-md-2">
+
+                    <!-- selected actions -->
+                    <ul class="nuButtonsList">
+                        <li>
+                            <div class="dropup">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ lang('text.checked_items') }} <i class="fa fa-caret-up"></i></span></button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <button type="submit" name="action" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- /selected actions -->
+
+                </div>
+                <div class="col-xs-12 col-sm-9 col-md-10 text-right">
+
+                    <!-- pagination -->
+                    <nav>
+                        {{ pager | raw }}
+                    </nav>
+                    <!-- /pagination -->
+
+                </div>
+            </div>
+
+            {{ form_close() }}
+
+            {% else %}
+
+            <div class="alert alert-info">
+                {{ lang('page.text.no_records') }}
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+    <!-- /content -->
+
+{% endblock %}

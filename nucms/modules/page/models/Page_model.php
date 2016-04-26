@@ -36,7 +36,7 @@ class Page_model extends MY_Model implements RouteModelInterface
         );
 
         parent::__construct();
-        $this->timestamps = TRUE;
+        $this->timestamps = false;
     }
 
     /**

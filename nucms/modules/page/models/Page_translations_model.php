@@ -12,7 +12,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
-    public $after_get = ['get_route'];
+    public $after_get = ['get_route', 'get_seo_progress'];
 
     function __construct()
     {
@@ -31,7 +31,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         );
 
         parent::__construct();
-        $this->timestamps = FALSE;
+        $this->timestamps = true;
     }
 
     /**
@@ -52,18 +52,6 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         $rules['meta_description'] = array('field' => 'meta_description', 'label' => lang('page.form.meta_description'), 'rules' => 'max_length[160]|trim|xss_clean');
 
         return $rules;
-    }
-
-    /**
-     * Generate query from search string
-     *
-     * @param string $string
-     */
-    public function generate_like_query($string)
-    {
-        if ($string) {
-            $this->db->like('title', $string);
-        }
     }
 
     /**
@@ -144,11 +132,6 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         $CI->load->model('route/route_model', 'route');
         if (!isset($data[0])) {
 
-//            $pageUrl = config_item('pages_route_controller').$data['page_id'].'/'.$data['locale'];
-//            $route = $CI->route
-//                ->fields('slug')
-//                ->where(['url' => $pageUrl])
-//                ->get();
             $route = $CI->route
                 ->fields('slug')
                 ->where(['module' => 'page', 'primary_key' => $data['page_id'], 'locale' => $data['locale']])
@@ -202,6 +185,66 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         }
 
         $CI->route->save_routes();
+    }
+    
+    /**
+     * Get seo progress for all get data
+     *
+     * @param array $data
+     * @return array
+     */
+    public function get_seo_progress($data)
+    {
+        if (isset($data[0])) {
+            $i = 0;
+            foreach ($data as $row) {
+                $data[$i]['seo_progress'] = $this->calculate_seo_progress((object) $row);
+                $i++;
+            }
+        } else {
+            $data['seo_progress'] = $this->calculate_seo_progress((object) $data);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Calculate seo progress
+     *
+     * @param object $page
+     * @return float
+     */
+    public function calculate_seo_progress($page)
+    {
+        $progress = 0;
+
+        if ($page->meta_title != '') {
+            $progress += 33.33;
+        }
+        if ($page->meta_keywords != '') {
+            $progress += 33.33;
+        }
+        if ($page->meta_description != '') {
+            $progress += 33.33;
+        }
+
+        return (float) $progress;
+    }
+
+    /**
+     * Generate query from search string
+     *
+     * @param string $string
+     */
+    public function generate_like_query($string)
+    {
+        if ($string) {
+            $this->db->like('title', $string);
+        }
+
+        if ($this->input->get('sort') && $this->input->get('sort_type')) {
+            $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
+        }
     }
 }
 

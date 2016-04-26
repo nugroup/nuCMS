@@ -43,6 +43,14 @@ class Migration_Create_page_translations extends CI_Migration
                 'type' => 'BOOLEAN',
                 'default' => 0
             ),
+            'created_at' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE
+            ),
+            'updated_at' => array(
+                'type' => 'DATETIME',
+                'null' => TRUE
+            ),
             'page_id' => array(
                 'type' => 'INT',
                 'constraint' => 5,

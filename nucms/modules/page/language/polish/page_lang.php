@@ -7,9 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* subnav
 ============================================================================= */
-$lang['page.subnav.list'] = 'Lista stron';
-$lang['page.subnav.add'] = 'Dodaj stronę';
-$lang['page.subnav.edit'] = 'Edytuj stronę';
+$lang['page.nav.list'] = 'Lista stron';
+$lang['page.nav.add'] = 'Dodaj stronę';
+$lang['page.nav.edit'] = 'Edytuj stronę';
 
 /* text
 ============================================================================= */
@@ -23,6 +23,11 @@ $lang['page.text.delete'] = 'Usuń stronę';
 $lang['page.list.title'] = 'Tytuł';
 $lang['page.list.created_at'] = 'Data utworzenia';
 $lang['page.list.active'] = 'Aktywność';
+
+/* filter
+============================================================================= */
+$lang['page.filter.label.language'] = 'Język';
+$lang['page.filter.label.string'] = 'Słowa kluczowe';
 
 /* alert
 ============================================================================= */

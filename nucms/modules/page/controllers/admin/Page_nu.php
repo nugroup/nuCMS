@@ -27,6 +27,7 @@ class Page_nu extends Backend_Controller
     {
         // Set default variables
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
+        $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
 
@@ -49,7 +50,7 @@ class Page_nu extends Backend_Controller
             ->count_rows();
 
         // Init pagination
-        $paginationLimits = $this->initPagination($numberOfItems, $page);
+        $paginationLimits = $this->initPagination($numberOfItems, $page, $per_page);
 
         $this->page_translations->generate_like_query($this->input->get('string'));
         $pages = $this->page_translations

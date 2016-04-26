@@ -37,7 +37,7 @@ class PageFixture implements FixturesInterface
             for ($i = 1; $i < 6; $i++) {
                 $title = substr($faker->unique()->sentence(1), 0, -1);
 
-                $insertedId = $CI->page->insert([]);
+                $insertedId = $CI->page->insert(['id' => NULL]);
 
                 if ($insertedId) {
                     // Insert all translations
