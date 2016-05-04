@@ -15,7 +15,7 @@ $lang['page.nav.edit'] = 'Edytuj stronę';
 ============================================================================= */
 $lang['page.text.confirm_delete'] = 'Czy napewno chcesz usunąć tę stronę?';
 $lang['page.text.no_records'] = 'Nie znaleziono żadnych stron';
-$lang['page.text.preview'] = 'Podgląd strony';
+$lang['page.text.preview'] = 'Podgląd';
 $lang['page.text.delete'] = 'Usuń stronę';
 
 /* list
@@ -29,6 +29,24 @@ $lang['page.list.active'] = 'Aktywność';
 $lang['page.filter.label.language'] = 'Język';
 $lang['page.filter.label.string'] = 'Słowa kluczowe';
 
+/* tabs
+============================================================================= */
+$lang['page.tabs.settings'] = 'Ustawienia';
+$lang['page.tabs.modules'] = 'Układ strony';
+
+/* heads
+============================================================================= */
+$lang['page.heads.seo'] = 'SEO';
+$lang['page.heads.others'] = 'Pozostałe';
+$lang['page.heads.options'] = 'Opcje';
+
+/* seo_progress
+============================================================================= */
+$lang['page.seo_progress.no_title'] = 'Uzupełnij tytuł strony';
+$lang['page.seo_progress.no_keywords'] = 'Uzupełnij słowa kluczowe strony';
+$lang['page.seo_progress.no_description'] = 'Uzupełnij opis strony';
+$lang['page.seo_progress_100'] = 'Wszystkie dane do pozycjonowania zostały wprowadzone.<br>Wujek google będzie zadowolony.';
+
 /* alert
 ============================================================================= */
 $lang['page.alert.success.add'] = 'Dodano nową stronę';
@@ -39,10 +57,11 @@ $lang['page.alert.error.delete'] = 'Nie udało się usunąć strony';
 ============================================================================= */
 $lang['page.form.title'] = 'Tytuł';
 $lang['page.form.active'] = 'Aktywność';
-$lang['page.form.meta_title'] = 'tytuł SEO';
-$lang['page.form.meta_keywords'] = 'słowa kluczowe SEO';
-$lang['page.form.meta_description'] = 'opis SEO';
+$lang['page.form.meta_title'] = 'Tytuł strony (50)';
+$lang['page.form.meta_keywords'] = 'Słowa kluczowe';
+$lang['page.form.meta_description'] = 'Opis strony (160)';
 $lang['page.form.slug'] = 'Adres URL';
+$lang['page.form.created_at'] = 'Utworzona';
 
 /* form - info
 ============================================================================= */

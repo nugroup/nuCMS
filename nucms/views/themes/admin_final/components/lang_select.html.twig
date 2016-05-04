@@ -1,0 +1,35 @@
+{#{% if (config.system_languages) %}
+
+    <!-- dropdown actions -->
+    <span class="txtUpper">{{ lang('text.language') }}:</span>
+    <span class="btn-group nuDropdown dropAsSelect dropAsSelectInline">
+        <span data-toggle="dropdown" class="txtBig" aria-expanded="false">{{ selected_language ? selected_language : '' }} <i class="fa fa-angle-down"></i></span>
+
+        <ul class="dropdown-menu" style="display: none;">
+            {% for language in config.system_languages %}
+
+                <li data-value="{{ language.locale }}" class="submitOnClick"><span>{{ language.name }}</span></li>
+
+            {% endfor %}
+        </ul>
+        {{ form_hidden('locale', input.get('locale')) }}
+    </span>
+
+{% endif %}#}
+
+{% if (config.system_languages) %}
+
+    <div class="input-group-btn">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="ico-flag" src="{{ asset('img/flags/'~selected_locale~'.png') }}"><span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% for language in config.system_languages %}
+
+                <li><a href="{{ current_url()~'?locale='~language.locale }}"><img class="ico-flag" src="{{ asset('img/flags/'~language.locale~'.png') }}">{{ language.name }}</a></li>
+
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endif %}

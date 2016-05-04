@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('page') }}">{{ lang('page.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('page/add') }}" class="nuNavActive">{{ lang('page.nav.add') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_open(current_url(), {'id': 'page-add-form', 'novalidate': 'novalidate'}) }}
+
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><button class="btn btn-success" type="submit"><i class="fa fa-plus"></i> {{ lang('text.add') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                            {{ form_input({'name': 'title', 'value': set_value('title'), 'class': 'form-control', 'id': 'title', 'placeholder': lang('page.form.title'), 'required': 'required'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- Nav tabs -->
+                    <ul id="nuActionsTabs" class="nav nav-pills" role="tablist">
+                        <li role="presentation" class="active"><a href="#settings" role="tab" data-toggle="tab">{{ lang('page.tabs.settings') }}</a></li>
+                        <li role="presentation"><a href="#modules" role="tab" data-toggle="tab">{{ lang('page.tabs.modules') }}</a></li>
+                    </ul>
+                    <!-- /Nav tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            <div class="row tab-pane fade in active" role="tabpanel" id="settings">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-margin">
+
+                    <!-- header without line -->
+                    <div class="nuHead nuHeadLine">{{ lang('page.heads.seo') }}:</div>
+                    <!-- /header -->
+
+                    <!-- meta_title -->
+                    <div class="form-group">
+                        <label for="meta_title">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_title.info') }}">
+                                {{ lang('page.form.meta_title') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'meta_title', 'value': set_value('meta_title'), 'class': 'form-control', 'id': 'meta_title', 'maxlength': 50}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /meta_title -->
+
+                    <!-- meta_keywords -->
+                    <div class="form-group">
+                        <label for="meta_keywords">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_keywords.info') }}">
+                                {{ lang('page.form.meta_keywords') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'meta_keywords', 'value': set_value('meta_keywords'), 'class': 'form-control', 'id': 'meta_keywords'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /meta_keywords -->
+
+                    <!-- meta_description -->
+                    <div class="form-group">
+                        <label for="meta_description">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_description.info') }}">
+                                {{ lang('page.form.meta_description') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_textarea({'name': 'meta_description', 'value': set_value('meta_description'), 'class': 'form-control autoTextarea', 'id': 'meta_description', 'rows': 6, 'maxlength': 160}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /meta_description -->
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('page.heads.others') }}:</div>
+                    <!-- /header -->
+
+                    <!-- active -->
+                    <div class="nuCheckbox-single">
+                        <label for="active">{{ lang('page.form.active') }}:</label>
+                        <label class="nuSwitch" for="active">
+                            {{ form_checkbox({'id': 'active', 'name': 'active'}, 1, set_value('active')) }}
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- /active -->
+
+                    <!-- slug -->
+                    <div class="form-group">
+                        <label for="slug">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.slug.info') }}">
+                                {{ lang('page.form.slug') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'slug', 'value': set_value('slug'), 'class': 'form-control', 'id': 'slug'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /slug -->
+
+                </div>
+            </div>
+
+            <div class="row tab-pane fade" role="tabpanel" id="modules">
+                <div class="col-xs-12">
+                    {{ form_textarea({'name': 'content', 'value': set_value('content'), 'class': 'form-control tinyEditor', 'id': 'content'}) }}
+                </div>
+            </div>
+
+        </div>
+    </div><!--/#nuEditPage-->
+
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    {% include('components/tiny_mce.html.twig') %}
+
+{% endblock %}

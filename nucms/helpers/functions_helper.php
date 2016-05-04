@@ -157,6 +157,7 @@ if (!function_exists('prepare_parent_array')) {
 }
 
 if (!function_exists('prepare_join_data')) {
+
     /**
      * Transfer data from obj->{$fieldName} variable to obj
      *
@@ -193,8 +194,8 @@ if (!function_exists('prepare_join_data')) {
     }
 }
 
-if ( ! function_exists('remove_querystring_var'))
-{
+if (!function_exists('remove_querystring_var')) {
+
     /**
      * Remove query variable (GET)
      *
@@ -213,8 +214,8 @@ if ( ! function_exists('remove_querystring_var'))
     }
 }
 
-if ( ! function_exists('sort_header'))
-{
+if (!function_exists('sort_header')) {
+
     /**
      * Generate table header with sort
      *
@@ -226,7 +227,7 @@ if ( ! function_exists('sort_header'))
      */
     function sort_header($fieldName, $label)
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
 
         $currentFieldName = $CI->input->get('sort');
         $currentSort = $CI->input->get('sort_type');

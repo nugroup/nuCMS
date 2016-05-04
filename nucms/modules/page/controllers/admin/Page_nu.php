@@ -54,9 +54,11 @@ class Page_nu extends Backend_Controller
 
         $this->page_translations->generate_like_query($this->input->get('string'));
         $pages = $this->page_translations
+//            ->with_root('order_by:created_at,desc')
+            ->with_root()
             ->where('locale', $locale)
+            ->order_by('id', 'desc')
             ->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])
-            ->with_root('order_by:created_at,desc')
             ->get_all();
 
         // Set view data
@@ -83,6 +85,11 @@ class Page_nu extends Backend_Controller
             'locale' => $locale
         ];
 
+        $page = $this->page_translations->where($where)->get();
+        if (!$page) {
+            show_404();
+        }
+
         // If post is send
         if ($this->input->post()) {
 
@@ -108,16 +115,14 @@ class Page_nu extends Backend_Controller
             redirect(admin_url('page/edit/'.$id));
         }
 
-        $page = $this->page_translations->where($where)->get();
-        if (!$page) {
-            show_404();
-        }
+        // Get seo progress message
+        $page->seo_progress_msg = $this->page_translations->get_seo_progress_msg($page);
 
         // Set view data
         $this->data['page'] = $page;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
-        $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
+        $this->data['selected_locale'] = $this->config->item($locale, 'system_languages_by_locale')->locale;
         $this->data['locale'] = $locale;
 
         // Load the view
@@ -138,7 +143,7 @@ class Page_nu extends Backend_Controller
 
             // Insert page root
             if ($this->form_validation->run() == true) {
-                $inserted_id = $this->page->insert([]);
+                $inserted_id = $this->page->insert(['id' => null]);
             }
 
             if ($inserted_id) {

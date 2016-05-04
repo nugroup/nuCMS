@@ -13,7 +13,7 @@ class Fixtures extends NU_Controller
         parent::__construct();
 
         // Only run this through terminal
-        if ($this->input->is_cli_request() == FALSE) {
+        if (ENVIRONMENT == 'production' && $this->input->is_cli_request() == FALSE) {
             show_404();
         }
 

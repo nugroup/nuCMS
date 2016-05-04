@@ -130,7 +130,26 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         // Load routes model
         $CI = & get_instance();
         $CI->load->model('route/route_model', 'route');
-        if (!isset($data[0])) {
+        
+        if (isset($data[0])) {
+            
+            $i = 0;
+            foreach ($data as $row) {
+
+                $route = $CI->route
+                    ->fields('slug')
+                    ->where(['module' => 'page', 'primary_key' => $row['page_id'], 'locale' => $row['locale']])
+                    ->get();
+
+                if ($route) {
+                    $data[$i]['slug'] = $route->slug;
+                    $data[$i]['token'] = $this->generate_token($data[$i]);
+                }
+
+                $i++;
+            }
+
+        } else {
 
             $route = $CI->route
                 ->fields('slug')
@@ -186,7 +205,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
         $CI->route->save_routes();
     }
-    
+
     /**
      * Get seo progress for all get data
      *
@@ -209,6 +228,33 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
     }
 
     /**
+     * Preapare seo progress message
+     *
+     * @param object $page
+     * @return string
+     */
+    public function get_seo_progress_msg($page)
+    {
+        $message = '';
+
+        if ($page->seo_progress == 100.00) {
+            $message = '<p>'.lang('page.seo_progress_100').'</p>';
+        } else {
+            if ($page->meta_title == '') {
+                $message .= '<p>'.lang('page.seo_progress.no_title').'</p>';
+            }
+            if ($page->meta_keywords == '') {
+                $message .= '<p>'.lang('page.seo_progress.no_keywords').'</p>';
+            }
+            if ($page->meta_description == '') {
+                $message .= '<p>'.lang('page.seo_progress.no_description').'</p>';
+            }
+        }
+
+        return $message;
+    }
+
+    /**
      * Calculate seo progress
      *
      * @param object $page
@@ -226,6 +272,9 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         }
         if ($page->meta_description != '') {
             $progress += 33.33;
+        }
+        if ($progress == 99.99) {
+            $progress = 100;
         }
 
         return (float) $progress;
