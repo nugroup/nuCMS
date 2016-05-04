@@ -5,7 +5,7 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* subnav
+/* nav
 ============================================================================= */
 $lang['page.nav.list'] = 'Lista stron';
 $lang['page.nav.add'] = 'Dodaj stronę';
@@ -34,11 +34,11 @@ $lang['page.filter.label.string'] = 'Słowa kluczowe';
 $lang['page.tabs.settings'] = 'Ustawienia';
 $lang['page.tabs.modules'] = 'Układ strony';
 
-/* heads
+/* head
 ============================================================================= */
-$lang['page.heads.seo'] = 'SEO';
-$lang['page.heads.others'] = 'Pozostałe';
-$lang['page.heads.options'] = 'Opcje';
+$lang['page.head.seo'] = 'SEO';
+$lang['page.head.others'] = 'Pozostałe';
+$lang['page.head.options'] = 'Opcje';
 
 /* seo_progress
 ============================================================================= */

@@ -238,7 +238,7 @@ if (!function_exists('sort_header')) {
         $ico = '<i class="fa fa-sort" aria-hidden="true"></i>';
         $prefix = (strpos($url, '?')) ? '&' : '?';
 
-        if ($currentSort == 'asc') {
+        if ($currentSort == 'asc' && $fieldName == $currentFieldName) {
             $sortType = 'desc';
             $ico = '<i class="fa fa-sort-asc" aria-hidden="true"></i>';
         }

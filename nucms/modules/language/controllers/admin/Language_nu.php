@@ -30,13 +30,28 @@ class Language_nu extends Backend_Controller
 
         // Delete checked item
         if ($this->input->post('action') == 'delete_checked') {
-            foreach ($this->input->post('check_item') as $item => $value) {
-                // Delete action
-                $this->language->delete($item);
+            try {
+                foreach ($this->input->post('check_item') as $item => $value) {
+
+                    $language = $this->language->get($item);
+
+                    if ($language && $language->default == 1) {
+                        throw new Exception(lang('language.alert.error.delete_default'));
+                    }
+
+                    // Delete action
+                    $this->language->delete($item);
+                }
+
+                // Set message and refresh the page
+                $this->session->set_flashdata('success', lang('alert.success.delete_checked'));
+            } catch (Exception $ex) {
+                // Log error message
+                $this->set_log($ex->getMessage());
+                $this->session->set_flashdata('error', $ex->getMessage());
+
             }
 
-            // Set message and refresh the page
-            $this->session->set_flashdata('success', lang('alert.success.delete_checked'));
             redirect(current_url());
         }
 

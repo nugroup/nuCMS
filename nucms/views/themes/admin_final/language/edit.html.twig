@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('language') }}">{{ lang('language.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('language/add') }}">{{ lang('language.nav.add') }}</a></li>
+        <li><a href="{{ admin_url('language/edit/'~language.id) }}" class="nuNavActive">{{ lang('language.nav.edit') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_open(current_url(), {'id': 'language-edit-form', 'novalidate': 'novalidate'}) }}
+
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                        {{ form_input({'type': 'text', 'name': 'name', 'value': language.name, 'class': 'form-control', 'id': 'name', 'placeholder': lang('language.form.name'),  'required': 'required'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- /head -->
+
+    <!-- content -->
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            <div class="row tab-pane fade in active" role="tabpanel">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('language.head.data') }}:</div>
+                    <!-- /header -->
+
+                    <!-- locale -->
+                    <div class="form-group">
+                        <label for="locale">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.locale.info') }}">
+                                {{ lang('language.form.locale') }}:
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'locale', 'value': language.locale, 'class': 'form-control', 'id': 'locale', 'required': 'required'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /locale -->
+
+                    <!-- folder_name -->
+                    <div class="form-group">
+                        <label for="folder_name">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.folder_name.info') }}">
+                                {{ lang('language.form.folder_name') }}:
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'folder_name', 'value': language.folder_name, 'class': 'form-control', 'id': 'folder_name', 'required': 'required'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /locale -->
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('language.head.others') }}:</div>
+                    <!-- /header -->
+
+                    <!-- active -->
+                    <div class="nuCheckbox-single">
+                        <label for="active">{{ lang('language.form.active') }}:</label>
+                        <label class="nuSwitch" for="active">
+                            {{ form_checkbox({'id': 'active', 'name': 'active'}, 1, language.active) }}
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- /active -->
+
+                    <!-- default -->
+                    <div class="nuCheckbox-single">
+                        <label for="default">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('language.form.default.info') }}">
+                                {{ lang('language.form.default') }}:
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        <label class="nuSwitch" for="default">
+                            {{ form_checkbox({'id': 'default', 'name': 'default'}, 1, language.default) }}
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- /active -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /content -->
+
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#language-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
+
+{% endblock %}

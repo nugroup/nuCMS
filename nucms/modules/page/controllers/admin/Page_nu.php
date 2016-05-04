@@ -54,7 +54,6 @@ class Page_nu extends Backend_Controller
 
         $this->page_translations->generate_like_query($this->input->get('string'));
         $pages = $this->page_translations
-//            ->with_root('order_by:created_at,desc')
             ->with_root()
             ->where('locale', $locale)
             ->order_by('id', 'desc')

@@ -47,6 +47,10 @@ class Language_model extends MY_Model
             $this->db->like('name', $string);
             $this->db->or_like('locale', $string);
         }
+
+        if ($this->input->get('sort') && $this->input->get('sort_type')) {
+            $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
+        }
     }
 }
 

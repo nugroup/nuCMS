@@ -142,3 +142,17 @@
     {{ form_close() }}
 
 {% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#user-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
+
+{% endblock %}

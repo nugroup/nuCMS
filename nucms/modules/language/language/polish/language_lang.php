@@ -5,11 +5,11 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* subnav
+/* nav
 ============================================================================= */
-$lang['language.subnav.list'] = 'Lista języków';
-$lang['language.subnav.add'] = 'Dodaj język';
-$lang['language.subnav.edit'] = 'Edytuj język';
+$lang['language.nav.list'] = 'Lista języków';
+$lang['language.nav.add'] = 'Dodaj język';
+$lang['language.nav.edit'] = 'Edytuj język';
 
 /* text
 ============================================================================= */
@@ -24,6 +24,16 @@ $lang['language.list.name'] = 'Nazwa';
 $lang['language.list.locale'] = 'Symbol';
 $lang['language.list.folder_name'] = 'Nazwa folderu';
 $lang['language.list.active'] = 'Aktywność';
+$lang['language.list.default'] = 'Domyślny';
+
+/* filter
+============================================================================= */
+$lang['language.filter.label.string'] = 'Nazwa / symbol';
+
+/* head
+============================================================================= */
+$lang['language.head.data'] = 'Dane';
+$lang['language.head.others'] = 'Pozostałe';
 
 /* alert
 ============================================================================= */
