@@ -39,6 +39,8 @@ $config['twig_user_functions'] = [
     'widget',
     'generate_thumbnail',
     'sort_header',
+    'extension',
+    'is_image',
 ];
 
 /* users

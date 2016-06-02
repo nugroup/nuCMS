@@ -1,0 +1,93 @@
+{{ form_open(current_url(), 'id="files-list-form"') }}
+
+<!-- photos -->
+<div class="row nuManager-row">
+
+    {% for file in files %}
+
+        {% set cutted_class = (attribute(cutted_files, file.id)) ? ' cutted' : '' %}
+
+        <!-- single file -->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 nuManager-col">
+
+            <div id="file_id_{{ file.id }}" class="nuManager-ratio-wrapper{{ cutted_class }}">
+                <div class="nuManager-ratio">
+
+                    <!-- checkbox -->
+                    <div class="nuManager-check">
+                        <label class="nuCheck nuCheckLight">{{ form_checkbox({'name': 'files[]', 'value': file.id, 'class': 'check_item' }) }}<span></span></label>
+                    </div>
+                    <!-- /checkbox -->
+
+                    <!-- options -->
+                    <div class="nuManager-options">
+                        <ul class="nuButtonsList">
+                            <li>
+                                <a class="btn btn-default nuListIco-flash" href="{{ site_url(config.upload_folder~'/'~file.filename) }}" target="_blank" role="button">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            </li><!--
+                            --><li>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="{{ admin_url('file/edit/'~file.id) }}"><i class="fa fa-pencil"></i>{{ lang('file.text.edit') }}</a></li>
+                                        <li><a href="#"><i class="fa fa-link"></i>{{ lang('file.text.copy_url') }}</a></li>
+                                        <li><a href="{{ admin_url('file/cut/'~file.id) }}" rel="{{ file.id }}" class="fileCut"><i class="fa fa-scissors" aria-hidden="true"></i>{{ lang('file.text.cut') }}</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#"><i class="fa fa-trash"></i>{{ lang('file.text.delete') }}</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /options -->
+
+                    <!-- file -->
+                    {% if is_image(file.extension) %}
+
+                        <div class="nuManager-elem nuManager-photo">
+                            {{ generate_thumbnail(file, '', file.alt, file.title) | raw }}
+                        </div>
+
+                    {% else %}
+
+                        <div class="nuManager-elem nuManager-file">
+                            {{ generate_thumbnail(file, '', file.alt, file.title) | raw }}
+                            <span>{{ file.name }}</span>
+                        </div>
+
+                    {% endif %}
+                    <!-- /file -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /single file -->
+
+    {% else %}
+
+        <div class="col-xs-12 nuManager-col">
+            <div class="alert alert-info margin0">{{ lang('file.text.no_records') }}</div>
+        </div>
+
+    {% endfor %}
+
+</div>
+<!-- /photos -->
+
+{{ form_close() }}
+
+<!-- pager -->
+<div class="row">
+    <div class="col-xs-12 text-right">
+
+        <!-- pagination -->
+        <nav class="filesListPagination">
+            {{ pager | raw }}
+        </nav>
+        <!-- /pagination -->
+
+    </div>
+</div>
+<!-- /pager -->

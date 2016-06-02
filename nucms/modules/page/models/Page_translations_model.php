@@ -130,9 +130,9 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         // Load routes model
         $CI = & get_instance();
         $CI->load->model('route/route_model', 'route');
-        
+
         if (isset($data[0])) {
-            
+
             $i = 0;
             foreach ($data as $row) {
 

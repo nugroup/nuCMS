@@ -98,6 +98,30 @@ class File_model extends MY_Model
 
         return $data;
     }
+
+    /**
+     * Get file extension
+     *
+     * @param array $data
+     * @return array
+     */
+    public function get_extension($data)
+    {
+        if (isset($data[0])) {
+
+            $i = 0;
+            foreach ($data as $row) {
+                $data[$i]['extension'] = extension($row['filename']);
+
+                $i++;
+            }
+        } else {
+
+            $data['extension'] = extension($row['filename']);
+        }
+
+        return $data;
+    }
 }
 
 /* End of file File_model.php */

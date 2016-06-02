@@ -29,6 +29,16 @@ class File_nu extends Backend_Controller
         $this->data['files_list'] = $this->files_list(0, 1);
         $this->data['folders_list'] = $this->folders_list(0, 1);
 
+        // Check cutted files session
+        $show_paste_button = false;
+
+        if (isset($this->session->{$this->sessionName}['cutted'])) {
+            $show_paste_button = true;
+        }
+
+        // Set view data
+        $this->data['show_paste_button'] = $show_paste_button;
+
         // Load the view
         $this->render('file/index', $this->data);
     }
@@ -44,6 +54,7 @@ class File_nu extends Backend_Controller
     {
         // Set default variables
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
+        $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
 
         // Get files list
         $where = [
@@ -59,7 +70,7 @@ class File_nu extends Backend_Controller
         $numberOfItems = $this->file
             ->where($where)
             ->count_rows();
-        $paginationLimits = $this->initPagination($numberOfItems, $page, 9, admin_url('file/files_list/'.$parent_id));
+        $paginationLimits = $this->initPagination($numberOfItems, $page, $per_page, admin_url('file/files_list/'.$parent_id));
 
         $this->file->generate_like_query($this->input->get('string'));
         $files = $this->file
@@ -68,9 +79,17 @@ class File_nu extends Backend_Controller
             ->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])
             ->get_all();
 
+        // Check cutted files session
+        $cutted_files = array();
+
+        if (isset($this->session->{$this->sessionName}['cutted'])) {
+            $cutted_files = $this->session->{$this->sessionName}['cutted'];
+        }
+
         // Set view data
         $data['files'] = $files;
         $data['pager'] = $this->pagination->create_links();
+        $data['cutted_files'] = $cutted_files;
 
         // Load the view
         if ($return == 1) {
@@ -121,12 +140,12 @@ class File_nu extends Backend_Controller
         if ($upload_data) {
             // Set data to insert
             $data = array(
-                'name'           => $upload_data['file_name'],
-                'filename'       => $upload_data['file_name'],
-                'size'           => $upload_data['file_size'],
-                'description'    => $upload_data['client_name'],
-                'alt'            => $upload_data['client_name'],
-                'title'          => $upload_data['client_name'],
+                'name' => $upload_data['file_name'],
+                'filename' => $upload_data['file_name'],
+                'size' => $upload_data['file_size'],
+                'description' => $upload_data['client_name'],
+                'alt' => $upload_data['client_name'],
+                'title' => $upload_data['client_name'],
             );
 
             if ((int) $this->input->post('parent_id')) {
@@ -144,7 +163,7 @@ class File_nu extends Backend_Controller
             $this->set_log(strip_tags($this->upload->display_errors()));
             $result = [
                 'result' => 0,
-                'errors'  => strip_tags($this->upload->display_errors()),
+                'errors' => strip_tags($this->upload->display_errors()),
             ];
         }
 
@@ -175,7 +194,6 @@ class File_nu extends Backend_Controller
                 $result = [
                     'result' => 1,
                 ];
-
             } catch (Exception $exc) {
 
                 $this->set_log($exc->getMessage());
@@ -183,9 +201,7 @@ class File_nu extends Backend_Controller
                     'result' => 0,
                     'errors' => $exc->getMessage()
                 ];
-
             }
-
         }
 
         header('Content-Type: application/json');
@@ -204,8 +220,8 @@ class File_nu extends Backend_Controller
         }
 
         $data = [
-            'type'      => 1,
-            'name'      => lang('file.text.new_folder'),
+            'type' => 1,
+            'name' => lang('file.text.new_folder'),
             'parent_id' => ($parent_id > 0) ? (int) $parent_id : null,
         ];
 
@@ -224,7 +240,7 @@ class File_nu extends Backend_Controller
         header('Content-Type: application/json');
         echo json_encode($result);
     }
-    
+
     /**
      * Save folder name (AJAX)
      *
@@ -272,11 +288,122 @@ class File_nu extends Backend_Controller
                 'result' => 1,
             ];
         } else {
-            $this->set_log(lang('ile.alert.error.delete_folder'));
+            $this->set_log(lang('file.alert.error.delete_folder'));
             $result = [
                 'result' => 0,
                 'errors' => lang('file.alert.error.delete_folder')
             ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+
+    /**
+     * Cut the file
+     *
+     * @param int $id
+     */
+    public function cut($id, $ajax = 1)
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
+        $current_session = $this->session->{$this->sessionName};
+
+        if (!isset($current_session['cutted'][$id])) {
+            $current_session['cutted'][$id] = $id;
+        }
+
+        $this->session->set_userdata($this->sessionName, $current_session);
+
+        if ($ajax) {
+
+            $result = [
+                'result'  => 1,
+                'message' => lang('file.alert.success.cut')
+            ];
+
+            header('Content-Type: application/json');
+            echo json_encode($result);
+        }
+    }
+
+    /**
+     * Cut checked files (AJAX)
+     *
+     * @throws Exception
+     */
+    public function cut_checked()
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
+        if ($this->input->post('files')) {
+            foreach ($this->input->post('files') as $file) {
+                $this->cut($file, 0);
+            }
+
+            $result = [
+                'result' => 1,
+                'files' => $this->input->post('files'),
+                'message' => lang('file.alert.success.cut_checked'),
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    }
+
+    /**
+     * Paste cutted files
+     */
+    public function paste($parent_id)
+    {
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }
+
+        $current_files_session = $this->session->{$this->sessionName};
+        $cutted_files = false;
+
+        if (isset($current_files_session['cutted'])) {
+            $cutted_files = $current_files_session['cutted'];
+            unset($current_files_session['cutted']);
+        }
+
+        if ($cutted_files) {
+
+            try {
+
+                foreach ($cutted_files as $file) {
+                    $update_data = array(
+                        'parent_id' => ($parent_id != 0) ? (int) $parent_id : null
+                    );
+
+                    if (!$this->file->update($update_data, $file)) {
+                        throw new Exception(lang('file.alert.error.paste'));
+                    }
+                }
+
+                // unset cutted files session
+                $this->session->set_userdata($this->sessionName, $current_files_session);
+
+                $result = [
+                    'result'  => 1,
+                    'message' => lang('file.alert.success.paste')
+                ];
+            } catch (Exception $exc) {
+
+                $this->set_log($exc->getMessage());
+                $result = [
+                    'result' => 0,
+                    'errors' => $exc->getMessage()
+                ];
+            }
+
         }
 
         header('Content-Type: application/json');

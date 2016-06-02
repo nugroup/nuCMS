@@ -1,0 +1,119 @@
+// main: nu.less
+
+@cBase1: #000000;
+@cBase2: #000000;
+@cRed: red;
+@cGreen: #47c981;
+
+// ----- files upload box
+.fileUploadBox {
+    display: none;
+    position: relative;
+    margin: 0 0 60px 0;
+    min-height: 343px;
+    border: 1px dashed @cBase2;
+    cursor: pointer;
+    background: none;
+    .transition(0.3s);
+
+    .inside {
+        .center-absolute();
+        text-align: center;
+
+        i {
+            color: @cBase2;
+            font-size: 80px;
+        }
+        .information {
+            margin: 15px 0 0 0;
+        }
+    }
+    &:hover {
+        background: fade(@cBase2, 15%);
+    }
+}
+
+// ----- myDropzone
+#myDropzone {
+    z-index: 10;
+
+    &.dropzone {
+        .dz-message {
+            margin: 0;
+        }
+        .dz-preview {
+            &.dz-image-preview {
+                background: none;
+            }
+            .dz-image {
+                .border-radius(0);
+            }
+        }
+    }
+
+    .myDropzoneClear {
+        cursor: pointer;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        color: @cRed;
+    }
+}
+
+// ----- folderTree
+.folderTreeBox {
+    margin: 40px 0 0 0;
+}
+.folderTree {
+    padding: 0;
+    list-style: none;
+
+    li {
+        padding: 8px 0;
+        position: relative;
+
+        a {
+            font-size: 16px;
+            color: @cBase1;
+
+            &.name {
+                margin: 0 0 0 15px;
+            }
+        }
+        input {
+            display: none;
+            padding: 0 0 0 34px !important;
+            margin: -27px 0 0 0;
+        }
+        .subtree {
+            /*display: none;*/
+            list-style: none;
+            padding: 8px 0 0 30px;
+        }
+        &:hover, &:focus, &:active, &.active {
+            text-decoration: none;
+            outline: none;
+
+            > a {
+                outline: none;
+                color: @cGreen !important;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+.dropzone {
+    .dz-preview {
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        margin: 16px;
+        min-height: 100px;
+    }
+}
+
+// ----- additional
+.cutted {
+    opacity: 0.2;
+}

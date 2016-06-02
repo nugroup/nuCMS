@@ -135,5 +135,22 @@ if (!function_exists('generate_thumbnail')) {
     }
 }
 
+if (!function_exists('is_image')) {
+    /**
+     * Chceck if file is image
+     *
+     * @param string $extension
+     * @return boolean
+     */
+    function is_image($extension)
+    {
+        if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png') {
+            return true;
+        }
+
+        return false;
+    }
+}
+
 /* End of file file_helper.php */
 /* Location: ./application/modules/menu/helpers/file_helper.php */

@@ -33,8 +33,11 @@ var showBeforeUnload = false;
     // ----- check all items
     $('.checkAll').on('change', function(e) {
         var elem = $('.check_item');
-        if ( this.checked ) elem.prop('checked', true);
-        else elem.prop('checked', false);
+        if ( this.checked )  {
+            elem.prop('checked', true);
+        } else {
+            elem.prop('checked', false);
+        }
     });
 
 

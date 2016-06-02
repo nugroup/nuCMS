@@ -1,0 +1,463 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('file') }}" class="nuNavActive">{{ lang('file.nav.list') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block action_bar_content %}
+
+    {{ form_open(current_url(), 'method="get" id="file-filter-form"') }}
+
+    <div class="row nuActions">
+
+        <div class="col-xs-12 col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+            <ul class="nuButtonsList nuButtonsList-padding">
+                <li><a href="javascript:void(0);" id="fileFiltersClean" class="btn btn-primary btn-squere"><i class="fa fa-remove"></i></a></li>
+                <li><button class="btn btn-success" type="submit"><i class="fa fa-filter"></i> {{ lang('text.filter') }}</button></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12 col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-8 col-lg-pull-4">
+
+            <div class="row nuFormInline">
+                <div class="col-xs-6 nuFormInlice-col">
+                    <div class="form-group">
+                        <label for="fil_string">{{ lang('file.filter.label.string') }}</label>
+                        {{ form_input({'name': 'string', 'id': 'fil_string', 'class': 'form-control', 'value': input.get('string'), 'placeholder': lang('page.filter.label.string')}) }}
+                    </div>
+                </div>
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        {% include 'components/per_page_select.html.twig' %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- content -->
+    <div id="nuManager" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+
+                    <!-- butons -->
+                    <div class="nuManager-head">
+                        <ul class="nuButtonsList">
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:void(0);" id="fileFolderAdd"><i class="fa fa-plus"></i>{{ lang('file.text.add_folder') }}</a></li>
+                                        <li><a href="javascript:void(0);" id="fileFolderEdit"><i class="fa fa-pencil"></i>{{ lang('file.text.edit_folder') }}</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="javascript:void(0);" id="fileFolderDelete"><i class="fa fa-trash"></i>{{ lang('file.text.delete_folder') }}</a></li>
+                                        <li role="separator" class="divider file_paste_button"{{ show_paste_button ? '' : ' style="display: none;"' }}></li>
+                                        <li{{ show_paste_button ? '' : ' style="display: none;"' }} class="file_paste_button"><a href="javascript:void(0);" id="filePaste"><i class="fa fa-clipboard" aria-hidden="true"></i>{{ lang('file.text.paste_files') }}</a></li>
+                                    </ul>
+                                </div>
+                            </li><!--
+                            --><li><button class="btn btn-success fileShowUpload" type="button"><i class="fa fa-arrow-down fa-margin"></i>{{ lang('file.text.add_files') }}</button></li>
+                        </ul>
+                    </div>
+                    <!-- /butons -->
+
+                    <!-- tree -->
+                    <div>
+                        <div id="foldersList">
+                            {{ folders_list | raw }}
+                        </div>
+                    </div>
+                    <!-- /tree -->
+
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+
+                    <div class="nuManager-head">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+
+                                <!-- breadcrumb -->
+                                {#<ol class="breadcrumb">
+                                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                    <li><a href="#">Home</a></li>
+                                    <li class="active">Folder</li>
+                                </ol>#}
+                                <!-- /breadcrumb -->
+
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 text-right">
+
+                                <!-- selected actions -->
+                                <ul class="nuButtonsList">
+                                    <li>
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ lang('text.checked_items') }} <i class="fa fa-caret-down"></i></span></button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><button type="button" name="action" id="fileDeleteChecked" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button></li>
+                                                <li><button type="button" name="action" id="fileCutChecked" value="cut_checked"><i class="fa fa-scissors"></i>{{ lang('file.text.cut') }}</button></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li><label class="nuCheck" style="margin-top:3px;"><input type="checkbox" class="checkAll"><span></span></label></li>
+                                </ul>
+                                <!-- /selected actions -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <!-- fileUploadBox -->
+                        <div class="col-xs-12 nuManager-col">
+                            <div id="myDropzone" class="dropzone fileUploadBox" style="display: none;">
+                                <div class="dz-default dz-message inside">
+                                    <i class="fa fa-upload"></i>
+                                    <div class="information txtBig">{{ lang('file.text.uploader') }}</div>
+                                </div>
+
+                                <div class="myDropzoneClear"><i class="fa fa-times"></i> {{ lang('file.text.clear_files') }}</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- filesList -->
+                    <div id="filesList" class="filesList">
+                        {{ files_list | raw }}
+                    </div>
+                    <!-- /filesList -->
+
+                    {{ form_input({'type': 'hidden', 'name': 'parent_id', 'class': 'form-control', 'id': 'parent_id_hidden', 'value': 0}) }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- /content -->
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        /**
+         * Load files list view
+         *
+         * @param {int} parentId
+         * @param {string} url
+         * @param {string} suffix
+         */
+        function loadFilesList(parentId, url, suffix) {
+
+            if (url.toString() !== '') {
+                $("#filesList").load(url + suffix, function () {
+
+                    $('body').goTo();
+
+                });
+            } else {
+                $("#filesList").load('{{ admin_url('file/files_list') }}/' + parentId + suffix, function () {
+
+                    $('body').goTo();
+
+                });
+            }
+
+        }
+
+        /**
+         * Load folders list view
+         *
+         * @param {int} activeId
+         */
+        function loadFoldersList(activeId) {
+
+            $("#foldersList").load('{{ admin_url('file/folders_list') }}/' + activeId, function (response) {
+                console.log(response);
+            });
+
+        }
+
+        // -- show upload area
+        $(document).on("click", '.fileShowUpload', function () {
+
+            $('.fileUploadBox').toggle();
+            return false;
+
+        });
+
+        // -- file tree
+        $(document).on("click", '.openSubTree', function () {
+
+            $(this).parent().children('ul').slideToggle('fast');
+            $(this).children('i').toggleClass('fa-folder-open-o');
+
+        });
+
+        // -- delete checked files
+        $(document).on("click", '#fileDeleteChecked', function () {
+
+            var filesFormData = $('#files-list-form').serialize();
+
+            $.post('{{ admin_url('file/delete_checked') }}', filesFormData, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    var parentId = parseInt($('#parent_id_hidden').val());
+                    loadFilesList(parentId, '');
+                    loadFoldersList(parentId);
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+            return false;
+
+        });
+
+        // -- cut checked files
+        $(document).on("click", '#fileCutChecked', function () {
+
+            var filesFormData = $('#files-list-form').serialize();
+
+            $.post('{{ admin_url('file/cut_checked') }}', filesFormData, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    for (fileId in response.files) {
+                        $('#file_id_'+response.files[fileId]).addClass('cutted');
+                    }
+                    $.nuAlert('success', response.message);
+                    $('.file_paste_button').show();
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+{#            return false;#}
+
+        });
+
+        // -- add folder action
+        $(document).on('click', '#fileFolderAdd', function () {
+
+            var parentId = parseInt($('#parent_id_hidden').val());
+
+            $.post('{{ admin_url('file/add_folder') }}/' + parentId, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    loadFoldersList(parentId);
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+        });
+
+        // -- edit folder action
+        $(document).on('click', '#fileFolderEdit', function () {
+
+            var folderId = parseInt($('#parent_id_hidden').val());
+
+            $('.fileFolderName[data-parent_id="' + folderId + '"]').hide();
+            $('.filefolderInput[data-parent_id="' + folderId + '"]').css('display', 'block').focus();
+
+        });
+
+        $(document).on('change', '.filefolderInput', function () {
+
+            var folderId = parseInt($(this).attr('data-parent_id'));
+            var newValue = $(this).val().toString();
+            var thisObj = $(this);
+
+            $.post('{{ admin_url('file/save_folder') }}/' + folderId, {name: newValue}, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    thisObj.hide();
+                    $('.fileFolderName[data-parent_id="' + folderId + '"]').children('.insideName').html(newValue);
+                    $('.fileFolderName[data-parent_id="' + folderId + '"]').show();
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+        });
+
+        // -- delete folder action
+        $(document).on('click', '#fileFolderDelete', function () {
+
+            if (confirm('{{ lang('file.text.folder_confirm_delete') }}')) {
+
+                var folderId = parseInt($('#parent_id_hidden').val());
+
+                $.post('{{ admin_url('file/delete_folder') }}/' + folderId, function (response) {
+
+                    if (parseInt(response.result) === 1) {
+                        loadFilesList(0, '');
+                        loadFoldersList(0);
+                    } else {
+                        alert(response.errors);
+                    }
+
+                });
+
+            }
+
+        });
+
+        // -- paste files action
+        $(document).on('click', '#filePaste', function () {
+
+            var folderId = parseInt($('#parent_id_hidden').val());
+
+            $.post('{{ admin_url('file/paste') }}/' + folderId, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    loadFilesList(folderId, '');
+                    loadFoldersList(folderId);
+                    $('.file_paste_button').hide();
+                    $.nuAlert('success', response.message);
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+        });
+
+        // -- files list ajax pagination
+        $(document).on('click', '.filesListPagination a', function () {
+
+            var pagerUrl = $(this).attr('href').toString();
+            loadFilesList(0, pagerUrl, '');
+
+            return false;
+
+        });
+
+        // -- search action
+        $(document).on('submit', '#file-filter-form', function () {
+
+            var searchString = $(this).val().toString();
+            var filters = $(this).serialize().toString();
+
+            loadFilesList(0, '', '?'+filters);
+
+            return false;
+
+        });
+
+        // -- clear filters action
+        $(document).on('click', '#fileFiltersClean', function () {
+
+            var parentId = parseInt($(this).attr('data-parent_id'));
+            loadFilesList(parentId, '');
+
+            return false;
+
+        });
+
+        // -- show file list by ajax
+        $(document).on('click', '.loadFilesList', function () {
+
+            var parentId = parseInt($(this).attr('data-parent_id'));
+            loadFilesList(parentId, '');
+
+            $('.folderTree li').removeClass('active');
+            $(this).parent().toggleClass('active');
+            $('#parent_id_hidden').val(parentId);
+
+        });
+
+        // -- cut single file
+        $(document).on('click', '.fileCut', function() {
+
+            var urlAction = $(this).attr('href').toString();
+            var fileId = parseInt($(this).attr('rel'));
+
+            $.post(urlAction, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    $('#file_id_'+fileId).addClass('cutted');
+                    $.nuAlert('success', response.message);
+                    $('.file_paste_button').show();
+                }
+
+            });
+
+            return false;
+
+        });
+
+        // -- dropzone
+        Dropzone.autoDiscover = false;
+        $("#myDropzone").dropzone({
+            maxFilesize:{{ config.upload_max_file_size }},
+            url: "{{ config.upload_action }}",
+            paramName: "file",
+            autoProcessQueue: true,
+            success: function (file, response) {
+
+                var parentId = parseInt($('#parent_id_hidden').val());
+                loadFilesList(parentId, '');
+                loadFoldersList(parentId);
+
+                if (parseInt(response.result) === 1) {
+                    file.previewElement.classList.add("dz-success");
+
+                } else {
+
+                    if (response.errors) {
+                        $('span[data-dz-errormessage]').html(response.errors);
+                    }
+
+                    return file.previewElement.classList.add("dz-error");
+                }
+            },
+            sending: function (file, xhr, formData) {
+
+                var parentId = parseInt($('#parent_id_hidden').val());
+                formData.append('parent_id', parentId);
+
+            },
+            init: function () {
+
+                var myDropzone = this;
+
+                $('.myDropzoneClear').on("click", function (e) {
+                    myDropzone.removeAllFiles(true);
+                });
+
+                this.on("error", function (file, response) {
+                    //handle errors here
+                });
+
+            },
+            dictFileTooBig: "{{ lang('file.dropzone.file_too_big') }}",
+            dictResponseError: "{{ lang('file.dropzone.response_error') }}"
+        });
+
+    </script>
+
+{% endblock %}

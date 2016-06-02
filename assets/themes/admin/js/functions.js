@@ -99,7 +99,9 @@ function changeBoolean(actionUrl, fieldValue, fieldName) {
 }
 
 function hideNuDropdown() {
-    $('.dropdown-menu').slideUp(200);
+//    $('.dropdown-menu').dropdown('toggle');
+//    $('.dropdown-menu').slideUp(200);
+    alert("test");
 }
 
 /**
