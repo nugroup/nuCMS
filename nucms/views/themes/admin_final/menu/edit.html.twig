@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('menu') }}">{{ lang('menu.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('menu/add') }}">{{ lang('menu.nav.add') }}</a></li>
+        <li><a href="{{ admin_url('menu/edit/'~menu.id) }}" class="nuNavActive">{{ lang('menu.nav.edit') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_open(current_url(), {'id': 'menu-edit-form', 'novalidate': 'novalidate'}) }}
+
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                        {% include('components/lang_select.html.twig') %}
+                        {{ form_input({'type': 'text', 'name': 'name', 'value': menu.name, 'class': 'form-control', 'id': 'name', 'placeholder': lang('menu.form.name'),  'required': 'required'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- /head -->
+
+    <!-- content -->
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            <div class="row tab-pane fade in active" role="tabpanel" id="settings">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('menu.head.data') }}:</div>
+                    <!-- /header -->
+
+                    <!-- active -->
+                    <div class="nuCheckbox-single">
+                        <label for="active">{{ lang('menu.form.active') }}:</label>
+                        <label class="nuSwitch" for="active">
+                            {{ form_checkbox({'id': 'active', 'name': 'active'}, 1, menu.active ) }}
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- /active -->
+
+                    <!-- position -->
+                    <div class="form-group">
+                        <label>{{ lang('menu.form.position') }}</label>
+                        {{ form_dropdown({'id': 'position', 'name': 'position', 'class': 'form-control'}, config.menu.positions, menu.position) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /position -->
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-margin">
+
+                    <div class="editBox">
+
+                        <div class="addItemsInputs form-horizontal">
+                            {% include 'menu/items/add.html.twig' %}
+                        </div>
+
+                        <div class="editItemInputs form-horizontal form-box">
+                            {% include 'menu/items/edit.html.twig' %}
+                        </div><!--/.editItemInputs-->
+                    </div>
+                    
+                    <div id="menu-items">
+                        {% include 'menu/items/index.html.twig' %}
+                    </div><!--/menu-items-->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- /content -->
+
+        <input type="hidden" name="nested_order" id="nested_order" value="">
+        <input type="hidden" id="menu_items_max_id" value="{{ menu_items_max_id }}">
+
+    {{ form_close() }}
+
+{% endblock %}

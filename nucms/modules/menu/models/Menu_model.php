@@ -46,14 +46,18 @@ class Menu_model extends MY_Model
     }
 
     /**
-     * Generate query from search string
+     * Prepare like and order_by query from $_GET
      *
-     * @param type $string
+     * @param string $string
      */
     public function generate_like_query($string)
     {
         if ($string) {
             $this->db->like('name', $string);
+        }
+
+        if ($this->input->get('sort') && $this->input->get('sort_type')) {
+            $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
         }
     }
 }

@@ -30,6 +30,7 @@ class Menu_nu extends Backend_Controller
     {
         // Set page
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
+        $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
         $this->setReturnLink($this->sessionName);
 
         // Delete checked item
@@ -49,7 +50,7 @@ class Menu_nu extends Backend_Controller
         $numberOfItems = $this->menu->count_rows();
 
         // Init pagination
-        $paginationLimits = $this->initPagination($numberOfItems, $page);
+        $paginationLimits = $this->initPagination($numberOfItems, $page, $per_page);
 
         // Get menus
         $this->menu->generate_like_query($this->input->get('string'));
@@ -77,8 +78,7 @@ class Menu_nu extends Backend_Controller
         }
 
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
-        // Get max menu items id
-        $menuItemsMaxId = $this->menu_items->get_max_id();
+        $menuItemsMaxId = $this->menu_items->get_max_id(); // Get max menu items id
 
         // If post is send
         if ($this->input->post()) {
@@ -149,6 +149,7 @@ class Menu_nu extends Backend_Controller
         $this->data['menu_items'] = generate_menu_tree($menu_items_parents, 0, [], 100, 0);
         $this->data['menu_items_max_id'] = $menuItemsMaxId;
         $this->data['pages_options'] = obj_to_options_array($pages, 'page_id', 'title');
+        $this->data['selected_locale'] = $this->config->item($locale, 'system_languages_by_locale')->locale;
 
         // Load the view
         $this->render('menu/edit', $this->data);
@@ -161,7 +162,13 @@ class Menu_nu extends Backend_Controller
     {
         // If post is send
         if ($this->input->post()) {
-            $inserted_id = $this->menu->from_form()->insert();
+
+            // Additional data
+            $additional_data = [
+                'active'  => (int) $this->input->post('active'),
+            ];
+
+            $inserted_id = $this->menu->from_form(NULL, $additional_data)->insert();
 
             if ($inserted_id) {
                 // Set informations

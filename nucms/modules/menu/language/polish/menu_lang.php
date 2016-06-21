@@ -7,9 +7,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* subnav
 ============================================================================= */
-$lang['menu.subnav.list'] = 'Lista menu';
-$lang['menu.subnav.add'] = 'Dodaj menu';
-$lang['menu.subnav.edit'] = 'Edytuj menu';
+$lang['menu.nav.list'] = 'Lista menu';
+$lang['menu.nav.add'] = 'Dodaj menu';
+$lang['menu.nav.edit'] = 'Edytuj menu';
 
 /* text
 ============================================================================= */
@@ -27,21 +27,20 @@ $lang['menu.list.position'] = 'Pozycja';
 $lang['menu.list.active'] = 'Aktywność';
 $lang['menu.list.position.default'] = '-- Nie przypisano --';
 
-/* alert
+/* filter
 ============================================================================= */
-$lang['menu.alert.success.add'] = 'Dodano nowe menu';
-$lang['menu.alert.success.delete'] = 'Usunięto menu';
-$lang['menu.alert.error.delete'] = 'Nie udało się usunąć menu';
-$lang['menu.item.alert.error.delete'] = 'Nie udało się usunąć elementu z menu';
-$lang['menu.item.alert.success.delete'] = 'Usunięto element z menu';
+$lang['menu.filter.label.string'] = 'Nazwa menu';
+
+/* heads
+============================================================================= */
+$lang['menu.head.data'] = 'Ustawienia menu';
+$lang['menu.head.items'] = 'Struktura menu';
 
 /* form
 ============================================================================= */
 $lang['menu.form.name'] = 'Nazwa';
 $lang['menu.form.position'] = 'Pozycja';
 $lang['menu.form.active'] = 'Aktywność';
-$lang['menu.form.slug'] = 'Adres URL';
-$lang['menu.form.locale'] = 'Język';
 $lang['menu.form.page'] = 'Strona';
 $lang['menu.form.target'] = 'Otwieraj w';
 $lang['menu.form.target.self'] = 'W tym samym oknie';
@@ -56,3 +55,11 @@ $lang['menu.type.pages'] = 'Strony';
 ============================================================================= */
 $lang['menu.position.top'] = 'Góra';
 $lang['menu.position.footer'] = 'Stopka';
+
+/* alert
+============================================================================= */
+$lang['menu.alert.success.add'] = 'Dodano nowe menu';
+$lang['menu.alert.success.delete'] = 'Usunięto menu';
+$lang['menu.alert.error.delete'] = 'Nie udało się usunąć menu';
+$lang['menu.item.alert.error.delete'] = 'Nie udało się usunąć elementu z menu';
+$lang['menu.item.alert.success.delete'] = 'Usunięto element z menu';
