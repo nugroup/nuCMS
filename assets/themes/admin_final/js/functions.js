@@ -150,3 +150,32 @@ $.fn.goTo = function () {
 
     return this;
 }
+
+/**
+ * Serialize form element in div
+ * 
+ * @param {string} el
+ * @returns {object}
+ */
+function divSerialize(el) {
+
+    var inputValues = {};
+
+    $(el + ' input').each(function () {
+        var type = $(this).attr("type");
+        if ((type == "checkbox" || type == "radio") && this.checked) {
+            inputValues[$(this).attr("data-name")] = this.value;
+        } else if (type != "button" || type != "submit") {
+            inputValues[$(this).attr("data-name")] = this.value;
+        }
+    });
+    $(el + ' select').each(function () {
+        inputValues[$(this).attr("data-name")] = this.value;
+    });
+    $(el + ' textarea').each(function () {
+        inputValues[$(this).attr("data-name")] = this.value;
+    });
+
+    return inputValues;
+    
+}

@@ -70,7 +70,7 @@ class Migration_Create_menu_items extends CI_Migration
                 'null' => TRUE,
                 'unsigned' => TRUE
             ),
-            'id_parent' => array(
+            'parent_id' => array(
                 'type' => 'INT',
                 'constraint' => 5,
                 'null' => TRUE,
@@ -84,7 +84,7 @@ class Migration_Create_menu_items extends CI_Migration
         $this->dbforge->add_key('primary_key');
 
         $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_menu_id_FK` FOREIGN KEY (`menu_id`) REFERENCES `nu_menu` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
-        $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_id_parent_FK` FOREIGN KEY (`id_parent`) REFERENCES `nu_menu_items` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
+        $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_parent_id_FK` FOREIGN KEY (`parent_id`) REFERENCES `nu_menu_items` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
         $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_locale_FK` FOREIGN KEY (`locale`) REFERENCES `nu_language` (`locale`) ON UPDATE CASCADE ON DELETE CASCADE;');
     }
 

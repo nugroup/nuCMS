@@ -28,7 +28,7 @@ $config['first_run'] = true;
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/nucms/';
+$config['base_url'] = 'http://localhost/~xprezesx/nucms/';
 $config['base_url_301'] = 'http://localhost';
 
 
@@ -389,7 +389,7 @@ $config['encryption_key'] = '~0DR3D*<8Y5Wx?-NAUxRu?o"F90.}|';
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 0;
-$config['sess_save_path'] = NULL;
+$config['sess_save_path'] =  sys_get_temp_dir();
 $config['sess_match_ip'] = FALSE;
 $config['sess_time_to_update'] = 0;
 $config['sess_regenerate_destroy'] = TRUE;

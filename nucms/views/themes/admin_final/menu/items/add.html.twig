@@ -4,12 +4,10 @@
     <button class="btn btn-orange" type="button" data-type="2">{{ lang('menu.text.add_page') }}</button>
 </div>
 
-<div class="form-box">
+<!-- add item type 1 -->
+<div class="form-box addItem type1">
 
-    <!-- add item type 1 -->
-    <div class="addItem type1">
-
-        {{ form_open(current_full_url(), {'id': 'menu-add-form-1', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+    <div id="menu-add-form-1">
 
         <div class="actionsButtons text-right">
             <button type="button" class="btn btn-default btn-sm closeAddItem">{{ lang('text.cancel') }}</button>
@@ -21,42 +19,42 @@
 
         <!-- name -->
         <div class="form-group">
-            <label for="add_name_1" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
-            <div class="col-sm-9">
-                {{ form_input({'name': 'name', 'class': 'form-control add_menu_item_1', 'id': 'add_name_1', 'required': 'required' }) }}
+            <label for="add_name_1" class="col-xs-12 control-label">{{ lang('menu.form.name') }}:</label>
+            <div class="col-xs-12">
+                {{ form_input({'data-name': 'name', 'class': 'form-control add_menu_item_1', 'id': 'add_name_1', 'required': 'required' }) }}
             </div>
             <div class="clearfix"></div>
         </div>
 
         <!-- target -->
         <div class="form-group">
-            <label for="edit_target_2" class="col-sm-3 control-label">{{ lang('menu.form.target') }}:</label>
-            <div class="col-sm-9">
-                {{ form_nu_dropdown({'class': 'form-control', 'name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
+            <label for="edit_target_2" class="col-xs-12 control-label">{{ lang('menu.form.target') }}:</label>
+            <div class="col-xs-12">
+                {{ form_dropdown({'class': 'form-control', 'data-name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
             </div>
             <div class="clearfix"></div>
         </div>
 
         <!-- slug -->
         <div class="form-group">
-            <label for="add_slug_1" class="col-sm-3 control-label">{{ lang('menu.form.slug') }}:</label>
-            <div class="col-sm-9">
-                {{ form_input({'name': 'slug', 'class': 'form-control add_menu_item_1', 'id': 'add_slug_1', 'required': 'required' }) }}
+            <label for="add_slug_1" class="col-xs-12 control-label">{{ lang('menu.form.slug') }}:</label>
+            <div class="col-xs-12">
+                {{ form_input({'data-name': 'data-slug', 'class': 'form-control add_menu_item_1', 'id': 'add_slug_1', 'required': 'required' }) }}
             </div>
             <div class="clearfix"></div>
         </div>
 
-        {{ form_hidden('type', 1) }}
-        {{ form_hidden('type_ico', 'fa fa-link ico') }}
+        {{ form_input({'type': 'hidden', 'data-name': 'type', 'value': 1})}}
+        {{ form_input({'type': 'hidden', 'data-name': 'type_ico', 'value': 'fa fa-link ico'})}}
 
-        {{ form_close() }}
+    </div><!--/menu-add-form-1-->
 
-    </div><!--/.addItem type1-->
+</div><!--/.addItem type1-->
 
-    <!-- add item type 2 -->
-    <div class="addItem type2">
+<!-- add item type 2 -->
+<div class="form-box addItem type2">
 
-        {{ form_open(current_full_url(), {'id': 'menu-add-form-2', 'class': 'form-horizontal', 'novalidate': 'novalidate'}) }}
+    <div id="menu-add-form-2">
 
         <div class="actionsButtons text-right">
             <button type="button" class="btn btn-default btn-sm closeAddItem">{{ lang('text.cancel') }}</button>
@@ -70,7 +68,7 @@
         <div class="form-group">
             <label for="add_name_2" class="col-sm-3 control-label">{{ lang('menu.form.name') }}:</label>
             <div class="col-sm-9">
-                {{ form_input({'name': 'name', 'class': 'form-control add_menu_item_2', 'id': 'add_name_2', 'required': 'required' }) }}
+                {{ form_input({'data-name': 'name', 'class': 'form-control add_menu_item_2', 'id': 'add_name_2', 'required': 'required' }) }}
             </div>
             <div class="clearfix"></div>
         </div>
@@ -79,7 +77,7 @@
         <div class="form-group">
             <label for="edit_target_2" class="col-sm-3 control-label">{{ lang('menu.form.target') }}:</label>
             <div class="col-sm-9">
-                {{ form_nu_dropdown({'class': 'form-control', 'name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
+                {{ form_dropdown({'class': 'form-control', 'data-name': 'target', 'required': 'required'}, config.menu.targets, '') | raw }}
             </div>
             <div class="clearfix"></div>
         </div>
@@ -88,16 +86,14 @@
         <div class="form-group">
             <label for="add_url_1" class="col-sm-3 control-label">{{ lang('menu.form.page') }}:</label>
             <div class="col-sm-9">
-                {{ form_nu_dropdown({'class': 'form-control add_menu_item_2', 'name': 'primary_key', 'required': 'required'}, pages_options) | raw }}
+                {{ form_dropdown({'class': 'form-control add_menu_item_2', 'data-name': 'primary_key', 'required': 'required'}, pages_options) | raw }}
             </div>
             <div class="clearfix"></div>
         </div>
 
-        {{ form_hidden('type', 2) }}
-        {{ form_hidden('type_ico', 'fa fa-file-o ico') }}
+        {{ form_input({'type': 'hidden', 'data-name': 'type', 'value': 2})}}
+        {{ form_input({'type': 'hidden', 'data-name': 'type_ico', 'value': 'fa fa-file-o ico'})}}
 
-        {{ form_close() }}
+    </div><!--/menu-add-form-2-->
 
-    </div><!--/.addItem type2-->
-    
-</div><!--/.form-box-->
+</div><!--/.addItem type2-->

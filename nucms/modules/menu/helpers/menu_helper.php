@@ -70,7 +70,7 @@ if ( ! function_exists('generate_menu_item_handler'))
     {
         $icons = array(
             1 => '<i class="fa fa-link ico"></i>',
-            2 => '<i class="fa fa-file-o ico"></i>',
+            2 => '<i class="fa fa-file ico"></i>',
         );
 
         $result = '';

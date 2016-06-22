@@ -22,7 +22,7 @@
 
                 <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
                     <ul class="nuButtonsList">
-                        <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                        <li><button id="edit-menu-submit" class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
                     </ul>
                 </div>
 
@@ -77,14 +77,18 @@
 
                 <div class="col-xs-12 col-sm-6 col-md-6 col-margin">
 
+                    <!-- header with line -->
+                    <div class="nuHead">{{ lang('menu.head.items') }}:</div>
+                    <!-- /header -->
+                    
                     <div class="editBox">
 
-                        <div class="addItemsInputs form-horizontal">
+                        <div class="addItemsInputs">
                             {% include 'menu/items/add.html.twig' %}
                         </div>
 
-                        <div class="editItemInputs form-horizontal form-box">
-                            {% include 'menu/items/edit.html.twig' %}
+                        <div class="editItemInputs">
+{#                            {% include 'menu/items/edit.html.twig' %}#}
                         </div><!--/.editItemInputs-->
                     </div>
                     
@@ -104,5 +108,193 @@
         <input type="hidden" id="menu_items_max_id" value="{{ menu_items_max_id }}">
 
     {{ form_close() }}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/jquery.mjs.nestedSortable.js') }}"></script>
+    <script>
+
+        $(document).on('change', '#menu-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+        // -- run nested sortable after load
+        runNestedSortable('.menu-items', '');
+
+        // -- add menu item
+        $(document).on('click', '.menuAdd', function () {
+
+            var type = parseInt($(this).attr('data-menu_type'));
+            var dataArray = divSerialize('#menu-add-form-' + type);
+            var maxId = parseInt($('#menu_items_max_id').val());
+            var newId = maxId+1;
+            var typeIco = $('#menu-add-form-' + type).find('*[data-name="type_ico"]').val().toString();
+            
+            // Copy item element
+            var newItem = $('.menu-items').children('li').last().clone().insertBefore('.menu-items .ghost');
+            newItem.find('.menu_item_name').html(dataArray["name"].value);
+
+            // Remove data from copy
+            var oldData = $(newItem).data(), i;
+            var keys = $.map(oldData , function(value, key) { return key; });
+            for(i = 0; i < keys.length; i++) {
+                newItem.removeAttr("data-" + keys[i]);
+            }
+            newItem.removeData();
+
+            // Add new data
+            newItem.attr('data-id', 0);
+            newItem.data('id', newId);
+            newItem.attr('id', 'item_'+(maxId+1));
+            for (row in dataArray) {
+                console.log(row);
+                if (row.toString() !== 'type_ico') {
+                    newItem.attr('data-'+row, dataArray[row]);
+                    newItem.data(row, dataArray[row]);
+                }
+            }
+            
+            // Set new id, icon
+            newItem.find('.menuEdit').attr('rel', newId);
+            newItem.find('.menuDelete').attr('rel', newId);
+            newItem.find('.ico').attr('class', '').addClass(typeIco+' ico');
+
+            // Remove children
+            newItem.children('ol').remove();
+            newItem.removeClass('ghost');
+            newItem.removeAttr('style');
+            newItem.show();
+            runNestedSortable('.menu-items', '');
+
+            // Change next id number
+            $('#menu_items_max_id').val(newId);
+
+            $('.addItem').hide();
+
+            showBeforeUnload = true;
+
+            return false;
+
+        });
+
+        // -- delete menu item
+        $(document).on('click', '.menuDelete', function () {
+
+            var itemId = parseInt($(this).attr('rel'));
+            $('#item_'+itemId).remove();
+            $('#menu-edit-form').append('<input type="hidden" name="menu_items_delete['+itemId+']" value="'+itemId+'">');
+
+            // Get sort
+            var oSortable = $('.menu-items').nestedSortable('serialize');
+            $('#nested_order').val(oSortable);
+
+            showBeforeUnload = true;
+
+        });
+
+        // -- save menu item
+        $(document).on('click', '.menuSave', function () {
+
+            var type = parseInt($(this).attr('data-type'));
+            var dataArray = $('#menu-edit-form-'+type).serializeArray();
+            var idItem = parseInt($('#menu-edit-form-'+type).find('*[name="id"]').val());
+            var itemElement = $('#item_'+idItem);
+
+            // Change data value
+            for (row in dataArray) {
+                itemElement.attr('data-'+dataArray[row].name, dataArray[row].value);
+                itemElement.data(dataArray[row].name, dataArray[row].value);
+            }
+
+            // Change name
+            itemElement.children('.handler').find('.menu_item_name').html(dataArray[0].value);
+
+            // Close edit inputs
+            $('.editItem').hide();
+            $('.addButtons').show();
+
+            showBeforeUnload = true;
+
+            return false;
+
+        });
+
+        // -- edit menu item
+        $(document).on('click', '.menuEdit', function () {
+
+            var itemId = parseInt($(this).attr('rel'));
+            var element = $('#item_'+itemId);
+            var type = parseInt(element.attr('data-type'));
+            var dataElements = [];
+
+            // Insert value from data item
+            var data = $(element).data(), i;
+            var keys = $.map(data , function(value, key) { return key; });
+            for(i = 0; i < keys.length; i++) {
+
+                var value = element.data(keys[i]);
+                $('.editItem.type' + type).find('*[name="'+keys[i]+'"]').val(value);
+
+                // Set value for dropdown
+                if (keys[i].toString() === 'primary_key' || keys[i].toString() === 'target') {
+                    var selectedValue = $('.editItem.type'+type+' ul[data-name="'+keys[i].toString()+'"]').find('li[data-value="'+value+'"]').text();
+                    console.log(selectedValue);
+                    $('.editItem.type' + type).find('span[data-name="'+keys[i].toString()+'"]').html(selectedValue);
+                }
+
+            }
+
+            // show edit form
+            $('.editItem').hide();
+            $('.editItem.type' + type).show();
+            $('.addButtons').hide();
+
+        });
+
+        // -- show add inputs
+        $(document).on('click', '.addButtons button', function () {
+
+            var type = parseInt($(this).attr('data-type'));
+            $('.addItem.type' + type).show();
+
+        });
+
+        // -- close add inputs
+        $(document).on('click', '.closeAddItem', function () {
+
+            $('.addItem').hide();
+
+        });
+
+        // -- close edit inputs
+        $(document).on('click', '.closeEditItem', function () {
+
+            $('.editItem').hide();
+
+        });
+
+        // -- submit form with all data
+        $('#edit-menu-submit').click(function () {
+
+            var dataArray = [];
+            $('.menu-items li:not(.ghost)').each(function () {
+
+                jQuery.removeData( this, "nestedSortableItem" );
+                var tmpData = $(this).data();
+                for (rowData in tmpData) {
+                    $('#menu-edit-form').append('<input type="hidden" name="menu_items['+tmpData['id']+']['+rowData+']" value="'+tmpData[rowData]+'">');
+                }
+
+            });
+
+            $('#menu-edit-form').submit();
+
+        });
+
+    </script>
 
 {% endblock %}
