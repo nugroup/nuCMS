@@ -79,12 +79,17 @@ if ( ! function_exists('generate_menu_item_handler'))
             $result .= $icons[$item->type];
             $result .= '<span class="menu_item_name">'.$item->name.'</span>';
 
-            $result .= '<div class="icons">';
-                $result .= '<a href="javascript: void(0)" rel="'.$item->id.'" class="menuEdit"><i class="ion ion-android-create tableActions-edit"></i></a>';
-                $result .= '<a rel="'.$item->id.'" class="menuDelete">';
-                    $result .= '<i class="ion ion-android-delete tableActions-delete"></i>';
-                $result .= '</a>';
+            $result .= '<div class="nuButtonList">';
+                $result .= '<div class="iconItem"><a href="javascript: void(0)" rel="'.$item->id.'" class="menuEdit"><i class="fa fa-pencil tableActions-edit" aria-hidden="true"></i></a></div>';
+                $result .= '<div class="iconItem dropdown">';
+                    $result .= '<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-ellipsis-v"></i></button>';
+                    $result .= '<div class="dropdown-menu dropdown-menu-right">';
+                        $result .= '<div><a rel="'.$item->id.'" class="menuDelete"><i class="fa fa-trash tableActions-delete"></i>'.lang('text.delete').'</a></div>';
+                    $result .= '</div>';
+                $result .= '</div>';
             $result .= '</div>';
+            
+            $result .= '<div class="editItemInputs" data-item_id="'.$item->id.'"></div>';
         $result .= '</div>';
 
         return $result;
@@ -93,3 +98,18 @@ if ( ! function_exists('generate_menu_item_handler'))
 
 /* End of file menu_helper.php */
 /* Location: ./application/modules/menu/helpers/menu_helper.php */
+//
+//<ul class="nuButtonsList">
+//    <li>
+//        <div class="dropdown open">
+//            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-ellipsis-v"></i></button>
+//            <ul class="dropdown-menu dropdown-menu-right">
+//                <li><a href="http://localhost/~xprezesx/nucms/admin/menu/edit/2"><i class="fa fa-pencil"></i>Edytuj</a></li>
+//                <li role="separator" class="divider"></li>
+//                <li>
+//                    <a href="http://localhost/~xprezesx/nucms/admin/menu/delete" rel="2" class="deleteRecord" data-confirmmsg="Czy na pewno chcesz usunąć to menu?"><i class="fa fa-trash"></i>Usuń</a>
+//                </li>
+//            </ul>
+//        </div>
+//    </li>
+//</ul>

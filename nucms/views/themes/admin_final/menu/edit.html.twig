@@ -81,15 +81,8 @@
                     <div class="nuHead">{{ lang('menu.head.items') }}:</div>
                     <!-- /header -->
                     
-                    <div class="editBox">
-
-                        <div class="addItemsInputs">
-                            {% include 'menu/items/add.html.twig' %}
-                        </div>
-
-                        <div class="editItemInputs">
-{#                            {% include 'menu/items/edit.html.twig' %}#}
-                        </div><!--/.editItemInputs-->
+                    <div class="addItemsInputs">
+                        {% include 'menu/items/add.html.twig' %}
                     </div>
                     
                     <div id="menu-items">
@@ -104,10 +97,14 @@
     </div>
     <!-- /content -->
 
-        <input type="hidden" name="nested_order" id="nested_order" value="">
-        <input type="hidden" id="menu_items_max_id" value="{{ menu_items_max_id }}">
+    <input type="hidden" name="nested_order" id="nested_order" value="">
+    <input type="hidden" id="menu_items_max_id" value="{{ menu_items_max_id }}">
 
     {{ form_close() }}
+    
+    <div class="editItemInputsGhost">
+        {% include 'menu/items/edit.html.twig' %}
+    </div><!--/.editItemInputs-->
 
 {% endblock %}
 
@@ -199,23 +196,24 @@
         // -- save menu item
         $(document).on('click', '.menuSave', function () {
 
+            var itemDiv = $(this).closest('.editItemInputs');
+            var itemDivClass = itemDiv.attr('class');
+            var idItem = parseInt(itemDiv.attr('data-item_id'));
             var type = parseInt($(this).attr('data-type'));
-            var dataArray = $('#menu-edit-form-'+type).serializeArray();
-            var idItem = parseInt($('#menu-edit-form-'+type).find('*[name="id"]').val());
+            var dataArray = divSerialize('.'+itemDivClass+'[data-item_id="'+idItem+'"] .editItem.type' + type);
             var itemElement = $('#item_'+idItem);
-
+            
             // Change data value
             for (row in dataArray) {
-                itemElement.attr('data-'+dataArray[row].name, dataArray[row].value);
-                itemElement.data(dataArray[row].name, dataArray[row].value);
+                itemElement.attr('data-'+row, dataArray[row]);
+                itemElement.data(row, dataArray[row]);
             }
 
             // Change name
-            itemElement.children('.handler').find('.menu_item_name').html(dataArray[0].value);
+            itemElement.children('.handler').find('.menu_item_name').html(dataArray['name']);
 
             // Close edit inputs
-            $('.editItem').hide();
-            $('.addButtons').show();
+            itemDiv.html('').hide();
 
             showBeforeUnload = true;
 
@@ -230,28 +228,29 @@
             var element = $('#item_'+itemId);
             var type = parseInt(element.attr('data-type'));
             var dataElements = [];
+            var itemDiv = $('.editItemInputs[data-item_id="'+itemId+'"]');
 
+            // move input from ghost to the item element
+            var editFormHtml = $('.editItemInputsGhost').html();
+            itemDiv.html(editFormHtml).show();
+            
             // Insert value from data item
             var data = $(element).data(), i;
             var keys = $.map(data , function(value, key) { return key; });
             for(i = 0; i < keys.length; i++) {
 
                 var value = element.data(keys[i]);
-                $('.editItem.type' + type).find('*[name="'+keys[i]+'"]').val(value);
+                itemDiv.find('.editItem.type' + type).find('*[data-name="'+keys[i]+'"]').val(value);
 
                 // Set value for dropdown
                 if (keys[i].toString() === 'primary_key' || keys[i].toString() === 'target') {
-                    var selectedValue = $('.editItem.type'+type+' ul[data-name="'+keys[i].toString()+'"]').find('li[data-value="'+value+'"]').text();
-                    console.log(selectedValue);
-                    $('.editItem.type' + type).find('span[data-name="'+keys[i].toString()+'"]').html(selectedValue);
+                    var selectedValue = itemDiv.find('.editItem.type'+type+' ul[data-name="'+keys[i].toString()+'"]').find('li[data-value="'+value+'"]').text();
+                    itemDiv.find('.editItem.type' + type).find('span[data-name="'+keys[i].toString()+'"]').html(selectedValue);
                 }
 
             }
-
-            // show edit form
-            $('.editItem').hide();
-            $('.editItem.type' + type).show();
-            $('.addButtons').hide();
+            
+            itemDiv.find('.editItem.type'+type).show();
 
         });
 
@@ -259,6 +258,7 @@
         $(document).on('click', '.addButtons button', function () {
 
             var type = parseInt($(this).attr('data-type'));
+            $('.addItem').hide();
             $('.addItem.type' + type).show();
 
         });
@@ -273,7 +273,7 @@
         // -- close edit inputs
         $(document).on('click', '.closeEditItem', function () {
 
-            $('.editItem').hide();
+            $(this).closest('.editItemInputs').html('').hide();
 
         });
 

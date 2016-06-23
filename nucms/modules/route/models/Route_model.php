@@ -36,7 +36,7 @@ class Route_model extends MY_Model
             $data[] = "<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');";
 
             foreach ($routes as $route) {
-                $data[] = '$route["'.$route->slug.'"] = "'.$route->slug.'";';
+                $data[] = '$route["'.$route->slug.'"] = "'.$route->url.'";';
             }
 
             $output = implode("\n", $data);

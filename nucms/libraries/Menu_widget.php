@@ -45,6 +45,8 @@ class Menu_widget
                 foreach ($menuItems as $item) {
                     if ($item['route_slug'] != '') {
                         $menuItems[$i]['slug'] = $item['route_slug'];
+                    } else {
+                        $menuItems[$i]['slug'] = $item['url'];
                     }
                     $i++;
                 }
