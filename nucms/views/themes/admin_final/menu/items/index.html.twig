@@ -6,7 +6,7 @@
     <li id="item_0" data-id="0" class="ghost" style="display: none;">
         <div class="handler ui-sortable-handle">
             <i class="fa fa-link ico"></i>
-            <span class="menu_item_name">adsfads</span>
+            <span class="menu_item_name"></span>
             <div class="icons">
                 <a href="javascript: void(0)" rel="0" class="menuEdit">
                     <i class="ion ion-android-create tableActions-edit"></i>
@@ -15,6 +15,18 @@
                     <i class="ion ion-android-delete tableActions-delete"></i>
                 </a>
             </div>
+            <div class="nuButtonList">
+                <div class="iconItem">
+                    <a href="javascript: void(0)" rel="0" class="menuEdit"><i class="fa fa-pencil tableActions-edit" aria-hidden="true"></i></a>
+                </div>
+                <div class="iconItem dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-ellipsis-v"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div><a rel="0" class="menuDelete"><i class="fa fa-trash tableActions-delete"></i>{{ lang('text.delete') }}</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="editItemInputs" data-item_id="0"></div>
         </div>
     </li>
 </ol>

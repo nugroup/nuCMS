@@ -130,10 +130,10 @@
             var maxId = parseInt($('#menu_items_max_id').val());
             var newId = maxId+1;
             var typeIco = $('#menu-add-form-' + type).find('*[data-name="type_ico"]').val().toString();
-            
+
             // Copy item element
             var newItem = $('.menu-items').children('li').last().clone().insertBefore('.menu-items .ghost');
-            newItem.find('.menu_item_name').html(dataArray["name"].value);
+            newItem.find('.menu_item_name').html(dataArray["name"]);
 
             // Remove data from copy
             var oldData = $(newItem).data(), i;
@@ -158,6 +158,7 @@
             // Set new id, icon
             newItem.find('.menuEdit').attr('rel', newId);
             newItem.find('.menuDelete').attr('rel', newId);
+            newItem.find('.editItemInputs').attr('data-item_id', newId);
             newItem.find('.ico').attr('class', '').addClass(typeIco+' ico');
 
             // Remove children
