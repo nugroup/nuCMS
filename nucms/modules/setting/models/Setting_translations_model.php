@@ -14,13 +14,6 @@ class Setting_translations_model extends MY_Model
     public $protected = array();
     public $rules = [
         'update' => [
-            'meta_title'       => ['field' => 'meta_title', 'label' => 'lang:setting.form.meta_title', 'rules' => 'max_length[50]|trim|xss_clean'],
-            'meta_keywords'    => ['field' => 'meta_keywords', 'label' => 'lang:setting.form.meta_keywords', 'rules' => 'trim|xss_clean'],
-            'meta_description' => ['field' => 'meta_description', 'label' => 'lang:setting.form.meta_description', 'rules' => 'max_length[160]|trim|xss_clean'],
-            'social_facebook'  => ['field' => 'social_facebook', 'label' => 'lang:setting.form.social_facebook', 'rules' => 'trim|xss_clean'],
-            'social_twitter'   => ['field' => 'social_twitter', 'label' => 'lang:setting.form.social_twitter', 'rules' => 'trim|xss_clean'],
-            'social_youtube'   => ['field' => 'social_youtube', 'label' => 'lang:setting.form.social_youtube', 'rules' => 'trim|xss_clean'],
-            'social_google'    => ['field' => 'social_google', 'label' => 'lang:setting.form.social_google', 'rules' => 'trim|xss_clean'],
         ]
     ];
 

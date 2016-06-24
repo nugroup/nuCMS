@@ -18,12 +18,25 @@ class Setting_model extends MY_Model
         $CI = & get_instance();
         $CI->load->model('language/language_model', 'language');
         $CI->load->model('setting/setting_translations_model', 'setting_translations');
+        $CI->load->model('setting/setting_groups_model', 'setting_groups');
 
+        $this->has_one['group'] = array(
+            'foreign_model' => 'Setting_group_model',
+            'foreign_table' => 'nu_setting_groups',
+            'foreign_key' => 'group_id',
+            'local_key' => 'id',
+        );
+        $this->has_one['translation'] = array(
+            'foreign_model' => 'Setting_translations_model',
+            'foreign_table' => 'nu_setting_translations',
+            'foreign_key' => 'setting_id',
+            'local_key' => 'id',
+        );
         $this->has_many['translations'] = array(
-            'foreign_model' => 'Page_translations_model',
-            'foreign_table' => 'nu_page_translations',
-            'foreign_key' => 'page_id',
-            'local_key' => 'id'
+            'foreign_model' => 'Setting_translations_model',
+            'foreign_table' => 'nu_setting_translations',
+            'foreign_key' => 'setting_id',
+            'local_key' => 'id',
         );
 
         parent::__construct();

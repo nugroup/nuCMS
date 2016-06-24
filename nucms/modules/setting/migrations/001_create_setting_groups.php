@@ -3,9 +3,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Class Migration_Create_setting
+ * Class Migration_Create_setting_groups
  */
-class Migration_Create_setting extends CI_Migration
+class Migration_Create_setting_groups extends CI_Migration
 {
     public function up()
     {
@@ -16,22 +16,22 @@ class Migration_Create_setting extends CI_Migration
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'admin_locale' => array(
+            'name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '255',
                 'default' => NULL
             ),
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('nu_setting');
+        $this->dbforge->create_table('nu_setting_groups');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('nu_setting');
+        $this->dbforge->drop_table('nu_setting_groups');
     }
 }
 
-/* End of file 001_create_file.php */
-/* Location: ./application/modules/copythis/migrations/001_create_file.php */
+/* End of file 001_create_setting_groups.php */
+/* Location: ./nucms/modules/setting/migrations/001_create_setting_groups.php */

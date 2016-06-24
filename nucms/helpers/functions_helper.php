@@ -133,6 +133,48 @@ if (!function_exists('obj_to_options_array')) {
     }
 }
 
+if (!function_exists('array_to_array_by_key')) {
+    
+    /**
+     * Transform array to new array by entered key
+     * 
+     * @param array $array
+     * @param string $key_name
+     * @return array
+     */
+    function array_to_array_by_key($array, $key_name)
+    {
+        $result = array();
+
+        foreach ($array as $row) {
+            $result[$row->{$key_name}][] = $row;
+        }
+
+        return $result;
+    }
+}
+
+if (!function_exists('array_to_array_by_key_single')) {
+    
+    /**
+     * Transform array to new array by entered key (single elements)
+     * 
+     * @param array $array
+     * @param string $key_name
+     * @return array
+     */
+    function array_to_array_by_key_single($array, $key_name)
+    {
+        $result = array();
+
+        foreach ($array as $row) {
+            $result[$row->{$key_name}] = $row;
+        }
+
+        return $result;
+    }
+}
+
 if (!function_exists('prepare_parent_array')) {
 
     /**

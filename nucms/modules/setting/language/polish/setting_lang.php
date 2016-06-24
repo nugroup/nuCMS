@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /* subnav
 ============================================================================= */
-$lang['setting.subnav.index'] = 'Ustawienia';
+$lang['setting.nav.index'] = 'Ustawienia';
 
 /* form
 ============================================================================= */

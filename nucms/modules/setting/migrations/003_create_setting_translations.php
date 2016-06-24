@@ -16,38 +16,13 @@ class Migration_Create_setting_translations extends CI_Migration
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'meta_title' => array(
+            'key' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'default' => NULL
             ),
-            'meta_keywords' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => NULL
-            ),
-            'meta_description' => array(
+            'value' => array(
                 'type' => 'TEXT',
-                'default' => NULL
-            ),
-            'social_facebook' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => NULL
-            ),
-            'social_twitter' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => NULL
-            ),
-            'social_youtube' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => NULL
-            ),
-            'social_google' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
                 'default' => NULL
             ),
             'locale' => array(
@@ -75,5 +50,5 @@ class Migration_Create_setting_translations extends CI_Migration
     }
 }
 
-/* End of file 001_create_file.php */
-/* Location: ./application/modules/copythis/migrations/001_create_file.php */
+/* End of file 003_create_setting_translations.php */
+/* Location: ./nucms/modules/setting/migrations/003_create_setting_translations.php */

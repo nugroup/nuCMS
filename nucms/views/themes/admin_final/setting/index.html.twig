@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('setting') }}">{{ lang('setting.nav.index') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+    
+    {{ form_open(current_url(), {'id': 'setting-form', 'novalidate': 'novalidate'}) }}
+        
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                            {% include('components/lang_select.html.twig') %}
+                            {{ form_input({'class': 'form-control'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- Nav tabs -->
+                    <ul id="nuActionsTabs" class="nav nav-pills" role="tablist">
+                        {% for group in settings_groups %}
+                            
+                            {% set activeClass = loop.first ? 'active' : '' %}
+                            
+                            <li role="presentation" class="{{ activeClass }}"><a href="#group_id_{{ group.id }}" role="tab" data-toggle="tab">{{ group.name }}</a></li>
+                            
+                        {% endfor %}
+                    </ul>
+                    <!-- /Nav tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+                    
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            {% for group in settings_groups %}
+
+                {% set activeClass = loop.first ? ' in active' : '' %}
+                
+                <div class="row tab-pane fade{{ activeClass }}" role="tabpanel" id="group_id_{{ group.id }}">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
+
+                        {% for settings_list in attribute(settings_by_groups, group.id) %}
+                        
+                            <div class="form-group">
+                                <label for="setting_id_{{ settings_list.id }}">{{ settings_list.name | e }}</label>
+                                {{ form_input({'name': 'settings['~settings_list.id~'][value]', 'value': settings_list.value, 'class': 'form-control', 'id': 'setting_id_'~settings_list.id}) }}
+                                <span class="nuFocusLine"></span>
+                            </div>
+                                
+                            {{ form_hidden('settings['~settings_list.id~'][type]', settings_list.type) }}
+                            {{ form_hidden('settings['~settings_list.id~'][global]', settings_list.global) }}
+                        
+                        {% endfor %}
+
+                    </div>
+                </div>
+                        
+            {% endfor %}
+            
+        </div>
+    </div><!--/#nuEditPage-->
+    
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+{% endblock %}
