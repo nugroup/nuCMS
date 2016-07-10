@@ -61,6 +61,25 @@ class Setting_model extends MY_Model
 
         return $rules;
     }
+    
+    /**
+     * Get groups names from settings
+     * 
+     * @param object $settings
+     * @return array
+     */
+    public function get_groups_array($settings)
+    {
+        $groups = array();
+
+        foreach ($settings as $setting) {
+            if (!in_array($setting->group_name, $groups) && $setting->group_name != '') {
+                $groups[] = $setting->group_name;
+            }
+        }
+        
+        return $groups;
+    }
 }
 
 /* End of file Setting_model.php */

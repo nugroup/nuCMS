@@ -16,11 +16,6 @@ class Migration_Create_setting_translations extends CI_Migration
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'key' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
-                'default' => NULL
-            ),
             'value' => array(
                 'type' => 'TEXT',
                 'default' => NULL

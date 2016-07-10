@@ -49,8 +49,10 @@ class Migration_Create_setting extends CI_Migration
         ));
 
         $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('key');
         $this->dbforge->create_table('nu_setting');
         $this->db->query('ALTER TABLE `nu_setting` ADD CONSTRAINT `nu_setting_group_id_FK` FOREIGN KEY (`group_id`) REFERENCES `nu_setting_groups` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
+        $this->db->query('ALTER TABLE `nu_setting` ADD UNIQUE(`key`);');
     }
 
     public function down()

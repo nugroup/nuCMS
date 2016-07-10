@@ -172,18 +172,17 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
     public function update_routes()
     {
         $CI =& get_instance();
-        $CI->load->model('route/route_model', 'route');
+        $CI->load->model('route/route_model', 'route_model');
 
-        $CI->route->after_create = [];
-        $CI->route->after_update = [];
-        $CI->route->after_delete = [];
+        $CI->route_model->after_create = [];
+        $CI->route_model->after_update = [];
+        $CI->route_model->after_delete = [];
 
         $pages = $this->get_all();
         if ($pages) {
             foreach($pages as $page) {
                 $pageUrl = $CI->config->item('pages_route_controller').$page->page_id.'/'.$page->locale;
                 $routeData = $CI->route->where(['url' => $pageUrl])->count_rows();
-
                 if ($page->locale != config_item('default_locale')) {
                     $pageSlug = $CI->route->prepare_unique_slug($page->title.'-'.$page->locale);
                 } else {
@@ -198,7 +197,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
                         'module' => 'page',
                         'primary_key' => $page->page_id,
                     ];
-                    $this->route->insert($routesData);
+                    $CI->route->insert($routesData);
                 }
             }
         }

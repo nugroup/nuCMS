@@ -10,7 +10,7 @@ class PageFixture implements FixturesInterface
 {
     public function load()
     {
-        $CI = & get_instance();
+        $CI =& get_instance();
         $CI->load->model('page/page_model', 'page');
         $CI->load->model('page/page_translations_model', 'page_translations');
         $CI->load->model('language/language_model', 'language');

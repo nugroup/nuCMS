@@ -5,9 +5,14 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/* subnav
+/* nav
 ============================================================================= */
 $lang['setting.nav.index'] = 'Ustawienia';
+
+/* tabs
+============================================================================= */
+$lang['setting.tabs.main'] = 'Ogólne';
+$lang['setting.tabs.social'] = 'Social';
 
 /* form
 ============================================================================= */
