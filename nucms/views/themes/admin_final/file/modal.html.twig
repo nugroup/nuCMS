@@ -1,0 +1,110 @@
+<div class="nuManager-modal-header">
+    <button id="nuManagerSubmit" class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('file.text.add_checked') }}</button>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+
+<!-- content -->
+<div id="nuManager" class="nuContent nuFormLight">
+    <div class="container-fluid nuContainer">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+
+                <!-- butons -->
+                <div class="nuManager-head">
+                    <ul class="nuButtonsList">
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:void(0);" id="fileFolderAdd"><i class="fa fa-plus"></i>{{ lang('file.text.add_folder') }}</a></li>
+                                    <li><a href="javascript:void(0);" id="fileFolderEdit"><i class="fa fa-pencil"></i>{{ lang('file.text.edit_folder') }}</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="javascript:void(0);" id="fileFolderDelete"><i class="fa fa-trash"></i>{{ lang('file.text.delete_folder') }}</a></li>
+                                    <li role="separator" class="divider file_paste_button"{{ show_paste_button ? '' : ' style="display: none;"' }}></li>
+                                    <li{{ show_paste_button ? '' : ' style="display: none;"' }} class="file_paste_button"><a href="javascript:void(0);" id="filePaste"><i class="fa fa-clipboard" aria-hidden="true"></i>{{ lang('file.text.paste_files') }}</a></li>
+                                </ul>
+                            </div>
+                        </li><!--
+                        --><li><button class="btn btn-success fileShowUpload" type="button"><i class="fa fa-arrow-down fa-margin"></i>{{ lang('file.text.add_files') }}</button></li>
+                    </ul>
+                </div>
+                <!-- /butons -->
+
+                <!-- tree -->
+                <div>
+                    <div id="foldersList">
+                        {{ folders_list | raw }}
+                    </div>
+                </div>
+                <!-- /tree -->
+
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+
+                <div class="nuManager-head">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-9">
+
+                            <!-- breadcrumb -->
+                            {#<ol class="breadcrumb">
+                                <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                                <li><a href="#">Home</a></li>
+                                <li class="active">Folder</li>
+                            </ol>#}
+                            <!-- /breadcrumb -->
+
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 text-right">
+
+                            <!-- selected actions -->
+                            <ul class="nuButtonsList">
+                                <li>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ lang('text.checked_items') }} <i class="fa fa-caret-down"></i></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><button type="button" name="action" id="fileDeleteChecked" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button></li>
+                                            <li><button type="button" name="action" id="fileCutChecked" value="cut_checked"><i class="fa fa-scissors"></i>{{ lang('file.text.cut') }}</button></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><label class="nuCheck" style="margin-top:3px;"><input type="checkbox" class="checkAll"><span></span></label></li>
+                            </ul>
+                            <!-- /selected actions -->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <!-- fileUploadBox -->
+                    <div class="col-xs-12 nuManager-col">
+                        <div id="myDropzone" class="dropzone fileUploadBox" style="display: none;">
+                            <div class="dz-default dz-message inside">
+                                <i class="fa fa-upload"></i>
+                                <div class="information txtBig">{{ lang('file.text.uploader') }}</div>
+                            </div>
+
+                            <div class="myDropzoneClear"><i class="fa fa-times"></i> {{ lang('file.text.clear_files') }}</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- filesList -->
+                <div id="filesList" class="filesList">
+                    {{ files_list | raw }}
+                </div>
+                <!-- /filesList -->
+
+                {{ form_input({'type': 'hidden', 'name': 'parent_id', 'class': 'form-control', 'id': 'parent_id_hidden', 'value': 0}) }}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /content -->
+
+{{ include('file/scripts.html.twig') }}

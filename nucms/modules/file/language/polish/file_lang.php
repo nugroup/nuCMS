@@ -31,6 +31,7 @@ $lang['file.text.copy_url'] = 'Kopiuj adres';
 $lang['file.text.delete'] = 'Usuń';
 $lang['file.text.cut'] = 'Wytnij';
 $lang['file.text.paste_files'] = 'Wklej pliki';
+$lang['file.text.add_checked'] = 'Dodaj zaznaczone';
 
 /* dropzone
 ============================================================================= */

@@ -1,6 +1,33 @@
 // out: ../css/nu.min.css, sourcemap: true, compress: true
 
 // ----- parts
-    @import "../parts/mixins.less";
-    @import "../parts/filemanager.less";
-    @import "../parts/menu.less";
+@import "../parts/mixins.less";
+@import "../parts/helpers.less";
+@import "../parts/filemanager.less";
+@import "../parts/menu.less";
+
+.photoBox {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    border: 1px dashed #dedede;
+    padding: 20px;
+    cursor: pointer;
+    .transition();
+    
+    i {
+        display: block;
+        .center-absolute();
+        font-size: 100px;
+        color: #dedede;
+        .transition();
+    }
+    
+    &:hover, &:focus, &:active {
+        background: #dedede;
+        
+        i {
+            color: darken(#dedede, 40%);
+        }
+    }
+}

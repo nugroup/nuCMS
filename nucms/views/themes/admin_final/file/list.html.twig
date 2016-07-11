@@ -64,6 +64,9 @@
             </div>
         </div>
         <!-- /single file -->
+        
+        {{ form_hidden('file_src_'~file.id, base_url()~config.upload_folder~'/'~file.filename) }}
+        {{ form_hidden('file_is_image_'~file.id, is_image(file.extension)) }}
 
     {% else %}
 

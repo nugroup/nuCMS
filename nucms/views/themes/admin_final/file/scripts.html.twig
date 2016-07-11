@@ -1,0 +1,300 @@
+<script>
+
+    /**
+     * Load files list view
+     *
+     * @param {int} parentId
+     * @param {string} url
+     * @param {string} suffix
+     */
+    function loadFilesList(parentId, url, suffix) {
+
+        if (url.toString() !== '') {
+            $("#filesList").load(url + suffix, function () {
+
+{#                $('body').goTo();#}
+
+            });
+        } else {
+            $("#filesList").load('{{ admin_url('file/files_list') }}/' + parentId + suffix, function () {
+
+{#                $('body').goTo();#}
+
+            });
+        }
+
+    }
+
+    /**
+     * Load folders list view
+     *
+     * @param {int} activeId
+     */
+    function loadFoldersList(activeId) {
+
+        $("#foldersList").load('{{ admin_url('file/folders_list') }}/' + activeId, function (response) {
+            console.log(response);
+        });
+
+    }
+
+    // -- show upload area
+    $(document).on("click", '.fileShowUpload', function () {
+
+        $('.fileUploadBox').toggle();
+        return false;
+
+    });
+
+    // -- file tree
+    $(document).on("click", '.openSubTree', function () {
+
+        $(this).parent().children('ul').slideToggle('fast');
+        $(this).children('i').toggleClass('fa-folder-open-o');
+
+    });
+
+    // -- delete checked files
+    $(document).on("click", '#fileDeleteChecked', function () {
+
+        var filesFormData = $('#files-list-form').serialize();
+
+        $.post('{{ admin_url('file/delete_checked') }}', filesFormData, function (response) {
+
+            if (parseInt(response.result) === 1) {
+                var parentId = parseInt($('#parent_id_hidden').val());
+                loadFilesList(parentId, '');
+                loadFoldersList(parentId);
+            } else {
+                alert(response.errors);
+            }
+
+        });
+
+        return false;
+
+    });
+
+    // -- cut checked files
+    $(document).on("click", '#fileCutChecked', function () {
+
+        var filesFormData = $('#files-list-form').serialize();
+
+        $.post('{{ admin_url('file/cut_checked') }}', filesFormData, function (response) {
+
+            if (parseInt(response.result) === 1) {
+                for (fileId in response.files) {
+                    $('#file_id_' + response.files[fileId]).addClass('cutted');
+                }
+                $.nuAlert('success', response.message);
+                $('.file_paste_button').show();
+            } else {
+                alert(response.errors);
+            }
+
+        });
+
+    });
+
+    // -- add folder action
+    $(document).on('click', '#fileFolderAdd', function () {
+
+        var parentId = parseInt($('#parent_id_hidden').val());
+
+        $.post('{{ admin_url('file/add_folder') }}/' + parentId, function (response) {
+
+            if (parseInt(response.result) === 1) {
+                loadFoldersList(parentId);
+            } else {
+                alert(response.errors);
+            }
+
+        });
+
+    });
+
+    // -- edit folder action
+    $(document).on('click', '#fileFolderEdit', function () {
+
+        var folderId = parseInt($('#parent_id_hidden').val());
+
+        $('.fileFolderName[data-parent_id="' + folderId + '"]').hide();
+        $('.filefolderInput[data-parent_id="' + folderId + '"]').css('display', 'block').focus();
+
+    });
+
+    $(document).on('change', '.filefolderInput', function () {
+
+        var folderId = parseInt($(this).attr('data-parent_id'));
+        var newValue = $(this).val().toString();
+        var thisObj = $(this);
+
+        $.post('{{ admin_url('file/save_folder') }}/' + folderId, {name: newValue}, function (response) {
+
+            if (parseInt(response.result) === 1) {
+                thisObj.hide();
+                $('.fileFolderName[data-parent_id="' + folderId + '"]').children('.insideName').html(newValue);
+                $('.fileFolderName[data-parent_id="' + folderId + '"]').show();
+            } else {
+                alert(response.errors);
+            }
+
+        });
+
+    });
+
+    // -- delete folder action
+    $(document).on('click', '#fileFolderDelete', function () {
+
+        if (confirm('{{ lang('file.text.folder_confirm_delete') }}')) {
+
+            var folderId = parseInt($('#parent_id_hidden').val());
+
+            $.post('{{ admin_url('file/delete_folder') }}/' + folderId, function (response) {
+
+                if (parseInt(response.result) === 1) {
+                    loadFilesList(0, '');
+                    loadFoldersList(0);
+                } else {
+                    alert(response.errors);
+                }
+
+            });
+
+        }
+
+    });
+
+    // -- paste files action
+    $(document).on('click', '#filePaste', function () {
+
+        var folderId = parseInt($('#parent_id_hidden').val());
+
+        $.post('{{ admin_url('file/paste') }}/' + folderId, function (response) {
+
+            if (parseInt(response.result) === 1) {
+                loadFilesList(folderId, '');
+                loadFoldersList(folderId);
+                $('.file_paste_button').hide();
+                $.nuAlert('success', response.message);
+            } else {
+                alert(response.errors);
+            }
+
+        });
+
+    });
+
+    // -- files list ajax pagination
+    $(document).on('click', '.filesListPagination a', function () {
+
+        var pagerUrl = $(this).attr('href').toString();
+        loadFilesList(0, pagerUrl, '');
+
+        return false;
+
+    });
+
+    // -- search action
+    $(document).on('submit', '#file-filter-form', function () {
+
+        var searchString = $(this).val().toString();
+        var filters = $(this).serialize().toString();
+
+        loadFilesList(0, '', '?' + filters);
+
+        return false;
+
+    });
+
+    // -- clear filters action
+    $(document).on('click', '#fileFiltersClean', function () {
+
+        var parentId = parseInt($(this).attr('data-parent_id'));
+        loadFilesList(parentId, '');
+
+        return false;
+
+    });
+
+    // -- show file list by ajax
+    $(document).on('click', '.loadFilesList', function () {
+
+        var parentId = parseInt($(this).attr('data-parent_id'));
+        loadFilesList(parentId, '');
+
+        $('.folderTree li').removeClass('active');
+        $(this).parent().toggleClass('active');
+        $('#parent_id_hidden').val(parentId);
+
+    });
+
+    // -- cut single file
+    $(document).on('click', '.fileCut', function () {
+
+        var urlAction = $(this).attr('href').toString();
+        var fileId = parseInt($(this).attr('rel'));
+
+        $.post(urlAction, function (response) {
+
+            if (parseInt(response.result) === 1) {
+                $('#file_id_' + fileId).addClass('cutted');
+                $.nuAlert('success', response.message);
+                $('.file_paste_button').show();
+            }
+
+        });
+
+        return false;
+
+    });
+
+    // -- dropzone
+    Dropzone.autoDiscover = false;
+    $("#myDropzone").dropzone({
+        maxFilesize:{{ config.upload_max_file_size }},
+                url: "{{ config.upload_action }}",
+        paramName: "file",
+        autoProcessQueue: true,
+        success: function (file, response) {
+
+            var parentId = parseInt($('#parent_id_hidden').val());
+            loadFilesList(parentId, '');
+            loadFoldersList(parentId);
+
+            if (parseInt(response.result) === 1) {
+                file.previewElement.classList.add("dz-success");
+
+            } else {
+
+                if (response.errors) {
+                    $('span[data-dz-errormessage]').html(response.errors);
+                }
+
+                return file.previewElement.classList.add("dz-error");
+            }
+        },
+        sending: function (file, xhr, formData) {
+
+            var parentId = parseInt($('#parent_id_hidden').val());
+            formData.append('parent_id', parentId);
+
+        },
+        init: function () {
+
+            var myDropzone = this;
+
+            $('.myDropzoneClear').on("click", function (e) {
+                myDropzone.removeAllFiles(true);
+            });
+
+            this.on("error", function (file, response) {
+                //handle errors here
+            });
+
+        },
+        dictFileTooBig: "{{ lang('file.dropzone.file_too_big') }}",
+        dictResponseError: "{{ lang('file.dropzone.response_error') }}"
+    });
+
+</script>

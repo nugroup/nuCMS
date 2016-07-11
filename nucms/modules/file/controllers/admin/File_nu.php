@@ -409,6 +409,26 @@ class File_nu extends Backend_Controller
         header('Content-Type: application/json');
         echo json_encode($result);
     }
+    
+    public function modal()
+    {
+        // Set view data
+        $this->data['files_list'] = $this->files_list(0, 1);
+        $this->data['folders_list'] = $this->folders_list(0, 1);
+
+        // Check cutted files session
+        $show_paste_button = false;
+
+        if (isset($this->session->{$this->sessionName}['cutted'])) {
+            $show_paste_button = true;
+        }
+
+        // Set view data
+        $this->data['show_paste_button'] = $show_paste_button;
+
+        // Load the view
+        $this->render('file/modal', $this->data);
+    }
 }
 
 /* End of file File_nu.php */

@@ -161,6 +161,18 @@
                     <!-- /created_at -->
 
                 </div>
+                        
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+                        
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('page.head.photo') }}:</div>
+                    <!-- /header -->
+                    
+                    <div id="photoButton" class="photoBox">
+                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    </div>
+                    
+                </div>
             </div>
 
             <div class="row tab-pane fade" role="tabpanel" id="modules">
@@ -186,6 +198,17 @@
 
         $(document).on('change', '#page-edit-form', function () {
             showBeforeUnload = true;
+        });
+        
+        $('#photoButton').nuFileManager({
+            singleItem: true,
+            dialogUrl: "{{ admin_url('file/modal') }}",
+            onAfterAdd: function(files) {
+                
+                if (files[0] !== undefined) {
+                    console.log(files[0]);
+                }
+            }
         });
 
     </script>

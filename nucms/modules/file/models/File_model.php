@@ -13,6 +13,7 @@ class File_model extends MY_Model
     public $fillable = [];
     public $protected = [];
     public $before_delete = ['delete_file', 'delete_files_from_folder'];
+    public $after_get = ['get_extension'];
     public $rules = [];
 
     function __construct()
@@ -117,7 +118,7 @@ class File_model extends MY_Model
             }
         } else {
 
-            $data['extension'] = extension($row['filename']);
+            $data['extension'] = extension($data['filename']);
         }
 
         return $data;

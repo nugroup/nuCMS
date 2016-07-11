@@ -39,6 +39,7 @@ $lang['page.tabs.modules'] = 'Układ strony';
 $lang['page.head.seo'] = 'SEO';
 $lang['page.head.others'] = 'Pozostałe';
 $lang['page.head.options'] = 'Opcje';
+$lang['page.head.photo'] = 'Zdjęcie główne';
 
 /* seo_progress
 ============================================================================= */
