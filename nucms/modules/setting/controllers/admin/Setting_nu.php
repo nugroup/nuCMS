@@ -77,7 +77,6 @@ class Setting_nu extends Backend_Controller {
                 // Check if settings exist
                 $setting_exist = $this->setting->get(array('key' => $key));
                 
-                dump($setting);
                 if ($setting['global'] == 1) {
                     // Global variable
                     $new_data = array(

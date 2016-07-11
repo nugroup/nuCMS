@@ -62,7 +62,8 @@ $config['default_locale'] = 'pl';
 $config['system_languages'] = [];
 $config['system_languages_by_locale'] = [];
 $config['languages_tables'] = [                                                 // Tables with translations
-    'nu_page'
+    'nu_page',
+    'nu_setting'
 ];
 
 /* pages

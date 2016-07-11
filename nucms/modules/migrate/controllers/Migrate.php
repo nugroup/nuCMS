@@ -13,9 +13,9 @@ class Migrate extends MX_Controller
         parent::__construct();
 
         // Only run this through terminal
-        if ($this->input->is_cli_request() == FALSE) {
-            show_404();
-        }
+//        if ($this->input->is_cli_request() == FALSE) {
+//            show_404();
+//        }
 
         $this->load->library('migration');
         $this->load->dbforge();
