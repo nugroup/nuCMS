@@ -31,7 +31,7 @@ var showBeforeUnload = false;
     });
 
     // ----- check all items
-    $('.checkAll').on('change', function(e) {
+    $(document).on('change', '.checkAll', function () {
         var elem = $('.check_item');
         if ( this.checked )  {
             elem.prop('checked', true);

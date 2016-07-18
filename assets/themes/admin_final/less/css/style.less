@@ -13,6 +13,7 @@
     border: 1px dashed #dedede;
     padding: 20px;
     cursor: pointer;
+    z-index: 5;
     .transition();
     
     i {
@@ -22,6 +23,9 @@
         color: #dedede;
         .transition();
     }
+    &.opacity {
+        opacity: 0.4;
+    }
     
     &:hover, &:focus, &:active {
         background: #dedede;
@@ -29,5 +33,23 @@
         i {
             color: darken(#dedede, 40%);
         }
+    }
+}
+
+.photoOutside {
+    position: relative;
+}
+.photoThumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 284px;
+    z-index: 1;
+    
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        .center-absolute();
     }
 }

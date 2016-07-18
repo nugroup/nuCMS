@@ -84,17 +84,26 @@ class Page_nu extends Backend_Controller
             'locale' => $locale
         ];
 
-        $page = $this->page_translations->where($where)->get();
+        $page = $this->page_translations
+                ->with_file()
+                ->where($where)
+                ->get();
+
         if (!$page) {
             show_404();
         }
-
+        
         // If post is send
         if ($this->input->post()) {
 
+            // Additional data
+            $additionalData = array(
+                'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL 
+            );
+            
             // Update page translation
             $result = $this->page_translations
-                ->from_form($this->page_translations->get_rules('update'), [], $where)
+                ->from_form($this->page_translations->get_rules('update'), $additionalData, $where)
                 ->update();
 
             // Update route

@@ -78,6 +78,12 @@
                 }
             }
             
+            // uncheck all visible checkboxes
+            $('.filesList').find('input[type="checkbox"]').each(function(){
+                $(this).attr('checked', false);
+                $(this).prop('checked', false);
+            });
+                        
             // show modal
             $('#'+modalId).modal('show');
 

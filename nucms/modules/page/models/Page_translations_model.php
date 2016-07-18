@@ -16,6 +16,9 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
     function __construct()
     {
+        $CI = & get_instance();
+        $CI->load->model('file/file_model', 'file');
+
         // Relationship
         $this->has_one['language'] = array(
             'foreign_model' => 'Language_model',
@@ -28,6 +31,12 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
             'foreign_table' => 'nu_page',
             'foreign_key' => 'id',
             'local_key' => 'page_id'
+        );
+        $this->has_one['file'] = array(
+            'foreign_model' => 'File_model',
+            'foreign_table' => 'nu_file',
+            'foreign_key' => 'id',
+            'local_key' => 'file_Id'
         );
 
         parent::__construct();

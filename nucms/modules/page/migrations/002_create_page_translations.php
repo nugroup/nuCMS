@@ -57,6 +57,12 @@ class Migration_Create_page_translations extends CI_Migration
                 'unsigned' => TRUE,
                 'default' => NULL
             ),
+            'file_id' => array(
+                'type' => 'INT',
+                'constraint' => 5,
+                'unsigned' => TRUE,
+                'default' => NULL
+            ),
             'locale' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '10',
@@ -67,6 +73,7 @@ class Migration_Create_page_translations extends CI_Migration
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('nu_page_translations');
         $this->db->query('ALTER TABLE `nu_page_translations` ADD CONSTRAINT `nu_page_translations_page_id_FK` FOREIGN KEY (`page_id`) REFERENCES `nu_page` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
+        $this->db->query('ALTER TABLE `nu_page_translations` ADD CONSTRAINT `nu_page_translations_file_id_FK` FOREIGN KEY (`file_id`) REFERENCES `nu_file` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
         $this->db->query('ALTER TABLE `nu_page_translations` ADD CONSTRAINT `nu_page_translations_locale_FK` FOREIGN KEY (`locale`) REFERENCES `nu_language` (`locale`) ON UPDATE CASCADE ON DELETE CASCADE;');
     }
 

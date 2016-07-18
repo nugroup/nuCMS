@@ -12,7 +12,7 @@
 
 {% block body %}
 
-    {{ form_open(current_url(), {'id': 'page-edit-form', 'novalidate': 'novalidate'}) }}
+    {{ form_open(current_full_url(), {'id': 'page-edit-form', 'novalidate': 'novalidate'}) }}
 
     <!-- head -->
     <div id="nuActionbar" class="nuFormDark">
@@ -168,8 +168,15 @@
                     <div class="nuHead nuHeadLine">{{ lang('page.head.photo') }}:</div>
                     <!-- /header -->
                     
-                    <div id="photoButton" class="photoBox">
-                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    <div class="photoOutside">
+                        <div id="photoButton" class="photoBox">
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        </div>
+                        <div id="photoThumb" class="photoThumb">
+                            {% if page.file %}
+                                <img src="{{ config.upload_folder }}/{{ page.file.filename }}" class="img_responsive">
+                            {% endif %}
+                        </div>
                     </div>
                     
                 </div>
@@ -184,6 +191,7 @@
         </div>
     </div><!--/#nuEditPage-->
 
+    {{ form_hidden('file_id', page.file_id) }}
     {{ form_close() }}
 
 {% endblock %}
@@ -206,7 +214,14 @@
             onAfterAdd: function(files) {
                 
                 if (files[0] !== undefined) {
-                    console.log(files[0]);
+                    
+                    // Add thumbnail
+                    $('#photoThumb img').remove();
+                    $('#photoThumb').append('<img src="' + files[0].src + '" class="img-responsive" alt="">');
+                    $('.photoBox').addClass('opacity');
+                    
+                    // Insert id to hidden input
+                    $('input[name="file_id"]').val(files[0].id);
                 }
             }
         });
