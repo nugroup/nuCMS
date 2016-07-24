@@ -169,7 +169,9 @@
                     <!-- /header -->
                     
                     <div class="photoOutside">
-                        <div id="photoButton" class="photoBox">
+                        {% set opacity_class = page.file ? ' opacity' : '' %}
+                        
+                        <div id="photoButton" class="photoBox{{ opacity_class }}">
                             <i class="fa fa-picture-o" aria-hidden="true"></i>
                         </div>
                         <div id="photoThumb" class="photoThumb">
