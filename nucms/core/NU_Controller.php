@@ -17,7 +17,7 @@ class NU_Controller extends MX_Controller
         // Config
         $this->load->config('app');
         $this->load->config('modules');
-
+        
         // Helpers
         $this->load->helper('language');
         $this->load->helper('security');

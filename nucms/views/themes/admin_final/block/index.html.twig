@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('block') }}" class="nuNavActive">{{ lang('block.nav.list') }}</a></li>
+        <li><a id="addBlock" href="{{ admin_url('block/add') }}">{{ lang('block.nav.add') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block action_bar_content %}
+
+    {{ form_open(current_url(), 'method="get"') }}
+
+    <div class="row nuActions">
+
+        <div class="col-xs-12 col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+            <ul class="nuButtonsList nuButtonsList-padding">
+                <li><a href="{{ admin_url('block') }}" class="btn btn-primary btn-squere"><i class="fa fa-remove"></i></a></li>
+                <li><button class="btn btn-success" type="submit"><i class="fa fa-filter"></i> {{ lang('text.filter') }}</button></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12 col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-8 col-lg-pull-4">
+
+            <div class="row nuFormInline">
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        <label>{{ lang('block.filter.label.language') }}</label>
+                        {{ form_dropdown('locale', obj_to_options_array(config.system_languages, 'locale', 'name'), input.get.locale, 'class="form-control"') }}
+                    </div>
+                </div>
+                {#<div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        <label>{{ lang('block.filter.label.type') }}</label>
+                        {{ form_dropdown('type', config.block.types, input.get.type, 'class="form-control"') }}
+                    </div>
+                </div>#}
+                <div class="col-xs-6 nuFormInlice-col">
+                    <div class="form-group">
+                        <label for="fil_string">{{ lang('block.filter.label.string') }}</label>
+                        {{ form_input({'name': 'string', 'id': 'fil_string', 'class': 'form-control', 'value': input.get('string'), 'placeholder': lang('block.filter.label.string')}) }}
+                    </div>
+                </div>
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        {% include 'components/per_page_select.html.twig' %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- content -->
+    <div id="nuList" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer">
+
+            {% if (blocks) %}
+
+                {{ form_open() }}
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th><label class="nuCheck"><input type="checkbox" class="checkAll"><span></span></label></th>
+                                    <th>{{ sort_header('name', lang('block.list.name')) | raw }}</th>
+                                    <th>{{ sort_header('type', lang('block.list.type')) | raw }}</th>
+                                    <th>{{ sort_header('created_at', lang('block.list.created_at')) | raw }}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for block in blocks %}
+
+                                    <tr id="item_{{ block.id }}">
+                                        <td class="colCheck">
+                                            <label class="nuCheck">
+                                                {{ form_checkbox({'name': 'check_item['~block.id~']', 'class': 'check_item', 'value': 1}) }}
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td class="colTitle">
+                                            <a href="{{ admin_url('block/edit/'~block.id) }}">{{ block.name }}</a>
+                                        </td>
+                                        <td class="colCreated">{{ attribute(config.block.types, block.type) }}</td>
+                                        <td class="hidden-xs hidden-sm colCreated">{{ block.created_at | date('Y-m-d') }}</td>
+                                        <td class="colIco">
+                                            <ul class="nuButtonsList">
+                                                <li>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <ul class="dropdown-menu dropdown-menu-right">
+                                                            <li><a href="{{ admin_url('block/edit/'~block.id) }}"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li>
+                                                                <a href="{{ admin_url('block/delete') }}" rel="{{ block.id }}" class="deleteRecord" data-confirmMsg="{{ lang('block.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="row table-foot">
+                    <div class="col-xs-12 col-sm-3 col-md-2">
+
+                        <!-- selected actions -->
+                        <ul class="nuButtonsList">
+                            <li>
+                                <div class="dropup">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ lang('text.checked_items') }} <i class="fa fa-caret-up"></i></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <button type="submit" name="action" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- /selected actions -->
+
+                    </div>
+                    <div class="col-xs-12 col-sm-9 col-md-10 text-right">
+
+                        <!-- pagination -->
+                        <nav>
+                            {{ pager | raw }}
+                        </nav>
+                        <!-- /pagination -->
+
+                    </div>
+                </div>
+
+                {{ form_close() }}
+
+            {% else %}
+
+                <div class="alert alert-info">
+                    {{ lang('block.text.no_records') }}
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+    <!-- /content -->
+    
+    {% include 'block/add.html.twig' %}
+    
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(function () {
+
+            $(document).on('click', '#addBlock', function () {
+
+                $('#blockAddModal').modal('show');
+                
+                return false;
+
+            });
+
+        });
+
+    </script>
+
+{% endblock %}

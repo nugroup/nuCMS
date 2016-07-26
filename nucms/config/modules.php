@@ -95,4 +95,13 @@ $config['modules'] = [
             ],
         ],
     ],
+    'block' => [
+        'routes' => [
+            'admin_block' => [
+                'route' => 'block',
+                'controller' => 'admin/block_nu',
+                'admin' => true
+            ],
+        ],
+    ],
 ];

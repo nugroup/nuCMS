@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('block') }}">{{ lang('block.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('block/edit/'~block.id) }}" class="nuNavActive">{{ lang('block.nav.edit') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_open(current_url(), {'id': 'block-edit-form', 'novalidate': 'novalidate'}) }}
+
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><a href="{{ admin_url('block/delete') }}" rel="{{ block.id }}" class="btn btn-primary btn-squere deleteRecord" data-confirmMsg="{{ lang('block.text.confirm_delete') }}" data-redirectUrl="{{ admin_url('block') }}"><i class="fa fa-trash"></i></a></li>
+                        <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                        {{ form_input({'type': 'name', 'name': 'name', 'value': block.name, 'class': 'form-control', 'id': 'name', 'placeholder': lang('block.form.name'),  'required': 'required'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- /head -->
+
+    <!-- content -->
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            <div class="row tab-pane fade in active" role="tabpanel" id="settings">
+                {% include('block/types/block_'~attribute(config.block.types_codes, block.type)~'.html.twig') %}
+            </div>
+
+        </div>
+    </div>
+    <!-- /content -->
+
+    {{ form_hidden('id', block.id) }}
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#block-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+    </script>
+
+{% endblock %}

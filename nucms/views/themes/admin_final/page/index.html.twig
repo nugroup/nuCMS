@@ -27,7 +27,7 @@
             <div class="row nuFormInline">
                 <div class="col-xs-3 nuFormInlice-col">
                     <div class="form-group">
-                        <label for="language">{{ lang('page.filter.label.language') }}</label>
+                        <label>{{ lang('page.filter.label.language') }}</label>
                         {{ form_dropdown('locale', obj_to_options_array(config.system_languages, 'locale', 'name'), input.get.locale, 'class="form-control"') }}
                     </div>
                 </div>

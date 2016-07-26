@@ -29,7 +29,11 @@ class Backend_Controller extends NU_Controller
         if ($this->config->item('first_run')) {
             $this->getSystemLanguagesList();
         }
-
+        
+        // Load block module
+        $this->lang->load('block/block', config_item('selected_lang'));
+        $this->load->config('block/block', TRUE);
+        
         // Url exceptions
         $exception_uris = array(
             config_item('admin_folder').'/auth/login',

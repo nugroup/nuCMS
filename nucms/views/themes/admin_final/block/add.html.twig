@@ -1,0 +1,35 @@
+{{ form_open(current_url(), {'id': 'block-add-form', 'novalidate': 'novalidate'}) }}
+                
+<div class="modal fade" id="blockAddModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ lang('block.nav.add') }}</h4>
+            </div>
+            <div class="modal-body">
+                    
+                <!-- name -->
+                <div class="form-group">
+                    <label for="name">{{ lang('block.form.name') }}</label>
+                    {{ form_input({'name': 'name', 'value': set_value('name'), 'class': 'form-control', 'id': 'name'}) }}
+                </div>
+                <!-- /name -->
+
+                <!-- type -->
+                <div class="form-group">
+                    <label for="type">{{ lang('block.form.type') }}</label>
+                    {{ form_dropdown('type', config.block.types, input.get.type, 'class="form-control"') }}
+                </div>
+                <!-- /name -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('text.cancel') }}</button>
+                <button type="submit" class="btn btn-success" name="add" value="1">{{ lang('text.add') }}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{{ form_close() }}

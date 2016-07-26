@@ -28,7 +28,7 @@ class Page_nu extends Backend_Controller
         // Set default variables
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
         $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
+        $locale = ((bool)$this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
 
         // Delete checked item
@@ -78,7 +78,7 @@ class Page_nu extends Backend_Controller
      */
     public function edit($id)
     {
-        $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
+        $locale = ((bool)$this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $where = [
             'page_id' => $id,
             'locale' => $locale
