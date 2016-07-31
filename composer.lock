@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "codeigniter/framework",
-            "version": "3.1.0",
+            "version": "3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bcit-ci/CodeIgniter.git",
-                "reference": "6ae943a4cea2434ccc582766724af21191e14fcd"
+                "reference": "ac067858c21250dd8c60cdc1f9bc12ba2ff82755"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/6ae943a4cea2434ccc582766724af21191e14fcd",
-                "reference": "6ae943a4cea2434ccc582766724af21191e14fcd",
+                "url": "https://api.github.com/repos/bcit-ci/CodeIgniter/zipball/ac067858c21250dd8c60cdc1f9bc12ba2ff82755",
+                "reference": "ac067858c21250dd8c60cdc1f9bc12ba2ff82755",
                 "shasum": ""
             },
             "require": {
@@ -27,9 +27,6 @@
             "require-dev": {
                 "mikey179/vfsstream": "1.1.*"
             },
-            "suggest": {
-                "paragonie/random_compat": "Provides better randomness in PHP 5.x"
-            },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -37,33 +34,37 @@
             ],
             "description": "The CodeIgniter framework",
             "homepage": "https://codeigniter.com",
-            "time": "2016-07-26 17:36:48"
+            "time": "2016-01-13 00:09:27"
         },
         {
             "name": "fzaninotto/faker",
-            "version": "v1.6.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123"
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/44f9a286a04b80c76a4e5fb7aad8bb539b920123",
-                "reference": "44f9a286a04b80c76a4e5fb7aad8bb539b920123",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d0190b156bcca848d401fb80f31f504f37141c8d",
+                "reference": "d0190b156bcca848d401fb80f31f504f37141c8d",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3|^7.0"
+                "php": ">=5.3.3"
             },
             "require-dev": {
-                "ext-intl": "*",
                 "phpunit/phpunit": "~4.0",
                 "squizlabs/php_codesniffer": "~1.5"
             },
+            "suggest": {
+                "ext-intl": "*"
+            },
             "type": "library",
             "extra": {
-                "branch-alias": []
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
             },
             "autoload": {
                 "psr-4": {
@@ -85,7 +86,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29 12:21:54"
+            "time": "2015-05-29 06:29:14"
         },
         {
             "name": "myth/bay",
@@ -128,16 +129,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.1",
+            "version": "v1.24.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512"
+                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3566d311a92aae4deec6e48682dc5a4528c4a512",
-                "reference": "3566d311a92aae4deec6e48682dc5a4528c4a512",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
+                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
                 "shasum": ""
             },
             "require": {
@@ -185,7 +186,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-05-30 09:11:59"
+            "time": "2016-01-25 21:22:18"
         }
     ],
     "packages-dev": [],
