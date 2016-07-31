@@ -15,6 +15,7 @@ uploads/*
 
 /.git/
 /vendor/
+composer.lock
 
 # IDE Files
 #-------------------------
