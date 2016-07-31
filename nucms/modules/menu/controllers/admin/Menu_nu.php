@@ -42,7 +42,7 @@ class Menu_nu extends Backend_Controller
 
             // Set message and refresh the page
             $this->session->set_flashdata('success', lang('alert.success.delete_checked'));
-            redirect(current_url());
+            redirect(current_full_url());
         }
 
         // Get number of items for pager

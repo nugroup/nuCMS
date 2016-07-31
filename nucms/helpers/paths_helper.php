@@ -31,3 +31,17 @@ if (!function_exists('uploads_url')) {
         return base_url().$CI->config->item('upload_folder').'/'.$url;
     }
 }
+
+if (!function_exists('asset')) {
+
+    /**
+     * Generate asset path
+     *
+     * @param string $pathName
+     * @return string
+     */
+    function asset($pathName)
+    {
+        return site_url('assets/themes/'.config_item('theme').'/'.$pathName);
+    }
+}

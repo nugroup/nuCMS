@@ -1,19 +1,5 @@
 <?php
 
-if (!function_exists('asset')) {
-
-    /**
-     * Generate asset path
-     *
-     * @param string $pathName
-     * @return string
-     */
-    function asset($pathName)
-    {
-        return site_url('assets/themes/'.config_item('theme').'/'.$pathName);
-    }
-}
-
 if (!function_exists('flashdata')) {
 
     /**

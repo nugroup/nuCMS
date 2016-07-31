@@ -5,6 +5,8 @@ if (!defined('BASEPATH'))
 
 /**
  * Class Block_model
+ * 
+ * Remember to run json_encode on form CONTENT data
  */
 class Block_model extends MY_Model
 {
@@ -12,6 +14,7 @@ class Block_model extends MY_Model
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
+    protected $after_get = array('decode_content');
 
     function __construct()
     {
@@ -28,12 +31,13 @@ class Block_model extends MY_Model
      */
     public function get_rules($action = '', $id = 0)
     {
-        $rules = array();
+        $rules = array(
+            'insert' => array(),
+            'update' => array(),
+        );
 
         if ($action == 'add') {
-            $rules['name'] = array('field' => 'name', 'label' => lang('block.form.name'), 'rules' => 'required|trim|xss_clean');
         } else {
-
         }
 
         return $rules;
@@ -54,6 +58,38 @@ class Block_model extends MY_Model
         if ($this->input->get('sort') && $this->input->get('sort_type')) {
             $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
         }
+    }
+    
+    /**
+     * Decode content json format to the object
+     *
+     * @param array $data
+     * @return array/object
+     */
+    public function decode_content($data)
+    {
+        if (isset($data[0])) {
+            $i = 0;
+            foreach ($data as $row) {
+                $data[$i]['content'] = json_decode($row['content']);
+                $i++;
+            }
+        } else {
+            $data['content'] = json_decode($data['content']);
+        }
+        
+        return $data;
+    }
+    
+    /**
+     * Encode content to the json_format
+     *
+     * @param array $content
+     * @return string
+     */
+    public function encode_content($content)
+    {
+        return json_encode($content);
     }
 }
 

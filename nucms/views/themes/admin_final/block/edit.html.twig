@@ -48,14 +48,14 @@
         <div class="container-fluid nuContainer tab-content">
 
             <div class="row tab-pane fade in active" role="tabpanel" id="settings">
-                {% include('block/types/block_'~attribute(config.block.types_codes, block.type)~'.html.twig') %}
+                <div id="blockContentAjax"></div>
+{#                {% include('block/types/block_'~attribute(config.block.types_codes, block.type)~'.html.twig') %}#}
             </div>
 
         </div>
     </div>
     <!-- /content -->
 
-    {{ form_hidden('id', block.id) }}
     {{ form_close() }}
 
 {% endblock %}
@@ -69,6 +69,12 @@
         $(document).on('change', '#block-edit-form', function () {
             showBeforeUnload = true;
         });
+        
+        $(window).load(function() {
+            $('#blockContentAjax').load("{{ admin_url('block/load_block_ajax/'~block.id) }}", function(r) {
+            });
+        });
+        
 
     </script>
 

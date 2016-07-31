@@ -22,7 +22,7 @@ function showConfirmModal(element) {
     var content = '<div class="modal-confirm"><div>' + confirmMsg + '</div>' + buttons + '</div>';
 
     // Insert modal content
-    $('.modal-body').html(content);
+    $('#my_modal .modal-body').html(content);
 
     // Show modal
     $('#my_modal').modal('show');

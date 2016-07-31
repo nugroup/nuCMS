@@ -9,12 +9,12 @@
 $config['types_codes'] = array(
     1 => 'html',
     2 => 'text',
-    3 => 'gallery',
-    4 => 'icon',
+    3 => 'icon',
+//    4 => 'gallery',
 );
 $config['types'] = array(
     1 => lang('block.type.html'),
     2 => lang('block.type.text'),
-    3 => lang('block.type.gallery'),
-    4 => lang('block.type.icon'),
+    3 => lang('block.type.icon'),
+//    4 => lang('block.type.gallery'),
 );

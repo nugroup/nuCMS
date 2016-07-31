@@ -17,6 +17,8 @@ class Block_nu extends Backend_Controller
         // Load classes
         $this->load->model('block/block_model', 'block');
         $this->lang->load('block', config_item('selected_lang'));
+        
+        $this->data['fontawesome_list'] = $this->block_lib->getFontsFile();
     }
 
     /**
@@ -29,7 +31,19 @@ class Block_nu extends Backend_Controller
         $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
         $locale = ((bool)$this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
+        
+        // Delete checked item
+        if ($this->input->post('action') == 'delete_checked') {
+            foreach ($this->input->post('check_item') as $item => $value) {
+                // Delete action
+                $this->block->delete($item);
+            }
 
+            // Set message and refresh the page
+            $this->session->set_flashdata('success', lang('alert.success.delete_checked'));
+            redirect(current_full_url());
+        }
+        
         // Add block
         if ($this->input->post('add')) {
             $data = array(
@@ -37,20 +51,15 @@ class Block_nu extends Backend_Controller
                 'type'   => $this->input->post('type'),
                 'locale' => $locale, 
             );
-            
-            // Validate form
-            $this->form_validation->set_rules($this->block->get_rules('add'));
 
-            // Insert page root
-            if ($this->form_validation->run() == true) {
-                $inserted_id = $this->block->insert($data);
-                
-                if ($inserted_id) {
-                    $this->session->set_flashdata('success', lang('block.alert.success.add'));
-                    
-                    // Redirect
-                    redirect(current_full_url());
-                }
+            // Insert block
+            $inserted_id = $this->block->insert($data);
+
+            if ($inserted_id) {
+                $this->session->set_flashdata('success', lang('block.alert.success.add'));
+
+                // Redirect
+                redirect(current_full_url());
             }
         }
         
@@ -81,13 +90,30 @@ class Block_nu extends Backend_Controller
     /**
      * Edit single block
      * 
-     * @param int $block_id
+     * @param int $id
      */
-    public function edit($block_id)
+    public function edit($id)
     {
-        $block = $this->block->get($block_id);
+        $block = $this->block->get($id);
         if (!$block) {
             show_404();
+        }
+
+        // Update
+        if ($this->input->post()) {
+            $insert_data = array(
+                'name' => $this->input->post('name', true),
+                'content' => $this->block->encode_content($this->input->post('content')),
+            );
+
+            $result = $this->block->update($insert_data, $id);
+            if ($result) {
+                // Set informations
+                $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
+
+                // Redirect
+                redirect(admin_url('block/edit/'.$id));
+            }
         }
         
         // Set view data
@@ -97,6 +123,63 @@ class Block_nu extends Backend_Controller
         
         // Load the view
         $this->render('block/edit', $this->data);
+    }
+    
+    /**
+     * 
+     * @param type $id
+     */
+    public function load_block_ajax($id)
+    {
+        $block = $this->block->get($id);
+        if (!$block || !$this->input->is_ajax_request()) {
+            show_404();
+        }
+     
+        $typesCodes = $this->config->item('types_codes', 'block');
+        
+        // Set view data
+        $data['block'] = $block;
+        $data['fontawesome_list'] = $this->data['fontawesome_list'];
+        
+        // Load the view
+        $this->render('block/types/block_' . $typesCodes[$block->type], $data);
+    }
+    
+    /**
+     * Delete action (by AJAX)
+     *
+     * @throws Exception
+     */
+    public function delete()
+    {
+        if ($this->input->post('id_item')) {
+            $id = $this->input->post('id_item');
+            if ($id > 0) {
+                try {
+                    // Delete menu
+                    if (!$this->block->delete($id)) {
+                        throw new Exception(lang('block.alert.error.delete'));
+                    }
+
+                    // Set response data
+                    $result['message'] = lang('block.alert.success.delete');
+                    $result['status'] = 1;
+                } catch (Exception $ex) {
+                    // Log error message
+                    $this->set_log($ex->getMessage());
+
+                    // Set response data
+                    $result['message'] = $ex->getMessage();
+                    $result['status'] = 0;
+                }
+            }
+        }
+
+        // Send header and response data
+        header('Content-Type: application/json');
+        echo json_encode(array('results' => $result));
+        exit;
     }
 }
 

@@ -29,6 +29,7 @@ class NU_Controller extends MX_Controller
         // libraires
         $this->load->library('form_validation');
         $this->load->library('auth/ion_auth');
+        $this->load->library('block/block_lib');
 
         $this->db->query("SET NAMES 'utf8'");
 

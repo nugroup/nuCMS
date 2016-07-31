@@ -1,1 +1,28 @@
-ICON
+<div class="col-xs-12">
+
+    <div class="fontsList">
+        {% for icon in fontawesome_list %}
+            <div class="fontItem" data-icon="{{ icon }}"><i class='fa {{ icon }}'></i></div>
+        {% endfor %}
+    </div>
+
+    {{ form_hidden('content[icon]', block.content.icon) }}
+
+</div>
+
+<script>
+    
+    $('.fontItem[data-icon="{{ block.content.icon }}"]').addClass('active');
+
+    $('.fontItem').click(function () {
+
+        var icon = $(this).attr('data-icon').toString();
+
+        $('input[name="content[icon]"').val(icon);
+        
+        $('.fontItem').removeClass('active');
+        $(this).addClass('active');
+
+    });
+
+</script>

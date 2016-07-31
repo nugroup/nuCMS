@@ -6,14 +6,6 @@
 
     RewriteEngine On
 
-    #development
-    RewriteBase /
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REMOTE_ADDR} !^localhost
-    RewriteRule ^(.*)$ index.php?/$1 [L]
-
-    #production
     RewriteBase /~xprezesx/nucms/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
