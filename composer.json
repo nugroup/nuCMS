@@ -1,6 +1,6 @@
 {
     "name": "nugato/nucms",
-    "description" : "nuCMS - revolution CMS",
+    "description" : "nuCMS - revolution and easy CMS",
     "license": "MIT",
     "homepage": "https://github.com/nugroup/nuCMS",
     "require": {
