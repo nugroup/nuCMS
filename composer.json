@@ -1,5 +1,5 @@
 {
-    "name": "nucms/nucms",
+    "name": "nugato/nucms",
     "description" : "nuCMS - revolution CMS",
     "license": "MIT",
     "homepage": "https://github.com/nugroup/nuCMS",
@@ -21,5 +21,17 @@
             "name": "Szymon Kulczyński",
             "email": "sz.kulczy@gmail.com"
         }
-    ]
+    ],
+    "repositories": [{
+        "type":"package",
+        "package": {
+            "name": "nugato/nucms",
+            "version": "master",
+            "source": {
+                "url": "git@github.com:nugato/nuCMS.git",
+                "type": "git",
+                "reference":"develop"
+            }
+        }
+    }]
 }

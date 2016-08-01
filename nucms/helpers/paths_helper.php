@@ -42,6 +42,7 @@ if (!function_exists('asset')) {
      */
     function asset($pathName)
     {
-        return site_url('assets/themes/'.config_item('theme').'/'.$pathName);
+        return site_url(config_item('assets_path').'/'.$pathName);
+//        return site_url('assets/themes/'.config_item('theme').'/'.$pathName);
     }
 }

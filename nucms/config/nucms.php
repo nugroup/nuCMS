@@ -6,7 +6,8 @@
  * @copyright          Copyright (c) 2015
  */
 $config['admin_folder'] = 'admin';                                              // Admin folder and prefix name
-$config['theme'] = 'admin_final';                                               // Admin view theme name
+$config['theme'] = 'admin';                                                     // Admin view theme name
+$config['assets_path'] = 'nucms/themes/' . $config['theme'] . '/assets';
 $config['admin_url'] = base_url() . $config['admin_folder'] . '/';              // Admin url
 $config['modules_path'] = APPPATH . 'modules/';                                 // Path to modules folder
 $config['selected_lang'] = 'polish';                                            // Selected lang (can be change on begin in Backend_Controller)
@@ -26,7 +27,10 @@ $config['copyright'] = [
 /* twig
 ============================================================================= */
 $config['twig_config'] = [
-    'paths' => [NUPATH.'/views/themes/'.$config['theme'], VIEWPATH],
+    'paths' => array(
+        NUPATH.'/themes/'.$config['theme'].'/views/',
+        VIEWPATH
+    ),
     'cache' => false,
 ];
 $config['twig_user_functions'] = [

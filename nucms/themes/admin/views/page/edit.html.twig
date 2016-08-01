@@ -1,0 +1,332 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('page') }}">{{ lang('page.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('page/add') }}">{{ lang('page.nav.add') }}</a></li>
+        <li><a href="{{ admin_url('page/edit/'~page.id) }}" class="nuNavActive">{{ lang('page.nav.edit') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block body %}
+
+    {{ form_open(current_full_url(), {'id': 'page-edit-form', 'novalidate': 'novalidate'}) }}
+
+    <!-- head -->
+    <div id="nuActionbar" class="nuFormDark">
+        <div class="container-fluid nuContainer">
+
+            <div class="row nuActions nuActions-small">
+
+                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                    <ul class="nuButtonsList">
+                        <li><a href="{{ site_url(page.slug~'?preview=1&token='~page.token) }}" target="_blank" class="btn btn-primary btn-squere"><i class="fa fa-eye"></i></a></li><!--
+                        --><li><a href="{{ admin_url('page/delete') }}" rel="{{ page.page_id }}" class="btn btn-primary btn-squere deleteRecord" data-confirmMsg="{{ lang('page.text.confirm_delete') }}" data-redirectUrl="{{ admin_url('page') }}"><i class="fa fa-trash"></i></a></li><!--
+                        --><li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                    <!-- title/lang fields -->
+                    <div class="input-group nuFormTitle">
+                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                            {% include('components/lang_select.html.twig') %}
+                            {{ form_input({'name': 'title', 'value': page.title, 'class': 'form-control', 'id': 'title', 'placeholder': lang('page.form.title'), 'required': 'required'}) }}
+                    </div>
+                    <!-- /title/lang fields -->
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <!-- Nav tabs -->
+                    <ul id="nuActionsTabs" class="nav nav-pills" role="tablist">
+                        <li role="presentation" class="active"><a href="#settings" role="tab" data-toggle="tab">{{ lang('page.tabs.settings') }}</a></li>
+                        <li role="presentation"><a href="#modules" role="tab" data-toggle="tab">{{ lang('page.tabs.modules') }}</a></li>
+                    </ul>
+                    <!-- /Nav tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="nuEditPage" class="nuContent nuFormLight">
+        <div class="container-fluid nuContainer tab-content">
+
+            <div class="row tab-pane fade in active" role="tabpanel" id="settings">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-margin">
+
+                    <!-- header without line -->
+                    <div class="nuHead">{{ lang('page.head.seo') }}:</div>
+                    <!-- /header -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="editCircle">
+                                <svg class="circle" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 283.5 283.5" style="enable-background:new 0 0 283.5 283.5;" xml:space="preserve">
+                                <circle class="nuCircle_bg" cx="141.7" cy="141.7" r="122"></circle>
+                                <circle data-nucircle-id="xyz" data-nucircle-type="circle" data-nucircle-value="{{ page.seo_progress }}" class="nuCircle_main" cx="141.7" cy="141.7" r="122"></circle>
+                                </svg>
+                                <div class="circlePercent" data-nucircle-id="xyz" data-nucircle-type="div" data-nucircle-value="{{ page.seo_progress }}">{{ page.seo_progress }}</div>
+                            </div>
+                            <div class="editSeo">
+                                {{ page.seo_progress_msg | raw }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- meta_title -->
+                    <div class="form-group">
+                        <label for="meta_title">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_title.info') }}">
+                                {{ lang('page.form.meta_title') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'meta_title', 'value': page.meta_title, 'class': 'form-control', 'id': 'meta_title', 'maxlength': 50}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /meta_title -->
+
+                    <!-- meta_keywords -->
+                    <div class="form-group">
+                        <label for="meta_keywords">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_keywords.info') }}">
+                                {{ lang('page.form.meta_keywords') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'meta_keywords', 'value': page.meta_keywords, 'class': 'form-control', 'id': 'meta_keywords'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /meta_keywords -->
+
+                    <!-- meta_description -->
+                    <div class="form-group">
+                        <label for="meta_description">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.meta_description.info') }}">
+                                {{ lang('page.form.meta_description') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_textarea({'name': 'meta_description', 'value': page.meta_description, 'class': 'form-control autoTextarea', 'id': 'meta_description', 'rows': 6, 'maxlength': 160}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /meta_description -->
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('page.head.others') }}:</div>
+                    <!-- /header -->
+
+                    <!-- active -->
+                    <div class="nuCheckbox-single">
+                        <label for="active">{{ lang('page.form.active') }}:</label>
+                        <label class="nuSwitch" for="active">
+                            {{ form_checkbox({'id': 'active', 'name': 'active'}, 1, page.active) }}
+                            <span></span>
+                        </label>
+                    </div>
+                    <!-- /active -->
+
+                    <!-- slug -->
+                    <div class="form-group">
+                        <label for="slug">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('page.form.slug.info') }}">
+                                {{ lang('page.form.slug') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{ form_input({'name': 'slug', 'value': page.slug, 'class': 'form-control', 'id': 'slug'}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /slug -->
+
+                    <!-- created_at -->
+                    <div class="form-group">
+                        <label for="input_created">{{ lang('page.form.created_at') }}:</label>
+                        {{ form_input({'name': 'created_at', 'value': page.created_at | date('Y-m-d'), 'class': 'form-control', 'id': 'created_at', 'disabled': true}) }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /created_at -->
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('page.head.photo') }}:</div>
+                    <!-- /header -->
+
+                    <div class="photoOutside">
+                        {% set opacity_class = page.file ? ' opacity' : '' %}
+
+                        <div id="photoButton" class="photoBox{{ opacity_class }}">
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        </div>
+                        <div id="photoThumb" class="photoThumb">
+                            {% if page.file %}
+                                <img src="{{ config.upload_folder }}/{{ page.file.filename }}" class="img_responsive">
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row tab-pane fade" role="tabpanel" id="modules">
+                <div class="col-xs-12">
+                    {{ form_textarea({'name': 'content', 'value': page.content, 'class': 'form-control', 'id': 'content', 'v-model': 'mapString', 'style': 'display: none;'}) }}
+                    <nublox :modules="[{type: 'html', name: 'HTML', icon: 'code'}, {type: 'image', name: 'Image', icon: 'image'}, {type: 'button', name: 'Button', icon: 'hand-pointer-o'}]"></nublox>
+                </div>
+            </div>
+
+        </div>
+    </div><!--/#nuEditPage-->
+    
+    <!-- all modules/templates -->
+    <div id="modulesHolder" style="display: none;">
+        <!-- HTML template -->
+        <div data-nublox-tpl="html">
+            <textarea class="form-control" name="blocks[empty][content]">Pusty szablon modulu HTML</textarea>
+        </div>
+
+        <!-- IMAGE template -->
+        <div data-nublox-tpl="image">
+            <label for="exampleInputFile">Pusty szablon modulu Image</label>
+            <input type="file" id="exampleInputFile">
+        </div>
+
+        <!-- BUTTON template -->
+        <div data-nublox-tpl="button">
+            <input type="text" class="form-control" value="Pusty szablon modulu Button">
+            <input type="text" class="form-control" value="Pusty szablon modulu Button">
+        </div>
+    </div>
+    <!-- /all modules/templates -->
+
+    {{ form_hidden('file_id', page.file_id) }}
+    {{ form_close() }}
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(document).on('change', '#page-edit-form', function () {
+            showBeforeUnload = true;
+        });
+
+        $('#photoButton').nuFileManager({
+            singleItem: true,
+            dialogUrl: "{{ admin_url('file/modal') }}",
+            onAfterAdd: function (files) {
+
+                if (files[0] !== undefined) {
+
+                    // Add thumbnail
+                    $('#photoThumb img').remove();
+                    $('#photoThumb').append('<img src="' + files[0].src + '" class="img-responsive" alt="">');
+                    $('.photoBox').addClass('opacity');
+
+                    // Insert id to hidden input
+                    $('input[name="file_id"]').val(files[0].id);
+                }
+            }
+        });
+
+        $(function () {
+
+            var nav = $('#nuActionsTabs'); // Tabs navigator
+            var content = $('.tab-content'); // Tabs content
+            var holder = $('#modulesHolder'); // Module and templates holder
+
+            // Create new tab
+            var craetetTab = function (moduleId) {
+
+                // Search for module title
+                var title = $('[data-nublox-title-id="' + moduleId + '"]').attr('data-nublox-title-title');
+
+                // Nav
+                var navi = $('<i />').addClass('fa fa-remove tab-close');
+                var nava = $('<a />').attr('href', '#tab_' + moduleId).attr('data-toggle', 'tab').attr('data-nublox-title-change', moduleId).html(title);
+                var navli = $('<li />').append(navi).append(nava);
+
+                // Content
+                var moduleTpl = $('[data-nublox-id="' + moduleId + '"]');
+                var newTabContent = $('<div />').addClass('row tab-pane fade').attr('id', 'tab_' + moduleId);
+                var newTabContentIn = $('<div />').addClass('col-xs-12').html(moduleTpl);
+
+                nav.append(navli); // Insert Tab in nav
+                content.append(newTabContent.append(newTabContentIn)); // Insert tab content
+            };
+
+            // Close tab
+            $('body').on('click', '.tab-close', function (e) {
+                var _self = $(this);
+{#                var id = _self.next('a').attr('href'); // Get id of removing element#}
+                var id = _self.next('a').attr('[data-nublox-title-change]'); // Get id of removing element
+                console.log(id);
+                var tpl = $(id).find('[data-nublox-id]'); // Search for tpl
+                holder.append(tpl); // Move tpl to holder
+                $(id).remove(); // Remove element content
+                if (_self.parent().hasClass('active')) {
+                    $('#nuActionsTabs a[href="#modules"]').tab('show'); // Redirect if removing active tab
+                }
+                _self.parent().remove(); // Remove element tab nav
+            });
+
+            // Add module
+            $('body').on('nuBlox.add', function (event, moduleId, moduleType) {
+                var tpl = $('[data-nublox-tpl="' + moduleType + '"]').clone(); // Clone current module type template
+                tpl.attr('data-nublox-id', moduleId).removeAttr('data-nublox-tpl'); // Add ID and remove tpl data
+                holder.append(tpl); // Append cloned tpl
+            });
+
+            // Edit module
+            $('body').on('nuBlox.edit', function (event, moduleId) {
+
+                // Check if module is edited
+                var exist = false;
+                var editing = nav.find('a');
+                $.each(editing, function (index, el) {
+                    var href = $(el).attr('href');
+                    if (href === '#tab_' + moduleId) {
+                        exist = true;
+                    }
+                });
+
+                // Create new tab if not exist
+                if (false === exist) {
+                    craetetTab(moduleId);
+                }
+
+                // Activate edit tab
+                $('#nuActionsTabs a[href="#tab_' + moduleId + '"]').tab('show');
+            });
+
+            // Change title in tabs when change
+            $('body').on('change', '[data-nublox-title-id]', function (e) {
+                var id = $(this).attr('data-nublox-title-id');
+                var title = $(this).attr('data-nublox-title-title');
+                nav.find('[data-nublox-title-change="' + id + '"]').html(title);
+            });
+
+        });
+
+    </script>
+
+{% endblock %}

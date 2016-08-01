@@ -49,9 +49,6 @@ class Backend_Controller extends NU_Controller
             }
         }
 
-        // Get nublox templatet into variable
-        $this->data['nublox'] = $this->load->view('nublox/nu-blox.tpl.php', [], true);
-
         $this->config->set_item('first_run', false);
     }
 

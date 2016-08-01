@@ -6,6 +6,7 @@
  * @copyright          Copyright (c) 2015-2016
  */
 $config['theme'] = 'nu';
+$config['assets_path'] = 'themes/' . $config['theme'] . '/assets';
 $config['selected_lang'] = 'polish';                                            // Selected lang (can be change on begin in Frontend_Controller)
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
 $config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
@@ -13,7 +14,11 @@ $config['profiler'] = false;                                                    
 /* twig
 ============================================================================= */
 $config['twig_config'] = [
-    'paths' => [VIEWPATH.'themes/'.$config['theme'], VIEWPATH],
+    'paths' => array(
+        VIEWPATH.'themes/'.$config['theme'],
+        APPPATH.'../themes/'.$config['theme'].'/views',
+        VIEWPATH,
+    ),
     'cache' => false,
 ];
 $config['twig_user_functions'] = [

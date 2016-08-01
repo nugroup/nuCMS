@@ -96,6 +96,9 @@ class Page_nu extends Backend_Controller
         // If post is send
         if ($this->input->post()) {
 
+            dump($this->input->post());
+            die();
+            
             // Additional data
             $additionalData = array(
                 'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL 

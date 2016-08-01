@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <!-- METATAGS -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="none">
+        <meta name="googlebot" content="none">
+        <meta name="Description" content="">
+        <meta name="Keywords" content="">
+
+        <title>{{ config.metatags.title }} {{ config.metatags.version}}</title>
+        <base href="{{ site_url() }}">
+
+        <!-- FAVICO -->
+        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+
+        <!-- FONTS -->
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+        <!-- CSS STYLES -->
+        {% block stylesheet %}
+
+            {#    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">#}
+            <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+            {#    <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">#}
+            {#    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">#}
+                <link href="{{ asset('css/dropzone.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/nu.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+        {% endblock %}
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        {% block navbar %}
+
+            <!-- navbar -->
+            <div id="nuNavbar">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-8 col-sm-2 text-left">
+                            <div class="nuDrop">
+                                <span class="nuDrop-title">
+                                    <span class="nuDrop-hamburger">
+                                        <span class="nuDrop-hamburger-main"><i></i></span>
+                                        <span class="nuDrop-hamburger-hover"><i class="fa fa-angle-down"></i></span>
+                                    </span>
+                                    {{ lang('text.menu') }}
+                                </span>
+                                <div class="nuDrop-menuWrapper">
+                                    {% block menu %}
+
+                                        {% include 'components/menu.html.twig' %}
+
+                                    {% endblock %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hidden-xs col-sm-8 text-center">
+                            <!-- navigation -->
+                            <div id="nuNav">
+                                {% block navigation %}{% endblock %}
+                            </div>
+
+                            <!-- /navigation -->
+                        </div>
+
+                        <div class="col-xs-4 col-sm-2 text-right">
+                            <!-- logo -->
+                            <div class="nuLogo">
+                                <a href="{{ site_url() }}" target="_blank"><i class="fa fa-globe"></i></a>
+                                <img src="{{ asset('img/nu.png') }}" alt="nucms">
+                            </div>
+                            <!-- /logo -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /navbar -->
+
+        {% endblock %}
+
+        {% block body %}
+
+            {% block action_bar %}
+
+                <!-- head -->
+                <div id="nuActionbar" class="nuFormDark">
+                    <div class="container-fluid nuContainer">
+
+                        {% block action_bar_content %}{% endblock %}
+
+                    </div>
+                </div>
+                <!-- /head -->
+
+            {% endblock %}
+
+            {% block content %}{% endblock %}
+
+        {% endblock %}
+
+        {% block footer %}
+
+            <!-- footer -->
+            <div id="nuFooter">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            &copy; {{ config.copyright.date }} by <a href="{{ config.copyright.company_website }}" target="_blank">{{ config.copyright.company_name }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /footer -->
+
+        {% endblock %}
+
+        {% block modal %}
+
+            <!-- Modal -->
+            <div class="modal fade" id="my_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{{ modal.title ? modal.title : lang('modal.alert') }}</h4>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('modal.close') }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endblock %}
+
+        <!-- JS SCRIPTS -->
+        {% block javascript %}
+
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/functions.js') }}"></script>
+            <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+            <script src="{{ asset('js/dropzone.min.js') }}"></script>
+            <script src="{{ asset('js/nu.min.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
+            <script src="{{ asset('js/nuFileManager.js') }}"></script>
+            <script src="{{ asset('js/nublox.js') }}"></script>
+    
+            <script>
+
+                $(function() {
+
+                    // init menu
+                    $('.nuDrop').nuDrop();
+
+                    // set all circle % values on start
+                    $('body').nuCircle('init');
+
+                });
+
+            </script>
+
+        {% endblock %}
+        
+        {% block alerts %}
+
+            <script>
+
+            {% if(validation_errors()) %}
+
+                $.nuAlert('danger', `{{ validation_errors() | raw }}`);
+
+            {% endif %}
+
+            {% if (flashdata('error')) %}
+
+                $.nuAlert('danger', '{{ flashdata('error') }}');
+
+            {% endif %}
+
+            {% if (flashdata('success')) %}
+
+                $.nuAlert('success', '{{ flashdata('success') }}');
+
+            {% endif %}
+
+            {% if (errors) is defined %}
+
+                var errorsString = '';
+
+                {% for error in errors %}
+                    errorsString += '{{ error }}';
+                {% endfor %}
+
+                $.nuAlert('danger', '{{ errorsString }}');
+
+            {% endif %}
+
+            </script>
+
+        {% endblock %}
+
+        <script type="text/javascript">
+            <!--
+        (function () {
+                if ("-ms-user-select" in document.documentElement.style && (navigator.userAgent.match(/IEMobile\/10\.0/) || navigator.userAgent.match(/IEMobile\/11\.0/))) {
+                    var msViewportStyle = document.createElement("style");
+                    msViewportStyle.appendChild(
+                            document.createTextNode("@-ms-viewport{width:auto!important}")
+                            );
+                    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+                }
+            })();
+            //-->
+        </script>
+
+    </body>
+</html>
