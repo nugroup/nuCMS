@@ -15,7 +15,6 @@ $config['profiler'] = false;                                                    
 ============================================================================= */
 $config['twig_config'] = [
     'paths' => array(
-        VIEWPATH.'themes/'.$config['theme'],
         APPPATH.'../themes/'.$config['theme'].'/views',
         VIEWPATH,
     ),
