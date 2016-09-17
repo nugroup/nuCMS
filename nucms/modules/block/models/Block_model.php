@@ -37,12 +37,14 @@ class Block_model extends MY_Model
         );
 
         if ($action == 'add') {
+            
         } else {
+            
         }
 
         return $rules;
     }
-    
+
     /**
      * Generate query from search string
      *
@@ -59,7 +61,30 @@ class Block_model extends MY_Model
             $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
         }
     }
-    
+
+    /**
+     * Save blocks other modules views
+     * 
+     * @param array $blocks
+     */
+    public function save_blocks($blocks)
+    {
+        if ($blocks) {
+            foreach ($blocks as $block) {
+                $decodedBlock = json_decode($block);
+
+                if (isset($decodedBlock->content)) {
+                    $decodedBlock->content = $this->encode_content($decodedBlock->content);
+                }
+                if ((int) $decodedBlock->id > 0) {
+                    $this->update($decodedBlock, $decodedBlock->id);
+                } else {
+                    $this->insert($decodedBlock);
+                }
+            }
+        }
+    }
+
     /**
      * Decode content json format to the object
      *
@@ -77,10 +102,10 @@ class Block_model extends MY_Model
         } else {
             $data['content'] = json_decode($data['content']);
         }
-        
+
         return $data;
     }
-    
+
     /**
      * Encode content to the json_format
      *

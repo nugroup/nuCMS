@@ -126,7 +126,7 @@
         $(document).on('click', '.menuAdd', function () {
 
             var type = parseInt($(this).attr('data-menu_type'));
-            var dataArray = divSerialize('#menu-add-form-' + type);
+            var dataArray = divSerialize('#menu-add-form-' + type, 'data-name');
             var maxId = parseInt($('#menu_items_max_id').val());
             var newId = maxId+1;
             var typeIco = $('#menu-add-form-' + type).find('*[data-name="type_ico"]').val().toString();
@@ -201,7 +201,7 @@
             var itemDivClass = itemDiv.attr('class');
             var idItem = parseInt(itemDiv.attr('data-item_id'));
             var type = parseInt($(this).attr('data-type'));
-            var dataArray = divSerialize('.'+itemDivClass+'[data-item_id="'+idItem+'"] .editItem.type' + type);
+            var dataArray = divSerialize('.'+itemDivClass+'[data-item_id="'+idItem+'"] .editItem.type' + type, 'data-name');
             var itemElement = $('#item_'+idItem);
             
             // Change data value

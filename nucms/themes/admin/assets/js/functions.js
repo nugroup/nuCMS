@@ -149,7 +149,7 @@ $.fn.goTo = function () {
     }, 'fast');
 
     return this;
-}
+};
 
 /**
  * Serialize form element in div
@@ -157,25 +157,26 @@ $.fn.goTo = function () {
  * @param {string} el
  * @returns {object}
  */
-function divSerialize(el) {
+function divSerialize(el, nameElement) {
 
     var inputValues = {};
 
     $(el + ' input').each(function () {
         var type = $(this).attr("type");
         if ((type == "checkbox" || type == "radio") && this.checked) {
-            inputValues[$(this).attr("data-name")] = this.value;
+            inputValues[$(this).attr(nameElement)] = this.value;
         } else if (type != "button" || type != "submit") {
-            inputValues[$(this).attr("data-name")] = this.value;
+            inputValues[$(this).attr(nameElement)] = this.value;
         }
     });
     $(el + ' select').each(function () {
-        inputValues[$(this).attr("data-name")] = this.value;
+        console.log("select");
+        inputValues[$(this).attr(nameElement)] = this.value;
     });
     $(el + ' textarea').each(function () {
-        inputValues[$(this).attr("data-name")] = this.value;
+        inputValues[$(this).attr(nameElement)] = this.value;
     });
 
     return inputValues;
-    
+
 }

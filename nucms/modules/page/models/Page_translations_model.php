@@ -10,9 +10,8 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 {
     public $table = 'nu_page_translations';
     public $primary_key = 'id';
-    public $fillable = array();
-    public $protected = array();
-    public $after_get = ['get_route', 'get_seo_progress'];
+    public $fillable = [];
+    public $after_get = ['get_route', 'get_seo_progress', 'decode_content'];
 
     function __construct()
     {
@@ -41,6 +40,32 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
         parent::__construct();
         $this->timestamps = true;
+    }
+
+    /**
+     * Decode content using block module
+     * 
+     * @param array $data
+     */
+    protected function decode_content($data)
+    {
+        if (isset($data[0])) {
+            foreach ($data as &$row) {
+                $row['content_blocks'] = array();
+
+                if (isset($row['content'])) {
+                    $row['content_blocks'] = $this->block_lib->decode_content_map($row['content']);
+                }
+            }
+        } else {
+            $data['content_blocks'] = array();
+
+            if (isset($data['content'])) {
+                $data['content_blocks'] = $this->block_lib->decode_content_map($data['content']);
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -79,8 +104,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
             // Insert translate
             $insertedTranslate = $this->from_form(
-                    $this->get_rules('add'),
-                    [
+                    $this->get_rules('add'), [
                         'locale' => $language->locale,
                         'page_id' => $page_id,
                         'active' => (int) $this->input->post('active'),
@@ -141,7 +165,6 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
         $CI->load->model('route/route_model', 'route');
 
         if (isset($data[0])) {
-
             $i = 0;
             foreach ($data as $row) {
 
@@ -157,9 +180,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
                 $i++;
             }
-
         } else {
-
             $route = $CI->route
                 ->fields('slug')
                 ->where(['module' => 'page', 'primary_key' => $data['page_id'], 'locale' => $data['locale']])
@@ -169,7 +190,6 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
                 $data['slug'] = $route->slug;
                 $data['token'] = $this->generate_token($data);
             }
-
         }
 
         return $data;
@@ -180,7 +200,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
      */
     public function update_routes()
     {
-        $CI =& get_instance();
+        $CI = & get_instance();
         $CI->load->model('route/route_model', 'route_model');
 
         $CI->route_model->after_create = [];
@@ -189,7 +209,7 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
 
         $pages = $this->get_all();
         if ($pages) {
-            foreach($pages as $page) {
+            foreach ($pages as $page) {
                 $pageUrl = $CI->config->item('pages_route_controller').$page->page_id.'/'.$page->locale;
                 $routeData = $CI->route->where(['url' => $pageUrl])->count_rows();
                 if ($page->locale != config_item('default_locale')) {
@@ -245,16 +265,16 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
     {
         $message = '';
 
-        if ($page->seo_progress == 100.00) {
+        if (isset($page->seo_progress) && $page->seo_progress == 100.00) {
             $message = '<p>'.lang('page.seo_progress_100').'</p>';
         } else {
-            if ($page->meta_title == '') {
+            if (isset($page->meta_title) && $page->meta_title && $page->meta_title == '') {
                 $message .= '<p>'.lang('page.seo_progress.no_title').'</p>';
             }
-            if ($page->meta_keywords == '') {
+            if (isset($page->meta_keywords) && $page->meta_keywords == '') {
                 $message .= '<p>'.lang('page.seo_progress.no_keywords').'</p>';
             }
-            if ($page->meta_description == '') {
+            if (isset($page->meta_description) && $page->meta_description == '') {
                 $message .= '<p>'.lang('page.seo_progress.no_description').'</p>';
             }
         }
@@ -272,13 +292,13 @@ class Page_translations_model extends MY_Model implements RouteTranslationsModel
     {
         $progress = 0;
 
-        if ($page->meta_title != '') {
+        if (isset($page->meta_title) && $page->meta_title != '') {
             $progress += 33.33;
         }
-        if ($page->meta_keywords != '') {
+        if (isset($page->meta_keywords) && $page->meta_keywords != '') {
             $progress += 33.33;
         }
-        if ($page->meta_description != '') {
+        if (isset($page->meta_description) && $page->meta_description != '') {
             $progress += 33.33;
         }
         if ($progress == 99.99) {

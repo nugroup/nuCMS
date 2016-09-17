@@ -187,33 +187,20 @@
             <div class="row tab-pane fade" role="tabpanel" id="modules">
                 <div class="col-xs-12">
                     {{ form_textarea({'name': 'content', 'value': page.content, 'class': 'form-control', 'id': 'content', 'v-model': 'mapString', 'style': 'display: none;'}) }}
-                    <nublox :modules="[{type: 'html', name: 'HTML', icon: 'code'}, {type: 'image', name: 'Image', icon: 'image'}, {type: 'button', name: 'Button', icon: 'hand-pointer-o'}]"></nublox>
+                    <nublox :modules="[{type: 'html', name: 'HTML', icon: 'code'}, {type: 'text', name: 'Text', icon: 'file-text-o'}, {type: 'icon', name: 'Icon', icon: 'fire'}]"></nublox>
                 </div>
             </div>
 
         </div>
     </div><!--/#nuEditPage-->
-    
-    <!-- all modules/templates -->
+
     <div id="modulesHolder" style="display: none;">
-        <!-- HTML template -->
-        <div data-nublox-tpl="html">
-            <textarea class="form-control" name="blocks[empty][content]">Pusty szablon modulu HTML</textarea>
-        </div>
+        {% for block in page.content_blocks %}
 
-        <!-- IMAGE template -->
-        <div data-nublox-tpl="image">
-            <label for="exampleInputFile">Pusty szablon modulu Image</label>
-            <input type="file" id="exampleInputFile">
-        </div>
+            {{ form_hidden('blocks[' ~ block.hash_id ~ ']', block.json_format) }}
 
-        <!-- BUTTON template -->
-        <div data-nublox-tpl="button">
-            <input type="text" class="form-control" value="Pusty szablon modulu Button">
-            <input type="text" class="form-control" value="Pusty szablon modulu Button">
-        </div>
+        {% endfor %}
     </div>
-    <!-- /all modules/templates -->
 
     {{ form_hidden('file_id', page.file_id) }}
     {{ form_close() }}
@@ -223,6 +210,11 @@
 {% block javascript %}
 
     {{ parent() }}
+
+    {% include('components/tiny_mce.html.twig') %}
+
+    <script src="{{ asset('js/nublox/nublox.js') }}"></script>
+    <script src="{{ asset('js/nublox/nubloxTabs.js') }}"></script>
 
     <script>
 
@@ -246,85 +238,6 @@
                     $('input[name="file_id"]').val(files[0].id);
                 }
             }
-        });
-
-        $(function () {
-
-            var nav = $('#nuActionsTabs'); // Tabs navigator
-            var content = $('.tab-content'); // Tabs content
-            var holder = $('#modulesHolder'); // Module and templates holder
-
-            // Create new tab
-            var craetetTab = function (moduleId) {
-
-                // Search for module title
-                var title = $('[data-nublox-title-id="' + moduleId + '"]').attr('data-nublox-title-title');
-
-                // Nav
-                var navi = $('<i />').addClass('fa fa-remove tab-close');
-                var nava = $('<a />').attr('href', '#tab_' + moduleId).attr('data-toggle', 'tab').attr('data-nublox-title-change', moduleId).html(title);
-                var navli = $('<li />').append(navi).append(nava);
-
-                // Content
-                var moduleTpl = $('[data-nublox-id="' + moduleId + '"]');
-                var newTabContent = $('<div />').addClass('row tab-pane fade').attr('id', 'tab_' + moduleId);
-                var newTabContentIn = $('<div />').addClass('col-xs-12').html(moduleTpl);
-
-                nav.append(navli); // Insert Tab in nav
-                content.append(newTabContent.append(newTabContentIn)); // Insert tab content
-            };
-
-            // Close tab
-            $('body').on('click', '.tab-close', function (e) {
-                var _self = $(this);
-{#                var id = _self.next('a').attr('href'); // Get id of removing element#}
-                var id = _self.next('a').attr('[data-nublox-title-change]'); // Get id of removing element
-                console.log(id);
-                var tpl = $(id).find('[data-nublox-id]'); // Search for tpl
-                holder.append(tpl); // Move tpl to holder
-                $(id).remove(); // Remove element content
-                if (_self.parent().hasClass('active')) {
-                    $('#nuActionsTabs a[href="#modules"]').tab('show'); // Redirect if removing active tab
-                }
-                _self.parent().remove(); // Remove element tab nav
-            });
-
-            // Add module
-            $('body').on('nuBlox.add', function (event, moduleId, moduleType) {
-                var tpl = $('[data-nublox-tpl="' + moduleType + '"]').clone(); // Clone current module type template
-                tpl.attr('data-nublox-id', moduleId).removeAttr('data-nublox-tpl'); // Add ID and remove tpl data
-                holder.append(tpl); // Append cloned tpl
-            });
-
-            // Edit module
-            $('body').on('nuBlox.edit', function (event, moduleId) {
-
-                // Check if module is edited
-                var exist = false;
-                var editing = nav.find('a');
-                $.each(editing, function (index, el) {
-                    var href = $(el).attr('href');
-                    if (href === '#tab_' + moduleId) {
-                        exist = true;
-                    }
-                });
-
-                // Create new tab if not exist
-                if (false === exist) {
-                    craetetTab(moduleId);
-                }
-
-                // Activate edit tab
-                $('#nuActionsTabs a[href="#tab_' + moduleId + '"]').tab('show');
-            });
-
-            // Change title in tabs when change
-            $('body').on('change', '[data-nublox-title-id]', function (e) {
-                var id = $(this).attr('data-nublox-title-id');
-                var title = $(this).attr('data-nublox-title-title');
-                nav.find('[data-nublox-title-change="' + id + '"]').html(title);
-            });
-
         });
 
     </script>

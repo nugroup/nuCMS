@@ -31,7 +31,7 @@
                     <!-- title/lang fields -->
                     <div class="input-group nuFormTitle">
                         <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
-                        {{ form_input({'type': 'name', 'name': 'name', 'value': block.name, 'class': 'form-control', 'id': 'name', 'placeholder': lang('block.form.name'),  'required': 'required'}) }}
+                            {{ form_input({'type': 'name', 'name': 'name', 'value': block.name, 'class': 'form-control', 'id': 'name', 'placeholder': lang('block.form.name'),  'required': 'required'}) }}
                     </div>
                     <!-- /title/lang fields -->
 
@@ -49,7 +49,6 @@
 
             <div class="row tab-pane fade in active" role="tabpanel" id="settings">
                 <div id="blockContentAjax"></div>
-{#                {% include('block/types/block_'~attribute(config.block.types_codes, block.type)~'.html.twig') %}#}
             </div>
 
         </div>
@@ -69,12 +68,10 @@
         $(document).on('change', '#block-edit-form', function () {
             showBeforeUnload = true;
         });
-        
-        $(window).load(function() {
-            $('#blockContentAjax').load("{{ admin_url('block/load_block_ajax/'~block.id) }}", function(r) {
-            });
+
+        $(window).load(function () {
+            $('#blockContentAjax').load("{{ admin_url('block/load_block_ajax/'~block.id) }}", function (r) {});
         });
-        
 
     </script>
 

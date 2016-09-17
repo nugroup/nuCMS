@@ -1,0 +1,18 @@
+{% if show_buttons %}
+
+    <button type="button" class="blockEditContentUpdate btn btn-success" data-hash_id="{{ block.hash_id }}">{{ lang('text.update') }}</button>
+    
+{% endif %}
+
+
+<div class="blockEditContent" data-nublox-tpl="{{ block.type }}" data-hash_id="{{ block.hash_id }}">
+    
+    {% block content %}{% endblock %}
+
+    {{ form_hidden('id', block.id) }}
+    {{ form_hidden('hash_id', block.hash_id) }}
+    {{ form_hidden('global', block.global) }}
+    {{ form_hidden('type', block.type) }}
+    {{ form_hidden('locale', block.locale) }}
+
+</div>

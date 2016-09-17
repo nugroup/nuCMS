@@ -1,7 +1,30 @@
-<div class="col-xs-12">
+{% extends 'block/types/block_base.html.twig' %}
 
-    {{ form_textarea({'name': 'content[content]', 'value': block.content.content, 'class': 'form-control tinyEditor textareaBig'}) }}
+{% block content %}
 
-</div>
-    
-{% include('components/tiny_mce.html.twig') %}
+    <div class="col-xs-12">
+
+        {{ 
+            form_textarea({
+                'name': 'content[content]',
+                'value': block.content.content,
+                'class': 'form-control tinyEditor textareaBig',
+                'id': 'content_' ~ block.hash_id
+            })
+        }}
+
+    </div>
+
+    <script>
+
+        var tinyTextarea = tinymce.get('content_{{ block.hash_id }}');
+
+        if (tinyTextarea !== null) {
+            tinyTextarea.remove();
+        }
+
+        initTiny();
+
+    </script>
+
+{% endblock %}

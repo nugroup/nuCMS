@@ -18,6 +18,7 @@ $lang['text.cancel'] = 'Anuluj';
 $lang['text.confirm'] = 'Zatwierdź';
 $lang['text.edit'] = 'Edytuj';
 $lang['text.filter'] = 'Filtruj';
+$lang['text.update'] = 'Aktualizuj';
 
 /* menu
 ============================================================================= */
@@ -61,6 +62,7 @@ $lang['config.user_types.admin'] = 'Administrator';
 $lang['alert.success.delete_checked'] = 'Usunięto zaznaczone elementy';
 $lang['alert.no_records'] = 'Brak elementów';
 $lang['alert.success.saved_changes'] = 'Zapisano zmiany';
+$lang['alert.success.blocks_save_changes'] = 'Zapisano zmiany w bloku';
 
 /* actions
 ============================================================================= */

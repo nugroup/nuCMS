@@ -154,6 +154,10 @@
         <!-- JS SCRIPTS -->
         {% block javascript %}
 
+            <script>
+                var selected_locale = '{{ config.selected_locale }}';
+                var admin_url = '{{ admin_url() }}';
+            </script>
             <script src="{{ asset('js/jquery.min.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/functions.js') }}"></script>
@@ -162,7 +166,6 @@
             <script src="{{ asset('js/nu.min.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
             <script src="{{ asset('js/nuFileManager.js') }}"></script>
-            <script src="{{ asset('js/nublox.js') }}"></script>
     
             <script>
 

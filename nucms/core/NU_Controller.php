@@ -17,7 +17,7 @@ class NU_Controller extends MX_Controller
         // Config
         $this->load->config('app');
         $this->load->config('modules');
-        
+
         // Helpers
         $this->load->helper('language');
         $this->load->helper('security');
@@ -25,6 +25,7 @@ class NU_Controller extends MX_Controller
         $this->load->helper('functions');
         $this->load->helper('widget');
         $this->load->helper('paths');
+        $this->load->helper('twig');
 
         // libraires
         $this->load->library('form_validation');
@@ -45,28 +46,7 @@ class NU_Controller extends MX_Controller
      */
     public function render($view, $data, $return = false)
     {
-        // Enable twig library and set config
-        $this->load->library('twig', $this->config->item('twig_config'));
-        $this->load->helper('twig');
-
-        // Add global variables to twig
-        $this->twig->addGlobal("session", $this->session->userdata);
-        $this->twig->addGlobal("config", $this->config->config);
-        $this->twig->addGlobal("input", $this->input);
-
-        // Add user function to twig
-        if ($this->config->item('twig_user_functions')) {
-            foreach ($this->config->item('twig_user_functions') as $function) {
-                $this->twig->addFunction($function);
-            }
-        }
-
-        // Render twig view
-        if ($return) {
-            return $this->twig->render($view, $data);
-        } else {
-            $this->twig->display($view, $data);
-        }
+        return render_twig($view, $data, $return);
     }
 
     /**

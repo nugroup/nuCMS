@@ -1,5 +1,11 @@
-<div class="col-xs-12">
+{% extends 'block/types/block_base.html.twig' %}
 
-    {{ form_textarea({'name': 'content[content]', 'value': block.content.content, 'class': 'form-control big'}) }}
+{% block content %}
 
-</div>
+    <div class="col-xs-12">
+
+        {{ form_textarea({'name': 'content[content]', 'value': block.content.content, 'class': 'form-control big'}) }}
+
+    </div>
+
+{% endblock %}

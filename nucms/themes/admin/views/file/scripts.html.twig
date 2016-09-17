@@ -253,7 +253,7 @@
     Dropzone.autoDiscover = false;
     $("#myDropzone").dropzone({
         maxFilesize:{{ config.upload_max_file_size }},
-                url: "{{ config.upload_action }}",
+        url: "{{ config.upload_action }}",
         paramName: "file",
         autoProcessQueue: true,
         success: function (file, response) {

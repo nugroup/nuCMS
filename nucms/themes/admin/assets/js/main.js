@@ -69,5 +69,10 @@ var showBeforeUnload = false;
             html: true
         });
     });
+    
+    $('form').submit(function() {
+        $('.blockEditContent').remove();
+        $(this).submit();
+    });
 
 })();

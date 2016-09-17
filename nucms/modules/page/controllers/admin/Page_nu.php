@@ -28,7 +28,7 @@ class Page_nu extends Backend_Controller
         // Set default variables
         $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
         $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
-        $locale = ((bool)$this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
+        $locale = ((bool) $this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
 
         // Delete checked item
@@ -78,32 +78,29 @@ class Page_nu extends Backend_Controller
      */
     public function edit($id)
     {
-        $locale = ((bool)$this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
+        $locale = ((bool) $this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $where = [
             'page_id' => $id,
             'locale' => $locale
         ];
 
         $page = $this->page_translations
-                ->with_file()
-                ->where($where)
-                ->get();
+            ->with_file()
+            ->where($where)
+            ->get();
 
         if (!$page) {
             show_404();
         }
-        
+
         // If post is send
         if ($this->input->post()) {
 
-            dump($this->input->post());
-            die();
-            
             // Additional data
             $additionalData = array(
-                'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL 
+                'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL
             );
-            
+
             // Update page translation
             $result = $this->page_translations
                 ->from_form($this->page_translations->get_rules('update'), $additionalData, $where)
@@ -115,6 +112,9 @@ class Page_nu extends Backend_Controller
                 'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $pageUrl),
             ];
             $resultRoute = $this->route->update($routeData, ['url' => $pageUrl]);
+
+            // Save blocks
+            $this->block->save_blocks($this->input->post('blocks'));
 
             if ($result || $resultRoute) {
 

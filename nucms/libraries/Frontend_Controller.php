@@ -69,21 +69,22 @@ class Frontend_Controller extends NU_Controller
         $settings = $this->setting_translations
             ->where('locale', 'pl')
             ->with_root()
-            ->get();
+            ->get_all();
 
         if ($settings) {
             $settings = prepare_join_data($settings, 'root');
 
-            $this->data['metatags']['title'] = $settings->meta_title;
-            $this->data['metatags']['keywords'] = $settings->meta_keywords;
-            $this->data['metatags']['description'] = $settings->meta_description;
+            // @todo tablica settings musi miec jako klucze pole KEY
+            $this->data['metatags']['title'] = '';
+            $this->data['metatags']['keywords'] = '';
+            $this->data['metatags']['description'] = '';
 
-            $this->data['socials'] = [
-                'facebook' => $settings->social_facebook,
-                'twitter'  => $settings->social_twitter,
-                'youtube'  => $settings->social_youtube,
-                'google'   => $settings->social_google,
-            ];
+//            $this->data['socials'] = [
+//                'facebook' => $settings->social_facebook,
+//                'twitter'  => $settings->social_twitter,
+//                'youtube'  => $settings->social_youtube,
+//                'google'   => $settings->social_google,
+//            ];
         }
     }
 }

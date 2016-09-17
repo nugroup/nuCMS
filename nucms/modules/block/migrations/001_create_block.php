@@ -16,6 +16,11 @@ class Migration_Create_block extends CI_Migration
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
+            'hash_id' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => NULL
+            ),
             'name' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
@@ -23,11 +28,12 @@ class Migration_Create_block extends CI_Migration
             ),
             'content' => array(
                 'type' => 'TEXT',
-                'default' => NULL
+                'default' => '',
+                'null' => false
             ),
             'type' => array(
-                'type' => 'TINYINT',
-                'constraint' => 2,
+                'type' => 'VARCHAR',
+                'constraint' => 100,
                 'null' => TRUE,
                 'unsigned' => TRUE
             ),
@@ -51,6 +57,7 @@ class Migration_Create_block extends CI_Migration
         ));
 
         $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('hash_id');
         $this->dbforge->create_table('nu_block');
         $this->db->query('ALTER TABLE `nu_block` ADD CONSTRAINT `nu_block_locale_FK` FOREIGN KEY (`locale`) REFERENCES `nu_language` (`locale`) ON UPDATE CASCADE ON DELETE CASCADE;');
     }
