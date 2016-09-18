@@ -2,8 +2,8 @@
 /**
  * nuCMS - Admin configuration
  *
- * @author		nugato
- * @copyright          Copyright (c) 2015
+ * @author              nugato
+ * @copyright           Copyright (c) 2015
  */
 $config['admin_folder'] = 'admin';                                              // Admin folder and prefix name
 $config['theme'] = 'admin';                                                     // Admin view theme name

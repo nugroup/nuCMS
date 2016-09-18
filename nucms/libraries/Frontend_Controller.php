@@ -20,7 +20,7 @@ class Frontend_Controller extends NU_Controller
         // Load language file
         $this->lang->load('www', config_item('selected_lang'));
 
-        // Set default data
+        // Set default setting data
         $this->set_setting();
 
         // Check profiler status
@@ -66,25 +66,21 @@ class Frontend_Controller extends NU_Controller
             ]
         ];
 
-        $settings = $this->setting_translations
-            ->where('locale', 'pl')
-            ->with_root()
-            ->get_all();
+        $settings = $this->setting->get_settings_for_front(config_item('selected_locale'));
 
         if ($settings) {
-            $settings = prepare_join_data($settings, 'root');
+            $this->data['metatags'] = [
+                'title' => (isset($settings['meta_title'])) ? $settings['meta_title']->value : '',
+                'keywords' => (isset($settings['meta_keywords'])) ? $settings['meta_keywords']->value : '',
+                'description' => (isset($settings['meta_description'])) ? $settings['meta_description']->value : '',
+            ];
 
-            // @todo tablica settings musi miec jako klucze pole KEY
-            $this->data['metatags']['title'] = '';
-            $this->data['metatags']['keywords'] = '';
-            $this->data['metatags']['description'] = '';
-
-//            $this->data['socials'] = [
-//                'facebook' => $settings->social_facebook,
-//                'twitter'  => $settings->social_twitter,
-//                'youtube'  => $settings->social_youtube,
-//                'google'   => $settings->social_google,
-//            ];
+            $this->data['socials'] = [
+                'facebook' => (isset($settings['social_facebook'])) ? $settings['social_facebook']->value : '',
+                'twitter'  => (isset($settings['social_twitter'])) ? $settings['social_twitter']->value : '',
+                'youtube'  => (isset($settings['social_youtube'])) ? $settings['social_youtube']->value : '',
+                'google'   => (isset($settings['social_google'])) ? $settings['social_google']->value : '',
+            ];
         }
     }
 }

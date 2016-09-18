@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="{{ metatags.robots }}">
     <meta name="googlebot" content="{{ metatags.googlebot }}">
-    <meta name="Description" content="{{ metatags.description}}">
-    <meta name="Keywords" content="{{ metatags.description}}">
+    <meta name="Description" content="{{ metatags.description | replace({"\n": ""}) }}">
+    <meta name="Keywords" content="{{ metatags.description | replace({"\n": ""})}}">
 
     <title>{{ metatags.title }}</title>
     <base href="{{ site_url() }}">

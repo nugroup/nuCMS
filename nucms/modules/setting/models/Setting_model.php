@@ -61,6 +61,24 @@ class Setting_model extends MY_Model
 
         return $rules;
     }
+    
+    /**
+     * Get and prepare settings for frontend
+     * 
+     * @param int $locale
+     * @return type
+     */
+    public function get_settings_for_front($locale)
+    {
+        $settings = $this->db
+            ->select("`s`.*, CASE WHEN `s`.`global` = 1 THEN `s`.`value` ELSE `st`.`value` END as `value`", false)
+            ->join('nu_setting_translations AS st', "s.id = st.setting_id AND st.locale = '" . $locale . "'", 'left')
+            ->from($this->table . ' as s')
+            ->get()
+            ->result();
+
+        return array_to_array_by_key_single($settings, 'key');
+    }
 }
 
 /* End of file Setting_model.php */
