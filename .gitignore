@@ -1,7 +1,5 @@
 .DS_Store
 
-application/config/production/database.php
-
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
@@ -15,6 +13,12 @@ uploads/*
 
 /.git/
 /vendor/
+
+# Dist files
+#-------------------------
+.htaccess
+application/config/production/database.php
+application/config/production/config.php
 
 # Deploy
 #-------------------------
