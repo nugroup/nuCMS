@@ -8,7 +8,8 @@
         "codeigniter/framework": "^3.0",
         "myth/bay": "dev-develop",
         "fzaninotto/faker": "^1.5",
-        "twig/twig": "^1.24"
+        "twig/twig": "^1.24",
+        "cube/composer-dist-installer": "~1.0@beta"
     },
     "require-dev": {
     },
@@ -33,5 +34,26 @@
                 "reference":"develop"
             }
         }
-    }]
+    }],
+    "scripts": {
+        "post-install-cmd": [
+            "Cube\\ComposerDistInstaller\\Bootstrap::install"
+        ]
+    },
+    "extra": {
+        "dist-installer-params": [
+            {
+                "file": "application/config/production/database.php",
+                "dist-file": "application/config/production/database.php.dist"
+            },
+            {
+                "file": "application/config/production/config.php",
+                "dist-file": "application/config/production/config.php.dist"
+            },
+            {
+                "file": ".htaccess",
+                "dist-file": ".htaccess.dist"
+            }
+        ]
+    }
 }

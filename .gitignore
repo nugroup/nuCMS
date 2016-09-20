@@ -16,6 +16,10 @@ uploads/*
 /.git/
 /vendor/
 
+# Deploy
+#-------------------------
+phploy.ini
+
 # IDE Files
 #-------------------------
 /nbproject/
