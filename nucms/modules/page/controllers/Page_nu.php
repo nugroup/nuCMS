@@ -18,7 +18,6 @@ class Page_nu extends Frontend_Controller
         $this->load->model('page/page_model', 'page');
         $this->load->model('page/page_translations_model', 'page_translations');
         $this->load->model('route/route_model', 'route');
-//        $this->load->library('NuBloxDecoder');
     }
 
     /**
@@ -49,7 +48,7 @@ class Page_nu extends Frontend_Controller
         $this->set_metatags($page);
 
         // Decode Page Content
-//        $page->content = $this->nubloxdecoder->decode($page->content);
+        $page->content = $this->block_lib->decode_content_for_front($page->content, $page->content_blocks);
 
         // Set view data
         $this->data['page'] = $page;

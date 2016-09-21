@@ -31,6 +31,18 @@ class Block_lib
     {
         return explode(',', str_replace("'", '', read_file(asset($this->fontFilePath))));
     }
+    
+    /**
+     * Decode map
+     * 
+     * @param string $map
+     * 
+     * @return string
+     */
+    public function decode_map($map)
+    {
+        return json_decode($map);
+    }
 
     /**
      * Decode content map json to the blocks array
@@ -42,7 +54,7 @@ class Block_lib
     {
         $blocks = array();
         $result = array();
-        $decodedMap = json_decode($map);
+        $decodedMap = $this->decode_map($map);
 
         if (!empty($decodedMap)) {
             $iterator = new RecursiveArrayIterator($decodedMap);
@@ -57,6 +69,10 @@ class Block_lib
                     $row->json_format = json_encode($row);
                 }
             }
+        }
+
+        if ($result) {
+            $result = array_to_array_by_key_single($result, 'hash_id');
         }
 
         return $result;
@@ -77,8 +93,85 @@ class Block_lib
                     'block' => $block,
                     'fontawesome_list' => $fontawesome_list
                 ];
-                echo render_twig('block/types/block_' . $block->type, $data, true);
+                echo render_twig('block/types/block_'.$block->type, $data, true);
             }
+        }
+    }
+
+    /**
+     * Complatly decode content for frontend
+     *
+     * @param string $map
+     * @param array $blocks
+     * 
+     * @return string
+     */
+    public function decode_content_for_front($map, $blocks = NULL)
+    {
+        if (is_null($blocks)) {
+            $blocks = $this->decode_content_map($map);
+        }
+
+        if ($blocks) {
+            foreach ($blocks as $block) {
+                $block->content = $this->prepare_block_data($block->content, $block->type);
+            }
+        }
+
+        $decodedMap = $this->decode_map($map);
+
+        return $this->decode_map_to_html($decodedMap, $blocks);
+    }
+
+    /**
+     * Decode array map to html format
+     * 
+     * @param array $decodedMap
+     * @param array $blocks
+     * 
+     * @return string
+     */
+    private function decode_map_to_html($decodedMap, $blocks)
+    {
+        $html = '';
+
+        foreach ($decodedMap->_children as $box) {
+            if ($box->type == 'module') {
+                $data = [
+                    'block' => $blocks->{$box->id},
+                ];
+                $html .= render_twig('block/block_'.$box->moduleType, $data, true);
+            } else {
+                $data = [
+                    'col_lg' => isset($box->size_lg) ? $box->size_lg : 0
+                ];
+                $html .= render_twig('block/block_'.$box->type, $data, true);
+            }
+
+            if (isset($box->_children)) {
+                $html = str_replace('##INSIDE##', $this->decode_map_to_html($box, $blocks), $html);
+            }
+        }
+
+        return $html;
+    }
+
+    /**
+     * Prepare block data by type
+     * 
+     * @param array $content
+     * @param string $type
+     * 
+     * @return array
+     */
+    public function prepare_block_data($content, $type)
+    {
+        if ($type == 'html') {
+            return $content;
+        } elseif ($type == 'text') {
+            return $content;
+        } elseif ($type == 'icon') {
+            return $content;
         }
     }
 }
