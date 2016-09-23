@@ -31,7 +31,7 @@ class Block_lib
     {
         return explode(',', str_replace("'", '', read_file(asset($this->fontFilePath))));
     }
-    
+
     /**
      * Decode map
      * 
@@ -48,9 +48,11 @@ class Block_lib
      * Decode content map json to the blocks array
      * 
      * @param string $map
+     * @param boolean $returnWithKey
+     * 
      * @return array
      */
-    public function decode_content_map($map)
+    public function decode_content_map($map, $returnWithKey = false)
     {
         $blocks = array();
         $result = array();
@@ -71,7 +73,7 @@ class Block_lib
             }
         }
 
-        if ($result) {
+        if ($result && $returnWithKey) {
             $result = array_to_array_by_key_single($result, 'hash_id');
         }
 
@@ -113,6 +115,8 @@ class Block_lib
         }
 
         if ($blocks) {
+            $blocks = array_to_array_by_key_single($blocks, 'hash_id');
+
             foreach ($blocks as $block) {
                 $block->content = $this->prepare_block_data($block->content, $block->type);
             }
@@ -135,21 +139,23 @@ class Block_lib
     {
         $html = '';
 
-        foreach ($decodedMap->_children as $box) {
-            if ($box->type == 'module') {
-                $data = [
-                    'block' => $blocks->{$box->id},
-                ];
-                $html .= render_twig('block/block_'.$box->moduleType, $data, true);
-            } else {
-                $data = [
-                    'col_lg' => isset($box->size_lg) ? $box->size_lg : 0
-                ];
-                $html .= render_twig('block/block_'.$box->type, $data, true);
-            }
+        if($decodedMap) {
+            foreach ($decodedMap->_children as $box) {
+                if ($box->type == 'module') {
+                    $data = [
+                        'block' => $blocks[$box->id],
+                    ];
+                    $html .= render_twig('block/block_'.$box->moduleType, $data, true);
+                } else {
+                    $data = [
+                        'col_lg' => isset($box->size_lg) ? $box->size_lg : 0
+                    ];
+                    $html .= render_twig('block/block_'.$box->type, $data, true);
+                }
 
-            if (isset($box->_children)) {
-                $html = str_replace('##INSIDE##', $this->decode_map_to_html($box, $blocks), $html);
+                if (isset($box->_children)) {
+                    $html = str_replace('##INSIDE##', $this->decode_map_to_html($box, $blocks), $html);
+                }
             }
         }
 

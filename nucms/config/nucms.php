@@ -45,6 +45,7 @@ $config['twig_user_functions'] = [
     'sort_header',
     'extension',
     'is_image',
+    'display_setting_hiddens',
 ];
 
 /* users

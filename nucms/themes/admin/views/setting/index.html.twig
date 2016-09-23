@@ -9,156 +9,301 @@
 {% endblock %}
 
 {% block body %}
-    
+
     {{ form_open(current_full_url(), {'id': 'setting-form', 'novalidate': 'novalidate'}) }}
-        
+
     <!-- head -->
     <div id="nuActionbar" class="nuFormDark">
         <div class="container-fluid nuContainer">
 
-            <div class="row nuActions nuActions-small">
+            {% block action_bar_content %}
 
-                <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
-                    <ul class="nuButtonsList">
-                        <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
-                    </ul>
-                </div>
+                <div class="row nuActions nuActions-small">
 
-                <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
-
-                    <!-- title/lang fields -->
-                    <div class="input-group nuFormTitle">
-                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
-                            {% include('components/lang_select.html.twig') %}
-                            {{ form_input({'class': 'form-control'}) }}
+                    <div class="col-xs-12 col-sm-6 col-sm-push-6 col-md-5 col-md-push-7 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+                        <ul class="nuButtonsList">
+                            <li><button class="btn btn-success" type="submit"><i class="fa fa-check"></i> {{ lang('text.save') }}</button></li>
+                        </ul>
                     </div>
-                    <!-- /title/lang fields -->
+
+                    <div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-8 col-lg-pull-4">
+
+                        <!-- title/lang fields -->
+                        <div class="input-group nuFormTitle">
+                            <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <!-- /title/lang fields -->
+
+                    </div>
 
                 </div>
 
-            </div>
+                <div class="row">
+                    <div class="col-xs-12">
 
-            <div class="row">
-                <div class="col-xs-12">
+                        <!-- Nav tabs -->
+                        <ul id="nuActionsTabs" class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="active"><a href="#group_id_main" role="tab" data-toggle="tab">{{ lang('setting.tabs.main') }}</a></li>
+                            <li role="presentation"><a href="#group_id_social" role="tab" data-toggle="tab">{{ lang('setting.tabs.social') }}</a></li>
 
-                    <!-- Nav tabs -->
-                    <ul id="nuActionsTabs" class="nav nav-pills" role="tablist">
-                        <li role="presentation" class="active"><a href="#group_id_main" role="tab" data-toggle="tab">{{ lang('setting.tabs.main') }}</a></li>
-                        <li role="presentation"><a href="#group_id_social" role="tab" data-toggle="tab">{{ lang('setting.tabs.social') }}</a></li>
-                        
-                        {% for group in settings_groups %}
-                            <li role="presentation" class="{{ activeClass }}"><a href="#group_id_{{ group.id }}" role="tab" data-toggle="tab">{{ group.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                    <!-- /Nav tabs -->
+                            {% for group in settings_groups %}
+                                <li role="presentation" class="{{ activeClass }}"><a href="#group_id_{{ group.id }}" role="tab" data-toggle="tab">{{ group.name }}</a></li>
+                                {% endfor %}
+                        </ul>
+                        <!-- /Nav tabs -->
 
+                    </div>
                 </div>
-            </div>
+
+            {% endblock %}
 
         </div>
     </div>
-                    
-    <div id="nuEditPage" class="nuContent nuFormLight">
-        <div class="container-fluid nuContainer tab-content">
 
-            <div class="row tab-pane fade active in" role="tabpanel" id="group_id_main">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
-                    <div class="form-group">
-                        <label for="meta_title">{{ lang('setting.form.meta_title') }} <i class="fa fa-language" aria-hidden="true"></i></label>
-                        {{ form_input({'name': 'settings[meta_title][value]', 'value': settings_by_keys.meta_title.value, 'class': 'form-control', 'id': 'meta_title'}) }}
-                        {{ form_hidden('settings[meta_title][type]', 'input') }}
-                        {{ form_hidden('settings[meta_title][global]', 0) }}
-                        {{ form_hidden('settings[meta_title][name]', lang('setting.form.meta_title')) }}
-                    </div>
-                    <div class="form-group">
-                        <label for="meta_keywords">{{ lang('setting.form.meta_keywords') }} <i class="fa fa-language" aria-hidden="true"></i></label>
-                        {{ form_input({'name': 'settings[meta_keywords][value]', 'value': settings_by_keys.meta_keywords.value, 'class': 'form-control', 'id': 'meta_keywords'}) }}
-                        {{ form_hidden('settings[meta_keywords][type]', 'input') }}
-                        {{ form_hidden('settings[meta_keywords][global]', 0) }}
-                        {{ form_hidden('settings[meta_keywords][name]', lang('setting.form.meta_keywords')) }}
-                    </div>
-                    <div class="form-group">
-                        <label for="meta_description">{{ lang('setting.form.meta_description') }} <i class="fa fa-language" aria-hidden="true"></i></label>
-                        {{ form_textarea({'name': 'settings[meta_description][value]', 'value': settings_by_keys.meta_description.value, 'class': 'form-control', 'id': 'meta_description'}) }}
-                        {{ form_hidden('settings[meta_description][type]', 'textarea') }}
-                        {{ form_hidden('settings[meta_description][global]', 0) }}
-                        {{ form_hidden('settings[meta_description][name]', lang('setting.form.meta_description')) }}
-                    </div>
-                </div>
-            </div>
+    {% block content %}
 
-            <div class="row tab-pane fade" role="tabpanel" id="group_id_social">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
-                    <div class="form-group">
-                        <label for="social_facebook">{{ lang('setting.form.social_facebook') }} <i class="fa fa-facebook-official" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i></label>
-                        {{ form_input({'name': 'settings[social_facebook][value]', 'value': settings_by_keys.social_facebook.value, 'class': 'form-control', 'id': 'social_facebook'}) }}
-                        {{ form_hidden('settings[social_facebook][type]', 'input') }}
-                        {{ form_hidden('settings[social_facebook][global]', 1) }}
-                        {{ form_hidden('settings[social_facebook][name]', lang('setting.form.social_facebook')) }}
-                    </div>
-                    <div class="form-group">
-                        <label for="social_twitter">{{ lang('setting.form.social_twitter') }} <i class="fa fa-twitter" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i></label>
-                        {{ form_input({'name': 'settings[social_twitter][value]', 'value': settings_by_keys.social_twitter.value, 'class': 'form-control', 'id': 'social_twitter'}) }}
-                        {{ form_hidden('settings[social_twitter][type]', 'input') }}
-                        {{ form_hidden('settings[social_twitter][global]', 1) }}
-                        {{ form_hidden('settings[social_twitter][name]', lang('setting.form.social_twitter')) }}
-                    </div>
-                    <div class="form-group">
-                        <label for="social_youtube">{{ lang('setting.form.social_youtube') }} <i class="fa fa-youtube-play" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i></label>
-                        {{ form_input({'name': 'settings[social_youtube][value]', 'value': settings_by_keys.social_youtube.value, 'class': 'form-control', 'id': 'social_youtube'}) }}
-                        {{ form_hidden('settings[social_youtube][type]', 'input') }}
-                        {{ form_hidden('settings[social_youtube][global]', 1) }}
-                        {{ form_hidden('settings[social_youtube][name]', lang('setting.form.social_youtube')) }}
-                    </div>
-                    <div class="form-group">
-                        <label for="social_google">{{ lang('setting.form.social_google') }} <i class="fa fa-google-plus" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i></label>
-                        {{ form_input({'name': 'settings[social_google][value]', 'value': settings_by_keys.social_google.value, 'class': 'form-control', 'id': 'social_google'}) }}
-                        {{ form_hidden('settings[social_google][type]', 'input') }}
-                        {{ form_hidden('settings[social_google][global]', 1) }}
-                        {{ form_hidden('settings[social_google][name]', lang('setting.form.social_google')) }}
-                    </div>
-                </div>
-            </div>
-            
-            {% for group in settings_groups %}
-                
-                <div class="row tab-pane fade" role="tabpanel" id="group_id_{{ group.id }}">
+        <div id="nuEditPage" class="nuContent nuFormLight">
+            <div class="container-fluid nuContainer tab-content">
+
+                <div class="row tab-pane fade active in" role="tabpanel" id="group_id_main">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
-
-                        {% for settings_list in attribute(settings_by_groups, group.id) %}
-                            
-                            {% set ico = (settings_list.global == 1) ? ' <i class="fa fa-globe" aria-hidden="true"></i>' : '<i class="fa fa-language" aria-hidden="true"></i>' %}
-                        
-                            <div class="form-group">
-                                <label for="setting_id_{{ settings_list.id }}">{{ settings_list.name | e }}{{ ico | raw }}</label>
-                                
-                                {% if settings_list.type == 'input' %}
-                                    {{ form_input({'name': 'settings['~settings_list.key~'][value]', 'value': settings_list.value, 'class': 'form-control', 'id': 'setting_id_'~settings_list.id}) }}
-                                {% elseif settings_list.type == 'textarea' %}
-                                    {{ form_textarea({'name': 'settings['~settings_list.key~'][value]', 'value': settings_list.value, 'class': 'form-control', 'id': 'setting_id_'~settings_list.id}) }}
-                                {% endif %}
-                                
-                                {{ form_hidden('settings['~settings_list.key~'][type]', settings_list.type) }}
-                                {{ form_hidden('settings['~settings_list.key~'][global]', settings_list.global) }}
-                                {{ form_hidden('settings['~settings_list.key~'][name]', settings_list.name) }}
+                        <!-- main_homepage -->
+                        <div class="form-group">
+                            <label>{{ lang('setting.form.main_homepage') }} <i class="fa fa-language" aria-hidden="true"></i></label>
+                            <div>
+                                <label class="radio-inline">
+                                    {{
+                                        form_radio({
+                                            'name': 'settings[main_homepage][value]',
+                                            'value': 'static',
+                                            'id': 'main_homepage_static',
+                                            'checked': (settings_by_keys.main_homepage.value == 'static') ? true : false
+                                        }) 
+                                    }}
+                                    {{ lang('setting.form.main_homepage.static') }}
+                                </label>
+                                <label class="radio-inline">
+                                    {{
+                                        form_radio({
+                                            'name': 'settings[main_homepage][value]',
+                                            'value': 'page',
+                                            'id': 'main_homepage_page',
+                                            'checked': (settings_by_keys.main_homepage.value == 'page') ? true : false
+                                        }) 
+                                    }}
+                                    {{ lang('setting.form.main_homepage.page') }}
+                                </label>
+                                {{ display_setting_hiddens('main_homepage', lang('setting.form.main_homepage'), 'radio', 1) }}
                             </div>
-                                
-                        {% endfor %}
+                            <div>
+                                {% set main_homepage_page_id_display = (settings_by_keys.main_homepage.value == 'page') ? 'block' : 'none' %}
+                                {{
+                                    form_dropdown(
+                                        'settings[main_homepage_page_id][value]',
+                                        pages_options,
+                                        settings_by_keys.main_homepage_page_id.value,
+                                        'class="form-control" id="main_homepage_page_id" style="display: ' ~ main_homepage_page_id_display ~ ';"'
+                                    )
+                                }}
+                                {{ display_setting_hiddens('main_homepage_page_id', '', 'select', 1) }}
+                            </div>
+                        </div>
 
+                        <!-- meta_title -->
+                        <div class="form-group">
+                            <label for="meta_title">
+                                {{ lang('setting.form.meta_title') }} <i class="fa fa-language" aria-hidden="true"></i>
+                            </label>
+                            {{ 
+                                form_input({
+                                    'name': 'settings[meta_title][value]',
+                                    'value': settings_by_keys.meta_title.value,
+                                    'class': 'form-control',
+                                    'id': 'meta_title'
+                                })
+                            }}
+                            {{ display_setting_hiddens('meta_title', lang('setting.form.meta_title'), 'input', 0) }}
+                        </div>
+
+                        <!-- meta_keywords -->
+                        <div class="form-group">
+                            <label for="meta_keywords">
+                                {{ lang('setting.form.meta_keywords') }} <i class="fa fa-language" aria-hidden="true"></i>
+                            </label>
+                            {{ 
+                                form_input({
+                                    'name': 'settings[meta_keywords][value]',
+                                    'value': settings_by_keys.meta_keywords.value,
+                                    'class': 'form-control',
+                                    'id': 'meta_keywords'
+                                })
+                            }}
+                            {{ display_setting_hiddens('meta_keywords', lang('setting.form.meta_keywords'), 'input', 0) }}
+                        </div>
+
+                        <!-- meta_description -->
+                        <div class="form-group">
+                            <label for="meta_description">
+                                {{ lang('setting.form.meta_description') }} <i class="fa fa-language" aria-hidden="true"></i>
+                            </label>
+                            {{ 
+                                form_textarea({
+                                    'name': 'settings[meta_description][value]',
+                                    'value': settings_by_keys.meta_description.value,
+                                    'class': 'form-control',
+                                    'id': 'meta_description'
+                                })
+                            }}
+                            {{ display_setting_hiddens('meta_description', lang('setting.form.meta_description'), 'textarea', 0) }}
+                        </div>
                     </div>
                 </div>
-                        
-            {% endfor %}
-            
-        </div>
-    </div><!--/#nuEditPage-->
-    
+
+                <div class="row tab-pane fade" role="tabpanel" id="group_id_social">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
+                        <!-- social_facebook -->
+                        <div class="form-group">
+                            <label for="social_facebook">
+                                {{ lang('setting.form.social_facebook') }} <i class="fa fa-facebook-official" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i>
+                            </label>
+                            {{
+                                form_input({
+                                    'name': 'settings[social_facebook][value]',
+                                    'value': settings_by_keys.social_facebook.value,
+                                    'class': 'form-control',
+                                    'id': 'social_facebook'
+                                })
+                            }}
+                            {{ display_setting_hiddens('social_facebook', lang('setting.form.social_facebook'), 'input', 1) }}
+                        </div>
+
+                        <!-- social_twitter -->
+                        <div class="form-group">
+                            <label for="social_twitter">
+                                {{ lang('setting.form.social_twitter') }} <i class="fa fa-twitter" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i>
+                            </label>
+                            {{
+                                form_input({
+                                    'name': 'settings[social_twitter][value]',
+                                    'value': settings_by_keys.social_twitter.value,
+                                    'class': 'form-control',
+                                    'id': 'social_twitter'
+                                })
+                            }}
+                            {{ display_setting_hiddens('social_twitter', lang('setting.form.social_twitter'), 'input', 1) }}
+                        </div>
+
+                        <!-- social_youtube -->
+                        <div class="form-group">
+                            <label for="social_youtube">
+                                {{ lang('setting.form.social_youtube') }} <i class="fa fa-youtube-play" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i>
+                            </label>
+                            {{
+                                form_input({
+                                    'name': 'settings[social_youtube][value]',
+                                    'value': settings_by_keys.social_youtube.value,
+                                    'class': 'form-control',
+                                    'id': 'social_youtube'
+                                })
+                            }}
+                            {{ display_setting_hiddens('social_youtube', lang('setting.form.social_youtube'), 'input', 1) }}
+                        </div>
+
+                        <!-- social_google -->
+                        <div class="form-group">
+                            <label for="social_google">
+                                {{ lang('setting.form.social_google') }} <i class="fa fa-google-plus" aria-hidden="true"></i> <i class="fa fa-globe" aria-hidden="true"></i>
+                            </label>
+                            {{
+                                form_input({
+                                    'name': 'settings[social_google][value]',
+                                    'value': settings_by_keys.social_google.value,
+                                    'class': 'form-control',
+                                    'id': 'social_google'
+                                })
+                            }}
+                            {{ display_setting_hiddens('social_google', lang('setting.form.social_google'), 'input', 1) }}
+                        </div>
+                    </div>
+                </div>
+
+                {% for group in settings_groups %}
+
+                    <div class="row tab-pane fade" role="tabpanel" id="group_id_{{ group.id }}">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
+
+                            {% for settings_list in attribute(settings_by_groups, group.id) %}
+
+                                {% set ico = (settings_list.global == 1) ? ' <i class="fa fa-globe" aria-hidden="true"></i>' : '<i class="fa fa-language" aria-hidden="true"></i>' %}
+
+                                <div class="form-group">
+                                    <label for="setting_id_{{ settings_list.id }}">
+                                        {{ settings_list.name | e }}{{ ico | raw }}
+                                    </label>
+
+                                    {% if settings_list.type == 'input' %}
+
+                                        {{
+                                            form_input({
+                                                'name': 'settings['~settings_list.key~'][value]',
+                                                'value': settings_list.value,
+                                                'class': 'form-control',
+                                                'id': 'setting_id_'~settings_list.id
+                                            })
+                                        }}
+
+                                    {% elseif settings_list.type == 'textarea' %}
+
+                                        {{ 
+                                            form_textarea({
+                                                'name': 'settings['~settings_list.key~'][value]',
+                                                'value': settings_list.value,
+                                                'class': 'form-control',
+                                                'id': 'setting_id_'~settings_list.id
+                                            })
+                                        }}
+
+                                    {% endif %}
+
+                                    {{ display_setting_hiddens(settings_list.key, settings_list.name, settings_list.type, settings_list.global) }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div><!--/#nuEditPage-->
+
     {{ form_close() }}
+
+    {% endblock %}
 
 {% endblock %}
 
 {% block javascript %}
 
     {{ parent() }}
+
+    <script>
+
+        $('#main_homepage_page').click(function() {
+
+           $('#main_homepage_page_id').show();
+
+        });
+
+        $('#main_homepage_static').click(function() {
+
+           $('#main_homepage_page_id').hide();
+
+        });
+
+    </script>
 
 {% endblock %}

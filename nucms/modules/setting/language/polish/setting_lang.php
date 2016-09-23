@@ -23,6 +23,9 @@ $lang['setting.form.social_facebook'] = 'Link FACEBOOK';
 $lang['setting.form.social_twitter'] = 'Link TWITTER';
 $lang['setting.form.social_youtube'] = 'Link YOUTUBE';
 $lang['setting.form.social_google'] = 'Link GOOGLE +';
+$lang['setting.form.main_homepage'] = 'Strona główna jako';
+$lang['setting.form.main_homepage.static'] = 'Plik statyczny';
+$lang['setting.form.main_homepage.page'] = 'Wybrana strona';
 
 /* form - info
 ============================================================================= */

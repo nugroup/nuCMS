@@ -195,7 +195,7 @@
     </div><!--/#nuEditPage-->
 
     <div id="modulesHolder" style="display: none;">
-        {% for block in page.content_blocks %}
+        {% for key, block in page.content_blocks %}
 
             {{ form_hidden('blocks[' ~ block.hash_id ~ ']', block.json_format) }}
 
@@ -210,8 +210,6 @@
 {% block javascript %}
 
     {{ parent() }}
-
-    {% include('components/tiny_mce.html.twig') %}
 
     <script src="{{ asset('js/nublox/nublox.js') }}"></script>
     <script src="{{ asset('js/nublox/nubloxTabs.js') }}"></script>

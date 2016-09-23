@@ -6,23 +6,27 @@ if (!defined('BASEPATH'))
 /**
  * Class Setting_nu
  */
-class Setting_nu extends Backend_Controller {
-
+class Setting_nu extends Backend_Controller
+{
     private $sessionName = 'setting';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         // Load classes
         $this->load->model('setting/setting_model', 'setting');
         $this->load->model('setting/setting_groups_model', 'setting_groups');
+        $this->load->model('page/page_translations_model', 'page_translations');
+        $this->load->helper('setting/setting');
         $this->lang->load('setting', config_item('selected_lang'));
     }
 
     /**
      * Default setting for website
      */
-    public function index() {
+    public function index()
+    {
         $locale = ($this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
 
         // Get setting and preare array for view
@@ -30,16 +34,22 @@ class Setting_nu extends Backend_Controller {
         $settings_by_keys = array();
         $settings_by_groups = array();
         $settings = $this->setting
-                ->get_all();
+            ->get_all();
         $settings_translations = $this->setting_translations
-                ->where('locale', $locale)
-                ->get_all();
+            ->where('locale', $locale)
+            ->get_all();
+
+        // Get pages list
+        $pages = $this->page_translations
+            ->where('locale', $locale)
+            ->where('active', 1)
+            ->get_all();
 
         if ($settings) {
             $settings = array_to_array_by_key_single($settings, 'id');
             $settings_by_keys = array_to_array_by_key_single($settings, 'key');
             $settings_by_groups = array_to_array_by_key($settings, 'group_id');
-            
+
             if ($settings_translations) {
                 $settings_translations = array_to_array_by_key_single($settings_translations, 'setting_id');
                 foreach ($settings_translations as $translation) {
@@ -48,11 +58,10 @@ class Setting_nu extends Backend_Controller {
             }
         }
 
-
         if ($this->input->post()) {
             $this->save_settings($locale);
         }
-        
+
         // Set view data
         $this->data['settings'] = $settings;
         $this->data['settings_by_keys'] = $settings_by_keys;
@@ -60,6 +69,7 @@ class Setting_nu extends Backend_Controller {
         $this->data['settings_groups'] = $setting_groups;
         $this->data['subnav_active'] = 'index';
         $this->data['selected_locale'] = $this->config->item($locale, 'system_languages_by_locale')->locale;
+        $this->data['pages_options'] = obj_to_options_array($pages, 'page_id', 'title');
 
         // Load the view
         $this->render('setting/index', $this->data);
@@ -70,13 +80,14 @@ class Setting_nu extends Backend_Controller {
      * 
      * @throws Exception
      */
-    private function save_settings($locale) {
+    private function save_settings($locale)
+    {
         try {
             foreach ($this->input->post('settings') as $key => $setting) {
 
                 // Check if settings exist
                 $setting_exist = $this->setting->get(array('key' => $key));
-                
+
                 if ($setting['global'] == 1) {
                     // Global variable
                     $new_data = array(
@@ -105,7 +116,6 @@ class Setting_nu extends Backend_Controller {
                             'value' => $setting['value'],
                         );
                         $this->setting_translations->update($update_data, array('setting_id' => $setting_exist->id, 'locale' => $locale));
-                
                     } else {
 
                         // var no exists

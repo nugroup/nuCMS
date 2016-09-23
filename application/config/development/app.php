@@ -11,6 +11,11 @@ $config['selected_lang'] = 'polish';                                            
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
 $config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
 
+/* meta
+============================================================================= */
+$config['meta_robots'] = 'none';
+$config['meta_googlebot'] = 'none';
+
 /* twig
 ============================================================================= */
 $config['twig_config'] = [

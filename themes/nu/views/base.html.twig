@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="{{ metatags.robots }}">
-    <meta name="googlebot" content="{{ metatags.googlebot }}">
-    <meta name="Description" content="{{ metatags.description | replace({"\n": ""}) }}">
-    <meta name="Keywords" content="{{ metatags.description | replace({"\n": ""})}}">
+    <meta name="robots" content="{{ config.meta_robots }}">
+    <meta name="googlebot" content="{{ config.googlebot }}">
+    <meta name="Description" content="{{ settings.meta_description.value | replace({"\n": ""}) }}">
+    <meta name="Keywords" content="{{ settings.meta_keywords.value | replace({"\n": ""})}}">
 
-    <title>{{ metatags.title }}</title>
+    <title>{{ settings.meta_title.value }}</title>
     <base href="{{ site_url() }}">
 
     <!-- FAVICO -->

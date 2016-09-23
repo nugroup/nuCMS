@@ -28,6 +28,7 @@ class Twig
         'form_input',
         'form_password',
         'form_checkbox',
+        'form_radio',
         'set_value',
     ];
 

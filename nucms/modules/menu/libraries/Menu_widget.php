@@ -4,10 +4,17 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
- * Class Menu_widget
+ * Widget class for help display menu data
+ *
+ * @author nugato
  */
 class Menu_widget
 {
+    /**
+     * Codeigniter instance
+     * 
+     * @var Controller
+     */
     private $CI;
 
     public function __construct()
