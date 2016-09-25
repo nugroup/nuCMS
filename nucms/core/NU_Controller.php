@@ -31,7 +31,6 @@ class NU_Controller extends MX_Controller
         // Helpers
         $this->load->helper('language');
         $this->load->helper('security');
-        $this->load->helper('url');
         $this->load->helper('functions');
         $this->load->helper('widget');
         $this->load->helper('paths');
