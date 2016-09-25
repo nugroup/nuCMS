@@ -63,8 +63,8 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
+//	'hostname' => 'localhost',
         'dsn'      => 'mysql:host=localhost;dbname=nucms',
-	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => 'root',
 	'database' => 'default',
