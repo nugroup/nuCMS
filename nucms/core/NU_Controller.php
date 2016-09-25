@@ -10,6 +10,16 @@ class NU_Controller extends MX_Controller
     {
         parent::__construct();
 
+        // WWW redirection
+        if (!(strstr($_SERVER['HTTP_HOST'], "www")) && ENVIRONMENT != 'development') {
+            redirect(config_item('base_url_301').$_SERVER['REQUEST_URI'], 'location', 301);
+        }
+
+        // index.php redirection
+        if (strstr($_SERVER['REQUEST_URI'], 'index.php')) {
+            redirect(config_item('base_url_301').str_replace('/index.php', '', $_SERVER['REQUEST_URI']));
+        }
+
         // Add new package folder
         $this->load->add_package_path(NUPATH.'/', TRUE);
         $this->load->add_package_path(NUPATH.'/modules/auth/', TRUE);
