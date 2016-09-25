@@ -2,7 +2,7 @@
     "name": "nugato/nucms",
     "description" : "nuCMS - revolution and easy CMS",
     "license": "MIT",
-    "homepage": "https://github.com/nugroup/nuCMS",
+    "homepage": "https://github.com/nugato/nuCMS",
     "require": {
         "php": ">=5.2.4",
         "codeigniter/framework": "^3.0",
@@ -31,7 +31,7 @@
             "source": {
                 "url": "git@github.com:nugato/nuCMS.git",
                 "type": "git",
-                "reference":"develop"
+                "reference": "develop"
             }
         }
     }],
