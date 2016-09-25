@@ -23,7 +23,7 @@ $config['twig_config'] = [
         APPPATH.'../themes/'.$config['theme'].'/views',
         VIEWPATH,
     ),
-    'cache' => true,
+    'cache' => (ENVIRONMENT == 'production') ? APPPATH . '/cache/twig/' : false,
 ];
 $config['twig_user_functions'] = [
     'asset',
