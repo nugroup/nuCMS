@@ -55,8 +55,10 @@ class Page_widget
      * @param type $id
      * @param type $locale
      */
-    public function render_page($id, $locale)
+    public function render_page($id, $locale, $data)
     {
+        $this->data = $data;
+
         $page = $this->CI->page_translations->get([
             'page_id' => $id,
             'locale' => $locale

@@ -2,10 +2,10 @@
 /**
  * Frontend configuration
  *
- * @author		Jacek Bednarek & Szymon Kulczynski
- * @copyright          Copyright (c) 2015-2016
+ * @author              nugato
+ * @copyright           Copyright (c) 2015-2016
  */
-$config['theme'] = 'nu';
+$config['theme'] = 'bootstrap';
 $config['assets_path'] = 'themes/' . $config['theme'] . '/assets';
 $config['selected_lang'] = 'polish';                                            // Selected lang (can be change on begin in Frontend_Controller)
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
@@ -23,7 +23,7 @@ $config['twig_config'] = [
         APPPATH.'../themes/'.$config['theme'].'/views',
         VIEWPATH,
     ),
-    'cache' => (ENVIRONMENT == 'production') ? APPPATH . '/cache/twig/' : false,
+    'cache' => (ENVIRONMENT == 'production') ? APPPATH . 'cache/twig/' : false,
 ];
 $config['twig_user_functions'] = [
     'asset',

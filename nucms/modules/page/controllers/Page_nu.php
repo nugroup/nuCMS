@@ -30,36 +30,9 @@ class Page_nu extends Frontend_Controller
     {
         widget('Page_widget::render_page', [
             'id' => $id,
-            'locale' => $locale
+            'locale' => $locale,
+            'data' => $this->data
         ]);
-
-//        $page = $this->page_translations->get([
-//            'page_id' => $id,
-//            'locale' => $locale
-//        ]);
-//        if (!$page) {
-//            show_404();
-//        }
-//
-//        if ($this->input->get('preview')) {
-//            if ($page->token != $this->input->get('token')) {
-//                show_404();
-//            }
-//        } elseif ($page->active != 1) {
-//            show_404();
-//        }
-//
-//        // Set metadata
-//        $this->set_metatags($page);
-//
-//        // Decode Page Content
-//        $page->content = $this->block_lib->decode_content_for_front($page->content, $page->content_blocks);
-//
-//        // Set view data
-//        $this->data['page'] = $page;
-//        $this->data['show_title'] = true;
-//
-//        $this->render('page/show', $this->data);
     }
 }
 

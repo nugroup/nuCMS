@@ -29,11 +29,11 @@ class Main_nu extends Frontend_Controller
 
         if ($homepageType == 'page' && isset($this->data['settings']['main_homepage_page_id'])) {
             // Page as a homepage
-            $this->load->library('page/page_widget', $this->data);
-
+            $this->load->library('page/page_widget');
             widget('Page_widget::render_page', [
                 'id' => $this->data['settings']['main_homepage_page_id']->value,
-                'locale' => $this->config->item('selected_locale')
+                'locale' => $this->config->item('selected_locale'),
+                'data' => $this->data
             ]);
         } else {
             // Static homepage

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <!-- METATAGS -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="{{ config.meta_robots }}">
+        <meta name="googlebot" content="{{ config.googlebot }}">
+        <meta name="Description" content="{{ settings.meta_description.value | replace({"\n": ""}) }}">
+        <meta name="Keywords" content="{{ settings.meta_keywords.value | replace({"\n": ""})}}">
+
+        <title>{{ settings.meta_title.value }}</title>
+        <base href="{{ site_url() }}">
+
+        <!-- FAVICO -->
+        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+
+        <!-- CSS STYLES -->
+        {% block css %}
+
+            <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+        {% endblock %}
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        {% block topbar %}
+
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">nuCMS</a>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        {{
+                            widget('Menu_widget::display', {
+                                'position': 1,
+                                'config': {
+                                    'item_active': '/',
+                                    'nav_tag_open': '<ul class="nav navbar-nav">',
+                                    'children_tag_open': '<ul class="dropdown-menu">',
+                                    'parent_anchor': '<a tabindex="0" data-toggle="dropdown" href="%s" target="%s">%s<span class="caret"></span></a>',
+                                }
+                            })
+                        }}
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if settings.social_facebook %}
+                                <li><a href="{{ settings.social_facebook.value }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            {% endif %}
+                            {% if settings.social_twitter %}
+                                <li><a href="{{ settings.social_twitter.value }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            {% endif %}
+                            {% if settings.social_youtube %}
+                                <li><a href="{{ settings.social_youtube.value }}" target="_blank"><i class="fa fa-youtube"></i></a></li>
+                            {% endif %}
+                            {% if settings.social_google %}
+                                <li><a href="{{ settings.social_google.value }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+
+        {% endblock %}
+
+    {% block body %}{% endblock %}
+
+    <footer class="footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    {{
+                        widget('Menu_widget::display', {
+                            'position': 2,
+                            'config': {
+                                'item_active': 'active',
+                                'nav_tag_open': '<ul class="nav nav-pills">',
+                            }
+                        })
+                    }}
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    {% block javascript %}
+
+        <script src="{{ asset('js/jquery-1.11.3.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/functions.js') }}"></script>
+
+    {% endblock %}
+
+    <script type="text/javascript">
+        <!--
+    (function () {
+            if ("-ms-user-select" in document.documentElement.style && (navigator.userAgent.match(/IEMobile\/10\.0/) || navigator.userAgent.match(/IEMobile\/11\.0/))) {
+                var msViewportStyle = document.createElement("style");
+                msViewportStyle.appendChild(
+                        document.createTextNode("@-ms-viewport{width:auto!important}")
+                        );
+                document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+            }
+        })();
+        //-->
+    </script>
+
+</body>
+</html>
