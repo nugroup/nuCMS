@@ -17,7 +17,7 @@ class File_nu extends Backend_Controller
         // Load classes
         $this->load->model('file/file_model', 'file');
         $this->load->helper('file/file');
-        $this->lang->load('file', config_item('selected_lang'));
+        $this->lang->load('file', config_item('selected_locale'));
     }
 
     /**

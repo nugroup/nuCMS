@@ -29,22 +29,21 @@ class Backend_Controller extends NU_Controller
         if ($this->config->item('first_run')) {
             $this->getSystemLanguagesList();
         }
-        
+
         // Load block module
-        $this->lang->load('block/block', config_item('selected_lang'));
+        $this->lang->load('block/block', config_item('selected_locale'));
         $this->load->config('block/block', TRUE);
-        
+
         // Url exceptions
         $exception_uris = array(
-            config_item('admin_folder').'/auth/login',
-            config_item('admin_folder').'/auth/logout',
-            config_item('admin_folder').'/auth/remember'
+            config_item('admin_folder') . '/auth/login',
+            config_item('admin_folder') . '/auth/logout',
+            config_item('admin_folder') . '/auth/remember'
         );
 
         if (in_array(uri_string(), $exception_uris) == false) {
             // Check if login
-            if (!$this->ion_auth->logged_in())
-            {
+            if (!$this->ion_auth->logged_in()) {
                 redirect(admin_url('auth/login'));
             }
         }
@@ -98,7 +97,7 @@ class Backend_Controller extends NU_Controller
      */
     public function setReturnLink($controllerName)
     {
-        $this->session->set_userdata($controllerName.'_return_link', config_item('base_url_301').$this->input->server('REQUEST_URI'));
+        $this->session->set_userdata($controllerName . '_return_link', config_item('base_url_301') . $this->input->server('REQUEST_URI'));
     }
 
     /**
@@ -109,11 +108,11 @@ class Backend_Controller extends NU_Controller
      */
     public function getReturnLink($controllerName)
     {
-        if ($this->session->{$controllerName.'_return_link'}) {
-            return $this->session->{$controllerName.'_return_link'};
+        if ($this->session->{$controllerName . '_return_link'}) {
+            return $this->session->{$controllerName . '_return_link'};
         }
 
-        return $this->config->item('admin_url').'/'.$controllerName;
+        return $this->config->item('admin_url') . '/' . $controllerName;
     }
 
     /**
@@ -146,12 +145,11 @@ class Backend_Controller extends NU_Controller
         }
 
         // Set config
-        $this->config->set_item('selected_lang', 'polish');
         $this->config->set_item('selected_locale', 'pl');
 
         // Load language file
-        $this->lang->load('nucms', config_item('selected_lang'));
-        $this->lang->load('language/language', config_item('selected_lang'));
+        $this->lang->load('nucms', config_item('selected_locale'));
+        $this->lang->load('language/language', config_item('selected_locale'));
         $this->load->model('language/language_model', 'language');
     }
 }

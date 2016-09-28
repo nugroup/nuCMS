@@ -15,7 +15,7 @@ class Menu_nu extends Backend_Controller
         parent::__construct();
 
         // Load classes
-        $this->lang->load('menu', config_item('selected_lang'));
+        $this->lang->load('menu', config_item('selected_locale'));
         $this->config->load('menu/menu', TRUE);
         $this->load->helper('menu/menu');
         $this->load->model('menu/menu_model', 'menu');

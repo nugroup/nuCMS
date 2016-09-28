@@ -21,11 +21,6 @@ foreach ($config['modules_ok'] as $moduleName => $module) {
     }
 
 }
-//
-//echo '<pre>';
-//print_r($route);
-//echo '</pre>';
-//die();
 
 // dynamic routes genereted by routes_model
 if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {
@@ -33,3 +28,5 @@ if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {
 }
 
 $route['default_controller'] = $config['main_module']['controller'];
+$route['(\w{2})'] = $config['main_module']['controller'] . '/$1';
+$route['404_override'] = 'page/page_nu/show';

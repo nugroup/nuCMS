@@ -19,7 +19,7 @@ class Setting_nu extends Backend_Controller
         $this->load->model('setting/setting_groups_model', 'setting_groups');
         $this->load->model('page/page_translations_model', 'page_translations');
         $this->load->helper('setting/setting');
-        $this->lang->load('setting', config_item('selected_lang'));
+        $this->lang->load('setting', config_item('selected_locale'));
     }
 
     /**

@@ -16,7 +16,7 @@ class Admin_copythis extends Backend_Controller
 
         // Load classes
         $this->load->model('copythis/copythis_model', 'copythis');
-        $this->lang->load('copythis', config_item('selected_lang'));
+        $this->lang->load('copythis', config_item('selected_locale'));
     }
 
     public function index()

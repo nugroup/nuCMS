@@ -15,7 +15,7 @@ class Language_nu extends Backend_Controller
         parent::__construct();
 
         // Load classes
-        $this->lang->load('language', config_item('selected_lang'));
+        $this->lang->load('language', config_item('selected_locale'));
         $this->load->model('language/language_model', 'language');
     }
 

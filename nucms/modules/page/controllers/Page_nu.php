@@ -21,16 +21,30 @@ class Page_nu extends Frontend_Controller
     }
 
     /**
-     * Show single page
-     *
-     * @param int $id
-     * @param string $locale
+     * Show page by slug in uri segment
      */
-    public function show($id, $locale)
+    public function show()
     {
+        $slug = $this->uri->segment(1);
+
+        // Find page_id in route
+        $route = $this->route
+            ->where('slug', $slug)
+            ->get();
+
+        if (!$route) {
+            show_404();
+        }
+
+        // Check selected lang
+        if (config_item('selected_locale') != $route->locale) {
+            redirect(site_url('main/change_locale/' . $route->locale));
+        }
+
+        // Load page
         widget('Page_widget::render_page', [
-            'id' => $id,
-            'locale' => $locale,
+            'id' => $route->primary_key,
+            'locale' => $route->locale,
             'data' => $this->data
         ]);
     }

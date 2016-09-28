@@ -15,7 +15,7 @@ class Page_nu extends Backend_Controller
         parent::__construct();
 
         // Load classes
-        $this->lang->load('page/page', $this->config->item('selected_lang'));
+        $this->lang->load('page/page', $this->config->item('selected_locale'));
         $this->load->model('page/page_model', 'page');
         $this->load->model('route/route_model', 'route');
     }

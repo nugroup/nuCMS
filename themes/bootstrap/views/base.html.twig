@@ -47,7 +47,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">nuCMS</a>
+                        <a class="navbar-brand" href="{{ config.home_url }}">nuCMS</a>
                     </div>
                     <div id="navbar" class="collapse navbar-collapse">
                         {{
@@ -63,17 +63,36 @@
                         }}
                         <ul class="nav navbar-nav navbar-right">
                             {% if settings.social_facebook %}
-                                <li><a href="{{ settings.social_facebook.value }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="{{ settings.social_facebook.value }}" target="_blank">&nbsp;<i class="fa fa-facebook"></i></a></li>
                             {% endif %}
                             {% if settings.social_twitter %}
-                                <li><a href="{{ settings.social_twitter.value }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="{{ settings.social_twitter.value }}" target="_blank">&nbsp;<i class="fa fa-twitter"></i></a></li>
                             {% endif %}
                             {% if settings.social_youtube %}
-                                <li><a href="{{ settings.social_youtube.value }}" target="_blank"><i class="fa fa-youtube"></i></a></li>
+                                <li><a href="{{ settings.social_youtube.value }}" target="_blank">&nbsp;<i class="fa fa-youtube"></i></a></li>
                             {% endif %}
                             {% if settings.social_google %}
-                                <li><a href="{{ settings.social_google.value }}" target="_blank"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="{{ settings.social_google.value }}" target="_blank">&nbsp;<i class="fa fa-google-plus"></i></a></li>
                             {% endif %}
+
+                            <li>
+                                <div class="btn-group flags">
+                                    <div class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img class="flag-sm" src="{{ asset('img/flags/' ~ config.selected_locale ~ '.png') }}" alt="">
+                                    </div>
+                                    <ul class="dropdown-menu">
+                                        {% for language in config.languages %}
+
+                                            <li>
+                                                <a href="{{ site_url('main/change_locale/' ~ language.locale) }}">
+                                                    <img class="flag-sm" src="{{ asset('img/flags/' ~ language.locale ~ '.png') }}" alt="{{ language.name }}">
+                                                </a>
+                                            </li>
+
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>

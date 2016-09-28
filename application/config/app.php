@@ -7,7 +7,7 @@
  */
 $config['theme'] = 'bootstrap';
 $config['assets_path'] = 'themes/' . $config['theme'] . '/assets';
-$config['selected_lang'] = 'polish';                                            // Selected lang (can be change on begin in Frontend_Controller)
+$config['home_url'] = base_url();
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
 $config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
 
@@ -34,3 +34,8 @@ $config['twig_user_functions'] = [
     'current_full_url',
     'widget',
 ];
+
+/* =languages
+============================================================================= */
+$config['languages'] = [];
+$config['languages_by_locale'] = [];

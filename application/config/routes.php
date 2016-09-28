@@ -56,5 +56,5 @@ include_once NUPATH.'/config/routes.php';
 // public routes
 // -- here you cana create own routes
 
-$route['404_override'] = '';
+//$route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;

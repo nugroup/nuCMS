@@ -16,7 +16,7 @@ class Block_nu extends Backend_Controller
 
         // Load classes
         $this->load->model('block/block_model', 'block');
-        $this->lang->load('block', config_item('selected_lang'));
+        $this->lang->load('block', config_item('selected_locale'));
 
         $this->data['fontawesome_list'] = $this->block_lib->get_fonts_file();
     }

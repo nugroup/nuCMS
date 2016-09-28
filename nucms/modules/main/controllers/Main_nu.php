@@ -8,6 +8,8 @@ if (!defined('BASEPATH'))
  */
 class Main_nu extends Frontend_Controller
 {
+    private $sessionName = 'main';
+
     public function __construct()
     {
         parent::__construct();
@@ -16,10 +18,14 @@ class Main_nu extends Frontend_Controller
     /**
      * Start admin page
      */
-    public function homepage()
+    public function homepage($locale = null)
     {
         if ($this->uri->segment(2) == 'homepage') {
             redirect(site_url(), 'location  ', 301);
+        }
+
+        if ($locale == null && config_item('default_locale') != config_item('selected_locale')) {
+            $this->change_locale(config_item('default_locale'), false);
         }
 
         $homepageType = 'static';
@@ -39,6 +45,22 @@ class Main_nu extends Frontend_Controller
             // Static homepage
             $this->render('homepage', $this->data);
         }
+    }
+
+    /**
+     * Change locale
+     * 
+     * @param string $locale
+     */
+    public function change_locale($locale, $suffix = true)
+    {
+        $this->session->set_userdata('selected_locale', $locale);
+
+        if ($suffix) {
+            redirect(site_url($locale));
+        }
+
+        redirect(site_url());
     }
 }
 

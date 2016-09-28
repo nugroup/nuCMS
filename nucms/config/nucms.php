@@ -10,7 +10,6 @@ $config['theme'] = 'admin';                                                     
 $config['assets_path'] = 'nucms/themes/' . $config['theme'] . '/assets';
 $config['admin_url'] = base_url() . $config['admin_folder'] . '/';              // Admin url
 $config['modules_path'] = APPPATH . 'modules/';                                 // Path to modules folder
-$config['selected_lang'] = 'polish';                                            // Selected lang (can be change on begin in Backend_Controller)
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Backend_Controller)
 $config['images_url'] = base_url() . 'assets/themes/' . $config['theme'] . '/img/';
 $config['default_admin_per_page'] = 10;                                         // Default number of elements

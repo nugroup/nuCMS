@@ -15,7 +15,7 @@ class User_nu extends Backend_Controller
         parent::__construct();
 
         // Load classes
-        $this->lang->load('user', config_item('selected_lang'));
+        $this->lang->load('user', config_item('selected_locale'));
         $this->load->model('user/user_model', 'user');
     }
 
