@@ -91,7 +91,7 @@ class Menu_nu extends Backend_Controller
                     $data['locale'] = $locale;
                     $data['menu_id'] = $id;
                     $data['module'] = (isset($typesModules[$data['type']])) ? $typesModules[$data['type']] : null;
-                    $data['parent_id'] = ($item['parent_id'] != 0) ? $item['parent_id'] : null; 
+                    $data['parent_id'] = (isset($item['parent_id']) && $item['parent_id'] != 0) ? $item['parent_id'] : null; 
 
                     if ((int) $item['id'] > $menuItemsMaxId) {
                         $this->menu_items->insert($data);
