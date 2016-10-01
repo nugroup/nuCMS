@@ -1,7 +1,13 @@
-// ----- parts
-@import "../parts/mixins.less";
-@import "../parts/helpers.less";
-@import "../parts/forms.less";
+// remove shadow from bootstrap input
+input, textarea {
+    box-shadow: none !important;
+    resize: none;
+
+    &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
 
 /* =homepage
 ----------------------------------------------------------------------------- */
@@ -30,9 +36,3 @@ body {
     background-color: #f5f5f5;
     padding: 10px 0;
 }
-
-// --responsive
-@import "../responsive/style_xs.less";
-@import "../responsive/style_sm.less";
-@import "../responsive/style_md.less";
-@import "../responsive/style_lg.less";

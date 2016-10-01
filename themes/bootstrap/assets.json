@@ -1,0 +1,21 @@
+{
+    "assets": [
+
+        { "source": "./node_modules/jquery/dist/jquery.min.js", "copyTo": "./assets/jquery/" },
+
+        { "source": "./node_modules/bootstrap/dist/js/bootstrap.min.js",  "copyTo": "./assets/bootstrap/" },
+        { "source": "./node_modules/bootstrap/dist/fonts/*",  "copyTo": "./assets/bootstrap/fonts/" },
+
+        { "source": "./node_modules/font-awesome/css/font-awesome.min.css",  "copyTo": "./assets/font-awesome/css/" },
+        { "source": "./node_modules/font-awesome/fonts/*",  "copyTo": "./assets/font-awesome/fonts/" },
+
+        { "source": "./node_modules/slick-carousel/slick/slick.min.js",  "copyTo": "./assets/slick/" },
+        { "source": "./node_modules/slick-carousel/slick/fonts/*",  "copyTo": "./assets/slick/fonts/" },
+        { "source": "./node_modules/slick-carousel/slick/ajax-loader.gif",  "copyTo": "./assets/slick/" },
+        { "source": "./node_modules/slick-carousel/slick/slick.css",  "copyTo": "./assets/slick/" },
+        { "source": "./node_modules/slick-carousel/slick/slick-theme.css",  "copyTo": "./assets/slick/" },
+
+        { "source": "./node_modules/waypoints/lib/jquery.waypoints.min.js",  "copyTo": "./assets/waypoints/" }
+
+    ]
+}

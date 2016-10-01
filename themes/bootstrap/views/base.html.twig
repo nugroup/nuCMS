@@ -14,15 +14,14 @@
         <base href="{{ site_url() }}">
 
         <!-- FAVICO -->
-        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
-        <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('media/img/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('media/img/favicon.ico') }}" type="image/x-icon">
 
         <!-- CSS STYLES -->
         {% block css %}
 
-            <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+            <link href="{{ asset('index.css') }}" rel="stylesheet">
+            <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
         {% endblock %}
 
@@ -62,30 +61,30 @@
                             })
                         }}
                         <ul class="nav navbar-nav navbar-right">
-                            {% if settings.social_facebook %}
+                            {% if settings.social_facebook.value != '' %}
                                 <li><a href="{{ settings.social_facebook.value }}" target="_blank">&nbsp;<i class="fa fa-facebook"></i></a></li>
                             {% endif %}
-                            {% if settings.social_twitter %}
+                            {% if settings.social_twitter.value != '' %}
                                 <li><a href="{{ settings.social_twitter.value }}" target="_blank">&nbsp;<i class="fa fa-twitter"></i></a></li>
                             {% endif %}
-                            {% if settings.social_youtube %}
+                            {% if settings.social_youtube.value != '' %}
                                 <li><a href="{{ settings.social_youtube.value }}" target="_blank">&nbsp;<i class="fa fa-youtube"></i></a></li>
                             {% endif %}
-                            {% if settings.social_google %}
+                            {% if settings.social_google.value != '' %}
                                 <li><a href="{{ settings.social_google.value }}" target="_blank">&nbsp;<i class="fa fa-google-plus"></i></a></li>
                             {% endif %}
 
                             <li>
                                 <div class="btn-group flags">
                                     <div class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img class="flag-sm" src="{{ asset('img/flags/' ~ config.selected_locale ~ '.png') }}" alt="">
+                                        <img class="flag-sm" src="{{ asset('media/img/flags/' ~ config.selected_locale ~ '.png') }}" alt="">
                                     </div>
                                     <ul class="dropdown-menu">
                                         {% for language in config.languages %}
 
                                             <li>
                                                 <a href="{{ site_url('main/change_locale/' ~ language.locale) }}">
-                                                    <img class="flag-sm" src="{{ asset('img/flags/' ~ language.locale ~ '.png') }}" alt="{{ language.name }}">
+                                                    <img class="flag-sm" src="{{ asset('media/img/flags/' ~ language.locale ~ '.png') }}" alt="{{ language.name }}">
                                                 </a>
                                             </li>
 
@@ -124,9 +123,9 @@
 
     {% block javascript %}
 
-        <script src="{{ asset('js/jquery-1.11.3.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/functions.js') }}"></script>
+        <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('index.js') }}"></script>
 
     {% endblock %}
 

@@ -20,6 +20,11 @@ uploads/*
 application/config/production/database.php
 application/config/production/config.php
 
+# Themes
+#-------------------------
+themes/bootstrap/node_modules/
+themes/bootstrap/assets/
+
 # Deploy
 #-------------------------
 phploy.ini

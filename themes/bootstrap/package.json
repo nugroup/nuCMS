@@ -1,0 +1,36 @@
+{
+  "name": "nugo",
+  "version": "1.0.0",
+  "description": "Front-end starter",
+  "main": "index.html",
+  "scripts": {
+    "start": "gulp start"
+  },
+  "author": "nugato",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.14.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-compile-handlebars": "^0.6.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^5.0.0",
+    "gulp-directory-sync": "^1.2.3",
+    "gulp-less": "^3.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.9",
+    "holderjs": "^2.9.4",
+    "less-plugin-glob": "^1.1.1",
+    "pump": "^1.0.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3",
+    "jquery": "^1.12.4",
+    "slick-carousel": "^1.6.0",
+    "waypoints": "^4.0.0"
+  }
+}
