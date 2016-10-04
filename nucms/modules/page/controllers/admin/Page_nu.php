@@ -106,15 +106,21 @@ class Page_nu extends Backend_Controller
                 ->from_form($this->page_translations->get_rules('update'), $additionalData, $where)
                 ->update();
 
-            // Update route
-            $pageUrl = $this->config->item('pages_route_controller').$id.'/'.$locale;
-            $routeData = [
-                'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $pageUrl),
-            ];
-            $resultRoute = $this->route->update($routeData, ['url' => $pageUrl]);
-
             // Save blocks
             $this->block->save_blocks($this->input->post('blocks'));
+
+            // Update route
+            $this->form_validation->set_rules($this->route->rules['update']);
+            if ($this->form_validation->run() == TRUE) {
+                $pageUrl = $this->config->item('pages_route_controller').$id.'/'.$locale;
+                $routeData = [
+                    'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $pageUrl),
+                ];
+                $resultRoute = $this->route->update($routeData, ['url' => $pageUrl]);
+
+            } else {
+                
+            }
 
             if ($result || $resultRoute) {
 
@@ -123,7 +129,7 @@ class Page_nu extends Backend_Controller
             }
 
             // Redirect
-            redirect(admin_url('page/edit/'.$id));
+            redirect(current_full_url());
         }
 
         // Get seo progress message

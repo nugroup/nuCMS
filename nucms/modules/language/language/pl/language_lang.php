@@ -22,7 +22,6 @@ $lang['language.text.in_progress'] = 'Trwa aktualizacja elementów językowych. 
 ============================================================================= */
 $lang['language.list.name'] = 'Nazwa';
 $lang['language.list.locale'] = 'Symbol';
-$lang['language.list.folder_name'] = 'Nazwa folderu';
 $lang['language.list.active'] = 'Aktywność';
 $lang['language.list.default'] = 'Domyślny';
 
@@ -50,10 +49,8 @@ $lang['language.form.name'] = 'Nazwa';
 $lang['language.form.active'] = 'Aktywność';
 $lang['language.form.default'] = 'Domyślny';
 $lang['language.form.locale'] = 'Kod';
-$lang['language.form.folder_name'] = 'Nazwa folderu';
 
 /* form - info
 ============================================================================= */
 $lang['language.form.default.info'] = 'Domyślny (pierwszy) język na stronie. Jeżeli inny język jest teraz domyślny zostanie on zastąpiony.';
 $lang['language.form.locale.info'] = 'np. pl, en. Obrazek z flagą powinien nazywać się tak samo i mieć rozszerzenie "png" np. pl.png';
-$lang['language.form.folder_name.info'] = 'Folder z tłumaczeniami systemowymi';

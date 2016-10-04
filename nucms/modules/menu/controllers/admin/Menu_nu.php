@@ -122,7 +122,7 @@ class Menu_nu extends Backend_Controller
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
 
                 // Redirect
-                redirect(admin_url('menu/edit/'.$id));
+                redirect(current_full_url());
             }
         }
 

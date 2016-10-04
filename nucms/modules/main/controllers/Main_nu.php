@@ -24,6 +24,7 @@ class Main_nu extends Frontend_Controller
             redirect(site_url(), 'location  ', 301);
         }
 
+
         if ($locale == null && config_item('default_locale') != config_item('selected_locale')) {
             $this->change_locale(config_item('default_locale'), false);
         }

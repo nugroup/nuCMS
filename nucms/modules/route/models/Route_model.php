@@ -13,6 +13,15 @@ class Route_model extends MY_Model
     public $after_create = ['save_routes'];
     public $after_update = ['save_routes'];
     public $after_delete = ['save_routes'];
+    public $rules = [
+        'insert' => [
+            'slug' => ['field' => 'slug', 'label' => 'lang:form.slug', 'rules' => 'required|trim|xss_clean|greater_than[3]'],
+        ],
+        'update' => [
+            'slug' => ['field' => 'slug', 'label' => 'lang:form.slug', 'rules' => 'required|trim|xss_clean|greater_than[3]'],
+        ],
+    ];
+
 
     function __construct()
     {
@@ -29,9 +38,9 @@ class Route_model extends MY_Model
     public function save_routes($result = 0)
     {
         $this->load->helper('file');
-        $fileName = APPPATH.'cache/dynamic_routes.php';
-        
-        $CI =& get_instance();
+        $fileName = APPPATH . 'cache/dynamic_routes.php';
+
+        $CI = & get_instance();
         $CI->load->model('route/route_model', 'route_model');
         $routes = $CI->route_model->get_all();
 
@@ -39,7 +48,7 @@ class Route_model extends MY_Model
             $data[] = "<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');";
 
             foreach ($routes as $route) {
-                $data[] = '$route["'.$route->slug.'"] = "'.$route->url.'";';
+                $data[] = '$route["' . $route->slug . '"] = "' . $route->url . '";';
             }
 
             $output = implode("\n", $data);
@@ -68,11 +77,11 @@ class Route_model extends MY_Model
         $i = 0;
         while ($route = $this->where(['slug' => $slugTmp, 'url !=' => $url])->count_rows()) {
             $i++;
-            $slugTmp = $slugOk.'-'.$i;
+            $slugTmp = $slugOk . '-' . $i;
         }
 
         if ($i > 0) {
-            $slugOk .= '-'.$i;
+            $slugOk .= '-' . $i;
         }
 
         return $slugOk;

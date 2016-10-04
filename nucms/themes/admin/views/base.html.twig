@@ -191,7 +191,7 @@
 
             {% if(validation_errors()) %}
 
-                $.nuAlert('danger', `{{ validation_errors() | raw }}`);
+                $.nuAlert('danger', `{{ validation_errors() | raw | striptags }}`);
 
             {% endif %}
 

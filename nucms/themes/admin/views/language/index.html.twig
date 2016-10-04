@@ -54,107 +54,105 @@
 
             {% if (languages) %}
 
-            {{ form_open() }}
+                {{ form_open() }}
 
-            <div class="row">
-                <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12">
 
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th><label class="nuCheck"><input type="checkbox" class="checkAll"><span></span></label></th>
-                                <th></th>
-                                <th>{{ sort_header('name', lang('language.list.name')) | raw }}</th>
-                                <th>{{ sort_header('locale', lang('language.list.locale')) | raw }}</th>
-                                <th>{{ sort_header('folder_name', lang('language.list.folder_name')) | raw }}</th>
-                                <th>{{ lang('language.list.default') }}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th><label class="nuCheck"><input type="checkbox" class="checkAll"><span></span></label></th>
+                                    <th></th>
+                                    <th>{{ sort_header('name', lang('language.list.name')) | raw }}</th>
+                                    <th>{{ sort_header('locale', lang('language.list.locale')) | raw }}</th>
+                                    <th>{{ lang('language.list.default') }}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {% for language in languages %}
+                            <tbody>
+                                {% for language in languages %}
 
-                            <tr id="item_{{ language.id }}">
-                                <td class="colCheck">
-                                    <label class="nuCheck">
-                                        {{ form_checkbox({'name': 'check_item['~language.id~']', 'class': 'check_item', 'value': 1}) }}
-                                        <span></span>
-                                    </label>
-                                </td>
-                                <td class="colCheck"><img src="{{ asset('img/flags/'~language.locale~'.png') }}"></td>
-                                <td class="colTitle">
-                                    <a href="{{ admin_url('language/edit/'~language.id) }}">{{ language.name }}</a>
-                                </td>
-                                <td>{{ language.locale }}</td>
-                                <td>{{ language.folder_name }}</td>
-                                <td>
-                                    {% if language.default == 1 %}
-                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                    {% endif %}
-                                </td>
-                                <td class="colIco">
-                                    <ul class="nuButtonsList">
+                                    <tr id="item_{{ language.id }}">
+                                        <td class="colCheck">
+                                            <label class="nuCheck">
+                                                {{ form_checkbox({'name': 'check_item['~language.id~']', 'class': 'check_item', 'value': 1}) }}
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td class="colCheck"><img src="{{ asset('img/flags/'~language.locale~'.png') }}"></td>
+                                        <td class="colTitle">
+                                            <a href="{{ admin_url('language/edit/'~language.id) }}">{{ language.name }}</a>
+                                        </td>
+                                        <td>{{ language.locale }}</td>
+                                        <td>
+                                            {% if language.default == 1 %}
+                                                <i class="fa fa-check" aria-hidden="true"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td class="colIco">
+                                            <ul class="nuButtonsList">
+                                                <li>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                                        <ul class="dropdown-menu dropdown-menu-right">
+                                                            <li><a href="{{ admin_url('language/edit/'~language.id) }}"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li>
+                                                                <a href="{{ admin_url('language/delete') }}" rel="{{ language.id }}" class="deleteRecord" data-confirmMsg="{{ lang('language.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div class="row table-foot">
+                    <div class="col-xs-12 col-sm-3 col-md-2">
+
+                        <!-- selected actions -->
+                        <ul class="nuButtonsList">
+                            <li>
+                                <div class="dropup">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ lang('text.checked_items') }} <i class="fa fa-caret-up"></i></span></button>
+                                    <ul class="dropdown-menu">
                                         <li>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a href="{{ admin_url('language/edit/'~language.id) }}"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li>
-                                                        <a href="{{ admin_url('language/delete') }}" rel="{{ language.id }}" class="deleteRecord" data-confirmMsg="{{ lang('language.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <button type="submit" name="action" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
                                         </li>
                                     </ul>
-                                </td>
-                            </tr>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- /selected actions -->
 
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    </div>
+                    <div class="col-xs-12 col-sm-9 col-md-10 text-right">
 
+                        <!-- pagination -->
+                        <nav>
+                            {{ pager | raw }}
+                        </nav>
+                        <!-- /pagination -->
+
+                    </div>
                 </div>
-            </div>
 
-            <div class="row table-foot">
-                <div class="col-xs-12 col-sm-3 col-md-2">
-
-                    <!-- selected actions -->
-                    <ul class="nuButtonsList">
-                        <li>
-                            <div class="dropup">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ lang('text.checked_items') }} <i class="fa fa-caret-up"></i></span></button>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <button type="submit" name="action" value="delete_checked"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                    <!-- /selected actions -->
-
-                </div>
-                <div class="col-xs-12 col-sm-9 col-md-10 text-right">
-
-                    <!-- pagination -->
-                    <nav>
-                        {{ pager | raw }}
-                    </nav>
-                    <!-- /pagination -->
-
-                </div>
-            </div>
-
-            {{ form_close() }}
+                {{ form_close() }}
 
             {% else %}
 
-            <div class="alert alert-info">
-                {{ lang('language.text.no_records') }}
-            </div>
+                <div class="alert alert-info">
+                    {{ lang('language.text.no_records') }}
+                </div>
 
             {% endif %}
 

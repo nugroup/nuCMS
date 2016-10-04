@@ -33,8 +33,8 @@
                     <!-- title/lang fields -->
                     <div class="input-group nuFormTitle">
                         <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
-                            {% include('components/lang_select.html.twig') %}
-                            {{ form_input({'name': 'title', 'value': page.title, 'class': 'form-control', 'id': 'title', 'placeholder': lang('page.form.title'), 'required': 'required'}) }}
+                        {% include('components/lang_select.html.twig') %}
+                        {{ form_input({'name': 'title', 'value': page.title, 'class': 'form-control', 'id': 'title', 'placeholder': lang('page.form.title'), 'required': 'required'}) }}
                     </div>
                     <!-- /title/lang fields -->
 

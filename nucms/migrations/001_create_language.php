@@ -26,11 +26,6 @@ class Migration_Create_language extends CI_Migration
                 'constraint' => '10',
                 'default' => NULL
             ),
-            'folder_name' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '10',
-                'default' => NULL
-            ),
             'active' => array(
                 'type' => 'BOOLEAN',
                 'default' => 0

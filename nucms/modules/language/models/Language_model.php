@@ -15,15 +15,13 @@ class Language_model extends MY_Model
     public $rules = [
         'insert' => [
             'name'        => ['field' => 'name', 'label' => 'lang:language.form.name', 'rules' => 'required|trim|xss_clean'],
-            'locale'      => ['field' => 'locale', 'label' => 'lang:language.form.locale', 'rules' => 'required|trim|xss_clean'],
-            'folder_name' => ['field' => 'folder_name', 'label' => 'lang:language.form.folder_name', 'rules' => 'required|trim|xss_clean'],
+            'locale'      => ['field' => 'locale', 'label' => 'lang:language.form.locale', 'rules' => 'required|trim|xss_clean|exact_length[2]'],
             'active'      => ['field' => 'active', 'label' => 'lang:language.form.active', 'rules' => 'trim|xss_clean'],
             'default'     => ['field' => 'default', 'label' => 'lang:language.form.default', 'rules' => 'trim|xss_clean'],
         ],
         'update' => [
             'name'        => ['field' => 'name', 'label' => 'lang:language.form.name', 'rules' => 'required|trim|xss_clean'],
-            'locale'      => ['field' => 'locale', 'label' => 'lang:language.form.locale', 'rules' => 'required|trim|xss_clean'],
-            'folder_name' => ['field' => 'folder_name', 'label' => 'lang:language.form.folder_name', 'rules' => 'required|trim|xss_clean'],
+            'locale'      => ['field' => 'locale', 'label' => 'lang:language.form.locale', 'rules' => 'required|trim|xss_clean|exact_length[2]'],
             'active'      => ['field' => 'active', 'label' => 'lang:language.form.active', 'rules' => 'trim|xss_clean'],
             'default'     => ['field' => 'default', 'label' => 'lang:language.form.default', 'rules' => 'trim|xss_clean'],
         ],
