@@ -9,16 +9,13 @@ if (!defined('BASEPATH'))
 class Route_model extends MY_Model
 {
     public $table = 'nu_route';
-    public $primary_key = 'primary_key';
-    public $after_create = ['save_routes'];
-    public $after_update = ['save_routes'];
-    public $after_delete = ['save_routes'];
+    public $primary_key = 'id';
     public $rules = [
         'insert' => [
-            'slug' => ['field' => 'slug', 'label' => 'lang:form.slug', 'rules' => 'required|trim|xss_clean|greater_than[3]'],
+            'slug' => ['field' => 'slug', 'label' => 'lang:form.slug', 'rules' => 'required|trim|xss_clean|min_length[3]'],
         ],
         'update' => [
-            'slug' => ['field' => 'slug', 'label' => 'lang:form.slug', 'rules' => 'required|trim|xss_clean|greater_than[3]'],
+            'slug' => ['field' => 'slug', 'label' => 'lang:form.slug', 'rules' => 'required|trim|xss_clean|min_length[3]'],
         ],
     ];
 
@@ -31,53 +28,28 @@ class Route_model extends MY_Model
     }
 
     /**
-     * Generate file with dynamic routes
-     *
-     * @return void
-     */
-    public function save_routes($result = 0)
-    {
-        $this->load->helper('file');
-        $fileName = APPPATH . 'cache/dynamic_routes.php';
-
-        $CI = & get_instance();
-        $CI->load->model('route/route_model', 'route_model');
-        $routes = $CI->route_model->get_all();
-
-        if ($routes) {
-            $data[] = "<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');";
-
-            foreach ($routes as $route) {
-                $data[] = '$route["' . $route->slug . '"] = "' . $route->url . '";';
-            }
-
-            $output = implode("\n", $data);
-            write_file($fileName, $output);
-            @chmod($fileName, 0777);
-        } else {
-            write_file($fileName, '');
-            @chmod($fileName, 0777);
-        }
-
-        return $result;
-    }
-
-    /**
      * Prepare unique slug
      *
      * @param string $slug
      * @param string $url
+     * 
      * @return string
      */
-    public function prepare_unique_slug($slug, $url = '')
+    public function prepare_unique_slug($slug, $id = null)
     {
         $slugOk = mb_strtolower(prepareURL($slug), 'utf-8');
         $slugTmp = $slugOk;
-
+        $where = [
+            'slug' => $slugTmp,
+        ];
+        if ($id !== null) {
+            $where['id !='] = (int) $id;
+        }
+        
         $i = 0;
-        while ($route = $this->where(['slug' => $slugTmp, 'url !=' => $url])->count_rows()) {
+        while ($route = $this->where($where)->count_rows()) {
             $i++;
-            $slugTmp = $slugOk . '-' . $i;
+            $where['slug'] = $slugOk . '-' . $i;
         }
 
         if ($i > 0) {

@@ -40,6 +40,7 @@ class Migration_Create_language extends CI_Migration
         $this->dbforge->add_key('locale');
 
         $this->dbforge->create_table('nu_language');
+        $this->db->query('INSERT INTO `nu_language` SET `name` = "Polski", `locale` = "pl", `active` = 1, `default` = 1;');
     }
 
     public function down()

@@ -68,7 +68,7 @@ class Page_widget
         }
 
         if ($this->CI->input->get('preview')) {
-            if ($page->token != $this->input->get('token')) {
+            if ($page->token != $this->CI->input->get('token')) {
                 show_404();
             }
         } elseif ($page->active != 1) {

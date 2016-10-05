@@ -24,6 +24,7 @@ application/config/production/config.php
 #-------------------------
 themes/bootstrap/node_modules/
 themes/bootstrap/assets/
+themes/bootstrap/npm-*
 
 # Deploy
 #-------------------------

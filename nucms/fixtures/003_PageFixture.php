@@ -22,7 +22,6 @@ class PageFixture implements FixturesInterface
         $languages = $CI->language->get_all();
 
         if ($languages) {
-
             // Delete page
             $CI->db->query('SET FOREIGN_KEY_CHECKS = 0');
             $CI->db->query('TRUNCATE TABLE nu_page');
@@ -42,7 +41,6 @@ class PageFixture implements FixturesInterface
                 if ($insertedId) {
                     // Insert all translations
                     foreach ($languages as $language) {
-
                         $dataTranslation = [
                             'title' => $title,
                             'meta_title' => $title,
@@ -53,11 +51,9 @@ class PageFixture implements FixturesInterface
                             'page_id' => $insertedId
                         ];
                         $CI->page_translations->insert($dataTranslation);
-
                     }
                 }
             }
-
         }
 
         $CI->page_translations->update_routes();

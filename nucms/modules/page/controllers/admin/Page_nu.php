@@ -55,6 +55,7 @@ class Page_nu extends Backend_Controller
         $this->page_translations->generate_like_query($this->input->get('string'));
         $pages = $this->page_translations
             ->with_root()
+            ->with_route()
             ->where('locale', $locale)
             ->order_by('id', 'desc')
             ->limit($paginationLimits['limit'], $paginationLimits['limit_offset'])
@@ -86,6 +87,7 @@ class Page_nu extends Backend_Controller
 
         $page = $this->page_translations
             ->with_file()
+            ->with_route()
             ->where($where)
             ->get();
 
@@ -95,41 +97,43 @@ class Page_nu extends Backend_Controller
 
         // If post is send
         if ($this->input->post()) {
-
             // Additional data
             $additionalData = array(
                 'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL
             );
+            
+            try {
+                $this->db->trans_start();
 
-            // Update page translation
-            $result = $this->page_translations
-                ->from_form($this->page_translations->get_rules('update'), $additionalData, $where)
-                ->update();
-
-            // Save blocks
-            $this->block->save_blocks($this->input->post('blocks'));
-
-            // Update route
-            $this->form_validation->set_rules($this->route->rules['update']);
-            if ($this->form_validation->run() == TRUE) {
-                $pageUrl = $this->config->item('pages_route_controller').$id.'/'.$locale;
+                // Update page translation
+                $result = $this->page_translations
+                    ->from_form($this->page_translations->get_rules('update'), $additionalData, $where)
+                    ->update();
+                
+                if ((bool) $result === false) {
+                    throw new Exception();
+                }
+                
+                // Save blocks
+                $this->block->save_blocks($this->input->post('blocks'));
+                
+                // Update route
+                $this->form_validation->set_rules($this->route->rules['update']);
+                if ($this->form_validation->run() === FALSE) {
+                    throw new Exception();
+                }
                 $routeData = [
-                    'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $pageUrl),
+                    'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $page->route_id),
                 ];
-                $resultRoute = $this->route->update($routeData, ['url' => $pageUrl]);
+                $this->route->update($routeData, $page->route_id);
+                
+                $this->db->trans_complete();
 
-            } else {
+                $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
+                redirect(current_full_url());
+            } catch (Exception $ex) {
                 
             }
-
-            if ($result || $resultRoute) {
-
-                // Set informations
-                $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
-            }
-
-            // Redirect
-            redirect(current_full_url());
         }
 
         // Get seo progress message

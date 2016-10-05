@@ -89,7 +89,8 @@ class Menu_items_model extends MY_Model
     public function get_with_routes($where)
     {
         $this->db->select('nu_menu_items.*, nu_route.slug as route_slug');
-        $this->db->join('nu_route', 'nu_route.primary_key = nu_menu_items.primary_key AND nu_route.module = nu_menu_items.module AND nu_menu_items.locale = nu_route.locale', 'left');
+//        $this->db->join('nu_route', 'nu_route.primary_key = nu_menu_items.primary_key AND nu_route.module = nu_menu_items.module AND nu_menu_items.locale = nu_route.locale', 'left');
+        $this->db->join('nu_route', 'nu_route.id = nu_menu_items.primary_key', 'left');
         $this->db->where($where);
         $this->db->order_by('sort', 'asc');
 

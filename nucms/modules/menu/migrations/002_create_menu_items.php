@@ -79,9 +79,9 @@ class Migration_Create_menu_items extends CI_Migration
         ));
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('nu_menu_items');
         $this->dbforge->add_key('module');
         $this->dbforge->add_key('primary_key');
+        $this->dbforge->create_table('nu_menu_items');
 
         $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_menu_id_FK` FOREIGN KEY (`menu_id`) REFERENCES `nu_menu` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
         $this->db->query('ALTER TABLE `nu_menu_items` ADD CONSTRAINT `nu_menu_items_parent_id_FK` FOREIGN KEY (`parent_id`) REFERENCES `nu_menu_items` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;');
