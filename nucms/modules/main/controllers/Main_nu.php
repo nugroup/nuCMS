@@ -24,9 +24,12 @@ class Main_nu extends Frontend_Controller
             redirect(site_url(), 'location  ', 301);
         }
 
-
-        if ($locale == null && config_item('default_locale') != config_item('selected_locale')) {
-            $this->change_locale(config_item('default_locale'), false);
+        // Check if langauge is set correctly
+        if (
+                ($locale == null && config_item('default_locale') != config_item('selected_locale')) ||
+                ($locale !== null && $locale != config_item('selected_locale'))
+            ) {
+            $this->change_locale($locale, true);
         }
 
         $homepageType = 'static';
@@ -57,7 +60,7 @@ class Main_nu extends Frontend_Controller
     {
         $this->session->set_userdata('selected_locale', $locale);
 
-        if ($suffix) {
+        if ($suffix && $locale != config_item('default_locale')) {
             redirect(site_url($locale));
         }
 

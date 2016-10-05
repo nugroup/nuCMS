@@ -64,7 +64,7 @@ class Frontend_Controller extends NU_Controller
         }
 
         // Change languages config if session checked
-        if ($this->session->selected_locale) {
+        if ($this->session->selected_locale && $this->session->selected_locale != config_item('default_locale')) {
             $this->config->set_item('selected_locale', $this->session->selected_locale);
             $this->config->set_item('home_url', site_url($this->session->selected_locale));
         }

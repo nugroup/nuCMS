@@ -10,10 +10,12 @@
 $config['main_module'] = [
     'route' => 'main',
     'controller' => 'main/main_nu/homepage',
+    'controller_name' => 'main/main_nu/',
 ];
 $config['admin_main_module'] = [
     'route' => 'main',
     'controller' => 'main/admin/main_nu/index',
+    'controller_name' => 'main/admin/main_nu/',
 ];
 
 // other modules
