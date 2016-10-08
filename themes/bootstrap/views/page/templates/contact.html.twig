@@ -8,14 +8,17 @@
                 <h1>{{ page.title }}</h1>
             </header>
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="contact-form">
-                        Contact form here
-                    </div>
-                </div>
                 <div class="col-sm-8">
                     <div class="text">
                         {{ page.content | raw }}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="contact-form">
+                        {{
+                            widget('Form_contact_widget::display', {
+                            })
+                        }}
                     </div>
                 </div>
             </div>
