@@ -1,22 +1,14 @@
 <ul class="nuDrop-menu">
-    <li><a href="{{ admin_url() }}"><i class="fa fa-desktop" aria-hidden="true"></i>{{ lang('menu.desktop') }}</a></li>
-    <li><a href="{{ admin_url('page') }}"><i class="fa fa-file" aria-hidden="true"></i>{{ lang('menu.pages') }}</a>
-        <ul class="nuDrop-submenu">
-            <li><a href="{{ admin_url('page') }}">{{ lang('menu.pages.list') }}</a></li>
-            <li><a href="{{ admin_url('page/add') }}">{{ lang('menu.pages.add') }}</a></li>
-        </ul>
-    </li>
+    <li><a href="{{ admin_url('page') }}"><i class="fa fa-file" aria-hidden="true"></i>{{ lang('menu.pages') }}</a></li>
     <li><a href="{{ admin_url('block') }}"><i class="fa fa-puzzle-piece"></i>{{ lang('menu.block') }}</a></li>
-{#    <li><a href="{{ admin_url('templates') }}"><i class="fa fa-columns"></i>{{ lang('menu.templates') }}</a></li>#}
     <li><a href="{{ admin_url('file') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>{{ lang('menu.files') }}</a>
-    <li><a href="{{ admin_url('menu') }}"><i class="fa fa-compass" aria-hidden="true"></i>{{ lang('menu.menu') }}</a>
-    <li><a href="{{ admin_url('user') }}"><i class="fa fa-user" aria-hidden="true"></i>{{ lang('menu.users') }}</a>
+    <li>
+        <a href="{{ admin_url('setting') }}"><i class="fa fa-wrench" aria-hidden="true"></i>{{ lang('menu.settings') }}</a>
         <ul class="nuDrop-submenu">
-            <li><a href="{{ admin_url('user') }}">{{ lang('menu.users.list') }}</a></li>
-            <li><a href="{{ admin_url('user/add') }}">{{ lang('menu.users.add') }}</a></li>
+            <li><a href="{{ admin_url('menu') }}">{{ lang('menu.menu') }}</a>
+            <li><a href="{{ admin_url('user') }}">{{ lang('menu.users') }}</a></li>
+            <li><a href="{{ admin_url('language') }}">{{ lang('menu.languages') }}</a></li>
         </ul>
     </li>
-    <li><a href="{{ admin_url('language') }}"><i class="fa fa-language" aria-hidden="true"></i>{{ lang('menu.languages') }}</a></li>
-    <li><a href="{{ admin_url('setting') }}"><i class="fa fa-wrench" aria-hidden="true"></i>{{ lang('menu.settings') }}</a></li>
     <li><a href="{{ admin_url('auth/logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i>{{ lang('menu.logout') }}</a></li>
 </ul>

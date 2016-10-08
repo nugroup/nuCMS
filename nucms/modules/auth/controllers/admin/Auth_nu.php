@@ -36,7 +36,7 @@ class Auth_nu extends Backend_Controller
         // Log in
         if ($this->form_validation->run() == TRUE) {
             if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), false)) {
-                redirect(admin_url());
+                redirect(admin_url('page'));
             } else {
                 $this->session->set_flashdata('error', $this->ion_auth->errors());
                 redirect(admin_url('auth/login'));

@@ -9,7 +9,7 @@ $config['theme'] = 'bootstrap';
 $config['assets_path'] = 'themes/' . $config['theme'] . '/assets';
 $config['home_url'] = base_url();
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
-$config['profiler'] = !false;                                                    // Enable/Disable CodeIgniter profiler
+$config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
 
 /* meta
 ============================================================================= */
