@@ -152,13 +152,20 @@
                     </div>
                     <!-- /slug -->
 
-                    <!-- created_at -->
+                    <!-- template -->
                     <div class="form-group">
-                        <label for="input_created">{{ lang('page.form.created_at') }}:</label>
-                        {{ form_input({'name': 'created_at', 'value': page.created_at | date('Y-m-d'), 'class': 'form-control', 'id': 'created_at', 'disabled': true}) }}
+                        <label for="input_created">{{ lang('page.form.template') }}:</label>
+                        {{
+                            form_dropdown(
+                                'template',
+                                templates,
+                                page.template,
+                                'class="form-control"'
+                            )
+                        }}
                         <span class="nuFocusLine"></span>
                     </div>
-                    <!-- /created_at -->
+                    <!-- /template -->
 
                 </div>
 

@@ -46,6 +46,7 @@ class PageFixture implements FixturesInterface
                             'meta_title' => $title,
                             'meta_keywords' => $faker->sentence(3),
                             'meta_description' => $faker->text(100),
+                            'template' => 'default',
                             'active' => 1,
                             'locale' => $language->locale,
                             'page_id' => $insertedId

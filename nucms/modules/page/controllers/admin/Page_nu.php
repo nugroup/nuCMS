@@ -15,6 +15,7 @@ class Page_nu extends Backend_Controller
         parent::__construct();
 
         // Load classes
+        $this->load->library('page/page_widget');
         $this->lang->load('page/page', $this->config->item('selected_locale'));
         $this->load->model('page/page_model', 'page');
         $this->load->model('route/route_model', 'route');
@@ -138,9 +139,13 @@ class Page_nu extends Backend_Controller
 
         // Get seo progress message
         $page->seo_progress_msg = $this->page_translations->get_seo_progress_msg($page);
+        
+        // Get templates list
+        $templates = $this->page_widget->get_templates_list();
 
         // Set view data
         $this->data['page'] = $page;
+        $this->data['templates'] = $templates;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
         $this->data['selected_locale'] = $this->config->item($locale, 'system_languages_by_locale')->locale;

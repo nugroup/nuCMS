@@ -62,7 +62,7 @@ $lang['page.form.meta_title'] = 'Tytuł strony (50)';
 $lang['page.form.meta_keywords'] = 'Słowa kluczowe';
 $lang['page.form.meta_description'] = 'Opis strony (160)';
 $lang['page.form.slug'] = 'Adres URL';
-$lang['page.form.created_at'] = 'Utworzona';
+$lang['page.form.template'] = 'Szablon';
 
 /* form - info
 ============================================================================= */

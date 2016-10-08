@@ -5,8 +5,9 @@
  * @author              nugato
  * @copyright           Copyright (c) 2015-2016
  */
-$config['theme'] = 'bootstrap';
-$config['assets_path'] = 'themes/' . $config['theme'] . '/assets';
+$config['app_theme'] = 'bootstrap';
+$config['app_theme_path'] = 'themes/';
+$config['assets_path'] = 'themes/' . $config['app_theme'] . '/assets';
 $config['home_url'] = base_url();
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
 $config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
@@ -20,7 +21,7 @@ $config['meta_googlebot'] = 'none';
 ============================================================================= */
 $config['twig_config'] = [
     'paths' => array(
-        APPPATH.'../themes/'.$config['theme'].'/views',
+        APPPATH.'../themes/'.$config['app_theme'].'/views',
         VIEWPATH,
     ),
     'cache' => (ENVIRONMENT == 'production') ? APPPATH . 'cache/twig/' : false,

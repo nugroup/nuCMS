@@ -20,12 +20,21 @@ class Page_widget
      * @var array
      */
     private $data;
+    
+    /**
+     * Path to templates file
+     * 
+     * @var string 
+     */
+    private $templatesPath;
 
     public function __construct($data = array())
     {
         $this->CI = & get_instance();
         $this->data = $data;
+        $this->templatesPath = config_item('app_theme_path').config_item('app_theme').'/views/page/templates/';
 
+        $this->CI->load->helper('directory');
         $this->CI->load->model('page/page_model', 'page');
         $this->CI->load->model('page/page_translations_model', 'page_translations');
         $this->CI->load->model('route/route_model', 'route');
@@ -83,7 +92,38 @@ class Page_widget
 
         // Set view data
         $this->data['page'] = $page;
+        
+        $pageTemplateFilename = $this->templatesPath.$page->template;
 
-        echo render_twig('page/show', $this->data);
+        if ($page->template != '' && file_exists($pageTemplateFilename.'.html.twig')) {
+            echo render_twig('page/templates/'.$page->template, $this->data);
+        } else {
+            echo render_twig('page/templates/'.'default', $this->data);
+        }
+    }
+    
+    /**
+     * Get page templates list for select
+     * 
+     * @return array
+     */
+    public function get_templates_list()
+    {
+        $this->CI->lang->load('templates', config_item('selected_locale'));
+
+        $templates = [];
+        $templatesDir = directory_map($this->templatesPath);
+        
+        if (count($templatesDir) > 0) {
+            foreach ($templatesDir as $tpl) {
+                $filename = str_replace('.html.twig', '', $tpl);
+                $translation = lang('templates.' . $filename);
+                $value = ($translation != '') ? $translation : $filename;
+
+                $templates[$filename] = $value;
+            }
+        }
+        
+        return $templates;
     }
 }

@@ -39,6 +39,11 @@ class Migration_Create_page_translations extends CI_Migration
                 'type' => 'TEXT',
                 'default' => NULL
             ),
+            'template' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => NULL
+            ),
             'active' => array(
                 'type' => 'BOOLEAN',
                 'default' => 0

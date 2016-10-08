@@ -87,6 +87,7 @@ class Page_translations_model extends MY_Model {
         $rules['meta_title'] = array('field' => 'meta_title', 'label' => lang('page.form.meta_title'), 'rules' => 'max_length[50]|trim|xss_clean');
         $rules['meta_keywords'] = array('field' => 'meta_keywords', 'label' => lang('page.form.meta_keywords'), 'rules' => 'trim|xss_clean');
         $rules['meta_description'] = array('field' => 'meta_description', 'label' => lang('page.form.meta_description'), 'rules' => 'max_length[160]|trim|xss_clean');
+        $rules['template'] = array('field' => 'template', 'label' => lang('page.form.template'), 'rules' => 'trim|xss_clean');
 
         return $rules;
     }
