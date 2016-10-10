@@ -11,7 +11,7 @@ class NU_Controller extends MX_Controller
         parent::__construct();
 
         // WWW redirection
-        if (ENVIRONMENT != 'development' && !strstr($_SERVER['HTTP_HOST'], "www")) {
+        if (ENVIRONMENT != 'development' && $this->input->is_cli_request() == FALSE && !strstr($_SERVER['HTTP_HOST'], "www")) {
             redirect(config_item('base_url_301').$_SERVER['REQUEST_URI'], 'location', 301);
         }
 
