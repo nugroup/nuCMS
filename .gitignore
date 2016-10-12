@@ -17,6 +17,7 @@ uploads/*
 # Dist files
 #-------------------------
 .htaccess
+application/config/app.php
 application/config/production/database.php
 application/config/production/config.php
 

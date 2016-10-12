@@ -53,6 +53,10 @@
             {
                 "file": ".htaccess",
                 "dist-file": ".htaccess.dist"
+            },
+            {
+                "file": "application/config/app.php",
+                "dist-file": "application/config/app.php.dist"
             }
         ]
     }
