@@ -16,6 +16,7 @@ uploads/*
 
 # Dist files
 #-------------------------
+composer.lock
 .htaccess
 application/config/app.php
 application/config/production/database.php
