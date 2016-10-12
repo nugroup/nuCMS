@@ -25,6 +25,8 @@ $config['mailer'] = [
     'username' => '',
     'password' => '',
     'security' => '', // '', 'ssl', 'tls', example: 'ssl' for GMAIL
+    'from' => '', // must be ARRAY should and be the same as username example: ['mail@gmail.com' => 'myname']
+    'to' => '' // email address
 ];
 
 /* twig

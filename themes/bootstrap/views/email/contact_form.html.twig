@@ -1,0 +1,14 @@
+<table style="width: 800px; margin: 0 auto;">
+    <tr>
+        <td style="width: 130px; vertical-align: top;"><b>{{ lang('form.contact.name') }}:</b></td>
+        <td style="vertical-align: top;">{{ form_contact.name }}</td>
+    </tr>
+    <tr>
+        <td style="width: 130px; vertical-align: top; "><b>{{ lang('form.contact.email') }}:</b></td>
+        <td style="vertical-align: top;">{{ form_contact.email }}</td>
+    </tr>
+    <tr>
+        <td style="width: 130px; vertical-align: top;"><b>{{ lang('form.contact.message') }}:</b></td>
+        <td style="vertical-align: top;">{{ form_contact.message | nl2br }}</td>
+    </tr>
+</table>

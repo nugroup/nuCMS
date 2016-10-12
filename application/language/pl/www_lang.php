@@ -16,3 +16,5 @@ $lang['form.contact.email'] = 'Adres e-mail';
 $lang['form.contact.message'] = 'Wiadomość';
 $lang['form.contact.submit'] = 'Wyślij';
 $lang['form.contact.success_msg'] = 'Wiadomość została wysłana. Dziękujemy';
+$lang['form.contact.error_msg'] = 'Wystąpił błąd podczas wysyłania wiadomości. Przepraszamy';
+$lang['form.contact.email.subject'] = 'Formularz kontaktowy';

@@ -35,13 +35,6 @@ class Form_contact_widget
      */
     private $validationErrors;
 
-    /**
-     * Validation success message
-     *
-     * @var string
-     */
-    private $validationSuccess;
-
     public function __construct()
     {
         $this->CI = & get_instance();
@@ -53,7 +46,11 @@ class Form_contact_widget
     public function display()
     {
         if ($this->CI->input->post()) {
-            $this->validate();
+            $this->process();
+        }
+
+        if ($this->CI->session->flashdata('formContactError')) {
+            $this->validationErrors = $this->CI->session->flashdata('formContactError');
         }
 
         $data = [
@@ -65,18 +62,61 @@ class Form_contact_widget
     }
 
     /**
-     * Form validation
+     * Form process
+     * 
+     * 1. validation
+     * 2. send
+     * 3. set message
+     * 4. redirect
      */
-    private function validate()
+    private function process()
     {
         $this->CI->form_validation->set_rules($this->validationRules);
 
         if ($this->CI->form_validation->run() == true) {
-            // @todo Add swiftmailer, mail class and form send
-            $this->CI->session->set_flashdata('formContactSuccess', lang('form.contact.success_msg'));
+            $sendResult = $this->send($this->prepare_message());
+
+            if ($sendResult['result'] == 1) {
+                $this->CI->session->set_flashdata('formContactSuccess', lang('form.contact.success_msg'));
+            } else {
+                $this->CI->session->set_flashdata('formContactError', lang('form.contact.error_msg'));
+                log_message('error', $sendResult['error']);
+            }
+
             redirect(current_full_url().'#send');
         } else {
             $this->validationErrors = validation_errors();
         }
+    }
+
+    /**
+     * Create swiftmailer message object and send e-mail
+     *
+     * @param string $message_body
+     *
+     * @return array
+     */
+    private function send($message_body)
+    {
+        $this->CI->load->library('mailer_nu');
+
+        $message = Swift_Message::newInstance(lang('form.contact.email.subject'))
+            ->setFrom($this->CI->config->item('from', 'mailer'))
+            ->setTo($this->CI->config->item('to', 'mailer'))
+            ->setBody($message_body, 'text/html');
+
+        return $this->CI->mailer_nu->send($message);
+    }
+
+    /**
+     * Preare message body
+     *
+     * @return string
+     */
+    private function prepare_message()
+    {
+        return render_twig('email/contact_form', [
+            'form_contact' => $this->CI->input->post('formContact')
+        ], true);
     }
 }

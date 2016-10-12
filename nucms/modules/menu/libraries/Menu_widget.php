@@ -21,6 +21,7 @@ class Menu_widget
     {
         $this->CI = & get_instance();
 
+        $this->CI->lang->load('menu/menu', config_item('selected_locale'));
         $this->CI->config->load('menu/menu', true);
         $this->CI->load->model('menu/menu_model', 'menu');
         $this->CI->load->model('menu/menu_items_model', 'menu_items');

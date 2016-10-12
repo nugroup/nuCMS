@@ -24,7 +24,6 @@ class Menu_items_model extends MY_Model
         $this->rules = [
             'insert' => [
                 'name'     => ['field' => 'name', 'label' => lang('menu.form.name'), 'rules' => 'required|trim|xss_clean'],
-                'locale'   => ['field' => 'locale', 'label' => lang('menu.form.locale'), 'rules' => 'required|trim|xss_clean'],
             ],
             'update' => [
                 'name'     => ['field' => 'name', 'label' => lang('menu.form.name'), 'rules' => 'required|trim|xss_clean'],
