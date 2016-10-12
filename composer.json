@@ -9,7 +9,8 @@
         "myth/bay": "dev-develop",
         "fzaninotto/faker": "^1.5",
         "twig/twig": "^1.24",
-        "cube/composer-dist-installer": "~1.0@beta"
+        "cube/composer-dist-installer": "~1.0@beta",
+        "swiftmailer/swiftmailer": "@stable"
     },
     "require-dev": {
     },
