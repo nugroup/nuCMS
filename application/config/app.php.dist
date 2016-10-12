@@ -17,6 +17,16 @@ $config['profiler'] = false;                                                    
 $config['meta_robots'] = 'none';
 $config['meta_googlebot'] = 'none';
 
+/* mailer
+============================================================================= */
+$config['mailer'] = [
+    'host' => '',
+    'port' => '',
+    'username' => '',
+    'password' => '',
+    'security' => '', // '', 'ssl', 'tls', example: 'ssl' for GMAIL
+];
+
 /* twig
 ============================================================================= */
 $config['twig_config'] = [
