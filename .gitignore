@@ -28,6 +28,10 @@ themes/bootstrap/node_modules/
 themes/bootstrap/assets/
 themes/bootstrap/npm-*
 
+nucms/themes/admin/node_modules/
+nucms/themes/admin/assets/
+nucms/themes/admin/npm-*
+
 # Deploy
 #-------------------------
 phploy.ini

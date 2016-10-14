@@ -1,0 +1,19 @@
+{
+    "assets": [
+
+        { "source": "./node_modules/jquery/dist/jquery.min.js", "copyTo": "./assets/js/" },
+
+        { "source": "./node_modules/bootstrap/dist/js/bootstrap.min.js",  "copyTo": "./assets/js/" },
+        { "source": "./node_modules/bootstrap/dist/css/bootstrap.min.css",  "copyTo": "./assets/css/" },
+        { "source": "./node_modules/bootstrap/dist/fonts/*",  "copyTo": "./assets/glyphicons-halflings-regular/" },
+
+        { "source": "./node_modules/font-awesome/css/font-awesome.min.css",  "copyTo": "./assets/css/" },
+        { "source": "./node_modules/font-awesome/fonts/*",  "copyTo": "./assets/fonts/fontawesome/" },
+        
+        { "source": "./node_modules/dropzone/dist/min/dropzone.min.js",  "copyTo": "./assets/js/" },
+        { "source": "./node_modules/dropzone/dist/min/dropzone.min.css",  "copyTo": "./assets/css/" },
+        
+        { "source": "./node_modules/dropzone/dist/nublox.min.js",  "copyTo": "./assets/js/" }
+
+    ]
+}
