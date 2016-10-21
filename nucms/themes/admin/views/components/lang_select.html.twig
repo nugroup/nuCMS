@@ -2,12 +2,12 @@
 
     <div class="input-group-btn">
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="ico-flag" src="{{ asset('img/flags/'~selected_locale~'.png') }}"><span class="caret"></span>
+            <img class="ico-flag" src="{{ asset('media/img/flags/'~selected_locale~'.png') }}"><span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             {% for language in config.system_languages %}
 
-                <li><a href="{{ current_url()~'?locale='~language.locale }}"><img class="ico-flag" src="{{ asset('img/flags/'~language.locale~'.png') }}">{{ language.name }}</a></li>
+                <li><a href="{{ current_url()~'?locale='~language.locale }}"><img class="ico-flag" src="{{ asset('media/img/flags/'~language.locale~'.png') }}">{{ language.name }}</a></li>
 
             {% endfor %}
         </ul>

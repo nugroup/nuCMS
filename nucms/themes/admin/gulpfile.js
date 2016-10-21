@@ -1,13 +1,13 @@
 var gulp = require('gulp');
 var fs = require('fs'); // node file system
 var assets = JSON.parse(fs.readFileSync('./assets.json')); // path to JSON of copied files
-var fixtures = JSON.parse(fs.readFileSync('./app/template/fixtures/fixtures.json')); // fixtures to hbs template
 // Load plugins
 var less = require('gulp-less');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var cleanCSS = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
+var minify = require('gulp-minify');
 var pump = require('pump');
 var connect = require('gulp-connect');
 var less_glob = require('less-plugin-glob');
@@ -32,21 +32,28 @@ gulp.task('assets', function(){
 
 // less to css and autoprefix
 gulp.task('less', function () {
-    return gulp.src('app/less/index.less')
+    return gulp.src('app/less/nu.less')
     .pipe(less( { plugins: [require('less-plugin-glob')] } ))
     .on('error', swallowError)
     .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
-    .pipe(gulp.dest('assets/'))
-    // .pipe(connect.reload());
+    .pipe(cleanCSS())
+    .pipe(rename({
+        suffix: '.min'
+    }))
+    .pipe(gulp.dest('assets/css/'))
     .pipe(browserSync.reload({stream: true}));
 });
 
 // concat JS files
 gulp.task('js', function() {
     return gulp.src('app/js/**/*.js')
-    .pipe(concat('index.js'))
-    .pipe(gulp.dest('assets/'))
-    // .pipe(connect.reload());
+    .pipe(concat('nu.js'))
+    .pipe(minify({
+        ext:{
+            min:'.min.js'
+        },
+    }))
+    .pipe(gulp.dest('assets/js/'))
     .pipe(browserSync.reload({stream: true}));
 });
 
@@ -57,65 +64,12 @@ gulp.task('copy_media', function() {
     .pipe(browserSync.reload({stream: true}));
 });
 
-// compile hbs to html
-gulp.task('hbs', function () {
-    var templateData = fixtures,
-    options = {
-        batch : ['./app/template/partials'],
-        helpers : {
-            _cut : function(str, from, to){
-                return str.substring(from, to);
-            },
-            _img : function(width, height) {
-                return 'holder.js/'+width+'x'+height+'?auto=yes';
-            }
-        }
-    }
-    return gulp.src('app/template/*.hbs')
-        .pipe(handlebars(templateData, options))
-        .pipe(rename({extname: '.html'}))
-        .pipe(gulp.dest('assets/template'))
-        // .pipe(connect.reload());
-        .pipe(browserSync.reload({stream: true}));
-});
-
-// server
-// gulp.task('connect', function() {
-//     connect.server({
-//         root: [__dirname],
-//         livereload: true
-//     });
-// });
-
-// server - hard reload
-// gulp.task('reload', function () {
-//     gulp.src('app/template/index.html')
-//     .pipe(connect.reload());
-// });
-
-
 // --------------------------------------------------------------------------------------------------------
 // --------------------------------------------------------------------- Watches and multitasks
 // --------------------------------------------------------------------------------------------------------
 
-// gulp.task('watch', function () {
-//     watch('./app/js/**/*.js', function(){
-//         gulp.start('js');
-//     });
-//     watch('./app/less/**/*.less', function(){
-//         gulp.start('less');
-//     });
-//     watch('./app/template/**/*.*', function(){
-//         gulp.start('hbs');
-//     });
-// });
-//
-// // starter task
-// gulp.task('start', ['assets', 'js', 'less', 'hbs', 'connect', 'watch']);
-
-
 // browser sync and watches
-gulp.task('start', ['assets', 'copy_media', 'js', 'less', 'hbs'], function () {
+gulp.task('start', ['assets', 'copy_media', 'js', 'less'], function () {
 
     // browser sync
     browserSync.init({
@@ -134,9 +88,6 @@ gulp.task('start', ['assets', 'copy_media', 'js', 'less', 'hbs'], function () {
     });
     watch('./app/less/**/*.less', function(){
         gulp.start('less');
-    });
-    watch('./app/template/**/*.*', function(){
-        gulp.start('hbs');
     });
     watch('./app/media/**', function(){
         gulp.start('copy_media');

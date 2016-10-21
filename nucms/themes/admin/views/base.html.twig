@@ -14,8 +14,8 @@
         <base href="{{ site_url() }}">
 
         <!-- FAVICO -->
-        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
-        <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('media/img/favicon.ico') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('media/favicon.ico') }}" type="image/x-icon">
 
         <!-- FONTS -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -23,10 +23,9 @@
         <!-- CSS STYLES -->
         {% block stylesheet %}
 
-            <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/dropzone.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('dropzone/css/dropzone.min.css') }}" rel="stylesheet">
             <link href="{{ asset('css/nu.min.css') }}" rel="stylesheet">
-            <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
         {% endblock %}
 
@@ -78,7 +77,7 @@
                             <!-- logo -->
                             <div class="nuLogo">
                                 <a href="{{ site_url() }}" target="_blank"><i class="fa fa-globe"></i></a>
-                                <img src="{{ asset('img/nu.png') }}" alt="nucms">
+                                <img src="{{ asset('media/img/nu.png') }}" alt="nucms">
                             </div>
                             <!-- /logo -->
                         </div>
@@ -155,16 +154,13 @@
                 var selected_locale = '{{ config.selected_locale }}';
                 var admin_url = '{{ admin_url() }}';
             </script>
-            <script src="{{ asset('js/jquery.min.js') }}"></script>
-            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-            <script src="{{ asset('js/functions.js') }}"></script>
-            <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-            <script src="{{ asset('js/dropzone.min.js') }}"></script>
+            <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+            <script src="{{ asset('bootstrap/bootstrap.min.js') }}"></script>
+{#            <script src="{{ asset('js/jquery-ui.min.js') }}"></script>#}
+            <script src="{{ asset('dropzone/js/dropzone.min.js') }}"></script>
             <script src="{{ asset('js/nu.min.js') }}"></script>
-            <script src="{{ asset('js/main.js') }}"></script>
-            <script src="{{ asset('js/nuFileManager.js') }}"></script>
 
-            {% include('components/tiny_mce.html.twig') %}
+{#            {% include('components/tiny_mce.html.twig') %}#}
 
             <script>
 

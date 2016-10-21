@@ -1,0 +1,398 @@
+///////////////////////////////////////////////// inputs focus line
+.form-control {
+    &+.nuFocusLine {
+        position: relative;
+        top: -(@nuBorderHeight);
+        display: block;
+        width: 0;
+        height: @nuBorderHeight;
+        background: @nuColorHighlight;
+        transition: all 0.4s;
+    }
+
+    &+.nuFocusLineDarken {
+        background: darken(@nuColorHighlight, 10%);
+    }
+
+    &:focus {
+        &+.nuFocusLine {
+            width: 100%;
+        }
+    }
+}
+
+
+///////////////////////////////////////////////// switch checkbox
+.nuSwitch {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 23px;
+    cursor: pointer;
+    border-radius: 50px;
+
+    span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: @nuColorLine;
+        border-radius: 50px;
+        transition: 0.3s;
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 3px;
+            left: 20px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50px;
+            background: #fff;
+            transition: 0.3s;
+        }
+    }
+
+    input[type=checkbox]:checked ~ span {
+        background: @nuColorHighlight;
+        &::after {
+            left: 3px;
+        }
+    }
+
+    input { display: none; }
+}
+
+
+///////////////////////////////////////////////// standard checkbox
+.nuCheck {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    // background: red;
+    cursor: pointer;
+    display: block;
+
+    &:hover {
+        span {
+            border-color: @nuColorHighlight;
+        }
+    }
+
+    span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 14px;
+        height: 14px;
+        border: 1px solid @nuColorHelpText;
+        border-radius: 2px;
+        transition: all 0.2s;
+
+        &::after {
+            content: '\f00c';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            font-family: 'FontAwesome';
+            font-size: 24px;
+            line-height: 24px;
+            color: @nuColorHighlight;
+            opacity: 0;
+            transition: all 0.2s;
+            // background: rgba(255, 0, 255, .2);
+        }
+    }
+
+    input[type=checkbox] { display: none; }
+
+    input[type=checkbox]:checked ~ span {
+        border-color: rgba(0, 0, 0, 0);
+
+        &::after {
+            top: -1px;
+            left: -1px;
+            font-size: 14px;
+            line-height: 14px;
+            opacity: 1;
+        }
+    }
+
+    // light checkbox
+    &.nuCheckLight {
+        span {
+            border: 1px solid #fff;
+
+            &::after {
+                color: #fff;
+            }
+        }
+    }
+}
+
+.nuCheckGroup {
+    position: relative;
+    display: inline-block;
+
+    .nuCheck {
+        position: absolute;
+        top: 2px;
+        left: 0;
+    }
+
+    label:last-child, div:last-child {
+        display: block;
+        margin-left: 25px;
+    }
+}
+
+
+///////////////////////////////////////////////// checkbox single and group
+.nuCheckbox-single {
+    position: relative;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: @nuBorderHeight solid @nuColorLine;
+
+    .nuSwitch {
+        position: absolute;
+        right: 0;
+        top: -3px;
+    }
+}
+.nuCategoryList {
+    margin: 10px 0 20px 0;
+    padding: 0 0 18px 0;
+    border-bottom: @nuBorderHeight solid @nuColorLine;
+    max-height: 200px;
+    overflow-y: scroll;
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+
+        ul {
+            padding: 7px 0 0 25px;
+        }
+
+        li {
+            position: relative;
+            padding: 4px 0;
+
+            label {
+                color: @nuColorMain1;
+            }
+        }
+    }
+}
+
+
+///////////////////////////////////////////////// force bootstrap
+// remove all highlights and buttons focuses
+.form-control, .form-control:focus  {
+    box-shadow: none;
+    outline: none;
+}
+.btn, .btn:focus, .btn:active  {
+    box-shadow: none !important;
+    outline: none !important;
+    border: none;
+}
+
+// turn off background after click
+.btn-default:focus, .btn-default:hover { background-color: @btn-default-bg; }
+.btn-primary:focus, .btn-primary:hover { background-color: @brand-primary; }
+.btn-success:focus, .btn-success:hover { background-color: @brand-success; }
+.btn-info:focus, .btn-info:hover { background-color: @brand-info; }
+.btn-warning:focus, .btn-warning:hover { background-color: @brand-warning; }
+.btn-danger:focus, .btn-danger:hover { background-color: @brand-danger; }
+
+// inputs
+.form-control  {
+    height: 46px;
+    border: none;
+}
+
+// hovers
+.btn {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        width: 0%;
+        height: 0%;
+        border-radius: 200px;
+        background: #fff;
+        opacity: 0.2;
+        transition: all 0.4s;
+    }
+
+    &:hover {
+        &::after {
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            opacity: 0.05;
+        }
+    }
+}
+
+// label style
+label {
+    .nuHeadStyle;
+    margin-bottom: 8px;
+
+    i {
+        margin-left: 4px;
+        color: @nuColorHighlight;
+    }
+}
+
+.dropdown-menu > li > a {
+    padding: 6px 20px;
+
+    .fa {
+        width: 25px;
+    }
+}
+
+
+///////////////////////////////////////////////// light forms
+.nuFormLight {
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        padding: 0 0 8px 0;
+        height: 33px;
+        border: none;
+        border-bottom: @nuBorderHeight solid @nuColorLine;
+        border-radius: 0;
+        .nuTitle;
+    }
+
+    label {
+        margin-bottom: 3px;
+        font-size: @font-size-base;
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: 500;
+        color: @nuColorHelpText;
+    }
+}
+
+
+///////////////////////////////////////////////// dark forms
+.nuFormDark {
+    // inputs and buttons
+    .form-control, .btn {
+        height: 46px;
+        line-height: 36px;
+        border: none;
+    }
+
+    // inputs
+    .form-control {
+        background: fade(@nuColorMain2, 40%);
+        color: #fff;
+        transition: all 0.2s;
+
+        &:focus {
+            background: fade(@nuColorMain2, 70%);
+        }
+    }
+
+    // buttons
+    .btn {
+        .nuHeadStyle;
+        padding-left: 30px;
+        padding-right: 30px;
+
+        &.btn-squere {
+            width: 46px;
+            text-align: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    // labels
+    label {
+        color: #fff;
+    }
+
+    // title and lang
+    .nuFormTitle {
+        padding-left: 50px;
+        position: relative;
+
+        .nuFormBack {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 30px;
+            padding: 0 20px 0 10px;
+            background: none !important;
+            color: @nuColorMain2;
+            transition: all 0.2s;
+
+            &:hover {
+                color: #fff;
+                &:after { display: none; }
+            }
+        }
+
+        .ico-flag {
+            margin-right: 10px;
+        }
+        .form-control {
+            font-size: @font-size-large;
+        }
+        .btn-primary {
+            background: fade(@nuColorMain2, 40%);
+            padding-right: 20px;
+            .caret { opacity: .2; }
+        }
+        .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group {
+            margin-right: 0;
+        }
+    }
+
+    // dropdowns
+    .dropdown-menu {
+        background: @nuColorMain2;
+        border: 0;
+
+        &>li >a {
+            color: @nuColorLine;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    // placeholders
+    ::-webkit-input-placeholder { color: fade(#fff, 30%); }
+    :-moz-placeholder { color: fade(#fff, 30%); }
+    ::-moz-placeholder { color: fade(#fff, 30%); }
+    :-ms-input-placeholder { color: fade(#fff, 30%); }
+}
+
+// ----- forms
+.form-control {
+    &.textareaBig {
+        height: 250px !important;
+    }
+}

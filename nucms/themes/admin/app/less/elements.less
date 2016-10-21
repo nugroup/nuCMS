@@ -1,0 +1,181 @@
+////////////////////////////////////////////////////////////// circle graphs
+.nuContent {
+    margin-top: 40px;
+    margin-bottom: 100px;
+
+    .col-margin {
+        margin-bottom: 40px;
+    }
+}
+
+
+//////////////////////// center contant verticle - parent must have position relative and constant height
+.nuVerticle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+
+////////////////////////////////////////////////////////////// circle graphs
+.nuCircle_bg {
+    fill:none;
+    stroke: @nuColorLine;
+    stroke-width:25;
+    stroke-linecap:round;
+    stroke-miterlimit:10;
+    stroke-dasharray:1000,1000;
+}
+
+.nuCircle_main {
+    fill:none;
+    stroke: @nuColorHighlight;
+    stroke-width:25;
+    stroke-linecap:round;
+    stroke-miterlimit:10;
+    stroke-dasharray: 0,1000;
+    transition: all 1s;
+}
+
+
+////////////////////////////////////////////////////////////// heads font
+.nuHeadStyle {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    font-size: 12px;
+}
+
+
+////////////////////////////////////////////////////////////// content header
+.nuTitle {
+    font-size: @font-size-large;
+    color: @nuColorMain1;
+    font-weight: 500;
+}
+
+.nuHead {
+    padding-bottom: 20px;
+    .nuHeadStyle;
+
+    &.nuHeadLine {
+        margin-bottom: 20px;
+        // border-bottom: @nuBorderHeight solid @nuColorLine;
+        border-bottom: @nuBorderHeight solid @nuColorMain2;
+    }
+}
+
+/////////////////////////////////////////////////////////////// pills
+.nav > li > a {
+    padding: 18px 25px;
+    border-top: @nuBorderHeight solid rgba(0, 0, 0, 0);
+    border-radius: 0;
+    color: #fff;
+    .nuHeadStyle;
+    transition: all 0.3s;
+}
+
+.nav > li > a:focus {
+    background: none;
+    outline: 0;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background: none;
+    border-top: @nuBorderHeight solid @nuColorHighlight;
+}
+
+.nav-pills > li > a:hover {
+    background: none;
+    border-top: @nuBorderHeight solid @nuColorMain2;
+}
+
+.tab-close {
+    position: absolute;
+    top: 17px;
+    right: 5px;
+    color: @nuColorMain2;
+    padding: 5px 3px;
+    z-index: 1;
+    transition: all 0.3s;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+/////////////////////////////////////////////////////////////// pagination
+.pagination {
+    margin: 0;
+
+    &.pagination-lg {
+        a {
+            font-size: @font-size-base !important;
+        }
+    }
+}
+
+
+/////////////////////////////////////////////////////////////// dropdowns
+.dropdown-toggle .fa-caret-up, .dropdown-toggle .fa-caret-down { margin-left: 7px }
+
+
+/////////////////////////////////////////////////////////////// icons
+// margin for icons
+.fa-margin {
+    margin-right: 7px;
+}
+
+.btn .fa { font-size: 14px; }
+.btn-lg .fa { font-size: 18px; }
+
+
+/////////////////////////////////////////////////////////////// buttons group list
+ul.nuButtonsList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    &.nuButtonsList-padding {
+        padding-top: 28px;
+    }
+
+    >li {
+        display: inline-block;
+        margin: 0 2px;
+        vertical-align: middle;
+    }
+
+    >li:first-child {
+        margin-left: 0;
+    }
+
+    >li:last-child {
+        margin-right: 0;
+    }
+}
+
+
+/////////////////////////////////////////////////////////////// breadcrumb
+.breadcrumb {
+    margin-bottom: 0;
+}
+
+
+/////////////////////////////////////////////////////////////// alerts
+.nuAlert {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: block;
+    font-weight: 500;
+    opacity: 1;
+    animation: show 0.5s;
+
+    .alert-text {
+        padding: 0 20px;
+        color: #fff;
+    }
+}

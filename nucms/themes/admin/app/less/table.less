@@ -1,0 +1,57 @@
+// graph
+.listCircle {
+    width: 30px;
+    height: 30px;
+    .circle { transform: rotate(-90deg); }
+}
+
+
+// default table styles
+.table {
+    border-bottom: 2px solid @nuColorLine;
+    thead {
+        th {
+            .nuHeadStyle;
+            i {
+                color: @nuColorHelpText;
+                margin-left: 5px;
+            }
+        }
+    }
+    tbody {
+        &>tr {
+            &>td {
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+.table-foot {
+    margin-bottom: 20px;
+}
+
+// columns
+.colCheck {
+    width: 30px;
+}
+.colGraph {
+    width: 60px;
+}
+.colTitle {
+    font-weight: 600;
+}
+.colCreated {
+}
+.colAuthor {
+}
+.colIco {
+    text-align: right;
+
+    .btn-default {
+        background: none;
+    }
+    .nuListIco-flash {
+        color: @nuColorHighlight;
+    }
+}

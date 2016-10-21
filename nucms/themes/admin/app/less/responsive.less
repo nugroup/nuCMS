@@ -1,0 +1,101 @@
+/////////////////////////////////////////////////////////// change paddings
+.container-fluid {
+    &.nuContainer {
+        @media all and (min-width: 1025px) {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+        @media all and (min-width: 1599px) {
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+    }
+}
+
+
+/////////////////////////////////////////////////////////// action bar
+.nuFormTitle {
+    // remove title padding on small screen
+    @media ( max-width: @screen-sm ) {
+        padding-left: 0 !important;
+    }
+
+    .nuFormBack {
+        // move back arrow higher
+        @media ( max-width: @screen-sm ) {
+            top: -67px !important;
+        }
+    }
+}
+
+#nuActionbar {
+    .nuActions {
+        @media ( max-width: @screen-sm ) {
+            padding-top: 20px !important;
+        }
+        .nuActionsButtonsCol {
+            @media ( max-width: @screen-sm ) {
+                padding-bottom: 20px !important;
+            }
+        }
+    }
+}
+
+.nuButtonsList-padding {
+    @media ( max-width: @screen-sm ) {
+        padding-top: 0 !important;
+    }
+}
+
+
+/////////////////////////////////////////////////////////// pills
+.nav {
+    @media ( max-width: @screen-sm ) {
+        .nav-justified;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.nav > li > a {
+    @media ( max-width: @screen-sm ) {
+        border: none !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    @media ( max-width: @screen-sm ) {
+        color: @nuColorHighlight;
+    }
+}
+
+.tab-close {
+    @media ( max-width: @screen-sm ) {
+        top: 7px;
+    }
+}
+
+
+/////////////////////////////////////////////////////////////// pagination
+.pagination {
+    @media ( max-width: @screen-sm ) {
+        margin: 20px 0;
+    }
+}
+
+
+/////////////////////////////////////////////////////////////// login
+.nuLogin-box {
+    @media ( max-width: @screen-sm ) {
+        width: 90% !important;
+        margin-top: 70px !important;
+    }
+}
+.nuLogin-form>div {
+    @media ( max-width: @screen-sm ) {
+        padding-left: 6vw !important;
+        padding-right: 6vw !important;
+    }
+}

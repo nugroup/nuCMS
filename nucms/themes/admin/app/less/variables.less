@@ -1,0 +1,88 @@
+/////////////////////////////////////////////////////////////////////////// nu variables
+@nuColorMain1: #272a31;
+@nuColorMain2: #3f434c;
+@nuColorHighlight: #47c981;
+@nuColorLine: #e6e3e3;
+@nuColorHelpText: fade(@text-color, 40%);
+
+@nuNavbarHeight: 70px; // navbar height
+@nuBorderHeight: 2px; // border for inputs etc
+@nuShadow: 0px 5px 14px 0px rgba(0,0,0,0.04); // main shadow
+
+/////////////////////////////////////////////////////////////////////////// bootstrap variables
+
+// background color for `<body>`.
+@body-bg: #f8f8f8;
+
+// gutter
+@grid-gutter-width: 50px;
+
+// fonts
+@font-family-sans-serif:  'Roboto', Helvetica, Arial, sans-serif;
+@font-size-base: 13px;
+@font-size-large: ceil((@font-size-base * 1.20));;
+@font-size-small: ceil((@font-size-base * 0.85));
+@line-height-base: 1.6;
+@text-color: @nuColorMain1;
+@link-color: @text-color;
+@link-hover-color: @nuColorHighlight;
+@link-hover-decoration: none;
+
+// colors
+@brand-primary: @nuColorMain2;
+@brand-success: @nuColorHighlight;
+@brand-info: #5bc0de;
+@brand-warning: #f0ad4e;
+@brand-danger: #d9534f;
+
+@btn-default-color: @text-color;
+@btn-default-bg: @body-bg;
+
+// radius
+@border-radius-base: 3px;
+@border-radius-large: 3px;
+@border-radius-small: 3px;
+
+// manager
+@nuManager-paddings: 10px;
+
+// inputs
+@input-bg: @body-bg;
+@input-color-placeholder: @nuColorHelpText;
+@input-group-addon-bg: @body-bg;
+
+// dropdowns
+@dropdown-link-hover-color: #fff;
+@dropdown-link-hover-bg: @nuColorHighlight;
+
+// tables
+@table-cell-padding: 12px;
+@table-bg-hover: #f5f5f5;
+@table-border-color: @nuColorLine;
+
+// pagination
+@pagination-color: @link-color;
+@pagination-bg: none;
+@pagination-border: rgba(0,0,0,0);
+@pagination-hover-color: @nuColorHighlight;
+@pagination-hover-bg: none;
+@pagination-hover-border: rgba(0,0,0,0);
+@pagination-active-color: #fff;
+@pagination-active-bg: @nuColorMain2;
+@pagination-active-border: rgba(0,0,0,0);
+@pagination-disabled-color: @nuColorHelpText;
+@pagination-disabled-bg: none;
+@pagination-disabled-border: rgba(0,0,0,0);
+
+// breadcrumbs
+@breadcrumb-padding-vertical: 8px;
+@breadcrumb-padding-horizontal: 0;
+@breadcrumb-bg: none;
+@breadcrumb-color: @text-color;
+@breadcrumb-active-color: @text-color;
+
+// alerts
+@state-success-bg: @brand-success;
+@state-info-bg: @brand-info;
+@state-warning-bg: @brand-warning;
+@state-danger-bg: @brand-danger;

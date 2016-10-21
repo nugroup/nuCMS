@@ -1,0 +1,325 @@
+// main dropdown menu
+.nuDrop
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1031;
+    height: @nuNavbarHeight;
+    transition: background 0.2s;
+
+    &:hover {
+        background: @nuColorMain2;
+        .nuDrop-title {
+            .nuDrop-hamburger {
+                .nuDrop-hamburger-main { top: -@nuNavbarHeight; }
+                .nuDrop-hamburger-hover { top: -@nuNavbarHeight; }
+            }
+        }
+    }
+
+    .nuDrop-title {
+        .nuHeadStyle;
+        position: relative;
+        color: @nuColorHighlight;
+        display: block;
+        height: @nuNavbarHeight;
+        line-height: @nuNavbarHeight;
+        padding: 0 45px 0 66px;
+        cursor: pointer;
+
+        .nuDrop-hamburger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: @nuNavbarHeight;
+            overflow: hidden;
+
+            .nuDrop-hamburger-main {
+                position: relative;
+                top: 0;
+                display: block;
+                width: 100%;
+                height: @nuNavbarHeight;
+                padding-top: @nuNavbarHeight/2-2;
+                padding-left: 30px;
+                transition: all 0.3s;
+
+                i {
+                    display: block;
+                    width: 14px;
+                    height: 1px;
+                    background: @nuColorHighlight;
+
+                    &::before, &::after {
+                        content: '';
+                        position: relative;
+                        display: block;
+                        height: 1px;
+                        background: @nuColorHighlight;
+                    }
+
+                    &::before {
+                        top: -4px;
+                        width: 20px;
+                    }
+
+                    &::after {
+                        top: 3px;
+                        width: 16px;
+                    }
+                }
+            }
+
+            .nuDrop-hamburger-hover {
+                position: relative;
+                top: 0;
+                display: block;
+                width: 100%;
+                height: @nuNavbarHeight;
+                font-size: 16px;
+                padding-left: 32px;
+                transition: all 0.3s;
+            }
+        }
+    }
+
+    // main wrapper for menu
+    .nuDrop-menuWrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        overflow: hidden;
+
+        // menu list
+        ul.nuDrop-menu {
+            position: relative;
+            padding: 20px 0 30px 0;
+            list-style-type: none;
+            background: @nuColorMain2;
+            display: none; // hide on start
+
+            >li {
+                position: relative;
+                left: 0;
+                opacity: 1;
+                list-style-type: none;
+                min-width: 280px;
+
+                >a {
+                    display: block;
+                    padding: 15px 30px;
+                    color: #fff;
+                    font-weight: 500;
+                    background: @nuColorMain2;
+                    transition: background 0.2s;
+
+                    i {
+                        width: 37px;
+                        opacity: .3;
+                        font-weight: 300;
+                        font-size: 14px;
+                    }
+
+                    &:hover {
+                        text-decoration: none;
+                        background: @nuColorHighlight;
+                    }
+
+                    &.nuDrop-fav {
+                        color: @brand-warning;
+                        transition: color 0.3s;
+                        i { opacity: 1; }
+                        &:hover { color: #fff; }
+                    }
+
+                    &.nuDrop-anim-li-hide {
+                        opacity: 0;
+                        // padding-left: 20px;
+
+                        i {
+                            width: 30px;
+                        }
+                    }
+
+                    &.nuDrop-anim-li-show {
+                        animation-name: liAnim;
+                        animation-duration: .3s;
+                        animation-fill-mode: forwards;
+
+                        i {
+                            animation-name: iAnim;
+                            animation-duration: .3s;
+                            animation-fill-mode: forwards;
+                        }
+                    }
+
+                    @keyframes liAnim {
+                        to {
+                            opacity: 1;
+                            // padding-left: 30px;
+                        }
+                    }
+
+                    @keyframes iAnim {
+                        to {
+                            width: 37px;
+                        }
+                    }
+                }
+            }
+        }
+
+        ul.nuDrop-submenu {
+            position: relative;
+            padding: 0 0 0 78px;
+            list-style-type: disc;
+            display: none;
+            color: rgba(255,255,255,0.3);
+
+            li {
+                list-style-type: disc;
+                color: rgba(255,255,255,0.3);
+
+                a {
+                    display: inline-block;
+                    padding: 0;
+                    margin-bottom: 8px;
+                    color: #fff;
+                    font-weight: 400;
+                    opacity: .6;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        text-decoration: none;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+        // submenu trigger
+        .nuDrop-submenu-trigger {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            cursor: pointer;
+
+            i {
+                line-height: 54px;
+                color: #fff;
+                opacity: .3;
+            }
+
+            &:hover {
+                background: @nuColorHighlight;
+            }
+        }
+    }
+}
+
+.form-box {
+    background: #ffffff;
+    padding: 10px 18px;
+    margin: 0 0 10px 0;
+    
+    .form-control {
+        background: #ffffff;
+        border-color: #ffffff !important;
+    }
+}
+
+.addButtons {
+    margin: -45px 0 20px 0;
+}
+.addItem {
+    display: none;
+}
+.editItemInputsGhost {
+    display: none;
+}
+.editItem {
+    display: none;
+}
+.editItemInputs {
+    margin: 10px 0 0 0;
+    display: none;
+}
+
+.menu-items {
+    list-style: none;
+    padding: 0;
+    
+    li {
+        > .handler {
+            background: #ffffff;
+            padding: 10px 18px;
+            margin: 0 0 4px 0;
+            cursor: move;
+            position: relative;
+            .border-radius(3px);
+            
+            .ico {
+                color: #cecece;
+                font-size: 15px;
+                margin: 0 15px 0 0;
+            }
+            .nuButtonList {
+                list-style: none;
+                padding: 0;
+                position: absolute;
+                top: 0;
+                right: 0;
+                
+                .iconItem {
+                    display: inline-block;
+                    background: none;
+                    font-size: 15px;
+                    
+                    > button, > a {
+                        display: block;
+                        background: none;
+                        padding: 10px 10px;
+                        
+                        &:hover, &:focus, &:active {
+                            
+                        }
+                    }
+                    
+                    &:last-child {
+                        > button, > a {
+                            padding: 10px 20px 10px 10px;
+                        }
+                    }
+                }
+            }
+        }
+        
+        ol {
+            list-style: none;
+            padding: 0 0 0 30px;
+        }
+    }
+}
+
+.dropdown-menu {
+    > div {
+        cursor: initial;
+        display: block;
+        clear: both;
+        font-weight: 400;
+        line-height: 1.6;
+        color: #333;
+        white-space: nowrap;
+        
+        a {
+            padding: 6px 20px;
+            display: block;
+            cursor: pointer;
+        }
+    }
+}

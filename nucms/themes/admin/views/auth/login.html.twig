@@ -13,28 +13,11 @@
 
     <div class="nuLogin-wrapper">
 
-        <!-- alerts -->
-        {% if(validation_errors()) %}
-
-            <div class="alert alert-danger">
-                {{ validation_errors() | raw }}
-            </div>
-
-        {% endif %}
-
-        {% if (flashdata('error')) %}
-
-            <div class="alert alert-danger">
-                {{ flashdata('error') }}
-            </div>
-
-        {% endif %}
-
         <div class="nuLogin-box">
 
             <!-- nu logo -->
             <div class="nuLogin-logo">
-                <img src="{{ asset('img/nu_white.png') }}" alt="nucms">
+                <img src="{{ asset('media/img/nu_white.png') }}" alt="nucms">
             </div>
 
             <div class="nuLogin-form">
@@ -58,8 +41,8 @@
 
                     <div class="nuLogin-buttons">
                         <ul class="nuButtonsList nuButtonsList nuFormDark">
-                            <li><button class="btn btn-primary btn-squere remindTrigger" type="button"><i class="fa fa-question"></i></button></li><!--
-                            --><li><button class="btn btn-primary" type="submit"><i class="fa fa-lock"></i> {{ lang('auth.login.button') }}</button></li>
+{#                            <li><button class="btn btn-primary btn-squere remindTrigger" type="button"><i class="fa fa-question"></i></button></li>#}
+                            <li><button class="btn btn-primary" type="submit"><i class="fa fa-lock"></i> {{ lang('auth.login.button') }}</button></li>
                         </ul>
                     </div>
 
@@ -83,7 +66,7 @@
 
                     <div class="nuLogin-buttons">
                         <ul class="nuButtonsList nuButtonsList nuFormDark">
-                            <li><button class="btn btn-primary btn-squere remindTrigger" type="button"><i class="fa fa-angle-left"></i></button></li><!--
+                            <li><button class="btn btn-primary btn-squere remindTrigger" type="button"><i class="fa fa-angle-left"></i></button></li>
                             --><li><button class="btn btn-primary" type="submit"><i class="fa fa-send"></i> Wyślij</button></li>
                         </ul>
                     </div>

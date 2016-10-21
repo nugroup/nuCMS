@@ -1,0 +1,58 @@
+#nuNavbar
+{
+    position: relative;
+    background-color: @nuColorMain1;
+    height: @nuNavbarHeight;
+
+    .nuLogo {
+        position: absolute;
+        top: 0;
+        right: 30px;
+        height: @nuNavbarHeight;
+        line-height: @nuNavbarHeight;
+
+        a {
+            position: relative;
+            top: 2px;
+            font-size: 16px;
+            color: @nuColorMain2;
+            margin-right: 20px;
+            transition: all 0.3s;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    #nuNav {
+
+        ul#nuNavList {
+            list-style-type: none;
+
+            li {
+                display: inline-block;
+
+                a {
+                    display: block;
+                    height: @nuNavbarHeight;
+                    line-height: @nuNavbarHeight;
+                    padding: 0 25px;
+                    border-bottom: @nuBorderHeight solid rgba(0, 0, 0, 0);
+                    .nuHeadStyle;
+                    color: #fff;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        text-decoration: none;
+                        border-bottom: @nuBorderHeight solid @nuColorMain2;
+                    }
+
+                    &.nuNavActive {
+                        border-bottom: @nuBorderHeight solid @nuColorHighlight;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,126 @@
+#nuManager
+{
+    .nuManager-head {
+        margin-bottom: 30px;
+    }
+
+    // change bootstrap paddings/margins
+    .nuManager-row {
+        margin-left : -(@nuManager-paddings);
+        margin-right : -(@nuManager-paddings);
+        margin-bottom : 20px;
+
+        .nuManager-col {
+            padding-right: @nuManager-paddings;
+            padding-left: @nuManager-paddings;
+            line-height: 0;
+            margin-bottom: (@nuManager-paddings)*2;
+        }
+    }
+
+    // files wrappers for ratio
+    .nuManager-ratio-wrapper {
+        width: 100%;
+        /* whatever width you want */
+        display: inline-block;
+        position: relative;
+    }
+    .nuManager-ratio-wrapper:after {
+        // padding-top: 56.25%; /* 16:9 ratio */
+        padding-top: 66%;
+        display: block;
+        content: '';
+    }
+    .nuManager-ratio {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background: @nuColorHighlight;
+        line-height: @line-height-base;
+    }
+
+    // checkbox
+    .nuManager-check {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        z-index: 10;
+    }
+
+    // options
+    .nuManager-options {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 5px 5px;
+        z-index: 10;
+
+        .btn {
+            background: none;
+            width: 25px;
+            height: 30px;
+            padding: 0;
+            line-height: 30px;
+            color: #fff;
+        }
+
+        ul li:first-child .btn i {
+            position: relative;
+            top: -1px;
+        }
+    }
+
+    // photos
+    .nuManager-photo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: @nuColorMain2;
+        overflow: hidden;
+        transition: all 0.3s;
+
+        img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+    }
+
+    // files
+    .nuManager-file {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: @nuColorMain2;
+        color: @nuColorLine;
+        overflow: hidden;
+        transition: all 0.3s;
+
+        i {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+            text-align: center;
+            font-size: 60px;
+            color: rgba(255, 255, 255, .1);
+        }
+
+        span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 10px;
+        }
+    }
+
+    // checked
+    .nuManager-checked {
+        opacity: .3;
+    }
+}

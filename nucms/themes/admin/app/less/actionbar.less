@@ -1,0 +1,48 @@
+#nuActionbar
+{
+    // container settings
+    position: relative;
+    z-index: 10;
+    background-color: @nuColorMain1;
+    background-image: url(../media/img/bg.png);
+    background-position: center top;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    min-height: 200px;
+
+    // main actions row - title, save btn etc
+    .nuActions {
+        min-height: 140px;
+        position: relative;
+        z-index: 20;
+        padding-top: 55px;
+        padding-bottom: 20px;
+        transition: all 0.3s;
+
+        &.nuActions-small {
+            padding-top: 45px;
+        }
+    }
+
+    // inline filter form
+    .nuFormInline {
+        margin-left : -5px;
+        margin-right : -5px;
+
+        .nuFormInlice-col {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        .nuFormInlice-col:not(:last-child) {
+            // padding-right: 5px;
+        }
+        .nuFormInlice-col:not(:first-child) {
+            // padding-left: 5px;
+        }
+    }
+}
+
+// hide filtters
+[data-nu-filtertoggled] {
+    display: none;
+}

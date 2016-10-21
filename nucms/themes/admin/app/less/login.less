@@ -1,0 +1,110 @@
+.nuLogin-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: @nuColorMain1;
+    background-image: url(../media/img/bg.png);
+    background-position: center top;
+    background-repeat: repeat;
+    background-attachment: fixed;
+
+    // login box
+    .nuLogin-box {
+        position: relative;
+        top: 0;
+        width: 420px;
+        height: 500px;
+        margin: 50px auto 25px auto;
+        border-radius: @border-radius-base;
+        box-shadow: @nuShadow;
+        background: @nuColorHighlight;
+        text-align: left;
+        overflow: hidden;
+        color: #fff;
+        animation-name: loginAnim;
+        animation-duration: 1s;
+
+        @keyframes loginAnim {
+            from { top: -20px; opacity: 0; }
+            to { top: 0; opacity: 1; }
+        }
+
+        .nuLogin-logo {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        // login forms
+        .nuLogin-form {
+            position: relative;
+            left: 0;
+            width: 200%;
+            transition: all 0.3s;
+
+            &.showRemind {
+                left: -100%;
+            }
+
+            &::after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+
+            >div {
+                padding: 0 50px;
+                width: 50%;
+                float: left;
+
+                .nuLogin-buttons {
+                    margin-top: 30px;
+                    text-align: right;
+                }
+            }
+
+            .btn {
+                line-height: 20px;
+            }
+        }
+
+        .nuForm-remindtxt {
+            margin-bottom: 30px;
+        }
+    }
+
+    .nuLogin-footer {
+        color: #fff;
+        margin-bottom: 25px;
+
+        a {
+            color: #fff;
+            transition: all 0.3s;
+            &:hover { color: @nuColorHighlight; }
+        }
+    }
+}
+
+.nuLogin-head {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    color: #fff;
+    z-index: 10;
+
+    a {
+        color: #fff;
+        transition: all 0.3s;
+        &:hover { color: @nuColorHighlight; }
+        i { margin-right: 10px; }
+    }
+}
