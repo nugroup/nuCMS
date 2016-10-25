@@ -8,8 +8,7 @@
             form_textarea({
                 'name': 'content[content]',
                 'value': block.content.content,
-                'class': 'form-control tinyEditor textareaBig',
-                'id': 'content_' ~ block.hash_id
+                'class': 'form-control tinyEditor textareaBig'
             })
         }}
 
@@ -17,13 +16,7 @@
 
     <script>
 
-        var tinyTextarea = tinymce.get('content_{{ block.hash_id }}');
-
-        if (tinyTextarea !== null) {
-            tinyTextarea.remove();
-        }
-
-        initTiny();
+        runTrumbowyg();
 
     </script>
 

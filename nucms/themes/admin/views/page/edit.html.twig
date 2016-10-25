@@ -193,8 +193,15 @@
 
             <div class="row tab-pane fade" role="tabpanel" id="modules">
                 <div class="col-xs-12">
-                    {{ form_textarea({'name': 'content', 'value': page.content, 'class': 'form-control', 'id': 'content', 'v-model': 'mapString', 'style': 'display: none;'}) }}
-                    <nublox :modules="[{type: 'html', name: 'HTML', icon: 'code'}, {type: 'text', name: 'Text', icon: 'file-text-o'}, {type: 'icon', name: 'Icon', icon: 'fire'}]"></nublox>
+                    {{ form_textarea({'name': 'content', 'value': page.content, 'class': 'form-control', 'id': 'nublox-content', 'style': 'display: none;'}) }}
+                    
+                    <nublox testtemplate="nublox-createtemplate" output="nublox-content" imgpath="{{ asset('nublox/assets/') }}" :input="{
+                        modules: [
+                            { name: 'Html', type: 'html', ico: 'fa fa-code' },
+                            { name: 'Text', type: 'text', ico: 'fa fa-align-left' },
+                            { name: 'Icon', type: 'icon', ico: 'fa fa-fire' },
+                        ]
+                    }"></nublox>
                 </div>
             </div>
 
@@ -218,9 +225,16 @@
 
     {{ parent() }}
 
-    <script src="{{ asset('js/nublox/nublox.js') }}"></script>
-    <script src="{{ asset('js/nublox/nubloxTabs.js') }}"></script>
+    <script src="{{ asset('nublox/nublox.min.js') }}"></script>
+    <script>
+        $('#page-edit-form').submit(function() {
 
+            $('.blockEditContent').remove();
+            $(this).submit();
+
+        });
+    </script>
+            
     <script>
 
         $(document).on('change', '#page-edit-form', function () {

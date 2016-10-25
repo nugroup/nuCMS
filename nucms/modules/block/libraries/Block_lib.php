@@ -10,7 +10,7 @@ class Block_lib
 {
     private $CI;
     private $config;
-    private $fontFilePath = 'fonts/fontawesome/font-awesome.txt';
+    private $fontFilePath = 'media/txt/font-awesome.txt';
 
     public function __construct()
     {

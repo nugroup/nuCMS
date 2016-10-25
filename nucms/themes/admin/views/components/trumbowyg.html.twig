@@ -1,0 +1,30 @@
+<link href="{{ asset('trumbowyg/ui/trumbowyg.min.css') }}" rel="stylesheet">
+<link href="{{ asset('trumbowyg/plugins/colors/ui/trumbowyg.colors.min.css') }}" rel="stylesheet">
+<script src="{{ asset('trumbowyg/trumbowyg.min.js') }}"></script>
+<script src="{{ asset('trumbowyg/plugins/colors/trumbowyg.colors.min.js') }}"></script>
+
+<script>
+
+    function runTrumbowyg() {
+
+        $('.tinyEditor').trumbowyg({
+            btns: [
+                ['viewHTML'],
+                ['formatting'],
+                'btnGrp-semantic',
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                'btnGrp-justify',
+                'btnGrp-lists',
+                'foreColor',
+                'backColor',
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen']
+            ]
+        });
+
+    }
+
+</script>

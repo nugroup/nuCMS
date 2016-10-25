@@ -9,12 +9,24 @@
         { "source": "./node_modules/font-awesome/css/font-awesome.min.css",  "copyTo": "./assets/font-awesome/css/" },
         { "source": "./node_modules/font-awesome/fonts/*",  "copyTo": "./assets/font-awesome/fonts/" },
         
-        { "source": "./node_modules/dropzone/dist/min/dropzone.min.js",  "copyTo": "./assets/dropzone/js/" },
-        { "source": "./node_modules/dropzone/dist/min/dropzone.min.css",  "copyTo": "./assets/dropzone/css/" },
+        { "source": "./node_modules/dropzone/dist/min/dropzone.min.js",  "copyTo": "./assets/dropzone/" },
+        { "source": "./node_modules/dropzone/dist/min/dropzone.min.css",  "copyTo": "./assets/dropzone/" },
         
-        { "source": "./node_modules/dropzone/dist/nublox.min.js",  "copyTo": "./assets/nublox/js/" },
+        { "source": "./node_modules/nublox/dist/nublox.min.js",  "copyTo": "./assets/nublox/" },
+        { "source": "./node_modules/nublox/dist/assets/*",  "copyTo": "./assets/nublox/assets/" },
         
-        { "source": "./node_modules/nestedSortable/jquery.mjs.nestedSortable.js",  "copyTo": "./assets/nested-sortable/js/" }
+        { "source": "./node_modules/nestedSortable/jquery.mjs.nestedSortable.js",  "copyTo": "./assets/nested_sortable/" },
+        
+        { "source": "./node_modules/jquery-ui-dist/jquery-ui.min.js",  "copyTo": "./assets/jquery_ui/" },
+        { "source": "./node_modules/jquery-ui-dist/jquery-ui.min.css",  "copyTo": "./assets/jquery_ui/" },
+        { "source": "./node_modules/jquery-ui-dist/images/*",  "copyTo": "./assets/jquery_ui/images/" },
+        
+        { "source": "./node_modules/trumbowyg/dist/trumbowyg.min.js",  "copyTo": "./assets/trumbowyg/" },
+        { "source": "./node_modules/trumbowyg/dist/plugins/**/*",  "copyTo": "./assets/trumbowyg/plugins/" },
+        { "source": "./node_modules/trumbowyg/dist/ui/icons.svg",  "copyTo": "./assets/trumbowyg/ui/" },
+        { "source": "./node_modules/trumbowyg/dist/ui/trumbowyg.min.css",  "copyTo": "./assets/trumbowyg/ui/" },
+        { "source": "./node_modules/trumbowyg/dist/langs/en.min.js",  "copyTo": "./assets/trumbowyg/langs/" },
+        { "source": "./node_modules/trumbowyg/dist/langs/pl.min.js",  "copyTo": "./assets/trumbowyg/langs/" }
 
     ]
 }
