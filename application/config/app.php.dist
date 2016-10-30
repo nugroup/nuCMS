@@ -52,3 +52,8 @@ $config['twig_user_functions'] = [
 ============================================================================= */
 $config['languages'] = [];
 $config['languages_by_locale'] = [];
+
+/* files
+============================================================================= */
+$config['upload_folder'] = 'uploads';
+$config['upload_max_file_size'] = 50; // MB
