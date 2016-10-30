@@ -3,7 +3,7 @@ $(function () {
     var nav = $('#nuActionsTabs'); // Tabs navigator
     var content = $('.tab-content'); // Tabs content
     var holder = $('#modulesHolder'); // Module and templates holder
-    
+
     /**
      * Create new tab
      *
@@ -59,7 +59,7 @@ $(function () {
      * Edit module in nuBlox event
      */
     $('body').on('nublox.edit', function (e, info) {
-        
+
         var blockJson = $('input[name="blocks[' + info.id + ']"');
         if (blockJson.length === 0) {
             var moduleObject = {
@@ -105,5 +105,5 @@ $(function () {
         return false;
 
     });
-    
+
 });

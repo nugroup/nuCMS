@@ -116,7 +116,7 @@ class Page_nu extends Backend_Controller
                 }
                 
                 // Save blocks
-                $this->block->save_blocks($this->input->post('blocks'));
+                $this->block->save_blocks($this->input->post('blocks'), $this->input->post('content'));
                 
                 // Update route
                 $this->form_validation->set_rules($this->route->rules['update']);

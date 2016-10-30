@@ -14,7 +14,7 @@ class Block_model extends MY_Model
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
-    protected $after_get = array('decode_content');
+//    protected $after_get = array('decode_content');
 
     function __construct()
     {
@@ -67,8 +67,12 @@ class Block_model extends MY_Model
      * 
      * @param array $blocks
      */
-    public function save_blocks($blocks)
+    public function save_blocks($blocks, $content)
     {
+        $CI =& get_instance();
+//        $blocksInMap = $CI->block_lib->decode_content_map($content);
+//        dump($blocksInMap);
+//        die();
         if ($blocks) {
             foreach ($blocks as $block) {
                 $decodedBlock = json_decode($block);
@@ -89,20 +93,23 @@ class Block_model extends MY_Model
      * Decode content json format to the object
      *
      * @param array $data
+     * 
      * @return array/object
      */
     public function decode_content($data)
     {
+        $CI =& get_instance();
+
         if (isset($data[0])) {
             $i = 0;
             foreach ($data as $row) {
-                $data[$i]['content'] = json_decode($row['content']);
+                $data[$i] = $CI->block_lib->prepare_block_data($row, true);
                 $i++;
             }
         } else {
-            $data['content'] = json_decode($data['content']);
+            $data = $CI->block_lib->prepare_block_data($data, true);
         }
-
+        
         return $data;
     }
 

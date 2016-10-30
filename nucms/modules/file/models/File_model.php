@@ -55,6 +55,44 @@ class File_model extends MY_Model
             $this->db->like('name', $string);
         }
     }
+    
+    /**
+     * Get file extension
+     *
+     * @param array $data
+     * @return array
+     */
+    public function get_extension($data)
+    {
+        if (isset($data[0])) {
+
+            $i = 0;
+            foreach ($data as $row) {
+                $data[$i]['extension'] = extension($row['filename']);
+
+                $i++;
+            }
+        } else {
+
+            $data['extension'] = extension($data['filename']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get all files by ids
+     * 
+     * @param array $filesIds
+     * 
+     * @return array/boolean
+     */
+    public function get_files_by_ids($filesIds)
+    {
+        $this->db->where_in($this->primary_key, $filesIds);
+        
+        return $this->get_all();
+    }
 
     /**
      * Delete file from server (BEFORE_DELETE EVENT)
@@ -95,30 +133,6 @@ class File_model extends MY_Model
                     }
                 }
             }
-        }
-
-        return $data;
-    }
-
-    /**
-     * Get file extension
-     *
-     * @param array $data
-     * @return array
-     */
-    public function get_extension($data)
-    {
-        if (isset($data[0])) {
-
-            $i = 0;
-            foreach ($data as $row) {
-                $data[$i]['extension'] = extension($row['filename']);
-
-                $i++;
-            }
-        } else {
-
-            $data['extension'] = extension($data['filename']);
         }
 
         return $data;

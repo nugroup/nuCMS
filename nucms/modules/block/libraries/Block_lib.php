@@ -19,6 +19,7 @@ class Block_lib
         $this->CI->load->helper('file');
         $this->CI->load->helper('block/block');
         $this->CI->load->model('block/block_model', 'block');
+        $this->CI->load->model('file/file_model', 'file');
         $this->config = $this->CI->config->item('block');
     }
 
@@ -57,7 +58,6 @@ class Block_lib
         $blocks = array();
         $result = array();
         $decodedMap = $this->decode_map($map);
-
         if (!empty($decodedMap)) {
             $iterator = new RecursiveArrayIterator($decodedMap);
             iterator_apply($iterator, 'traverseStructure', array($iterator, &$blocks));
@@ -68,7 +68,9 @@ class Block_lib
             $result = $this->CI->block->get_all();
             if ($result) {
                 foreach ($result as $row) {
-                    $row->json_format = json_encode($row);
+                    $json = $row;
+                    $json->content = json_decode($json->content);
+                    $row->json_format = json_encode($json);
                 }
             }
         }
@@ -118,7 +120,7 @@ class Block_lib
             $blocks = array_to_array_by_key_single($blocks, 'hash_id');
 
             foreach ($blocks as $block) {
-                $block->content = $this->prepare_block_data($block->content, $block->type);
+                $block = $this->prepare_block_data($block);
             }
         }
 
@@ -148,7 +150,7 @@ class Block_lib
                     $html .= render_twig('block/block_'.$box->moduleType, $data, true);
                 } else {
                     $data = [
-                        'col_lg' => isset($box->size_lg) ? $box->size_lg : 0
+                        'settings' => $box->settings
                     ];
                     $html .= render_twig('block/block_'.$box->type, $data, true);
                 }
@@ -161,7 +163,7 @@ class Block_lib
 
         return $html;
     }
-
+    
     /**
      * Prepare block data by type
      * 
@@ -170,15 +172,39 @@ class Block_lib
      * 
      * @return array
      */
-    public function prepare_block_data($content, $type)
+    public function prepare_block_data($block, $returnAsArray = false)
     {
-        if ($type == 'html') {
-            return $content;
-        } elseif ($type == 'text') {
-            return $content;
-        } elseif ($type == 'icon') {
-            return $content;
+        $block = (object) $block;
+        $files = [];
+        $content = (is_object($block->content)) ? $block->content : json_decode($block->content);
+        
+        if ($block->type == 'gallery') {
+            $filesIds = [];
+
+            if (isset($content->photos) && $content->photos) {
+                foreach ($content->photos as $photo) {
+                    $filesIds[] = $photo->file_id;
+                }
+                
+                if (!empty($filesIds)) {
+                    $files = $this->CI->file->get_files_by_ids($filesIds);
+                }
+                
+                $content->photos = (array) $content->photos;
+            }
         }
+        
+        // Set data
+        $block->content = $content;
+        if ($files) {
+            $block->files = array_to_array_by_key_single($files, 'id');
+        }
+        
+        if ($returnAsArray) {
+            return (array) $block;
+        }
+
+        return $block;
     }
 }
 

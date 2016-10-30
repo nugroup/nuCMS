@@ -42,6 +42,7 @@ class NU_Controller extends MX_Controller
         $this->load->helper('widget');
         $this->load->helper('paths');
         $this->load->helper('twig');
+        $this->load->helper('file/media');
 
         // libraires
         $this->load->library('form_validation');

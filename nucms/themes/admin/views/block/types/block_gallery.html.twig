@@ -1,1 +1,202 @@
-GALLERY
+{% extends 'block/types/block_base.html.twig' %}
+
+{% block content %}
+
+    <div class="col-xs-12">
+
+        <div class="row galleryRow">
+            <div class="galleryList" data-id="{{ block.global == 1 ? block.id : block.hash_id }}">
+
+                {% for key, photo in block.content.photos %}
+
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 galleryCol">
+                        <div class="galleryItem" data-key="{{ key }}">
+                            <div class="galleryItemWrapper">
+                                {{ generate_thumbnail(attribute(block.files, photo.file_id), '', photo.alt, photo.title) | raw }}
+
+                                <div class="galleryItemOptions">
+                                    <ul class="nuButtonsList">
+                                        <li>
+                                            <div class="dropdown">
+                                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li><a href="javascript:void(0);" class="galleryItemEdit"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
+                                                    <li><a href="javascript:void(0);" class="galleryItemDelete"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <input type="hidden" data-name="file_id" name="content[photos][{{ key }}][file_id]" value="{{ photo.file_id}}">
+                                <input type="hidden" data-name="alt" name="content[photos][{{ key }}][alt]" value="{{ photo.alt}}">
+                                <input type="hidden" data-name="title" name="content[photos][{{ key }}][title]" value="{{ photo.title}}">
+                                <input type="hidden" data-name="description" name="content[photos][{{ key }}][description]" value="{{ photo.description}}">
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 galleryCol disabledSort">
+                    <div class="galleryItem galleryAdd">
+                        <div class="galleryItemWrapper">
+                            <i class="fa fa-plus add"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" data-name="next_index" name="content[next_index]" value="{{ block.content.next_index ?: 0 }}">
+
+            </div><!--/.galleryList-->
+        </div>
+
+    </div>
+
+    <div class="modal fade galleryModal" data-id="{{ block.global == 1 ? block.id : block.hash_id }}" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ lang('block.form.alt') }}</label>
+                        {{ form_input({'name': 'alt', 'class': 'form-control'}) }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ lang('block.form.title') }}</label>
+                        {{ form_input({'name': 'title', 'class': 'form-control'}) }}
+                    </div>
+                    <div class="form-group">
+                        <label>{{ lang('block.form.description') }}</label>
+                        {{ form_textarea({'name': 'description', 'class': 'form-control'}) }}
+                    </div>
+                    {{ form_hidden('key') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary galleryItemOptionsSave">{{ lang('save') }}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <script>
+
+        var emptyItem = `
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 galleryCol">
+                <div class="galleryItem" data-key="##INDEX##">
+                    <div class="galleryItemWrapper">
+                        <img src="" class="img-responsive">
+    
+                        <div class="galleryItemOptions">
+                            <ul class="nuButtonsList">
+                                <li>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="javascript:void(0);" class="galleryItemEdit"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
+                                            <li><a href="javascript:void(0);" class="galleryItemDelete"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <input type="hidden" data-name="file_id" name="content[photos][##INDEX##][file_id]">
+                    <input type="hidden" data-name="alt" name="content[photos][##INDEX##][alt]">
+                    <input type="hidden" data-name="title" name="content[photos][##INDEX##][title]">
+                    <input type="hidden" data-name="description" name="content[photos][##INDEX##][description]">
+                </div>
+            </div>
+        `;
+    
+        /**
+         * Run nuFileManager on add button
+         */
+        $('.galleryList[data-id="{{ block.global == 1 ? block.id : block.hash_id }}"] .galleryAdd').nuFileManager({
+            singleItem: false,
+            onlyImage: true,
+            dialogUrl: "{{ admin_url('file/modal') }}",
+            onAfterAdd: function (files) {
+
+                if (files !== undefined) {
+                    var gallery = $('.galleryList[data-id="{{ block.global == 1 ? block.id : block.hash_id }}"]');
+                    var index = parseInt(gallery.find('input[data-name="next_index"]').val());
+                    for (var i in files) {
+                        if (files[i].is_image === true) {
+
+                            gallery.prepend(emptyItem.replace(/##INDEX##/g, index));
+                            var newItem = gallery.children().first();
+                            newItem.find('img').attr('src', files[i].src);
+                            newItem.find('input[data-name="file_id"]').val(files[i].id);
+                            gallery.find('input[data-name="next_index"]').val(++index);
+                        }
+                    }
+                }
+
+            }
+        });
+        
+        $('.galleryList').nestedSortable({
+            listType: 'div',
+            items: 'div.galleryCol:not(.disabledSort)',
+            helper: 'clone',
+        });
+
+        /**
+         * Delete gallery item
+         */
+        $(document).on('click', '.galleryItemDelete', function() {
+
+            $(this).closest('.galleryCol').remove();
+
+        });
+
+        /**
+         * Edit gallery item options (alt, title, description)
+         */
+        $(document).on('click', '.galleryItemEdit', function() {
+
+            var galleryList = $(this).closest('.galleryList');
+            var blockId = galleryList.attr('data-id');
+            var gallery = $(this).closest('.galleryItem');
+            var key = parseInt(gallery.attr('data-key'));
+            var modal = $('.galleryModal[data-id="' + blockId + '"]');
+            
+            var galleryAlt = gallery.find('input[data-name="alt"]').val().toString();
+            var galleryTitle = gallery.find('input[data-name="title"]').val().toString();
+            var galleryDescription = gallery.find('input[data-name="description"]').val().toString();
+            
+            modal.find('input[name="alt"]').val(galleryAlt);
+            modal.find('input[name="title"]').val(galleryTitle);
+            modal.find('textarea[name="description"]').val(galleryDescription);
+            modal.find('input[name="key"]').val(key);
+            
+            modal.modal('show');
+
+        });
+        
+        /**
+         * Save gallery item options (alt, title, description)
+         */
+        $(document).on('click', '.galleryItemOptionsSave', function() {
+            
+            var galleryModal = $(this).closest('.galleryModal');
+            var blockId = galleryModal.attr('data-id');
+            var galleryList = $('.galleryList[data-id="'+blockId+'"]');
+            var galleryAlt = galleryModal.find('input[name="alt"]').val().toString();
+            var galleryTitle = galleryModal.find('input[name="title"]').val().toString();
+            var galleryDescription = galleryModal.find('textarea[name="description"]').val().toString();
+            var key = parseInt(galleryModal.find('input[name="key"]').val());
+            var gallery = galleryList.find('.galleryItem[data-key="'+key+'"]');
+            
+            gallery.find('input[data-name="alt"]').val(galleryAlt);
+            gallery.find('input[data-name="title"]').val(galleryTitle);
+            gallery.find('input[data-name="description"]').val(galleryDescription);
+            
+            galleryModal.modal('hide');
+
+        });
+
+    </script>
+
+{% endblock %}

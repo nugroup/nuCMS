@@ -3,6 +3,8 @@
     $.fn.nuFileManager = function (options) {
 
         // Variables
+        var d = new Date();
+        var modalTime = d.getTime();
         var modalId = "nuFileManager-modal";
 
         // This is the easiest way to have default options.
@@ -10,9 +12,9 @@
             singleItem: false,
             dialogUrl: "",
             submitButtonId: "nuManagerSubmit",
-            formId: "files-list-form"
+            formId: "files-list-form",
+            onlyImage: false
         }, options);
-
 
         // this.click is equivalent to $(identifier).click()
         this.click(function () {
@@ -22,7 +24,7 @@
         });
 
         // submit action
-        $(document).on('click', '#' + settings.submitButtonId, function () {
+        $(document).on('click', '#' + settings.submitButtonId+'[data-time="'+modalTime+'"]', function () {
 
             if (options.onAfterAdd !== undefined) {
 
@@ -74,20 +76,25 @@
                 $('body').append(modalHtml);
 
                 if (settings.dialogUrl !== "") {
-                    $('#' + modalId).find('.modal-body').load(settings.dialogUrl, function () {
+                    $('#' + modalId).find('.modal-body').load(settings.dialogUrl, {'onlyImage': settings.onlyImage}, function () {
 
+                        $('#' + settings.submitButtonId).attr('data-time', modalTime);
+    
                         // uncheck all visible checkboxes
                         $('.filesList').find('input[type="checkbox"]').each(function () {
                             $(this).attr('checked', false);
                             $(this).prop('checked', false);
                         });
 
-                        // show modal
-                        $('#' + modalId).modal('show');
-
                     });
                 }
             }
+            
+            // change time
+            $('#' + settings.submitButtonId).attr('data-time', modalTime);
+
+            // show modal
+            $('#' + modalId).modal('show');
 
         }
 

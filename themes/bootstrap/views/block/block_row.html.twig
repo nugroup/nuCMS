@@ -1,3 +1,11 @@
+{% set style = (settings.style) ? ' style="'~settings.style~'"' : '' %}
+{% set id = (settings.id) ? ' id="'~settings.id~'"' : '' %}
+{% set class = (settings.class) ? ' class="'~settings.class~'"' : '' %}
+
 <div class="row">
-    ##INSIDE##
+    <div{{ style | raw }}{{ id | raw }}{{ class | raw }}>
+        ##INSIDE##
+        
+        <div class="clearfix"></div>
+    </div>
 </div>

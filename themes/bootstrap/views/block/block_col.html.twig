@@ -1,3 +1,9 @@
-<div class="col-lg-{{ col_lg }}">
-    ##INSIDE##
+{% set style = (settings.style) ? ' style="'~settings.style~'"' : '' %}
+{% set id = (settings.id) ? ' id="'~settings.id~'"' : '' %}
+{% set class = (settings.class) ? ' class="'~settings.class~'"' : '' %}
+
+<div class="col-xs-{{ settings.size_xs }} col-sm-{{ settings.size_sm }} col-md-{{ settings.size_md }} col-lg-{{ settings.size_lg }}">
+    <div{{ style | raw }}{{ id }}{{ class }}>
+        ##INSIDE##
+    </div>
 </div>

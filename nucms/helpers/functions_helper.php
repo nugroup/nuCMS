@@ -276,7 +276,6 @@ if (!function_exists('sort_header')) {
         $url = remove_querystring_var(current_full_url(), 'sort');
         $url = remove_querystring_var($url, 'sort_type');
         $sortType = 'asc';
-//        $ico = '<i class="fa fa-angle-down"></i>';
         $ico = '<i class="fa fa-sort" aria-hidden="true"></i>';
         $prefix = (strpos($url, '?')) ? '&' : '?';
 

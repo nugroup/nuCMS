@@ -77,5 +77,3 @@ $config['pages_route_controller'] = 'page/page_nu/show/';
 /* files
 ============================================================================= */
 $config['upload_action'] = $config['admin_url'].'file/upload';
-$config['upload_folder'] = 'uploads';
-$config['upload_max_file_size'] = 50; // MB

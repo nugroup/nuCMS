@@ -1,0 +1,9 @@
+<div class="nuBlock nuBlock-gallery">
+    {% for photo in block.content.photos %}
+        
+        <figure>
+            {{ generate_thumbnail(attribute(block.files, photo.file_id), '', photo.alt, photo.title) | raw }}
+        </figure>
+        
+    {% endfor %}
+</div>

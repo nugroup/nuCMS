@@ -10,4 +10,5 @@ $config['types'] = array(
     'html' => lang('block.type.html'),
     'text' => lang('block.type.text'),
     'icon' => lang('block.type.icon'),
+    'gallery' => lang('block.type.gallery'),
 );

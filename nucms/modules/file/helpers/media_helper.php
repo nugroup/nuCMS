@@ -79,7 +79,7 @@ if (!function_exists('generate_thumbnail')) {
      * @param object $file
      * @return string
      */
-    function generate_thumbnail($file, $size = '', $alt = '', $title = '')
+    function generate_thumbnail($file, $size = '', $alt = '', $title = '', $class = 'img-responsive')
     {
         $file_extension = extension($file->filename);
 
@@ -87,7 +87,7 @@ if (!function_exists('generate_thumbnail')) {
             case 'jpg':
             case 'jpeg':
             case 'png':
-                $result = '<img src="'.base_url().config_item('upload_folder').'/'.$file->filename.'" alt="'.$alt.'" title="'.$title.'">';
+                $result = '<img src="'.base_url().config_item('upload_folder').'/'.$file->filename.'" alt="'.$alt.'" title="'.$title.'" class="'.$class.'">';
                 break;
             case 'avi':
             case 'mp4':

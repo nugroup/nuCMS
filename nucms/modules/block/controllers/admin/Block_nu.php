@@ -96,7 +96,7 @@ class Block_nu extends Backend_Controller
     public function edit($id)
     {
         $block = $this->block->get($id);
-        if (!$block) {
+        if (!$block || !$id) {
             show_404();
         }
 
@@ -116,9 +116,9 @@ class Block_nu extends Backend_Controller
                 redirect(admin_url('block/edit/'.$id));
             }
         }
-
+        
         // Set view data
-        $this->data['block'] = $block;
+        $this->data['block'] = $this->block_lib->prepare_block_data($block);
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
 
@@ -139,9 +139,9 @@ class Block_nu extends Backend_Controller
         }
 
         // Set view data
-        $data['block'] = $block;
+        $data['block'] = $this->block_lib->prepare_block_data($block);
         $data['fontawesome_list'] = $this->data['fontawesome_list'];
-
+        
         // Load the view
         $this->render('block/types/block_'.$block->type, $data);
     }
@@ -160,7 +160,7 @@ class Block_nu extends Backend_Controller
 
         // Set view data
         $data = [
-            'block' => $block,
+            'block' => $this->block_lib->prepare_block_data($block),
             'fontawesome_list' => $this->data['fontawesome_list'],
             'show_buttons' => true,
         ];

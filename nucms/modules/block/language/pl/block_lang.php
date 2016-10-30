@@ -32,13 +32,16 @@ $lang['block.filter.label.type'] = 'Typ bloku';
 ============================================================================= */
 $lang['block.type.html'] = 'Blok HTML';
 $lang['block.type.text'] = 'Blok tekstowy';
-$lang['block.type.gallery'] = 'Blok zdjęć';
 $lang['block.type.icon'] = 'Blok ikon';
+$lang['block.type.gallery'] = 'Blok galerii';
 
 /* form
 ============================================================================= */
 $lang['block.form.name'] = 'Nazwa';
 $lang['block.form.type'] = 'Typ';
+$lang['block.form.alt'] = 'Alt';
+$lang['block.form.title'] = 'Title';
+$lang['block.form.description'] = 'Opis';
 
 /* alert
 ============================================================================= */
