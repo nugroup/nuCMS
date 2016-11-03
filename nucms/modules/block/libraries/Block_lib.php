@@ -169,10 +169,11 @@ class Block_lib
      * 
      * @param array $content
      * @param string $type
+     * @param boolean $onlyContent
      * 
      * @return array
      */
-    public function prepare_block_data($block, $returnAsArray = false)
+    public function prepare_block_data($block, $returnAsArray = false, $onlyContent = false)
     {
         $block = (object) $block;
         $files = [];
@@ -205,6 +206,29 @@ class Block_lib
         }
 
         return $block;
+    }
+    
+    /**
+     * Find blocks to delete from database
+     * 
+     * @param string $newContent
+     * @param string/array $oldContent
+     * 
+     * @return array
+     */
+    public function find_blocks_to_delete($newContent, $oldContent)
+    {
+        $newBlocks = $this->decode_content_map($newContent, true);
+        $oldBlocks = (is_array($oldContent)) ? $oldContent : $this->prepare_block_data($oldContent, true);
+        $blocksToDelete = [];
+        
+        foreach ($oldBlocks as $block) {
+            if (!key_exists($block->hash_id, $newBlocks)) {
+                $blocksToDelete[] = $block->id;
+            }
+        }
+        
+        return $blocksToDelete;
     }
 }
 

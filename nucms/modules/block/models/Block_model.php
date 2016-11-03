@@ -14,7 +14,6 @@ class Block_model extends MY_Model
     public $primary_key = 'id';
     public $fillable = array();
     public $protected = array();
-//    protected $after_get = array('decode_content');
 
     function __construct()
     {
@@ -67,12 +66,14 @@ class Block_model extends MY_Model
      * 
      * @param array $blocks
      */
-    public function save_blocks($blocks, $content)
+    public function save_blocks($blocks, $content, $oldContent)
     {
-        $CI =& get_instance();
-//        $blocksInMap = $CI->block_lib->decode_content_map($content);
-//        dump($blocksInMap);
-//        die();
+        $blocksToDelete = $this->block_lib->find_blocks_to_delete($content, $oldContent);
+        
+        foreach ($blocksToDelete as $blockId) {
+            $this->delete($blockId);
+        }
+        
         if ($blocks) {
             foreach ($blocks as $block) {
                 $decodedBlock = json_decode($block);
