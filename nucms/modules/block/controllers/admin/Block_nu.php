@@ -140,6 +140,7 @@ class Block_nu extends Backend_Controller
 
         // Set view data
         $data['block'] = $this->block_lib->prepare_block_data($block);
+        $data['sizes_options'] = $this->config->item('sizes_options', 'img');
         $data['fontawesome_list'] = $this->data['fontawesome_list'];
         
         // Load the view
@@ -163,6 +164,7 @@ class Block_nu extends Backend_Controller
             'block' => $this->block_lib->prepare_block_data($block),
             'fontawesome_list' => $this->data['fontawesome_list'],
             'show_buttons' => true,
+            'sizes_options' => $this->config->item('sizes_options', 'img')
         ];
 
         // Load the view

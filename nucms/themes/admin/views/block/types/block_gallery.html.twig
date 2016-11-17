@@ -12,7 +12,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 galleryCol">
                         <div class="galleryItem" data-key="{{ key }}">
                             <div class="galleryItemWrapper">
-                                {{ generate_thumbnail(attribute(block.files, photo.file_id), '', photo.alt, photo.title) | raw }}
+                                {{ generate_thumbnail(attribute(block.files, photo.file_id), 'sm', photo.alt, photo.title) | raw }}
 
                                 <div class="galleryItemOptions">
                                     <ul class="nuButtonsList">
@@ -32,6 +32,7 @@
                                 <input type="hidden" data-name="alt" name="content[photos][{{ key }}][alt]" value="{{ photo.alt}}">
                                 <input type="hidden" data-name="title" name="content[photos][{{ key }}][title]" value="{{ photo.title}}">
                                 <input type="hidden" data-name="description" name="content[photos][{{ key }}][description]" value="{{ photo.description}}">
+                                <input type="hidden" data-name="size" name="content[photos][{{ key }}][size]" value="{{ photo.size}}">
                             </div>
                         </div>
                     </div>
@@ -57,6 +58,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label>{{ lang('block.form.size') }}</label>
+                        {{
+                            form_dropdown(
+                                'size',
+                                sizes_options,
+                                '',
+                                'class="form-control" placeholder="test"'
+                            )
+                        }}
+                    </div>
                     <div class="form-group">
                         <label>{{ lang('block.form.alt') }}</label>
                         {{ form_input({'name': 'alt', 'class': 'form-control'}) }}
@@ -105,6 +117,7 @@
                     <input type="hidden" data-name="alt" name="content[photos][##INDEX##][alt]">
                     <input type="hidden" data-name="title" name="content[photos][##INDEX##][title]">
                     <input type="hidden" data-name="description" name="content[photos][##INDEX##][description]">
+                    <input type="hidden" data-name="size" name="content[photos][##INDEX##][size]">
                 </div>
             </div>
         `;
@@ -165,11 +178,13 @@
             var galleryAlt = gallery.find('input[data-name="alt"]').val().toString();
             var galleryTitle = gallery.find('input[data-name="title"]').val().toString();
             var galleryDescription = gallery.find('input[data-name="description"]').val().toString();
+            var gallerySize = gallery.find('input[data-name="size"]').val().toString();
             
             modal.find('input[name="alt"]').val(galleryAlt);
             modal.find('input[name="title"]').val(galleryTitle);
             modal.find('textarea[name="description"]').val(galleryDescription);
             modal.find('input[name="key"]').val(key);
+            modal.find('select[name="size"]').val(gallerySize);
             
             modal.modal('show');
 
@@ -186,12 +201,14 @@
             var galleryAlt = galleryModal.find('input[name="alt"]').val().toString();
             var galleryTitle = galleryModal.find('input[name="title"]').val().toString();
             var galleryDescription = galleryModal.find('textarea[name="description"]').val().toString();
+            var gallerySize = galleryModal.find('select[name="size"]').val().toString();
             var key = parseInt(galleryModal.find('input[name="key"]').val());
             var gallery = galleryList.find('.galleryItem[data-key="'+key+'"]');
             
             gallery.find('input[data-name="alt"]').val(galleryAlt);
             gallery.find('input[data-name="title"]').val(galleryTitle);
             gallery.find('input[data-name="description"]').val(galleryDescription);
+            gallery.find('input[data-name="size"]').val(gallerySize);
             
             galleryModal.modal('hide');
 

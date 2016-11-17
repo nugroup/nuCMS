@@ -42,6 +42,7 @@ $lang['block.form.type'] = 'Typ';
 $lang['block.form.alt'] = 'Alt';
 $lang['block.form.title'] = 'Title';
 $lang['block.form.description'] = 'Opis';
+$lang['block.form.size'] = 'Rozmiar';
 
 /* alert
 ============================================================================= */

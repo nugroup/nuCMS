@@ -35,6 +35,13 @@ class NU_Controller extends MX_Controller
         $this->load->config('app');
         $this->load->config('modules');
 
+        // libraires
+        $this->load->library('form_validation');
+        $this->load->library('auth/ion_auth');
+        $this->load->library('block/block_lib');
+        $this->load->library('menu/menu_widget', array());
+        $this->load->library('img'); 
+        
         // Helpers
         $this->load->helper('language');
         $this->load->helper('security');
@@ -43,12 +50,6 @@ class NU_Controller extends MX_Controller
         $this->load->helper('paths');
         $this->load->helper('twig');
         $this->load->helper('file/media');
-
-        // libraires
-        $this->load->library('form_validation');
-        $this->load->library('auth/ion_auth');
-        $this->load->library('block/block_lib');
-        $this->load->library('menu/menu_widget', array());
 
         $this->db->query("SET NAMES 'utf8'");
 

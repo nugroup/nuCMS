@@ -1,10 +1,10 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 
-if ( ! function_exists('generate_folder_tree')) {
+if (!function_exists('generate_folder_tree')) {
+
     /**
      * Generate HTML with menu tree
      * 
@@ -24,17 +24,15 @@ if ( ! function_exists('generate_folder_tree')) {
             $activeHome = (in_array(0, $active_path)) ? ' class="active"' : '';
             $fileInHomeFolder = (isset($additionalData['files_in_home_folder'])) ? $additionalData['files_in_home_folder'] : 0;
 
-            $result .= '<li id="item_0"'.$activeHome.'>' . PHP_EOL;
-                $result .= '<a href="javascript:void(0);" class="ico openSubTree"><i class="fa fa-folder-o"></i></a>' . PHP_EOL;
-                $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="0">'.lang('file.text.home_folder').' ('.$fileInHomeFolder.')</a>' . PHP_EOL;
+            $result .= '<li id="item_0"' . $activeHome . '>' . PHP_EOL;
+            $result .= '<a href="javascript:void(0);" class="ico openSubTree"><i class="fa fa-folder-o"></i></a>' . PHP_EOL;
+            $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList" data-parent_id="0">' . lang('file.text.home_folder') . ' (' . $fileInHomeFolder . ')</a>' . PHP_EOL;
             $result .= '</li>' . PHP_EOL;
         }
 
-        if(isset($items[$parent_id]) && $max_level > $level)
-        {
+        if (isset($items[$parent_id]) && $max_level > $level) {
             // files folder
-            foreach ($items[$parent_id] as $item)
-            {
+            foreach ($items[$parent_id] as $item) {
                 // Set active class and ico
                 if (in_array($item->id, $active_path)) {
                     $activeClass = ' class="active"';
@@ -45,24 +43,22 @@ if ( ! function_exists('generate_folder_tree')) {
                 }
 
                 // Items with children
-                if(isset($items[$item->id]) && count($items[$item->id]) > 0)
-                {
-                    $result .= '<li id="item_' . $item->id. '"'.$activeClass.'>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList fileFolderName" data-parent_id="'.$item->id.'"><span class="insideName">'.$item->name.'</span> ('.$item->files_in_folder.')</a>' . PHP_EOL;
-                        $result .= form_input(['class' => 'form-control filefolderInput', 'value' => $item->name, 'data-parent_id' => $item->id]);
-                        $result .= '<ul class="subtree">' . PHP_EOL;
-                            $result .= generate_files_folder_tree($items, $item->id, $active_path, $max_level, $level + 1);
-                        $result .= '</ul>' . PHP_EOL;
+                if (isset($items[$item->id]) && count($items[$item->id]) > 0) {
+                    $result .= '<li id="item_' . $item->id . '"' . $activeClass . '>' . PHP_EOL;
+                    $result .= '<a href="javascript:void(0);" class="ico openSubTree">' . $ico . '</a>' . PHP_EOL;
+                    $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList fileFolderName" data-parent_id="' . $item->id . '"><span class="insideName">' . $item->name . '</span> (' . $item->files_in_folder . ')</a>' . PHP_EOL;
+                    $result .= form_input(['class' => 'form-control filefolderInput', 'value' => $item->name, 'data-parent_id' => $item->id]);
+                    $result .= '<ul class="subtree">' . PHP_EOL;
+                    $result .= generate_files_folder_tree($items, $item->id, $active_path, $max_level, $level + 1);
+                    $result .= '</ul>' . PHP_EOL;
                     $result .= '</li>' . PHP_EOL;
                 }
                 // Items without children
-                else
-                {
-                    $result .= '<li id="item_' . $item->id. '"'.$activeClass.'>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="ico openSubTree">'.$ico.'</a>' . PHP_EOL;
-                        $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList fileFolderName" data-parent_id="'.$item->id.'"><span class="insideName">'.$item->name.'</span> ('.$item->files_in_folder.')</a>' . PHP_EOL;
-                        $result .= form_input(['class' => 'form-control filefolderInput', 'value' => $item->name, 'data-parent_id' => $item->id]);
+                else {
+                    $result .= '<li id="item_' . $item->id . '"' . $activeClass . '>' . PHP_EOL;
+                    $result .= '<a href="javascript:void(0);" class="ico openSubTree">' . $ico . '</a>' . PHP_EOL;
+                    $result .= '<a href="javascript:void(0);" class="name txtBig loadFilesList fileFolderName" data-parent_id="' . $item->id . '"><span class="insideName">' . $item->name . '</span> (' . $item->files_in_folder . ')</a>' . PHP_EOL;
+                    $result .= form_input(['class' => 'form-control filefolderInput', 'value' => $item->name, 'data-parent_id' => $item->id]);
                     $result .= '</li>' . PHP_EOL;
                 }
             }
@@ -73,6 +69,7 @@ if ( ! function_exists('generate_folder_tree')) {
 }
 
 if (!function_exists('generate_thumbnail')) {
+
     /**
      * Generate thumbnail for file
      *
@@ -81,13 +78,29 @@ if (!function_exists('generate_thumbnail')) {
      */
     function generate_thumbnail($file, $size = '', $alt = '', $title = '', $class = 'img-responsive')
     {
+        $CI = & get_instance();
         $file_extension = extension($file->filename);
+        $imgConfig = $CI->config->item('sizes', 'img');
 
-        switch($file_extension) {
+        switch ($file_extension) {
             case 'jpg':
             case 'jpeg':
             case 'png':
-                $result = '<img src="'.base_url().config_item('upload_folder').'/'.$file->filename.'" alt="'.$alt.'" title="'.$title.'" class="'.$class.'">';
+                $imgData = [
+                    'alt' => $alt,
+                    'title' => $title,
+                    'class' => $class,
+                ];
+
+                if (isset($imgConfig[$size][0])) {
+                    $imgData['width'] = $imgConfig[$size][0];
+                    $imgData['height'] = $imgConfig[$size][1];
+
+                    $result = $CI->img->rimg(config_item('upload_folder') . '/' . $file->filename, $imgData);
+                } else {
+                    $result = '<img src="' . config_item('upload_folder') . '/' . $file->filename . '" alt="' . $alt . '" title="' . $title . '" class="' . $class . '">';
+                }
+
                 break;
             case 'avi':
             case 'mp4':
@@ -124,7 +137,7 @@ if (!function_exists('generate_thumbnail')) {
                 break;
             case 'txt':
             case 'rtf':
-                $result ='<i class="fa fa-file-text-o"></i>';
+                $result = '<i class="fa fa-file-text-o"></i>';
                 break;
             default:
                 $result = '<i class="fa fa-file-o"></i>';
@@ -136,6 +149,7 @@ if (!function_exists('generate_thumbnail')) {
 }
 
 if (!function_exists('is_image')) {
+
     /**
      * Chceck if file is image
      *
