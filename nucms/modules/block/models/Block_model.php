@@ -66,12 +66,14 @@ class Block_model extends MY_Model
      * 
      * @param array $blocks
      */
-    public function save_blocks($blocks, $content, $oldContent)
+    public function save_blocks($blocks, $content, $oldContent = false)
     {
-        $blocksToDelete = $this->block_lib->find_blocks_to_delete($content, $oldContent);
-        
-        foreach ($blocksToDelete as $blockId) {
-            $this->delete($blockId);
+        if ($oldContent) {
+            $blocksToDelete = $this->block_lib->find_blocks_to_delete($content, $oldContent);
+            
+            foreach ($blocksToDelete as $blockId) {
+                $this->delete($blockId);
+            }
         }
         
         if ($blocks) {

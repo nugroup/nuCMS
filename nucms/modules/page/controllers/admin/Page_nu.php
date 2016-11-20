@@ -162,7 +162,6 @@ class Page_nu extends Backend_Controller
     {
         // If post is send
         if ($this->input->post()) {
-
             // Validate form
             $this->form_validation->set_rules($this->page_translations->get_rules('add'));
             $inserted_id = false;
@@ -171,7 +170,7 @@ class Page_nu extends Backend_Controller
             if ($this->form_validation->run() == true) {
                 $inserted_id = $this->page->insert(['id' => null]);
             }
-
+            
             if ($inserted_id) {
                 // Insert all translations
                 $insertedTranslate = $this->page_translations->insert_all_translations($inserted_id);
@@ -182,7 +181,7 @@ class Page_nu extends Backend_Controller
                 }
 
                 // Redirect
-                redirect(admin_url('page'));
+                redirect(admin_url('page/edit/' . $inserted_id));
             }
         }
 
