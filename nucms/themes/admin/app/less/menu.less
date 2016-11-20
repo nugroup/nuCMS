@@ -307,7 +307,7 @@
 }
 
 .dropdown-menu {
-    > div {
+    > div, > li {
         cursor: initial;
         display: block;
         clear: both;
@@ -316,10 +316,24 @@
         color: #333;
         white-space: nowrap;
         
-        a {
+        a, button {
             padding: 6px 20px;
             display: block;
             cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            
+            .fa {
+                width: 25px;
+            }
+            
+            &:hover {
+                text-decoration: none;
+                color: #fff;
+                background-color: @nuColorHighlight;
+            }
         }
     }
 }

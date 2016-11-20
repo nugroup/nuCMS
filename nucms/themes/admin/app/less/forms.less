@@ -334,7 +334,8 @@ label {
 
     // title and lang
     .nuFormTitle {
-        padding-left: 50px;
+        width: 100%;
+        padding-left: 40px;
         position: relative;
 
         .nuFormBack {
@@ -358,11 +359,21 @@ label {
         }
         .form-control {
             font-size: @font-size-large;
+            padding: 6px 16px;
         }
         .btn-primary {
             background: fade(@nuColorMain2, 40%);
             padding-right: 20px;
             .caret { opacity: .2; }
+        }
+        .input-group-btn {
+            width: auto !important;
+        }
+        .input-group-addon {
+            border: none !important;;
+            background: none !important;;
+            margin: 0 !important;;
+            padding: 0 !important;;
         }
         .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group {
             margin-right: 0;

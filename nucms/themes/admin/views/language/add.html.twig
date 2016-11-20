@@ -29,7 +29,9 @@
 
                     <!-- title/lang fields -->
                     <div class="input-group nuFormTitle">
-                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                        <div class="input-group-addon">
+                            <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                        </div>
                         {{ form_input({'type': 'text', 'name': 'name', 'value': set_value('name'), 'class': 'form-control', 'id': 'name', 'placeholder': lang('language.form.name'),  'required': 'required'}) }}
                     </div>
                     <!-- /title/lang fields -->

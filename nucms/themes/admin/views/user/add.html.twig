@@ -29,8 +29,10 @@
 
                     <!-- title/lang fields -->
                     <div class="input-group nuFormTitle">
-                        <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
-                            {{ form_input({'type': 'email', 'name': 'email', 'value': set_value('email'), 'class': 'form-control', 'id': 'email', 'placeholder': lang('user.form.email'),  'required': 'required'}) }}
+                        <div class="input-group-addon">
+                            <a class="btn btn-primary nuFormBack" href="{{ return_link }}" role="button"><i class="fa fa-angle-left"></i></a>
+                        </div>
+                        {{ form_input({'type': 'email', 'name': 'email', 'value': set_value('email'), 'class': 'form-control', 'id': 'email', 'placeholder': lang('user.form.email'),  'required': 'required'}) }}
                     </div>
                     <!-- /title/lang fields -->
 

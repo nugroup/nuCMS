@@ -39,6 +39,8 @@ $(function () {
         var data = tmpForm.serialize();
         tmpForm.remove();
 
+        $.nuLoader('show');
+
         $.post(admin_url + 'block/update_from_json', data, function (response) {
 
             var jsonResult = response.json.toString();
@@ -48,7 +50,9 @@ $(function () {
                 blockJson.val(jsonResult);
                 $.nuAlert('success', response.success_msg);
             }
-
+            
+            $.nuLoader('hide');
+            
         });
 
         return false;
@@ -75,6 +79,8 @@ $(function () {
             blockJson = $('input[name="blocks[' + info.id + ']"');
         }
 
+        $.nuLoader('show');
+
         $.post(admin_url + 'block/edit_from_json', {'blockJson': blockJson.val()}, function (response) {
 
             if (response.html.toString() !== '') {
@@ -99,6 +105,8 @@ $(function () {
             } else {
                 alert("Error");
             }
+            
+            $.nuLoader('hide');
 
         });
 

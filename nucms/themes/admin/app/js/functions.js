@@ -118,7 +118,7 @@ function runNestedSortable(element, actionUrl) {
         items: 'li:not(.ghost)',
         helper: 'clone',
         toleranceElement: '> div',
-        placeholder: 'sortable-placeholder',
+        placeholder: 'menu-placeholder',
         relocate: function () {
             var oSortable = $(element).nestedSortable('serialize');
 

@@ -173,20 +173,27 @@
     // ------------------------------------------------ nuActionsTabs
     // ------------------------------------------------------------------------------------------------------
     $('body').on('click', '.tab-close', function(e) {
-//        var tab = $(this);
-//        var link = tab.next("a").attr('href');
         
         var link = $(this).next('a').attr('href');
         $(link).remove();
         $(this).parent().remove();
         
         $('#nuActionsTabs a[href="#modules"]').tab("show");
-//        $(this).parent().('a:last').tab('show') // Select last tab
-//        $(this).parent().prev().children('a').click();
     });
-    
-//    a("body").on("click",".tab-close",function(b){
-//        var c=a(this),d=c.next("a").attr("href");
-//        a(d).remove(),c.parent().hasClass("active")&&a('#nuActionsTabs a[href="#modules"]').tab("show"),c.parent().remove()})
 
+    // ------------------------------------------------------------------------------------------------------
+    // ------------------------------------------------ loader
+    // ------------------------------------------------------------------------------------------------------
+    $.nuLoader = function(action) {
+        
+        if (action === 'show') {
+            $('.nuLoader').show();
+        }
+        
+        if (action === 'hide') {
+            $('.nuLoader').hide();
+        }
+
+    }
+    
 })( jQuery, window, document );

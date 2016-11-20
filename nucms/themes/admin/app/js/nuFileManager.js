@@ -76,26 +76,40 @@
                 $('body').append(modalHtml);
 
                 if (settings.dialogUrl !== "") {
+                    $.nuLoader('show');
+            
                     $('#' + modalId).find('.modal-body').load(settings.dialogUrl, {'onlyImage': settings.onlyImage}, function () {
 
                         $('#' + settings.submitButtonId).attr('data-time', modalTime);
     
-                        // uncheck all visible checkboxes
-                        $('.filesList').find('input[type="checkbox"]').each(function () {
-                            $(this).attr('checked', false);
-                            $(this).prop('checked', false);
-                        });
+                        uncheckFiles();
+                        
+                        $.nuLoader('hide');
+                        $('#' + modalId).modal('show');
 
                     });
                 }
+            } else {
+                $('#' + modalId).modal('show');
+                uncheckFiles();
             }
             
             // change time
             $('#' + settings.submitButtonId).attr('data-time', modalTime);
 
-            // show modal
-            $('#' + modalId).modal('show');
-
+        }
+        
+        /**
+         * uncheck all visible checkboxes
+         */
+        function uncheckFiles()
+        {
+            // uncheck all visible checkboxes
+            $('.filesList').find('input[type="checkbox"]').each(function () {
+                $(this).attr('checked', false);
+                $(this).removeAttr('checked');
+                $(this).prop('checked', false);
+            });
         }
 
     };
