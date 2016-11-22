@@ -138,32 +138,8 @@
                 </div>
             </div>
 
-            <div class="row tab-pane fade" role="tabpanel" id="modules">
-                <div class="col-xs-12">
-                    {{ form_textarea({'name': 'content', 'value': input.post.content | raw, 'class': 'form-control', 'id': 'nublox-content', 'style': 'display: none;'}) }}
-                    
-                    <nublox testtemplate="nublox-createtemplate" output="nublox-content" imgpath="{{ asset('nublox/assets/') }}" :input="{
-                        modules: [
-                            { name: 'Html', type: 'html', ico: 'fa fa-code' },
-                            { name: 'Text', type: 'text', ico: 'fa fa-align-left' },
-                            { name: 'Icon', type: 'icon', ico: 'fa fa-fire' },
-                            { name: 'Gallery', type: 'gallery', ico: 'fa fa-image' },
-                        ]
-                    }"></nublox>
-                </div>
-            </div>
-
         </div>
     </div><!--/#nuEditPage-->
-
-    <div id="modulesHolder" style="display: none;">
-        {{ dump(input.post.blocks) }}
-        {% for key, block in input.post.blocks %}
-
-            {{ form_hidden('blocks[' ~ block.hash_id ~ ']', block.json_format) }}
-
-        {% endfor %}
-    </div>
 
     {{ form_hidden('file_id', page.file_id) }}
     {{ form_close() }}
