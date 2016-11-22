@@ -31,11 +31,11 @@
                                 <div class="dropdown">
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="{{ admin_url('file/edit/'~file.id) }}"><i class="fa fa-pencil"></i>{{ lang('file.text.edit') }}</a></li>
-                                        <li><a href="#"><i class="fa fa-link"></i>{{ lang('file.text.copy_url') }}</a></li>
+{#                                        <li><a href="{{ admin_url('file/edit/'~file.id) }}"><i class="fa fa-pencil"></i>{{ lang('file.text.edit') }}</a></li>#}
+                                        <li><a href="javascript:void(0);" class="clipboardCopy" data-clipboard-text="{{ site_url(config.upload_folder ~ '/' ~ file.filename) }}"><i class="fa fa-link"></i>{{ lang('file.text.copy_url') }}</a></li>
                                         <li><a href="{{ admin_url('file/cut/'~file.id) }}" rel="{{ file.id }}" class="fileCut"><i class="fa fa-scissors" aria-hidden="true"></i>{{ lang('file.text.cut') }}</a></li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="#"><i class="fa fa-trash"></i>{{ lang('file.text.delete') }}</a></li>
+{#                                        <li><a href="javascript:void(0);"><i class="fa fa-trash"></i>{{ lang('file.text.delete') }}</a></li>#}
                                     </ul>
                                 </div>
                             </li>

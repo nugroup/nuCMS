@@ -171,6 +171,7 @@
             <script src="{{ asset('jquery/jquery.min.js') }}"></script>
             <script src="{{ asset('jquery_ui/jquery-ui.min.js') }}"></script>
             <script src="{{ asset('bootstrap/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('clipboard/clipboard.min.js') }}"></script>
             <script src="{{ asset('nested_sortable/jquery.mjs.nestedSortable.js') }}"></script>
             <script src="{{ asset('dropzone/dropzone.min.js') }}"></script>
             <script src="{{ asset('js/nu.js') }}"></script>
@@ -184,6 +185,17 @@
 
                     // set all circle % values on start
                     $('body').nuCircle('init');
+                    
+                    // -- run tooltip
+                    $('[data-toggle="tooltip"]').tooltip({
+                        html: true
+                    });
+
+                    // -- run clipboard
+                    var clipboard = new Clipboard('.clipboardCopy');
+                    clipboard.on('success', function(e) {
+                        $.nuAlert('success', '{{ lang('alert.success.clipboard') }}');
+                    });
 
                 });
 

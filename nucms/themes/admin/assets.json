@@ -26,7 +26,9 @@
         { "source": "./node_modules/trumbowyg/dist/ui/icons.svg",  "copyTo": "./assets/trumbowyg/ui/" },
         { "source": "./node_modules/trumbowyg/dist/ui/trumbowyg.min.css",  "copyTo": "./assets/trumbowyg/ui/" },
         { "source": "./node_modules/trumbowyg/dist/langs/en.min.js",  "copyTo": "./assets/trumbowyg/langs/" },
-        { "source": "./node_modules/trumbowyg/dist/langs/pl.min.js",  "copyTo": "./assets/trumbowyg/langs/" }
+        { "source": "./node_modules/trumbowyg/dist/langs/pl.min.js",  "copyTo": "./assets/trumbowyg/langs/" },
+        
+        { "source": "./node_modules/clipboard/dist/clipboard.min.js",  "copyTo": "./assets/clipboard/" }
 
     ]
 }

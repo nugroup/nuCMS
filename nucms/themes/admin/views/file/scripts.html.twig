@@ -9,16 +9,18 @@
      */
     function loadFilesList(parentId, url, suffix) {
 
+        $.nuLoader('show');
+
         if (url.toString() !== '') {
             $("#filesList").load(url + suffix, function () {
 
-{#                $('body').goTo();#}
+                $.nuLoader('hide');
 
             });
         } else {
             $("#filesList").load('{{ admin_url('file/files_list') }}/' + parentId + suffix, function () {
 
-{#                $('body').goTo();#}
+                $.nuLoader('hide');
 
             });
         }

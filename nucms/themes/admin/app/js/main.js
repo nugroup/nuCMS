@@ -62,11 +62,4 @@ var showBeforeUnload = false;
 
     });
 
-    // -- run tooltip
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip({
-            html: true
-        });
-    });
-
 })();
