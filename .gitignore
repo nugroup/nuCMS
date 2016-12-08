@@ -19,6 +19,8 @@ uploads/*
 composer.lock
 .htaccess
 application/config/app.php
+application/config/development/database.php
+application/config/development/config.php
 application/config/production/database.php
 application/config/production/config.php
 
