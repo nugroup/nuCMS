@@ -64,10 +64,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 //	'hostname' => 'localhost',
-        'dsn'      => 'mysql:host=localhost;dbname=nucms',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'default',
+        'dsn'      => 'mysql:host=##HOST##;dbname=##DBNAME##',
+	'username' => '##USERNAME##',
+	'password' => '##PASSWORD##',
+	'database' => '##DBNAME##',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
