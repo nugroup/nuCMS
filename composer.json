@@ -52,12 +52,12 @@
                 "dist-file": "application/config/development/config.php.dist"
             },
             {
-                "file": "application/config/development/database.php",
-                "dist-file": "application/config/development/database.php.dist"
+                "file": "application/config/production/database.php",
+                "dist-file": "application/config/production/database.php.dist"
             },
             {
-                "file": "application/config/development/config.php",
-                "dist-file": "application/config/development/config.php.dist"
+                "file": "application/config/production/config.php",
+                "dist-file": "application/config/production/config.php.dist"
             },
             {
                 "file": ".htaccess",
