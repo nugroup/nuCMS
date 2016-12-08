@@ -28,7 +28,7 @@ class Upload_nu
     public function do_upload($upload_folder)
     {
         // upload config
-        $nazwa_input = "file";
+        $inputName = "file";
         $config['upload_path'] = getcwd().'/'.$upload_folder.'/';
         $config['allowed_types'] = '*';
         $config['max_size'] = '50000';
@@ -38,7 +38,7 @@ class Upload_nu
         $this->CI->load->library('upload', $config);
 
         // Upload file
-        if ($this->CI->upload->do_upload($nazwa_input)) {
+        if ($this->CI->upload->do_upload($inputName)) {
             $upload_data = $this->CI->upload->data();
             chmod($upload_data['full_path'], 0777);
 
@@ -65,5 +65,5 @@ class Upload_nu
     }
 }
 
-/* End of file Upload.php */
-/* Location: ./application/modules/upload/controllers/admin/Admin_upload.php */
+/* End of file Upload_nu.php */
+/* Location: ./nucms/libraries/Upload_nu.php */
