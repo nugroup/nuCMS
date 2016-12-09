@@ -71,7 +71,10 @@ class Menu_items_model extends MY_Model
      */
     public function get_max_id()
     {
-        $result = $this->db->query('SELECT `AUTO_INCREMENT` as next_id FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME =  "'.$this->table.'"')->row();
+        $result = $this->db->query('SELECT `AUTO_INCREMENT` as next_id 
+                                    FROM INFORMATION_SCHEMA.TABLES
+                                    WHERE TABLE_SCHEMA = "' . $this->db->database . '"
+                                    AND TABLE_NAME =  "'.$this->table.'"')->row();
         if ($result) {
             return $result->next_id;
         }
