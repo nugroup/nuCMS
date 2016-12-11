@@ -146,6 +146,7 @@ class Block_lib
                 if ($box->type == 'module') {
                     $data = [
                         'block' => $blocks[$box->id],
+                        'settings' => $box->settings
                     ];
                     $html .= render_twig('block/block_'.$box->moduleType, $data, true);
                 } else {
