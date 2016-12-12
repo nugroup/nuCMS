@@ -45,7 +45,7 @@ class Form_contact_widget
      */
     public function display()
     {
-        if ($this->CI->input->post()) {
+        if ($this->CI->input->post('formContact')) {
             $this->process();
         }
 
