@@ -65,7 +65,10 @@ class Block_nu extends Backend_Controller
 
         // Get number of items for pager
         $this->block->generate_like_query($this->input->get('string'));
-        $numberOfItems = $this->block->count_rows();
+        $numberOfItems = $this->block
+            ->where('locale', $locale)
+            ->where('global', 1)
+            ->count_rows();
 
         // Init pagination
         $paginationLimits = $this->initPagination($numberOfItems, $page, $per_page);
