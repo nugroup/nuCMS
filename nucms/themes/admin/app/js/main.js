@@ -61,5 +61,12 @@ var showBeforeUnload = false;
         });
 
     });
+    
+    
+    // ----- Global datepicker
+    $('input[type="text"].datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        language: selected_locale
+    });
 
 })();

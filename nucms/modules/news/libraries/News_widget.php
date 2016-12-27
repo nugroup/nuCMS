@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Widget class for help display page data
+ * Widget class for help display news data
  *
  * @author nugato
  */
-class Page_widget
+class News_widget
 {
     /**
      * Codeigniter instance
@@ -32,11 +32,11 @@ class Page_widget
     {
         $this->CI = & get_instance();
         $this->data = $data;
-        $this->templatesPath = config_item('app_theme_path').config_item('app_theme').'/views/page/templates/';
+        $this->templatesPath = config_item('app_theme_path').config_item('app_theme').'/views/news/templates/';
 
         $this->CI->load->helper('directory');
-        $this->CI->load->model('page/page_model', 'page');
-        $this->CI->load->model('page/page_translations_model', 'page_translations');
+        $this->CI->load->model('news/news_model', 'news');
+        $this->CI->load->model('news/news_translations_model', 'news_translations');
         $this->CI->load->model('route/route_model', 'route');
     }
 
@@ -57,54 +57,55 @@ class Page_widget
             $this->data['settings']['meta_description']->value = $metatags->meta_description;
         }
     }
-
+    
     /**
-     * Render page by id and locale
+     * Render news by id and locale
      * 
      * @param int $id
      * @param string $locale
      * @param array $data
      */
-    public function render_page($id, $locale, $data)
+    public function render_news($id, $locale, $data)
     {
         $this->data = $data;
+        $dt = new DateTime();
 
-        $page = $this->CI->page_translations->get([
-            'page_id' => $id,
-            'locale' => $locale
+        $news = $this->CI->news_translations->get([
+            'news_id' => $id,
+            'locale' => $locale,
         ]);
-        if (!$page) {
+        if (!$news) {
             show_404();
         }
 
         if ($this->CI->input->get('preview')) {
-            if ($page->token != $this->CI->input->get('token')) {
+            if ($news->token != $this->CI->input->get('token')) {
                 show_404();
             }
-        } elseif ($page->active != 1) {
+        } elseif ($news->active != 1 || $news->publication_date > $dt->format('Y-m-d')) {
             show_404();
         }
 
         // Set metadata
-        $this->set_metatags($page);
+        $this->set_metatags($news);
 
         // Decode Page Content
-        $page->content = $this->CI->block_lib->decode_content_for_front($page->content, $page->content_blocks);
+        $news->content = $this->CI->block_lib->decode_content_for_front($news->content, $news->content_blocks);
 
         // Set view data
-        $this->data['page'] = $page;
+        $this->data['news'] = $news;
         
-        $pageTemplateFilename = $this->templatesPath.$page->template;
+        $newsTemplateFilename = $this->templatesPath.$news->template;
 
-        if ($page->template != '' && file_exists($pageTemplateFilename.'.html.twig')) {
-            echo render_twig('page/templates/'.$page->template, $this->data);
+        if ($news->template != '' && file_exists($newsTemplateFilename.'.html.twig')) {
+            echo render_twig('news/templates/'.$news->template, $this->data);
         } else {
-            echo render_twig('page/templates/'.'default', $this->data);
+            echo render_twig('news/templates/'.'default', $this->data);
         }
     }
-    
+
     /**
-     * Get page templates list for select
+     * Get news templates list for select
      * 
      * @return array
      */

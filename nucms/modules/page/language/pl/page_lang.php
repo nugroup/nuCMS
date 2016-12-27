@@ -46,7 +46,7 @@ $lang['page.head.photo'] = 'Zdjęcie główne';
 $lang['page.seo_progress.no_title'] = 'Uzupełnij tytuł strony';
 $lang['page.seo_progress.no_keywords'] = 'Uzupełnij słowa kluczowe strony';
 $lang['page.seo_progress.no_description'] = 'Uzupełnij opis strony';
-$lang['page.seo_progress_100'] = 'Wszystkie dane do pozycjonowania zostały wprowadzone.<br>Wujek google będzie zadowolony.';
+$lang['page.seo_progress_100'] = 'Wszystkie dane do pozycjonowania zostały wprowadzone.';
 
 /* alert
 ============================================================================= */

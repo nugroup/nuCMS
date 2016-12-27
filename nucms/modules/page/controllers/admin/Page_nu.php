@@ -156,7 +156,7 @@ class Page_nu extends Backend_Controller
     }
 
     /**
-     * Add new language
+     * Add new page
      */
     public function add()
     {
@@ -191,35 +191,6 @@ class Page_nu extends Backend_Controller
 
         // Load the view
         $this->render('page/add', $this->data);
-    }
-
-    /**
-     * Update active by AJAX (onclick)
-     *
-     * @param int $id
-     * @param string $field
-     * @return boolean
-     */
-    public function update_active($id)
-    {
-        $name = $this->input->post('name');
-        $value = (int) $this->input->post('value');
-
-        // Set data view to checked or not checked
-        $data[$name] = $value;
-
-        // Update the view
-        if ($this->page_translations->update($data, (int) $id)) {
-            echo $this->db->last_query();
-            $result = ['result' => 1];
-        } else {
-            $result = ['result' => 0];
-        }
-
-        header('Content-Type: application/json');
-        echo json_encode($result);
-
-        return FALSE;
     }
 
     /**
@@ -259,5 +230,5 @@ class Page_nu extends Backend_Controller
     }
 }
 
-/* End of file Admin_page.php */
-/* Location: ./application/modules/page/controllers/admin/Admin_page.php */
+/* End of file Page_nu.php */
+/* Location: ./nucms/modules/page/controllers/admin/Page_nu.php */

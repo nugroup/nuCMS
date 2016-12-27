@@ -70,6 +70,15 @@ $config['modules'] = [
             ],
         ],
     ],
+    'news' => [
+        'routes' => [
+            'admin_news' => [
+                'route' => 'news',
+                'controller' => 'admin/news_nu',
+                'admin' => true
+            ],
+        ],
+    ],
     'menu' => [
         'routes' => [
             'admin_menu' => [

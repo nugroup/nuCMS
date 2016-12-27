@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <article class="singlePage">
+            <header class="page-header text-center">
+                <h1>{{ news.title }}</h1>
+            </header>
+
+            <div class="text">
+                {{ news.content | raw }}
+            </div>
+        </article>
+    </div><!--/.container-->
+
+{% endblock %}
