@@ -147,7 +147,7 @@ if (!function_exists('array_to_array_by_key')) {
         $result = array();
 
         foreach ($array as $row) {
-            $result[$row->{$key_name}][] = $row;
+            $result[(int) $row->{$key_name}][] = $row;
         }
 
         return $result;
@@ -212,7 +212,7 @@ if (!function_exists('prepare_join_data')) {
             foreach ($data as $row) {
                 if (isset($row->{$fieldName})) {
                     unset($row->{$fieldName}->id);
-
+                    
                     foreach ($row->{$fieldName} as $key => $value) {
                         $row->{$key} = $value;
                     }

@@ -15,16 +15,18 @@ $lang['news_category.nav.add'] = 'Dodaj kategorie';
 
 /* text
 ============================================================================= */
-$lang['news.text.confirm_delete'] = 'Czy napewno chcesz usunąć ten news?';
+$lang['news.text.confirm_delete'] = 'Czy na pewno chcesz usunąć ten news?';
 $lang['news.text.no_records'] = 'Nie znaleziono żadnych newsów';
 $lang['news.text.preview'] = 'Podgląd';
 $lang['news.text.delete'] = 'Usuń news';
+$lang['news_category.text.confirm_delete'] = 'Usunięcie kategorii spowoduje usunięcie wszystkich kategorii podrzędnych oraz usunięcie wszystkich przypisań newsów do tych kategorii.<br><br>Czy na pewno chcesz usunąć tę kategorię?';
 
 /* list
 ============================================================================= */
 $lang['news.list.title'] = 'Tytuł';
 $lang['news.list.publication_date'] = 'Data publikacji';
 $lang['news.list.active'] = 'Aktywność';
+$lang['news_category.list.name'] = 'Nazwa kategorii';
 
 /* filter
 ============================================================================= */
@@ -55,6 +57,9 @@ $lang['news.seo_progress_100'] = 'Wszystkie dane do pozycjonowania zostały wpro
 $lang['news.alert.success.add'] = 'Dodano nowy news';
 $lang['news.alert.success.delete'] = 'Usunięto news';
 $lang['news.alert.error.delete'] = 'Nie udało się usunąć newsa';
+$lang['news_category.alert.success.add'] = 'Dodano nową kategorie newsów';
+$lang['news_category.alert.success.delete'] = 'Usunięto kategorię';
+$lang['news_category.alert.error.delete'] = 'Nie udało się usunąć kategorii';
 
 /* form
 ============================================================================= */

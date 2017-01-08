@@ -7,8 +7,7 @@ if (!defined('BASEPATH'))
  */
 class NewsCategoryFixture implements FixturesInterface
 {
-    const NUMBER_OF_NEWS = 6;
-    const NUMBER_OF_CATEGORIES = 4;
+    const NUMBER_OF_CATEGORIES = 10;
 
     /**
      * Codeigniter instance
@@ -87,15 +86,27 @@ class NewsCategoryFixture implements FixturesInterface
             'module' => 'news_category',
         ]);
 
-        for ($i = 1; $i <= self::NUMBER_OF_NEWS; $i++) {
+        for ($i = 1; $i <= self::NUMBER_OF_CATEGORIES; $i++) {
             $name = substr($this->faker->unique()->sentence(1), 0, -1);
-
-            $insertedId = $this->CI->news_category->insert(['id' => NULL]);
+            $parentId = null;
+            
+            if ($i % 2 == 0) {
+                $parentId = $this->categoriesIds[array_rand($this->categoriesIds)];
+            }
+            
+            $insertedId = $this->CI->news_category->insert([
+                'id' => null,
+                'parent_id' => $parentId
+            ]);
             $this->categoriesIds[] = $insertedId;
 
             if ($insertedId) {
                 // Insert all translations
+                $langIndex = 1;
                 foreach ($this->languages as $language) {
+                    if ($langIndex > 1) {
+                        $name .= ' - ' . $language->locale;
+                    }
                     $dataTranslation = [
                         'name' => $name,
                         'meta_title' => $name,
@@ -107,6 +118,8 @@ class NewsCategoryFixture implements FixturesInterface
                         'news_category_id' => $insertedId
                     ];
                     $this->CI->news_category_translations->insert($dataTranslation);
+                    
+                    $langIndex++;
                 }
             }
         }

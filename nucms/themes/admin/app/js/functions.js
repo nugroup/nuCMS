@@ -44,6 +44,7 @@ function deleteItem(idItem, actionUrl, redirectUrl) {
     // Make ajax request
     $.post(actionUrl, {id_item: idItem}, function (results) {
 
+        console.log(results);
         var response = results.results;
 
         // Status 1 - SUCCESS
@@ -56,6 +57,9 @@ function deleteItem(idItem, actionUrl, redirectUrl) {
                 $('#item_' + idItem).fadeOut(300, function () {
                     $(this).remove();
                     $.nuAlert('success', response.message);
+                });
+                $('.subitem_' + idItem).fadeOut(300, function () {
+                    $(this).remove();
                 });
             }
 
