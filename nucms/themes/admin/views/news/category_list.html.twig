@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block navigation %}
+
+    <ul id="nuNavList">
+        <li><a href="{{ admin_url('news') }}" class="nuNavActive">{{ lang('news_category.nav.list') }}</a></li>
+        <li><a id="addNewsCategory" href="{{ admin_url('news-category/add') }}">{{ lang('news_category.nav.add') }}</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block action_bar_content %}
+
+    {{ form_open(current_url(), 'method="get"') }}
+
+    <div class="row nuActions">
+
+        <div class="col-xs-12 col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-4 col-lg-push-8 text-right nuActionsButtonsCol">
+            <ul class="nuButtonsList nuButtonsList-padding">
+                <li><a href="{{ admin_url('news') }}" class="btn btn-primary btn-squere"><i class="fa fa-remove"></i></a></li>
+                <li><button class="btn btn-success" type="submit"><i class="fa fa-filter"></i> {{ lang('text.filter') }}</button></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-12 col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-8 col-lg-pull-4">
+
+            <div class="row nuFormInline">
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        <label>{{ lang('news.filter.label.language') }}</label>
+                        {{ form_dropdown('locale', obj_to_options_array(config.system_languages, 'locale', 'name'), input.get.locale, 'class="form-control"') }}
+                    </div>
+                </div>
+                <div class="col-xs-6 nuFormInlice-col">
+                    <div class="form-group">
+                        <label for="fil_string">{{ lang('news.filter.label.string') }}</label>
+                        {{ form_input({'name': 'string', 'id': 'fil_string', 'class': 'form-control', 'value': input.get('string'), 'placeholder': lang('news.filter.label.string')}) }}
+                    </div>
+                </div>
+                <div class="col-xs-3 nuFormInlice-col">
+                    <div class="form-group">
+                        {% include 'components/per_page_select.html.twig' %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {{ form_close() }}
+    
+{% endblock %}
+
+{% block content %}
+    lista
+{% endblock %}

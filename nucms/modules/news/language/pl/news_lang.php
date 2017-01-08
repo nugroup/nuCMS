@@ -10,6 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $lang['news.nav.list'] = 'Lista newsów';
 $lang['news.nav.add'] = 'Dodaj news';
 $lang['news.nav.edit'] = 'Edytuj news';
+$lang['news_category.nav.list'] = 'Newsy - lista kategorii';
+$lang['news_category.nav.add'] = 'Dodaj kategorie';
 
 /* text
 ============================================================================= */
@@ -64,6 +66,7 @@ $lang['news.form.meta_description'] = 'Opis strony (160)';
 $lang['news.form.slug'] = 'Adres URL';
 $lang['news.form.template'] = 'Szablon';
 $lang['news.form.publication_date'] = 'Data publikacji';
+$lang['news_category.form.name'] = 'Nazwa kategorii';
 
 /* form - info
 ============================================================================= */

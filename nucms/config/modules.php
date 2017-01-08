@@ -77,6 +77,11 @@ $config['modules'] = [
                 'controller' => 'admin/news_nu',
                 'admin' => true
             ],
+            'admin_news_category' => [
+                'route' => 'news-category',
+                'controller' => 'admin/news_category_nu',
+                'admin' => true
+            ],
         ],
     ],
     'menu' => [

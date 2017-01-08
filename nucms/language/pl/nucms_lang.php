@@ -26,6 +26,7 @@ $lang['menu.page_preview'] = 'Podgląd strony';
 $lang['menu.desktop'] = 'Pulpit';
 $lang['menu.pages'] = 'Strony';
 $lang['menu.news'] = 'Newsy';
+$lang['menu.news_category'] = 'Kategorie';
 $lang['menu.pages.add'] = 'Dodaj nową';
 $lang['menu.templates'] = 'Szablony';
 $lang['menu.block'] = 'Bloki';

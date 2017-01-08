@@ -1,6 +1,11 @@
 <ul class="nuDrop-menu">
     <li><a href="{{ admin_url('page') }}"><i class="fa fa-file" aria-hidden="true"></i>{{ lang('menu.pages') }}</a></li>
-    <li><a href="{{ admin_url('news') }}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>{{ lang('menu.news') }}</a></li>
+    <li>
+        <a href="{{ admin_url('news') }}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>{{ lang('menu.news') }}</a>
+        <ul class="nuDrop-submenu">
+            <li><a href="{{ admin_url('news-category') }}">{{ lang('menu.news_category') }}</a>
+        </ul>
+    </li>
     <li><a href="{{ admin_url('block') }}"><i class="fa fa-puzzle-piece"></i>{{ lang('menu.block') }}</a></li>
     <li><a href="{{ admin_url('file') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>{{ lang('menu.files') }}</a>
     <li>
