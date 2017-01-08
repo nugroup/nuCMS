@@ -25,7 +25,7 @@ class Page_nu extends Frontend_Controller
      */
     public function show()
     {
-        $slug = $this->uri->segment(1);
+        $slug = $this->uri->uri_string();
 
         // Find page_id in route
         $route = $this->route
