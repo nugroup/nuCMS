@@ -3,7 +3,8 @@
 {% block navigation %}
 
     <ul id="nuNavList">
-        <li><a href="{{ admin_url('news') }}" class="nuNavActive">{{ lang('news_category.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('news') }}">{{ lang('news.nav.list') }}</a></li>
+        <li><a href="{{ admin_url('news-category') }}" class="nuNavActive">{{ lang('news_category.nav.list') }}</a></li>
         <li><a id="addNewsCategory" href="{{ admin_url('news-category/add') }}">{{ lang('news_category.nav.add') }}</a></li>
     </ul>
 

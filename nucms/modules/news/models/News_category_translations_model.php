@@ -38,7 +38,7 @@ class News_category_translations_model extends MY_Model
         );
 
         parent::__construct();
-        $this->timestamps = true;
+        $this->timestamps = false;
     }
 
     /**
