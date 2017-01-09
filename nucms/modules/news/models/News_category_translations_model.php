@@ -12,6 +12,14 @@ class News_category_translations_model extends MY_Model
     public $fillable = [];
     public $after_get = ['get_token', 'get_seo_progress'];
     public $after_create = ['update_sort'];
+    public $rules = [
+        'insert' => [
+            'name' => ['field' => 'name', 'label' => 'lang:news_category.form.name', 'rules' => 'required|trim|xss_clean|min_length[3]'],
+            'meta_title' => ['field' => 'meta_title', 'label' => 'lang:news.form.meta_title', 'rules' => 'max_length[50]|trim|xss_clean'],
+            'meta_keywords' => ['field' => 'meta_keywords', 'label' => 'lang:news.form.meta_keywords', 'rules' => 'trim|xss_clean'],
+            'meta_description' => ['field' => 'meta_description', 'label' => 'lang:news.form.meta_description', 'rules' => 'max_length[160]|trim|xss_clean']
+        ],
+    ];
 
     function __construct()
     {
@@ -56,25 +64,6 @@ class News_category_translations_model extends MY_Model
     }
 
     /**
-     * Get validations rules
-     *
-     * @param string $action
-     * @return array
-     */
-    public function get_rules($action = '', $id = 0)
-    {
-        $rules = array();
-
-        $rules['name'] = array('name' => 'title', 'label' => lang('news_category.form.name'), 'rules' => 'required|trim|xss_clean|min_length[3]');
-        $rules['active'] = array('field' => 'active', 'label' => lang('news.form.active'), 'rules' => 'trim|xss_clean');
-        $rules['meta_title'] = array('field' => 'meta_title', 'label' => lang('news.form.meta_title'), 'rules' => 'max_length[50]|trim|xss_clean');
-        $rules['meta_keywords'] = array('field' => 'meta_keywords', 'label' => lang('news.form.meta_keywords'), 'rules' => 'trim|xss_clean');
-        $rules['meta_description'] = array('field' => 'meta_description', 'label' => lang('news.form.meta_description'), 'rules' => 'max_length[160]|trim|xss_clean');
-
-        return $rules;
-    }
-
-    /**
      * Insert translation for all languages with slug
      *
      * @param int $news_category_id
@@ -92,10 +81,10 @@ class News_category_translations_model extends MY_Model
             // Insert translate
             $insertedTranslate = $this
                 ->from_form(
-                    $this->get_rules('add'), [
-                    'locale' => $language->locale,
-                    'news_category_id' => $news_category_id,
-                    'active' => (int) $this->input->post('active'),
+                    $this->rules['insert'], [
+                        'locale' => $language->locale,
+                        'news_category_id' => $news_category_id,
+                        'active' => (int) $this->input->post('active'),
                     ]
                 )
                 ->insert();
@@ -278,22 +267,6 @@ class News_category_translations_model extends MY_Model
         }
 
         return (float) $progress;
-    }
-
-    /**
-     * Generate query from search string
-     *
-     * @param string $string
-     */
-    public function generate_like_query($string)
-    {
-        if ($string) {
-            $this->db->like('name', $string);
-        }
-
-        if ($this->input->get('sort') && $this->input->get('sort_type')) {
-            $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
-        }
     }
 }
 

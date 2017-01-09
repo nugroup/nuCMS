@@ -72,6 +72,7 @@ $lang['news.form.slug'] = 'Adres URL';
 $lang['news.form.template'] = 'Szablon';
 $lang['news.form.publication_date'] = 'Data publikacji';
 $lang['news_category.form.name'] = 'Nazwa kategorii';
+$lang['news_category.form.parent_id'] = 'Kategoria - rodzic';
 
 /* form - info
 ============================================================================= */

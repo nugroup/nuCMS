@@ -35,12 +35,6 @@ class Block_model extends MY_Model
             'update' => array(),
         );
 
-        if ($action == 'add') {
-            
-        } else {
-            
-        }
-
         return $rules;
     }
 

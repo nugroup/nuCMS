@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -27,11 +26,9 @@ class News_category_nu extends Backend_Controller
     public function index()
     {
         // Set default variables
-        $news = ($this->input->get('page')) ? $this->input->get('page') : 1;
-        $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
         $locale = ((bool) $this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
-        
+
         // Delete checked item
         if ($this->input->post('action') == 'delete_checked') {
             foreach ($this->input->post('check_item') as $item => $value) {
@@ -43,20 +40,29 @@ class News_category_nu extends Backend_Controller
             $this->session->set_flashdata('success', lang('alert.success.delete_checked'));
             redirect(current_url());
         }
-        
-        $this->news_category_translations->generate_like_query($this->input->get('string'));
+
+        // Add action
+        if ($this->input->post('add')) {
+            $this->add();
+        }
+
+        // Edit action
+        if ($this->input->post('edit')) {
+            $this->edit_action();
+        }
+
         $newsCategoryList = $this->news_category_translations
             ->with_root()
             ->with_route()
             ->where('locale', $locale)
             ->order_by('sort', 'asc')
             ->get_all();
-        
+
         if ($newsCategoryList) {
             $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
             $newsCategoryList = array_to_array_by_key($newsCategoryList, 'parent_id');
         }
-        
+
         // Set view data
         $this->data['news_categories'] = $newsCategoryList;
         $this->data['locale'] = $locale;
@@ -64,9 +70,9 @@ class News_category_nu extends Backend_Controller
         $this->data['selected_language'] = $this->config->item($locale, 'system_languages_by_locale')->name;
 
         // Load the view
-        $this->render('news/category_list', $this->data);
+        $this->render('news/category/index', $this->data);
     }
-    
+
     /**
      * Delete action (by AJAX)
      *
@@ -101,6 +107,127 @@ class News_category_nu extends Backend_Controller
         header('Content-Type: application/json');
         echo json_encode(array('results' => $result));
         exit;
+    }
+
+    /**
+     * Add news category action
+     */
+    private function add()
+    {
+        // Validate form
+        $this->form_validation->set_rules($this->news_category_translations->rules['insert']);
+        $inserted_id = false;
+
+        // Insert news root
+        if ($this->form_validation->run() == true) {
+            $data = [
+                'parent_id' => ($this->input->post('parent_id')) ?: null,
+                'active' => ($this->input->post('active')) ? 1 : 0
+            ];
+            $inserted_id = $this->news_category->insert($data);
+        }
+
+        if ($inserted_id) {
+            // Insert all translations
+            $insertedTranslate = $this->news_category_translations->insert_all_translations($inserted_id);
+
+            // Set informations
+            if ($insertedTranslate) {
+                $this->session->set_flashdata('success', lang('news_category.alert.success.add'));
+            }
+
+            // Redirect
+            redirect(current_full_url());
+        }
+    }
+
+    /**
+     * Edit view action run by AJAX
+     * 
+     * @param int $id
+     * @param string $locale
+     */
+    public function edit($id, $locale)
+    {
+        $newsCategoryList = $this->news_category_translations
+            ->with_root()
+            ->where('locale', $locale)
+            ->order_by('sort', 'asc')
+            ->get_all();
+
+        if ($newsCategoryList) {
+            $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
+            $newsCategoryList = array_to_array_by_key($newsCategoryList, 'parent_id');
+        }
+
+        $newsCategory = $this->news_category_translations
+            ->with_root()
+            ->with_route()
+            ->where('locale', $locale)
+            ->get();
+
+        // Set view data
+        $this->data['news_category'] = $newsCategory;
+        $this->data['news_categories'] = $newsCategoryList;
+
+        // Load the view
+        $this->render('news/category/edit', $this->data);
+    }
+
+    /**
+     * Edit post action
+     */
+    public function edit_action()
+    {
+        if (!$this->input->post('news_category_id')) {
+            show_404();
+        }
+
+        // Validate form
+        $this->form_validation->set_rules($this->news_category_translations->rules['insert']);
+        $inserted_id = false;
+
+        // Insert news root
+        if ($this->form_validation->run() == true) {
+            try {
+                $this->db->trans_start();
+                $data = [
+                    'parent_id' => ($this->input->post('parent_id')) ?: null,
+                ];
+                $this->news_category->update($data, $this->input->post('news_category_id'));
+
+                $result = $this->news_category_translations
+                    ->from_form(
+                        $this->news_category_translations->rules['insert'], [
+                        'active' => (int) $this->input->post('active'),
+                        ], [
+                        'news_category_id' => $this->input->post('news_category_id'),
+                        'locale' => $this->input->post('locale'),
+                        ]
+                    )
+                    ->update();
+
+                // Update route
+                $this->form_validation->set_rules($this->route->rules['update']);
+                if ($this->form_validation->run() === FALSE) {
+                    throw new Exception();
+                }
+                $routeData = [
+                    'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $this->input->post('route_id')),
+                ];
+                $this->route->update($routeData, $this->input->post('route_id'));
+
+                $this->db->trans_complete();
+
+                // Set informations
+                $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
+            } catch (Exception $ex) {
+                
+            }
+
+            // Redirect
+            redirect(current_full_url());
+        }
     }
 }
 

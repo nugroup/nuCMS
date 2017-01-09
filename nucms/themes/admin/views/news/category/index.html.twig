@@ -39,7 +39,7 @@
                         <div class="dropdown">
                             <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="{{ admin_url('news-categories/edit/' ~ category.news_category_id) }}"><i class="fa fa-pencil"></i>Edytuj</a></li>
+                                <li><a rel="{{ category.news_category_id }}" href="{{ admin_url('news-categories/edit/' ~ category.news_category_id) }}" class="editNewsCategory" data-locale="{{ category.locale }}"><i class="fa fa-pencil"></i>Edytuj</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{{ admin_url('news-category/delete') }}" rel="{{ category.news_category_id }}" class="deleteRecord" data-confirmmsg="{{ lang('news_category.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
@@ -170,5 +170,49 @@
         </div>
     </div>
     <!-- /content -->
+
+    {% include 'news/category/add.html.twig' %}
+    
+    <div id="edit-box"></div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $(function () {
+
+            $(document).on('click', '#addNewsCategory', function () {
+
+                $('#newsCategoryAddModal').modal('show');
+                
+                return false;
+
+            });
+            
+            $(document).on('click', '.editNewsCategory', function () {
+
+                var id = parseInt($(this).attr('rel'));
+                var locale = $(this).attr('data-locale').toString();
+                console.log(locale);
+
+                $.post('{{ admin_url('news-category/edit/') }}' + id + '/' + locale, function(result) {
+                    
+                    $('#edit-box').html(result);
+                    $('#newsCategoryEditModal').modal('show');
+                    
+                });
+                
+                return false;
+
+            });
+
+
+        });
+
+    </script>
 
 {% endblock %}
