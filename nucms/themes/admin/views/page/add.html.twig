@@ -134,6 +134,21 @@
                         <span class="nuFocusLine"></span>
                     </div>
                     <!-- /slug -->
+                    
+                    <!-- template -->
+                    <div class="form-group">
+                        <label for="input_created">{{ lang('page.form.template') }}:</label>
+                        {{
+                            form_dropdown(
+                                'template',
+                                templates,
+                                page.template,
+                                'class="form-control"'
+                            )
+                        }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /template -->
 
                 </div>
             </div>

@@ -195,14 +195,17 @@
             
             $(document).on('click', '.editNewsCategory', function () {
 
+                $.nuLoader('show');
+                
                 var id = parseInt($(this).attr('rel'));
                 var locale = $(this).attr('data-locale').toString();
-                console.log(locale);
 
                 $.post('{{ admin_url('news-category/edit/') }}' + id + '/' + locale, function(result) {
                     
                     $('#edit-box').html(result);
                     $('#newsCategoryEditModal').modal('show');
+                    
+                    $.nuLoader('hide');
                     
                 });
                 

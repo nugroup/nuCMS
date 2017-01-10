@@ -1,4 +1,3 @@
-
 {% extends 'base.html.twig' %}
 
 {% block navigation %}
@@ -179,6 +178,16 @@
                         <span class="nuFocusLine"></span>
                     </div>
                     <!-- /template -->
+                    
+                    <!-- categories -->
+                    <label>{{ lang('news.form.categories') }}:</label>
+                    {%
+                        include('news/category/checkbox_tree.html.twig') with {
+                            'categories': news_categories,
+                            'selected_categories': selected_categories
+                        } only
+                    %}
+                    <!-- /categories -->
 
                 </div>
 

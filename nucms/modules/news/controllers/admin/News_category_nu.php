@@ -51,17 +51,7 @@ class News_category_nu extends Backend_Controller
             $this->edit_action();
         }
 
-        $newsCategoryList = $this->news_category_translations
-            ->with_root()
-            ->with_route()
-            ->where('locale', $locale)
-            ->order_by('sort', 'asc')
-            ->get_all();
-
-        if ($newsCategoryList) {
-            $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
-            $newsCategoryList = array_to_array_by_key($newsCategoryList, 'parent_id');
-        }
+        $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
 
         // Set view data
         $this->data['news_categories'] = $newsCategoryList;
@@ -149,22 +139,13 @@ class News_category_nu extends Backend_Controller
      */
     public function edit($id, $locale)
     {
-        $newsCategoryList = $this->news_category_translations
-            ->with_root()
-            ->where('locale', $locale)
-            ->order_by('sort', 'asc')
-            ->get_all();
-
-        if ($newsCategoryList) {
-            $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
-            $newsCategoryList = array_to_array_by_key($newsCategoryList, 'parent_id');
-        }
-
         $newsCategory = $this->news_category_translations
             ->with_root()
             ->with_route()
             ->where('locale', $locale)
             ->get();
+
+        $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
 
         // Set view data
         $this->data['news_category'] = $newsCategory;

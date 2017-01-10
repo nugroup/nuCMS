@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -19,8 +18,11 @@ class News_nu extends Backend_Controller
         $this->lang->load('news/news', $this->config->item('selected_locale'));
         $this->load->model('news/news_model', 'news');
         $this->load->model('route/route_model', 'route');
+        $this->load->model('news/news_category_model', 'news_category');
+        $this->load->model('news/news_category_news_model', 'news_category_news');
+        $this->load->model('news/news_category_translations_model', 'news_category_translations');
     }
-    
+
     /**
      * List of news
      */
@@ -72,7 +74,7 @@ class News_nu extends Backend_Controller
         // Load the view
         $this->render('news/index', $this->data);
     }
-    
+
     /**
      * Edit single news
      *
@@ -102,7 +104,7 @@ class News_nu extends Backend_Controller
             $additionalData = array(
                 'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL
             );
-            
+
             try {
                 $this->db->trans_start();
 
@@ -110,14 +112,17 @@ class News_nu extends Backend_Controller
                 $result = $this->news_translations
                     ->from_form($this->news_translations->get_rules('update'), $additionalData, $where)
                     ->update();
-                
+
                 if ((bool) $result === false) {
                     throw new Exception();
                 }
-                
+
+                // Save categories
+                $this->news_category_news->save_news_categories($this->input->post('categories'), $news->news_id);
+
                 // Save blocks
                 $this->block->save_blocks($this->input->post('blocks'), $this->input->post('content'), $news->content_blocks);
-                
+
                 // Update route
                 $this->form_validation->set_rules($this->route->rules['update']);
                 if ($this->form_validation->run() === FALSE) {
@@ -127,7 +132,7 @@ class News_nu extends Backend_Controller
                     'slug' => $this->route->prepare_unique_slug($this->input->post('slug'), $news->route_id),
                 ];
                 $this->route->update($routeData, $news->route_id);
-                
+
                 $this->db->trans_complete();
 
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
@@ -139,12 +144,18 @@ class News_nu extends Backend_Controller
 
         // Get seo progress message
         $news->seo_progress_msg = $this->news_translations->get_seo_progress_msg($news);
-        
+
         // Get templates list
         $templates = $this->news_widget->get_templates_list();
 
+        // Get categories list
+        $selectedCategories = $this->news_category_news->get_selected_categories($news->news_id);
+        $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
+
         // Set view data
         $this->data['news'] = $news;
+        $this->data['news_categories'] = $newsCategoryList;
+        $this->data['selected_categories'] = $selectedCategories;
         $this->data['templates'] = $templates;
         $this->data['subnav_active'] = 'edit';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
@@ -154,7 +165,7 @@ class News_nu extends Backend_Controller
         // Load the view
         $this->render('news/edit', $this->data);
     }
-    
+
     /**
      * Add new news
      */
@@ -170,10 +181,13 @@ class News_nu extends Backend_Controller
             if ($this->form_validation->run() == true) {
                 $inserted_id = $this->news->insert(['id' => null]);
             }
-            
+
             if ($inserted_id) {
                 // Insert all translations
                 $insertedTranslate = $this->news_translations->insert_all_translations($inserted_id);
+
+                // Save categories
+                $this->news_category_news->save_news_categories($this->input->post('categories'), $inserted_id);
 
                 // Set informations
                 if ($insertedTranslate) {
@@ -185,14 +199,19 @@ class News_nu extends Backend_Controller
             }
         }
 
+        $newsCategoryList = $this->news_category_translations->get_categories_tree(config_item('default_locale'));
+        $templates = $this->news_widget->get_templates_list();
+
         // Set view data
+        $this->data['news_categories'] = $newsCategoryList;
+        $this->data['templates'] = $templates;
         $this->data['subnav_active'] = 'add';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
 
         // Load the view
         $this->render('news/add', $this->data);
     }
-    
+
     /**
      * Delete action (by AJAX)
      *

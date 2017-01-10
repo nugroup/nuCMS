@@ -1,0 +1,43 @@
+{% macro checkbox_tree(categories, key, selected, level) %}
+
+    {% set padding = level * 20 %}
+
+    {% for category in attribute(categories, key) %}
+
+    <li style="padding-left: {{ padding }}px;">
+        <span class="nuCheckGroup">
+            <label class="nuCheck">
+                {{
+                    form_checkbox
+                    (
+                        {
+                            'name': 'categories[]',
+                            'id': 'category_' ~ category.news_category_id,
+                        },
+                        category.news_category_id,
+                        (category.news_category_id in selected) ? true : false
+                    )
+                }}
+                <span></span>
+            </label>
+            <label for="{{ 'category_' ~ category.news_category_id }}">{{ category.name }}</label>
+        </span>
+    </li>
+    
+    {% if attribute(categories, category.news_category_id) %}
+
+        {{ _self.checkbox_tree(categories, category.news_category_id, selected, level + 1) }}
+
+    {% endif %}
+
+    {% endfor %}
+
+{% endmacro %}
+
+{% import _self as tree %}
+
+<div class="nuCategoryList">
+    <ul>
+        {{ tree.checkbox_tree(categories, 0, selected_categories, 0) }}
+    </ul>
+</div>

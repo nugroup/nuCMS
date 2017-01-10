@@ -268,6 +268,31 @@ class News_category_translations_model extends MY_Model
 
         return (float) $progress;
     }
+    
+    /**
+     * Get categories array tree
+     * 
+     * @param string $locale
+     * 
+     * @return array
+     */
+    public function get_categories_tree($locale)
+    {
+        $newsCategoryList = $this
+            ->with_root()
+            ->with_route()
+            ->where('locale', $locale)
+            ->order_by('sort', 'asc')
+            ->get_all();
+
+        if ($newsCategoryList) {
+            $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
+
+            return array_to_array_by_key($newsCategoryList, 'parent_id');
+        }
+        
+        return [];
+    }    
 }
 
 /* End of file News_category_translations_model.php */

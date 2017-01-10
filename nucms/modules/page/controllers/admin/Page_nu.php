@@ -137,10 +137,7 @@ class Page_nu extends Backend_Controller
             }
         }
 
-        // Get seo progress message
         $page->seo_progress_msg = $this->page_translations->get_seo_progress_msg($page);
-        
-        // Get templates list
         $templates = $this->page_widget->get_templates_list();
 
         // Set view data
@@ -185,8 +182,10 @@ class Page_nu extends Backend_Controller
             }
         }
 
+        $templates = $this->page_widget->get_templates_list();
+
         // Set view data
-        $this->data['subnav_active'] = 'add';
+        $this->data['templates'] = $templates;
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
 
         // Load the view

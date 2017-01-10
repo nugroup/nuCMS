@@ -144,6 +144,31 @@
                         <span class="nuFocusLine"></span>
                     </div>
                     <!-- /publication_date -->
+                    
+                    <!-- template -->
+                    <div class="form-group">
+                        <label for="input_created">{{ lang('news.form.template') }}:</label>
+                        {{
+                            form_dropdown(
+                                'template',
+                                templates,
+                                set_value('template'),
+                                'class="form-control"'
+                            )
+                        }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /template -->
+                    
+                    <!-- categories -->
+                    <label>{{ lang('news.form.categories') }}:</label>
+                    {%
+                        include('news/category/checkbox_tree.html.twig') with {
+                            'categories': news_categories,
+                            'selected_categories': input.post.categories
+                        } only
+                    %}
+                    <!-- /categories -->
 
                 </div>
             </div>
