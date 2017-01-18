@@ -79,6 +79,7 @@ class Backend_Controller extends NU_Controller
             'page_query_string' => TRUE,
             'query_string_segment' => 'page',
             'reuse_query_string' => TRUE,
+            'full_tag_open' => '<ul class="pagination pagination-lg">'
         ];
 
         // Initialize pagination

@@ -1,29 +1,4 @@
-{% macro select_categories_tree(categories, key, level, selected) %}
-
-    {% for category in attribute(categories, key) %}
-        
-        {% set selectedClass = (selected == category.news_category_id) ? ' selected' : '' %}
-
-        <option value="{{ category.news_category_id }}"{{ selectedClass }}>
-            {% if level > 0 %}
-
-                {% for i in 1..level %}--{% endfor %}
-
-            {% endif %}
-            {{ category.name }}
-        </option>
-        
-        {% if attribute(categories, category.news_category_id) %}
-
-            {{ _self.select_categories_tree(categories, category.news_category_id, level + 1) }}
-
-        {% endif %}
-        
-    {% endfor %}
-    
-{% endmacro %}
-
-{% import _self as tree %}
+{% import 'news/category/options_macro.html.twig' as tree %}
 
 {{ form_open(admin_url('news-category'), {'id': 'news_category-add-form', 'novalidate': 'novalidate'}) }}
                 

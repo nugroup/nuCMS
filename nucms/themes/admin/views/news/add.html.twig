@@ -140,7 +140,14 @@
                         <label for="publication_date">
                             {{ lang('news.form.publication_date') }}
                         </label>
-                        {{ form_input({'name': 'publication_date', 'value': set_value('publication_date'), 'class': 'form-control datepicker', 'id': 'publication_date'}) }}
+                        {{
+                            form_input({
+                                'name': 'publication_date',
+                                'value': (set_value('publication_date')) ?: "now" | date("Y-m-d"),
+                                'class': 'form-control datepicker',
+                                'id': 'publication_date'
+                            })
+                        }}
                         <span class="nuFocusLine"></span>
                     </div>
                     <!-- /publication_date -->
@@ -171,12 +178,83 @@
                     <!-- /categories -->
 
                 </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-margin">
+
+                    <!-- header with line -->
+                    <div class="nuHead nuHeadLine">{{ lang('news.head.photo') }}:</div>
+                    <!-- /header -->
+
+                    <div class="panel panel-default">
+                        <div class="photoOutside">
+                            {% set opacity_class = tmp_file ? ' opacity' : '' %}
+
+                            <div id="photoButton" class="photoBox{{ opacity_class }}">
+                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                            </div>
+                            <div id="photoThumb" class="photoThumb">
+                                {% if tmp_file %}
+                                    {{ generate_thumbnail(tmp_file.filename, 'md') | raw }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <!-- content_preview -->
+                    <div class="form-group">
+                        <label for="content_preview">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('news.form.content_preview.info') }}">
+                                {{ lang('news.form.content_preview') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{
+                            form_textarea({
+                                'name': 'content_preview',
+                                'value': set_value('content_preview'),
+                                'class': 'form-control autoTextarea',
+                                'id': 'content_preview',
+                                'rows': 7,
+                            })
+                        }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /content_preview -->
+
+                </div>
             </div>
 
         </div>
     </div><!--/#nuEditPage-->
 
-    {{ form_hidden('file_id', news.file_id) }}
+    {{ form_hidden('file_id', tmp_file.id) }}
     {{ form_close() }}
 
+{% endblock %}
+
+{% block javascript %}
+
+    {{ parent() }}
+
+    <script>
+
+        $('#photoButton').nuFileManager({
+            singleItem: true,
+            dialogUrl: "{{ admin_url('file/modal') }}",
+            onAfterAdd: function (files) {
+
+                if (files[0] !== undefined) {
+
+                    // Add thumbnail
+                    $('#photoThumb img').remove();
+                    $('#photoThumb').append('<img src="' + files[0].src + '" class="img-responsive" alt="">');
+                    $('.photoBox').addClass('opacity');
+
+                    // Insert id to hidden input
+                    $('input[name="file_id"]').val(files[0].id);
+                }
+            }
+        });
+        
+    </script>
+        
 {% endblock %}

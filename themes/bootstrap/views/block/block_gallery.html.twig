@@ -7,7 +7,7 @@
         {% for photo in block.content.photos %}
 
             <figure>
-                {{ generate_thumbnail(attribute(block.files, photo.file_id), photo.size, photo.alt, photo.title) | raw }}
+                {{ generate_thumbnail(attribute(block.files, photo.file_id).filename, photo.size, photo.alt, photo.title) | raw }}
             </figure>
 
         {% endfor %}

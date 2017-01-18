@@ -71,6 +71,7 @@ if ( ! function_exists('generate_menu_item_handler'))
         $icons = array(
             1 => '<i class="fa fa-link ico"></i>',
             2 => '<i class="fa fa-file ico"></i>',
+            3 => '<i class="fa fa-newspaper-o ico"></i>',
         );
 
         $result = '';
@@ -98,18 +99,3 @@ if ( ! function_exists('generate_menu_item_handler'))
 
 /* End of file menu_helper.php */
 /* Location: ./application/modules/menu/helpers/menu_helper.php */
-//
-//<ul class="nuButtonsList">
-//    <li>
-//        <div class="dropdown open">
-//            <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-ellipsis-v"></i></button>
-//            <ul class="dropdown-menu dropdown-menu-right">
-//                <li><a href="http://localhost/~xprezesx/nucms/admin/menu/edit/2"><i class="fa fa-pencil"></i>Edytuj</a></li>
-//                <li role="separator" class="divider"></li>
-//                <li>
-//                    <a href="http://localhost/~xprezesx/nucms/admin/menu/delete" rel="2" class="deleteRecord" data-confirmmsg="Czy na pewno chcesz usunąć to menu?"><i class="fa fa-trash"></i>Usuń</a>
-//                </li>
-//            </ul>
-//        </div>
-//    </li>
-//</ul>

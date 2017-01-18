@@ -12,6 +12,7 @@ $config['positions'] = [                                                        
 $config['types_modules'] = [                                                    // Menu types modules
     1 => null,
     2 => 'page',
+    3 => 'news_category',
 ];
 $config['targets'] = [                                                          // Menu item target options
     '_self' => lang('menu.form.target.self'),

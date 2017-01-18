@@ -519,9 +519,20 @@ class Multi_menu {
 	 */
 	private function set_active($html, $slug)
 	{
-		$segment = $this->ci->uri->segment($this->uri_segment);
-
-		if ( ($this->item_active != '' && $slug == $this->item_active && empty($segment)) || $slug == $segment) 
+		$segment = $this->ci->uri->uri_string();
+        $exSegment = explode('/', $segment);
+        $exSlug = explode('/', $slug);
+        
+        $i = 0;
+        $active = true;
+        foreach ($exSlug as $row) {
+            if (!in_array($row, $exSegment)) {
+                $active = false;
+                break;
+            }
+        }
+        
+		if ( ($this->item_active != '' && $slug == $this->item_active && empty($segment)) || $active || $slug == $segment) 
 		{
 			$doc = new DOMDocument();
 			$doc->loadHTML($html);

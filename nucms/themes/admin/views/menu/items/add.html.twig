@@ -1,7 +1,15 @@
 <!-- add item buttons -->
 <div class="addButtons text-right">
-    <button class="btn btn-primary" type="button" data-type="1">{{ lang('menu.text.add_slug') }}</button>
-    <button class="btn btn-primary" type="button" data-type="2">{{ lang('menu.text.add_page') }}</button>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ lang('text.add') }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li><button type="button" data-type="1">{{ lang('menu.text.add_slug') }}</button></li>
+            <li><button type="button" data-type="2">{{ lang('menu.text.add_page') }}</button></li>
+            <li><button type="button" data-type="3">{{ lang('menu.text.add_news_cateogry') }}</button></li>
+        </ul>
+    </div>
 </div>
 
 <!-- add item type 1 -->
@@ -80,7 +88,7 @@
 
         <!-- primary_key -->
         <div class="form-group">
-            <label for="add_url_1" class="col-xs-12 control-label">{{ lang('menu.form.page') }}:</label>
+            <label for="add_url_2" class="col-xs-12 control-label">{{ lang('menu.form.page') }}:</label>
             <div class="col-xs-12">
                 {{ form_dropdown({'data-name': 'primary_key', 'class': 'form-control add_menu_item_2', 'required': 'required'}, pages_options) | raw }}
             </div>
@@ -98,3 +106,52 @@
     </div><!--/menu-add-form-2-->
 
 </div><!--/.addItem type2-->
+
+<!-- add item type 3 -->
+<div class="form-box addItem type3">
+
+    <div id="menu-add-form-3">
+
+        <!-- margin -->
+        <div class="clearfix baseMargin"></div>
+
+        <!-- name -->
+        <div class="form-group">
+            <label for="add_name_3" class="col-xs-12 control-label">{{ lang('menu.form.name') }}:</label>
+            <div class="col-xs-12">
+                {{ form_input({'data-name': 'name', 'class': 'form-control add_menu_item_3', 'id': 'add_name_3', 'required': 'required' }) }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- target -->
+        <div class="form-group">
+            <label for="edit_target_3" class="col-xs-12 control-label">{{ lang('menu.form.target') }}:</label>
+            <div class="col-xs-12">
+                {{ form_dropdown({'data-name': 'target', 'class': 'form-control', 'required': 'required'}, config.menu.targets, '') | raw }}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- primary_key -->
+        <div class="form-group">
+            <label for="add_url_3" class="col-xs-12 control-label">{{ lang('menu.form.news_category') }}:</label>
+            <div class="col-xs-12">
+                <select class="form-control" data-name="primary_key" class="form-control add_menu_item_3" required="required">
+                    {{ tree.select_categories_tree(news_categories, 0, 0) }}
+                </select>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="actionsButtons text-right">
+            <button type="button" class="btn btn-primary closeAddItem"><i class="fa fa-remove"></i></button>
+            <button type="button" class="btn btn-success menuAdd" data-menu_type="3"><i class="fa fa-check"></i> {{ lang('text.add') }}</button>
+        </div>
+
+        {{ form_input({'type': 'hidden', 'data-name': 'type', 'value': 3})}}
+        {{ form_input({'type': 'hidden', 'data-name': 'type_ico', 'value': 'fa fa-newspaper-o ico'})}}
+
+    </div><!--/menu-add-form-3-->
+
+</div><!--/.addItem type 3-->

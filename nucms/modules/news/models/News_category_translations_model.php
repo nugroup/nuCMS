@@ -156,7 +156,7 @@ class News_category_translations_model extends MY_Model
                 } else {
                     $newsCategorySlug = $CI->route->prepare_unique_slug($newsCategory->name);
                 }
-
+                
                 if ($routeData <= 0) {
                     $routesData = [
                         'slug' => $newsCategorySlug,
@@ -164,6 +164,7 @@ class News_category_translations_model extends MY_Model
                         'module' => 'news_category',
                         'primary_key' => $newsCategory->news_category_id,
                     ];
+                    
                     $insertedId = $CI->route->insert($routesData);
 
                     $this

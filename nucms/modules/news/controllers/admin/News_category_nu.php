@@ -143,8 +143,9 @@ class News_category_nu extends Backend_Controller
             ->with_root()
             ->with_route()
             ->where('locale', $locale)
+            ->where('news_category_id', $id)
             ->get();
-
+        
         $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
 
         // Set view data

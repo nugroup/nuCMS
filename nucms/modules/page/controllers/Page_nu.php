@@ -30,6 +30,7 @@ class Page_nu extends Frontend_Controller
         // Find page_id in route
         $route = $this->route
             ->where('slug', $slug)
+            ->where('module', 'page')
             ->get();
 
         if (!$route) {

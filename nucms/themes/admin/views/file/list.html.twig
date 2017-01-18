@@ -47,13 +47,13 @@
                     {% if is_image(file.extension) %}
 
                         <div class="nuManager-elem nuManager-photo">
-                            {{ generate_thumbnail(file, 'xs', file.alt, file.title) | raw }}
+                            {{ generate_thumbnail(file.filename, 'xs', file.alt, file.title) | raw }}
                         </div>
 
                     {% else %}
 
                         <div class="nuManager-elem nuManager-file">
-                            {{ generate_thumbnail(file, 'xs', file.alt, file.title) | raw }}
+                            {{ generate_thumbnail(file.filename, 'xs', file.alt, file.title) | raw }}
                             <span>{{ file.name }}</span>
                         </div>
 

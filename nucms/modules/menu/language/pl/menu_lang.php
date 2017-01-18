@@ -18,6 +18,7 @@ $lang['menu.text.no_records'] = 'Nie znaleziono żadnych menu';
 $lang['menu.text.delete'] = 'Usuń menu';
 $lang['menu.text.add_slug'] = 'Dodaj link';
 $lang['menu.text.add_page'] = 'Dodaj stronę';
+$lang['menu.text.add_news_cateogry'] = 'Dodaj kategorie newsów';
 $lang['menu.item.text.confirm_delete'] = 'Czy na pewno chcesz usunąć ten element z menu';
 
 /* list
@@ -46,6 +47,7 @@ $lang['menu.form.page'] = 'Strona';
 $lang['menu.form.target'] = 'Otwieraj w';
 $lang['menu.form.target.self'] = 'W tym samym oknie';
 $lang['menu.form.target.blank'] = 'W nowym oknie';
+$lang['menu.form.news_category'] = 'Kategoria';
 
 /* types
 ============================================================================= */

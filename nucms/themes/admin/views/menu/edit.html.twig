@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% import 'news/category/options_macro.html.twig' as tree %}
+
 {% block navigation %}
 
     <ul id="nuNavList">
@@ -258,7 +260,7 @@
         });
 
         // -- show add inputs
-        $(document).on('click', '.addButtons button', function () {
+        $(document).on('click', '.addButtons li button', function () {
 
             var type = parseInt($(this).attr('data-type'));
             $('.addItem').hide();

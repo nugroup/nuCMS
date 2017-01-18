@@ -20,7 +20,10 @@ class Menu_nu extends Backend_Controller
         $this->load->helper('menu/menu');
         $this->load->model('menu/menu_model', 'menu');
         $this->load->model('menu/menu_items_model', 'menu_items');
+        $this->load->model('route/route_model', 'route');
         $this->load->model('page/page_translations_model', 'page_translations');
+        $this->load->model('news/news_category_model', 'news_category');
+        $this->load->model('news/news_category_translations_model', 'news_category_translations');
     }
 
     /**
@@ -126,12 +129,13 @@ class Menu_nu extends Backend_Controller
             }
         }
 
-        $this->load->module('menu/admin/menu_items_nu'); // Load menu_items controller
-
         // Get pages list
         $pages = $this->page_translations
             ->where('locale', $locale)
             ->get_all();
+        
+        // Get news categories list
+        $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
 
         // Get menu items
         $menu_items = $this->menu_items
@@ -149,6 +153,7 @@ class Menu_nu extends Backend_Controller
         $this->data['menu_items'] = generate_menu_tree($menu_items_parents, 0, [], 100, 0);
         $this->data['menu_items_max_id'] = $menuItemsMaxId;
         $this->data['pages_options'] = obj_to_options_array($pages, 'page_id', 'title');
+        $this->data['news_categories'] = $newsCategoryList;
         $this->data['selected_locale'] = $this->config->item($locale, 'system_languages_by_locale')->locale;
 
         // Load the view

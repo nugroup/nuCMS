@@ -8,6 +8,12 @@
                 <h1>{{ news.title }}</h1>
             </header>
 
+            {% if return_link %}
+                
+                <a href="{{ return_link }}">&lsaquo; {{ lang('news.text.return_link') }}</a>
+                
+            {% endif %}
+
             <div class="text">
                 {{ news.content | raw }}
             </div>

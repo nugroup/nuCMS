@@ -1,7 +1,7 @@
 <?php
 $config['use_page_numbers'] = TRUE;
 $config["num_links"] = 2;
-$config['full_tag_open'] = '<ul class="pagination pagination-lg">';
+$config['full_tag_open'] = '<ul class="pagination pagination-md">';
 $config['full_tag_close'] = '</ul>';
 $config['cur_tag_open'] = '<li class="active"><a href="javascript:void(0);">';
 $config['cur_tag_close'] = '</a></li>';

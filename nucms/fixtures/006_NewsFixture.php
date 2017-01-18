@@ -43,6 +43,7 @@ class NewsFixture implements FixturesInterface
                     foreach ($languages as $language) {
                         $dataTranslation = [
                             'title' => $title,
+                            'content_preview' => $faker->text(150),
                             'meta_title' => $title,
                             'meta_keywords' => $faker->sentence(3),
                             'meta_description' => $faker->text(100),

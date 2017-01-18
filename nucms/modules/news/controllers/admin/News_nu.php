@@ -29,7 +29,7 @@ class News_nu extends Backend_Controller
     public function index()
     {
         // Set default variables
-        $news = ($this->input->get('page')) ? $this->input->get('page') : 1;
+        $page = ($this->input->get('page')) ? $this->input->get('page') : 1;
         $per_page = ($this->input->get('per_page')) ? $this->input->get('per_page') : $this->config->item('default_admin_per_page');
         $locale = ((bool) $this->input->get('locale')) ? $this->input->get('locale') : config_item('default_locale');
         $this->setReturnLink($this->sessionName);
@@ -53,7 +53,7 @@ class News_nu extends Backend_Controller
             ->count_rows();
 
         // Init pagination
-        $paginationLimits = $this->initPagination($numberOfItems, $news, $per_page);
+        $paginationLimits = $this->initPagination($numberOfItems, $page, $per_page);
 
         $this->news_translations->generate_like_query($this->input->get('string'));
         $newsList = $this->news_translations
@@ -171,6 +171,8 @@ class News_nu extends Backend_Controller
      */
     public function add()
     {
+        $tmpFile = false;
+
         // If post is send
         if ($this->input->post()) {
             // Validate form
@@ -197,6 +199,8 @@ class News_nu extends Backend_Controller
                 // Redirect
                 redirect(admin_url('news/edit/' . $inserted_id));
             }
+            
+            $tmpFile = $this->file->get($this->input->post('file_id'));
         }
 
         $newsCategoryList = $this->news_category_translations->get_categories_tree(config_item('default_locale'));
@@ -207,7 +211,10 @@ class News_nu extends Backend_Controller
         $this->data['templates'] = $templates;
         $this->data['subnav_active'] = 'add';
         $this->data['return_link'] = $this->getReturnLink($this->sessionName);
-
+        if ($tmpFile) {
+            $this->data['tmp_file'] = $tmpFile;
+        }
+        
         // Load the view
         $this->render('news/add', $this->data);
     }

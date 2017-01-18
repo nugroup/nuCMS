@@ -21,6 +21,10 @@ class Migration_Create_news_translations extends CI_Migration
                 'constraint' => '255',
                 'default' => NULL
             ),
+            'content_preview' => array(
+                'type' => 'TEXT',
+                'default' => NULL
+            ),
             'content' => array(
                 'type' => 'TEXT',
                 'default' => NULL

@@ -76,10 +76,10 @@ if (!function_exists('generate_thumbnail')) {
      * @param object $file
      * @return string
      */
-    function generate_thumbnail($file, $size = '', $alt = '', $title = '', $class = 'img-responsive')
+    function generate_thumbnail($filename, $size = '', $alt = '', $title = '', $class = 'img-responsive', $icon = true)
     {
         $CI = & get_instance();
-        $file_extension = extension($file->filename);
+        $file_extension = extension($filename);
         $imgConfig = $CI->config->item('sizes', 'img');
 
         switch ($file_extension) {
@@ -96,9 +96,9 @@ if (!function_exists('generate_thumbnail')) {
                     $imgData['width'] = $imgConfig[$size][0];
                     $imgData['height'] = $imgConfig[$size][1];
 
-                    $result = $CI->img->rimg(config_item('upload_folder') . '/' . $file->filename, $imgData);
+                    $result = $CI->img->rimg(config_item('upload_folder') . '/' . $filename, $imgData);
                 } else {
-                    $result = '<img src="' . config_item('upload_folder') . '/' . $file->filename . '" alt="' . $alt . '" title="' . $title . '" class="' . $class . '">';
+                    $result = '<img src="' . config_item('upload_folder') . '/' . $filename . '" alt="' . $alt . '" title="' . $title . '" class="' . $class . '">';
                 }
 
                 break;
@@ -140,7 +140,11 @@ if (!function_exists('generate_thumbnail')) {
                 $result = '<i class="fa fa-file-text-o"></i>';
                 break;
             default:
-                $result = '<i class="fa fa-file-o"></i>';
+                if ($icon) {
+                    $result = '<i class="fa fa-file-o"></i>';
+                } else {
+                    $result = '<div class="noPhoto"></div>';
+                }
                 break;
         }
 

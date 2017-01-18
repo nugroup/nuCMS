@@ -36,6 +36,7 @@ class News_widget
 
         $this->CI->load->helper('directory');
         $this->CI->load->model('news/news_model', 'news');
+        $this->CI->load->model('news/news_category_model', 'news_category');
         $this->CI->load->model('news/news_translations_model', 'news_translations');
         $this->CI->load->model('route/route_model', 'route');
     }
@@ -78,11 +79,13 @@ class News_widget
             show_404();
         }
 
+        $dtNews = new DateTime($news->publication_date);
+
         if ($this->CI->input->get('preview')) {
             if ($news->token != $this->CI->input->get('token')) {
                 show_404();
             }
-        } elseif ($news->active != 1 || $news->publication_date > $dt->format('Y-m-d')) {
+        } elseif ($news->active != 1 || $dtNews->format('Y-m-d') > $dt->format('Y-m-d')) {
             show_404();
         }
 
@@ -102,6 +105,50 @@ class News_widget
         } else {
             echo render_twig('news/templates/'.'default', $this->data);
         }
+    }
+    
+    /**
+     * Render news list by category id and locale
+     * 
+     * @param int $newsCategoryId
+     * @param string $locale
+     * @param boolean $partial
+     * @param int $limit
+     * @param int $offset
+     * @param array $data
+     */
+    public function render_news_list(
+        $newsCategoryId,
+        $locale,
+        $partial = false,
+        $limit = null,
+        $offset = null,
+        $data = []
+    ) {
+        $this->data = $data;
+        
+        $newsCategory = $this->CI->news_category_translations
+            ->where('news_category_id', $newsCategoryId)
+            ->where('locale', $locale)
+            ->get();
+
+        $newsList = $this->CI->news_category_news->get_news_list_by_category(
+            $newsCategoryId,
+            $locale,
+            $limit,
+            $offset
+        );
+        
+        // Set metadata
+        if (!$partial) {
+            $this->set_metatags($newsCategory);
+        }
+
+        // Set view data
+        $this->data['news_category'] = $newsCategory;
+        $this->data['news_list'] = $newsList;
+
+        echo render_twig('news/news_list', $this->data);
     }
 
     /**

@@ -197,18 +197,41 @@
                     <div class="nuHead nuHeadLine">{{ lang('news.head.photo') }}:</div>
                     <!-- /header -->
 
-                    <div class="photoOutside">
-                        {% set opacity_class = news.file ? ' opacity' : '' %}
+                    <div class="panel panel-default">
+                        <div class="photoOutside">
+                            {% set opacity_class = news.file ? ' opacity' : '' %}
 
-                        <div id="photoButton" class="photoBox{{ opacity_class }}">
-                            <i class="fa fa-picture-o" aria-hidden="true"></i>
-                        </div>
-                        <div id="photoThumb" class="photoThumb">
-                            {% if news.file %}
-                                <img src="{{ config.upload_folder }}/{{ news.file.filename }}" class="img_responsive">
-                            {% endif %}
+                            <div id="photoButton" class="photoBox{{ opacity_class }}">
+                                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                            </div>
+                            <div id="photoThumb" class="photoThumb">
+                                {% if news.file %}
+                                    {{ generate_thumbnail(news.file.filename, 'md') | raw }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
+                        
+                    <!-- content_preview -->
+                    <div class="form-group">
+                        <label for="content_preview">
+                            <span data-toggle="tooltip" data-placement="top" title="{{ lang('news.form.content_preview.info') }}">
+                                {{ lang('news.form.content_preview') }}
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+                        </label>
+                        {{
+                            form_textarea({
+                                'name': 'content_preview',
+                                'value': news.content_preview,
+                                'class': 'form-control autoTextarea',
+                                'id': 'content_preview',
+                                'rows': 7,
+                            })
+                        }}
+                        <span class="nuFocusLine"></span>
+                    </div>
+                    <!-- /content_preview -->
 
                 </div>
             </div>

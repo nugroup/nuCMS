@@ -72,4 +72,44 @@ class Frontend_Controller extends NU_Controller
         // Load language file
         $this->lang->load('www', config_item('selected_locale'));
     }
+    
+    /**
+     * Initialize default pagination
+     * 
+     * @param int $numberOfItems number of all items for pagination
+     * @param int $page
+     * @param int $perPage
+     * @param string $base_url
+     * 
+     * @return array return array with keys: 'limit' and 'limit_offset'
+     */
+    public function initPagination($numberOfItems, $page = 1, $perPage = 0, $base_url = '')
+    {
+        if ($perPage == 0) {
+            $perPage = $this->config->item('default_per_page');
+        }
+
+        $pager_url = ($base_url != '') ? $base_url : current_url();
+
+        // Load pagination library
+        $this->load->library('pagination');
+
+        // Set paginaton config
+        $config = [
+            'base_url' => $pager_url,
+            'total_rows' => $numberOfItems,
+            'per_page' => $perPage,
+            'page_query_string' => TRUE,
+            'query_string_segment' => 'p',
+            'reuse_query_string' => TRUE,
+        ];
+
+        // Initialize pagination
+        $this->pagination->initialize($config);
+
+        $params['limit_offset'] = ($page * $config["per_page"]) - $config["per_page"];
+        $params['limit'] = $config["per_page"];
+
+        return $params;
+    }
 }

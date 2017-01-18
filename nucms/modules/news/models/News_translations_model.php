@@ -1,13 +1,12 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 /**
  * Class News_translations_model
  */
-class News_translations_model extends MY_Model {
-
+class News_translations_model extends MY_Model
+{
     public $table = 'nu_news_translations';
     public $primary_key = 'id';
     public $fillable = [];
@@ -54,7 +53,8 @@ class News_translations_model extends MY_Model {
      * 
      * @param array $data
      */
-    protected function decode_content($data) {
+    protected function decode_content($data)
+    {
         if (isset($data[0])) {
             foreach ($data as &$row) {
                 $row['content_blocks'] = array();
@@ -73,7 +73,7 @@ class News_translations_model extends MY_Model {
 
         return $data;
     }
- 
+
     /**
      * Update sort after insert
      * 
@@ -94,11 +94,13 @@ class News_translations_model extends MY_Model {
      * @param string $action
      * @return array
      */
-    public function get_rules($action = '', $id = 0) {
+    public function get_rules($action = '', $id = 0)
+    {
         $rules = array();
 
         $rules['title'] = array('field' => 'title', 'label' => lang('news.form.title'), 'rules' => 'required|trim|xss_clean|min_length[3]');
         $rules['content'] = array('field' => 'content', 'label' => lang('news.form.content'), 'rules' => 'xss_clean');
+        $rules['content_preview'] = array('field' => 'content_preview', 'label' => lang('news.form.content_preview'), 'rules' => 'xss_clean');
         $rules['active'] = array('field' => 'active', 'label' => lang('news.form.active'), 'rules' => 'trim|xss_clean');
         $rules['meta_title'] = array('field' => 'meta_title', 'label' => lang('news.form.meta_title'), 'rules' => 'max_length[50]|trim|xss_clean');
         $rules['meta_keywords'] = array('field' => 'meta_keywords', 'label' => lang('news.form.meta_keywords'), 'rules' => 'trim|xss_clean');
@@ -114,25 +116,27 @@ class News_translations_model extends MY_Model {
      *
      * @param int $news_id
      */
-    public function insert_all_translations($news_id) {
+    public function insert_all_translations($news_id)
+    {
         // Load routes model
         $CI = & get_instance();
         $CI->load->model('route/route_model', 'route');
 
         $this->db->trans_start();
-                
+
         $i = 1;
         foreach (config_item('system_languages') as $language) {
             // Insert translate
             $insertedTranslate = $this
-                    ->from_form(
-                        $this->get_rules('add'), [
-                            'locale' => $language->locale,
-                            'news_id' => $news_id,
-                            'active' => (int) $this->input->post('active'),
-                        ]
-                    )
-                    ->insert();
+                ->from_form(
+                    $this->get_rules('add'), [
+                        'locale' => $language->locale,
+                        'news_id' => $news_id,
+                        'active' => (int) $this->input->post('active'),
+                        'file_id' => ($this->input->post('file_id')) ? (int) $this->input->post('file_id') : NULL
+                    ]
+                )
+                ->insert();
 
             if (!$insertedTranslate) {
                 break;
@@ -152,20 +156,20 @@ class News_translations_model extends MY_Model {
                 'module' => 'news',
                 'primary_key' => $news_id,
             ];
-            
+
             $insertedRouteId = $CI->route->insert($routeData);
 
             if ($insertedRouteId) {
                 $this->where([
-                    'locale' => $language->locale,
-                    'news_id' => $news_id,
-                ])
-                ->update(['route_id' => $insertedRouteId]);
+                        'locale' => $language->locale,
+                        'news_id' => $news_id,
+                    ])
+                    ->update(['route_id' => $insertedRouteId]);
             }
-            
+
             $i++;
         }
-        
+
         $this->db->trans_complete();
 
         return $insertedTranslate;
@@ -177,7 +181,8 @@ class News_translations_model extends MY_Model {
      * @param object $news
      * @return string
      */
-    public function generate_token($news) {
+    public function generate_token($news)
+    {
         $newsObject = (object) $news;
 
         return md5($newsObject->title . $newsObject->id);
@@ -186,7 +191,8 @@ class News_translations_model extends MY_Model {
     /**
      * Create route from pages
      */
-    public function update_routes() {
+    public function update_routes()
+    {
         $CI = & get_instance();
         $CI->load->model('route/route_model', 'route_model');
 
@@ -226,7 +232,8 @@ class News_translations_model extends MY_Model {
      * @param array $data
      * @return array
      */
-    public function get_seo_progress($data) {
+    public function get_seo_progress($data)
+    {
         if (isset($data[0])) {
             foreach ($data as &$row) {
                 $row['seo_progress'] = $this->calculate_seo_progress((object) $row);
@@ -244,7 +251,8 @@ class News_translations_model extends MY_Model {
      * @param object $news
      * @return string
      */
-    public function get_seo_progress_msg($news) {
+    public function get_seo_progress_msg($news)
+    {
         $message = '';
 
         if (isset($news->seo_progress) && $news->seo_progress == 100.00) {
@@ -290,7 +298,8 @@ class News_translations_model extends MY_Model {
      * @param object $news
      * @return float
      */
-    public function calculate_seo_progress($news) {
+    public function calculate_seo_progress($news)
+    {
         $progress = 0;
 
         if (isset($news->meta_title) && $news->meta_title != '') {
@@ -314,7 +323,8 @@ class News_translations_model extends MY_Model {
      *
      * @param string $string
      */
-    public function generate_like_query($string) {
+    public function generate_like_query($string)
+    {
         if ($string) {
             $this->db->like('title', $string);
         }
@@ -323,7 +333,6 @@ class News_translations_model extends MY_Model {
             $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
         }
     }
-
 }
 
 /* End of file News_translations_model.php */

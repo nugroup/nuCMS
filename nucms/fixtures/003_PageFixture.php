@@ -34,7 +34,7 @@ class PageFixture implements FixturesInterface
             ]);
 
             for ($i = 1; $i < 6; $i++) {
-                $title = substr($faker->unique()->sentence(1), 0, -1);
+                $title = substr($faker->unique()->sentence(2), 0, -1);
 
                 $insertedId = $CI->page->insert(['id' => NULL]);
 

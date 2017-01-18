@@ -11,6 +11,7 @@ $config['assets_path'] = 'themes/' . $config['app_theme'] . '/assets';
 $config['home_url'] = base_url();
 $config['selected_locale'] = 'pl';                                              // Selected locale (can be change on begin in Frontend_Controller)
 $config['profiler'] = false;                                                    // Enable/Disable CodeIgniter profiler
+$config['default_per_page'] = 5;
 
 /* meta
 ============================================================================= */
@@ -58,3 +59,9 @@ $config['languages_by_locale'] = [];
 ============================================================================= */
 $config['upload_folder'] = 'uploads';
 $config['upload_max_file_size'] = 50; // MB
+
+/* prefixes
+============================================================================= */
+$config['prefix'] = [
+    'news' => 'n'
+];

@@ -51,8 +51,10 @@ class Menu_widget
             if ($menuItems) {
                 $i = 0;
                 foreach ($menuItems as $item) {
+                    $prefix = $this->getPrefix($item['type']);
+
                     if ($item['route_slug'] != '') {
-                        $menuItems[$i]['slug'] = $item['route_slug'];
+                        $menuItems[$i]['slug'] = $prefix . $item['route_slug'];
                     } else {
                         $menuItems[$i]['slug'] = $item['url'];
                     }
@@ -68,5 +70,23 @@ class Menu_widget
             $this->CI->multi_menu->set_items($menuItems);
             echo $this->CI->multi_menu->render($config);
         }
+    }
+    
+    /**
+     * Get prefix by type
+     * 
+     * @param int $type
+     * 
+     * @return string
+     */
+    private function getPrefix($type)
+    {
+        $prefix = '';
+        
+        if ($type == 3) {
+            $prefix = $this->CI->config->item('news_category', 'prefix');
+        }
+        
+        return $prefix;
     }
 }

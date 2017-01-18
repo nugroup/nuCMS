@@ -74,6 +74,7 @@ $lang['news.form.publication_date'] = 'Data publikacji';
 $lang['news_category.form.name'] = 'Nazwa kategorii';
 $lang['news_category.form.parent_id'] = 'Kategoria - rodzic';
 $lang['news.form.categories'] = 'Kategorie';
+$lang['news.form.content_preview'] = 'Zajawka';
 
 /* form - info
 ============================================================================= */
@@ -81,3 +82,4 @@ $lang['news.form.slug.info'] = 'Adres URL pod którym widoczny będzie news';
 $lang['news.form.meta_title.info'] = 'Tytuł strony dla wyszukiwarek<br>(Maks. 50 znaków)';
 $lang['news.form.meta_keywords.info'] = 'Słowa kluczowe oddzielaj znakiem ","';
 $lang['news.form.meta_description.info'] = 'Opis strony dla wyszukiwarek<br>(Maks. 160 znaków)';
+$lang['news.form.content_preview.info'] = 'Krótki opis newsa, wyświetlany na liście.';
