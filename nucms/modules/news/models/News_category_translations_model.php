@@ -42,7 +42,7 @@ class News_category_translations_model extends MY_Model
             'foreign_model' => 'Route_model',
             'foreign_table' => 'nu_route',
             'foreign_key' => 'id',
-            'local_key' => 'route_Id'
+            'local_key' => 'route_id'
         );
 
         parent::__construct();
@@ -287,6 +287,10 @@ class News_category_translations_model extends MY_Model
             ->get_all();
 
         if ($newsCategoryList) {
+            foreach ($newsCategoryList as $category) {
+                $category->route->slug = $this->config->item('news_category', 'prefix') . $category->route->slug;
+            }
+
             $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
 
             return array_to_array_by_key($newsCategoryList, 'parent_id');

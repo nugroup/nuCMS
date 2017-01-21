@@ -20,7 +20,7 @@ class News_widget
      * @var array
      */
     private $data;
-    
+
     /**
      * Path to templates file
      * 
@@ -32,7 +32,7 @@ class News_widget
     {
         $this->CI = & get_instance();
         $this->data = $data;
-        $this->templatesPath = config_item('app_theme_path').config_item('app_theme').'/views/news/templates/';
+        $this->templatesPath = config_item('app_theme_path') . config_item('app_theme') . '/views/news/templates/';
 
         $this->CI->load->helper('directory');
         $this->CI->load->model('news/news_model', 'news');
@@ -58,7 +58,7 @@ class News_widget
             $this->data['settings']['meta_description']->value = $metatags->meta_description;
         }
     }
-    
+
     /**
      * Render news by id and locale
      * 
@@ -97,16 +97,16 @@ class News_widget
 
         // Set view data
         $this->data['news'] = $news;
-        
-        $newsTemplateFilename = $this->templatesPath.$news->template;
 
-        if ($news->template != '' && file_exists($newsTemplateFilename.'.html.twig')) {
-            echo render_twig('news/templates/'.$news->template, $this->data);
+        $newsTemplateFilename = $this->templatesPath . $news->template;
+
+        if ($news->template != '' && file_exists($newsTemplateFilename . '.html.twig')) {
+            echo render_twig('news/templates/' . $news->template, $this->data);
         } else {
-            echo render_twig('news/templates/'.'default', $this->data);
+            echo render_twig('news/templates/' . 'default', $this->data);
         }
     }
-    
+
     /**
      * Render news list by category id and locale
      * 
@@ -118,27 +118,20 @@ class News_widget
      * @param array $data
      */
     public function render_news_list(
-        $newsCategoryId,
-        $locale,
-        $partial = false,
-        $limit = null,
-        $offset = null,
-        $data = []
-    ) {
+    $newsCategoryId, $locale, $partial = false, $limit = null, $offset = null, $data = []
+    )
+    {
         $this->data = $data;
-        
+
         $newsCategory = $this->CI->news_category_translations
             ->where('news_category_id', $newsCategoryId)
             ->where('locale', $locale)
             ->get();
 
         $newsList = $this->CI->news_category_news->get_news_list_by_category(
-            $newsCategoryId,
-            $locale,
-            $limit,
-            $offset
+            $newsCategoryId, $locale, $limit, $offset
         );
-        
+
         // Set metadata
         if (!$partial) {
             $this->set_metatags($newsCategory);
@@ -152,6 +145,19 @@ class News_widget
     }
 
     /**
+     * Render news categories tree
+     */
+    public function render_category_menu()
+    {
+        $data['news_categories'] = $this->CI->news_category_translations
+            ->get_categories_tree(config_item('selected_locale'));
+
+        $data['active_slug'] = $this->CI->uri->uri_string();
+
+        echo render_twig('news/news_category_menu', $data, true);
+    }
+
+    /**
      * Get news templates list for select
      * 
      * @return array
@@ -162,7 +168,7 @@ class News_widget
 
         $templates = [];
         $templatesDir = directory_map($this->templatesPath);
-        
+
         if (is_array($templatesDir)) {
             foreach ($templatesDir as $tpl) {
                 $filename = str_replace('.html.twig', '', $tpl);
@@ -172,7 +178,7 @@ class News_widget
                 $templates[$filename] = $value;
             }
         }
-        
+
         return $templates;
     }
 }

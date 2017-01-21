@@ -1,0 +1,33 @@
+{% macro categories_menu(categories, key, activeSlug, level) %}
+
+    <ul class="nav nav-list">
+
+        {% for category in attribute(categories, key) %}
+
+            {% set activeClass = (category.route.slug == activeSlug) ? ' class=active' : '' %}
+
+            <li{{ activeClass | raw }}>
+                <a href="{{ site_url(category.route.slug) }}">
+                    {{ category.name }}
+                </a>
+
+                {% if attribute(categories, category.news_category_id) %}
+
+                    {{ _self.categories_menu(categories, category.news_category_id, activeSlug, level + 1) }}
+
+                {% endif %}
+            </li>
+
+        {% endfor %}
+
+    </ul>
+
+{% endmacro %}
+
+{% import _self as menu %}
+
+<div class="well well-lg submenu">
+
+    {{ menu.categories_menu(news_categories, 0, active_slug, 0) }}
+
+</div>
