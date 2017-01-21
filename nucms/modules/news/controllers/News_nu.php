@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 /**
  * Class News_nu
  */
-class News_nu extends Frontend_Controller
+class News_nu extends MY_Controller
 {
     private $sessionName = 'news';
 

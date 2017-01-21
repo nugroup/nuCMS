@@ -1933,4 +1933,9 @@ class MY_Model extends CI_Model
 	    return $data;
     }
     */
+    
+    public function query($query)
+    {
+        return $this->_database->query($query);
+    }
 }
