@@ -18,7 +18,7 @@ $config['profiler'] = false;                                                    
 /* copyright
 ============================================================================= */
 $config['copyright'] = [
-    'date'             => '2016',
+    'date'             => '2015 - ' . date('Y'),
     'company_name'     => 'nugato',
     'company_website'  => 'http://www.nugato.pl',
 ];
@@ -78,3 +78,56 @@ $config['pages_route_controller'] = 'page/page_nu/show/';
 /* files
 ============================================================================= */
 $config['upload_action'] = $config['admin_url'].'file/upload';
+
+/* menu
+============================================================================= */
+$config['admin_menu'] = [
+    10 => [
+        'slug' => 'page',
+        'name' => lang('menu.pages'),
+        'icon' => 'fa-file',
+    ],
+    20 => [
+        'slug' => 'news',
+        'name' => lang('menu.news'),
+        'icon' => 'fa-newspaper-o',
+        'submenu' => [
+            [
+                'slug' => 'news-category',
+                'name' => lang('menu.news_category'),
+            ]
+        ]
+    ],
+    30 => [
+        'slug' => 'block',
+        'name' => lang('menu.block'),
+        'icon' => 'fa-puzzle-piece',
+    ],
+    40 => [
+        'slug' => 'file',
+        'name' => lang('menu.files'),
+        'icon' => 'fa-picture-o',
+    ],
+    50 => [
+        'slug' => 'setting',
+        'name' => lang('menu.settings'),
+        'icon' => 'fa-wrench',
+        'submenu' => [
+            [
+                'slug' => 'menu',
+                'name' => lang('menu.menu'),
+            ],
+            [
+                'slug' => 'user',
+                'name' => lang('menu.users'),
+            ],
+            [
+                'slug' => 'language',
+                'name' => lang('menu.languages'),
+            ]
+        ]
+    ],
+];
+
+// Load user configuration
+include(APPPATH . 'config/admin.php');

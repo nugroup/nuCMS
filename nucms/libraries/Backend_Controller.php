@@ -18,6 +18,7 @@ class Backend_Controller extends NU_Controller
         $this->setLanguage();
 
         // Load needed config
+        $this->load->config('app');
         $this->load->config('nucms');
 
         // Check profiler status

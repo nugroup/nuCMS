@@ -1,20 +1,24 @@
 <ul class="nuDrop-menu">
-    <li><a href="{{ admin_url('page') }}"><i class="fa fa-file" aria-hidden="true"></i>{{ lang('menu.pages') }}</a></li>
-    <li>
-        <a href="{{ admin_url('news') }}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>{{ lang('menu.news') }}</a>
-        <ul class="nuDrop-submenu">
-            <li><a href="{{ admin_url('news-category') }}">{{ lang('menu.news_category') }}</a>
-        </ul>
-    </li>
-    <li><a href="{{ admin_url('block') }}"><i class="fa fa-puzzle-piece"></i>{{ lang('menu.block') }}</a></li>
-    <li><a href="{{ admin_url('file') }}"><i class="fa fa-picture-o" aria-hidden="true"></i>{{ lang('menu.files') }}</a>
-    <li>
-        <a href="{{ admin_url('setting') }}"><i class="fa fa-wrench" aria-hidden="true"></i>{{ lang('menu.settings') }}</a>
-        <ul class="nuDrop-submenu">
-            <li><a href="{{ admin_url('menu') }}">{{ lang('menu.menu') }}</a>
-            <li><a href="{{ admin_url('user') }}">{{ lang('menu.users') }}</a></li>
-            <li><a href="{{ admin_url('language') }}">{{ lang('menu.languages') }}</a></li>
-        </ul>
-    </li>
+    {% for key, item in config.admin_menu %}
+
+        <li>
+            <a href="{{ admin_url(item.slug) }}">
+                <i class="fa {{ item.icon }}" aria-hidden="true"></i>{{ item.name }}
+            </a>
+            {% if item.submenu %}
+
+                <ul class="nuDrop-submenu">
+                    {% for subitem in item.submenu %}
+
+                        <li><a href="{{ admin_url(subitem.slug) }}">{{ subitem.name }}</a>
+
+                        {% endfor %}
+                </ul>
+
+            {% endif %}
+        </li>
+
+    {% endfor %}
+
     <li><a href="{{ admin_url('auth/logout') }}"><i class="fa fa-power-off" aria-hidden="true"></i>{{ lang('menu.logout') }}</a></li>
 </ul>
