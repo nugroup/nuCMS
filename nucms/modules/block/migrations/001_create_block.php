@@ -41,6 +41,10 @@ class Migration_Create_block extends CI_Migration
                 'type' => 'BOOLEAN',
                 'default' => 1
             ),
+            'blocked' => array(
+                'type' => 'BOOLEAN',
+                'default' => 0
+            ),
             'created_at' => array(
                 'type' => 'DATETIME',
                 'null' => TRUE

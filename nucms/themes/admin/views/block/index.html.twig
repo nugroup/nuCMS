@@ -31,12 +31,6 @@
                         {{ form_dropdown('locale', obj_to_options_array(config.system_languages, 'locale', 'name'), input.get.locale, 'class="form-control"') }}
                     </div>
                 </div>
-                {#<div class="col-xs-3 nuFormInlice-col">
-                    <div class="form-group">
-                        <label>{{ lang('block.filter.label.type') }}</label>
-                        {{ form_dropdown('type', config.block.types, input.get.type, 'class="form-control"') }}
-                    </div>
-                </div>#}
                 <div class="col-xs-6 nuFormInlice-col">
                     <div class="form-group">
                         <label for="fil_string">{{ lang('block.filter.label.string') }}</label>
@@ -104,10 +98,15 @@
                                                         <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></button>
                                                         <ul class="dropdown-menu dropdown-menu-right">
                                                             <li><a href="{{ admin_url('block/edit/'~block.id) }}"><i class="fa fa-pencil"></i>{{ lang('text.edit') }}</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li>
-                                                                <a href="{{ admin_url('block/delete') }}" rel="{{ block.id }}" class="deleteRecord" data-confirmMsg="{{ lang('block.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
-                                                            </li>
+                                                            {{ dump(block.blocked) }}
+                                                            {% if block.blocked == 0 %}
+
+                                                                <li role="separator" class="divider"></li>
+                                                                <li>
+                                                                    <a href="{{ admin_url('block/delete') }}" rel="{{ block.id }}" class="deleteRecord" data-confirmMsg="{{ lang('block.text.confirm_delete') }}"><i class="fa fa-trash"></i>{{ lang('text.delete') }}</a>
+                                                                </li>
+
+                                                            {% endif %}
                                                         </ul>
                                                     </div>
                                                 </li>

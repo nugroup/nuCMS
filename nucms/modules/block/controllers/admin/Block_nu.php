@@ -36,7 +36,10 @@ class Block_nu extends Backend_Controller
         if ($this->input->post('action') == 'delete_checked') {
             foreach ($this->input->post('check_item') as $item => $value) {
                 // Delete action
-                $this->block->delete($item);
+                $block = $this->block->fields('blocked')->get($item);
+                if ($block && $block->blocked == 0) {
+                    $this->block->delete($item);
+                }
             }
 
             // Set message and refresh the page
@@ -203,10 +206,21 @@ class Block_nu extends Backend_Controller
      */
     public function delete()
     {
+        $result = [
+            'status' => 0,
+            'message' => ''
+        ];
+
         if ($this->input->post('id_item')) {
             $id = $this->input->post('id_item');
-            if ($id > 0) {
+            $block = $this->block->fields('blocked')->get($id);
+
+            if ($block) {
                 try {
+                    // Blocked
+                    if ($block->blocked == 1) {
+                        throw new Exception(lang('block.alert.error.delete'));
+                    }
                     // Delete menu
                     if (!$this->block->delete($id)) {
                         throw new Exception(lang('block.alert.error.delete'));
