@@ -305,7 +305,26 @@ class Page_translations_model extends MY_Model {
             $this->db->order_by($this->input->get('sort'), $this->input->get('sort_type'));
         }
     }
-
+    
+    /**
+     * Get page by string - fronend search
+     * 
+     * @param string $string
+     */
+    public function find_by_string($string, $locale)
+    {
+        $this->db
+            ->group_start()
+                ->like('title', $string)
+                ->or_like('meta_title', $string)
+                ->or_like('meta_keywords', $string)
+                ->or_like('meta_description', $string)
+            ->group_end();
+        
+        return $this
+            ->with_route()
+            ->get_all(['locale' => $locale]);
+    }
 }
 
 /* End of file Page_translations_model.php */
