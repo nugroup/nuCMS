@@ -112,6 +112,7 @@ class News_category_news_model extends MY_Model
             ->where('ncn.news_category_id', $newsCategoryId)
             ->where('n.active', 1)
             ->where('DATE_FORMAT(n.publication_date, "%Y-%m-%d") <=', $dt->format('Y-m-d'))
+            ->order_by('n.publication_date', 'DESC')
             ->get()
             ->result();
 

@@ -9,6 +9,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ------------------------------------------------------------------------------*/
 $lang['homepage'] = 'Homepage';
 
+/* =news
+------------------------------------------------------------------------------*/
+$lang['news.more'] = 'More';
+$lang['news.text.return_link'] = 'Back';
+
 /* =form-contact
 ------------------------------------------------------------------------------*/
 $lang['form.contact.name'] = 'Name';
