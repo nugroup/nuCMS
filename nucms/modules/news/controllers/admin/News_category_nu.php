@@ -51,7 +51,7 @@ class News_category_nu extends Backend_Controller
             $this->edit_action();
         }
 
-        $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
+        $newsCategoryList = $this->news_category_translations->get_categories_tree($locale, true, false);
 
         // Set view data
         $this->data['news_categories'] = $newsCategoryList;

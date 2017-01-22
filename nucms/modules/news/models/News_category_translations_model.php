@@ -273,12 +273,18 @@ class News_category_translations_model extends MY_Model
     /**
      * Get categories array tree
      * 
-     * @param string $locale
+     * @param type $locale
+     * @param type $parentAsKey
+     * @param type $onlyActive
      * 
      * @return array
      */
-    public function get_categories_tree($locale)
+    public function get_categories_tree($locale, $parentAsKey = true, $onlyActive = true)
     {
+        if ($onlyActive) {
+            $this->db->where('active', 1);
+        }
+
         $newsCategoryList = $this
             ->with_root()
             ->with_route()
@@ -293,7 +299,11 @@ class News_category_translations_model extends MY_Model
 
             $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
 
-            return array_to_array_by_key($newsCategoryList, 'parent_id');
+            if ($parentAsKey) {
+                return array_to_array_by_key($newsCategoryList, 'parent_id');
+            } else {
+                return array_to_array_by_key_single($newsCategoryList, 'news_category_id');
+            }
         }
         
         return [];

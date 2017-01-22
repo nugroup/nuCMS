@@ -39,6 +39,7 @@ class NU_Controller extends MX_Controller
         $this->load->library('form_validation');
         $this->load->library('auth/ion_auth');
         $this->load->library('block/block_lib');
+        $this->load->library('block/block_widget');
         $this->load->library('menu/menu_widget', array());
         $this->load->library('img'); 
         

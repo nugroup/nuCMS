@@ -29,6 +29,6 @@ if (file_exists(APPPATH.'/cache/dynamic_routes.php')) {
 
 $route['default_controller'] = $config['main_module']['controller'];
 $route['(\w{2})'] = $config['main_module']['controller'] . '/$1';
-$route['n/(:any)'] = 'news/news_nu/show';
-$route['c/(:any)'] = 'news/news_nu/show_list';
+$route['n/(.+)'] = 'news/news_nu/show';
+$route['c/(.+)'] = 'news/news_nu/show_list';
 $route['404_override'] = 'page/page_nu/show';
