@@ -149,7 +149,7 @@ class News_category_nu extends Backend_Controller
         $newsCategoryList = $this->news_category_translations->get_categories_tree($locale);
 
         // Set view data
-        $this->data['news_category'] = $newsCategory;
+        $this->data['news_category'] = prepare_join_data($newsCategory, 'root');
         $this->data['news_categories'] = $newsCategoryList;
 
         // Load the view

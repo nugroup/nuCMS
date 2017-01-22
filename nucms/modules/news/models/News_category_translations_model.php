@@ -94,7 +94,7 @@ class News_category_translations_model extends MY_Model
             }
 
             // Insert translate route
-            $slug = ($this->input->post('slug')) ? $this->input->post('slug') : $this->input->post('title');
+            $slug = ($this->input->post('slug')) ? $this->input->post('slug') : $this->input->post('name');
 
             if ($i > 1) {
                 $slug .= '-' . $language->locale;
