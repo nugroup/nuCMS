@@ -1,5 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% block social_metatags %}
+
+    {{ parent() }}
+    
+    {% if page.file %}
+        
+        <meta property="og:image" content="{{ uploads_url(page.file.filename) }}">
+        <meta name="twitter:image:src" content="{{ uploads_url(page.file.filename) }}">
+        
+    {% endif %}
+
+{% endblock %}
+
 {% block body %}
 
     <div class="container">

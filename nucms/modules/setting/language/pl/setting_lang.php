@@ -19,6 +19,7 @@ $lang['setting.tabs.social'] = 'Social';
 $lang['setting.form.meta_title'] = 'Tytuł strony';
 $lang['setting.form.meta_keywords'] = 'Słowa kluczowe';
 $lang['setting.form.meta_description'] = 'Opis strony';
+$lang['setting.form.social_share_plugin'] = 'Udostępnianie na portalach społecznościowych';
 $lang['setting.form.social_facebook'] = 'Link FACEBOOK';
 $lang['setting.form.social_twitter'] = 'Link TWITTER';
 $lang['setting.form.social_youtube'] = 'Link YOUTUBE';

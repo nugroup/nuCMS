@@ -23,3 +23,7 @@ $lang['form.contact.submit'] = 'Wyślij';
 $lang['form.contact.success_msg'] = 'Wiadomość została wysłana. Dziękujemy';
 $lang['form.contact.error_msg'] = 'Wystąpił błąd podczas wysyłania wiadomości. Przepraszamy';
 $lang['form.contact.email.subject'] = 'Formularz kontaktowy';
+
+/* =social
+------------------------------------------------------------------------------*/
+$lang['social.share'] = 'Udostępnij';

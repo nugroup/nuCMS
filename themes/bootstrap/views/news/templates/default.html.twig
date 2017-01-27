@@ -1,5 +1,54 @@
 {% extends 'base.html.twig' %}
 
+{% block social_metatags %}
+
+    {{ parent() }}
+    <meta property="og:image" content="{{ uploads_url(news.file.filename) }}" />
+    <meta name="twitter:image:src" content="{{ uploads_url(news.file.filename) }}" />
+
+{% endblock %}
+
+{% block body_start %}
+
+    {% if settings.social_share_plugin.value == 1 %}
+
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.8";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                    t = window.twttr || {};
+            if (d.getElementById(id))
+                return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+
+    {% endif %}
+
+{% endblock %}
+
 {% block body %}
 
     <div class="container">
@@ -8,10 +57,34 @@
                 <h1>{{ news.title }}</h1>
             </header>
 
+            {% if settings.social_share_plugin.value == 1 %}
+
+            <ul class="shareButtons list-inline">
+                <li>
+                    <div class="fb-share-button"
+                         data-href="{{ current_full_url() }}"
+                         data-layout="button"
+                         data-size="small"
+                         data-mobile-iframe="true">
+                        {{ lang('social.share') }}
+                    </div>
+                </li>
+                <li>
+                    <div class="twitter-share-button">
+                        <a id ="twitter-wjs" class="twitter-share-button"
+                           href="{{ current_full_url() }}">
+                            {{ lang('social.share') }}
+                        </a>
+                    </div>
+                </li>
+            </ul>
+
+            {% endif %}
+
             {% if return_link %}
-                
+
                 <a href="{{ return_link }}">&lsaquo; {{ lang('news.text.return_link') }}</a>
-                
+
             {% endif %}
 
             <div class="text">

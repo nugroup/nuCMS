@@ -21,3 +21,9 @@ $lang['form.contact.email'] = 'E-mail address';
 $lang['form.contact.message'] = 'Message';
 $lang['form.contact.submit'] = 'Send';
 $lang['form.contact.success_msg'] = 'Message was sent. Thank you';
+$lang['form.contact.error_msg'] = 'An error occurred while sending a message. Sorry';
+$lang['form.contact.email.subject'] = 'Contact form';
+
+/* =social
+------------------------------------------------------------------------------*/
+$lang['social.share'] = 'Share';

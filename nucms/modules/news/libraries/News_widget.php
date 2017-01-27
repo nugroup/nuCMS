@@ -71,10 +71,11 @@ class News_widget
         $this->data = $data;
         $dt = new DateTime();
 
-        $news = $this->CI->news_translations->get([
-            'news_id' => $id,
-            'locale' => $locale,
-        ]);
+        $news = $this->CI->news_translations
+            ->with_file()
+            ->where('news_id', $id)
+            ->where('locale', $locale)
+            ->get();
         if (!$news) {
             show_404();
         }

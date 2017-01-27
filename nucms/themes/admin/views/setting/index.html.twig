@@ -163,6 +163,28 @@
 
                 <div class="row tab-pane fade" role="tabpanel" id="group_id_social">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-margin">
+                        
+                        <!-- social_share_plugin -->
+                        <div class="form-group">
+                            <div class="nuCheckbox-single">
+                                <label for="social_share_plugin">
+                                    {{ lang('setting.form.social_share_plugin') }} <i class="fa fa-globe" aria-hidden="true"></i>
+                                </label>
+                                <label class="nuSwitch" for="social_share_plugin">
+                                    {{
+                                        form_checkbox({
+                                            'name': 'settings[social_share_plugin][value]',
+                                            'value': 1,
+                                            'id': 'social_share_plugin',
+                                            'checked': (settings_by_keys.social_share_plugin.value) ? true : false        
+                                        })
+                                    }}
+                                    <span></span>
+                                </label>
+                            </div>
+                            {{ display_setting_hiddens('social_share_plugin', lang('setting.social_share_plugin'), 'checkbox', 1) }}
+                        </div>
+        
                         <!-- social_facebook -->
                         <div class="form-group">
                             <label for="social_facebook">

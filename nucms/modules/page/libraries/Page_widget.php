@@ -69,10 +69,11 @@ class Page_widget
     {
         $this->data = $data;
 
-        $page = $this->CI->page_translations->get([
-            'page_id' => $id,
-            'locale' => $locale
-        ]);
+        $page = $this->CI->page_translations
+            ->with('file')
+            ->where('page_id', $id)
+            ->where('locale', $locale)
+            ->get();
         if (!$page) {
             show_404();
         }
