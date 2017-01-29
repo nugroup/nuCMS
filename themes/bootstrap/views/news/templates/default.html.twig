@@ -6,7 +6,7 @@
     <meta property="og:image" content="{{ uploads_url(news.file.filename) }}" />
     <meta name="twitter:image:src" content="{{ uploads_url(news.file.filename) }}" />
     <meta itemprop="image" content="{{ uploads_url(news.file.filename) }}">
-
+    
 {% endblock %}
 
 {% block body_start %}
@@ -48,6 +48,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer>
       {lang: '{{ config.selected_lang }}'}
     </script>
+    <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 
     {% endif %}
 
@@ -86,6 +87,14 @@
                              data-action="share"
                              data-href="{{ current_full_url() }}"
                              data-annotation="none">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="pinterest-share-button">
+                            <a data-pin-do="buttonBookmark"
+                               data-pin-save="true"
+                               href="https://www.pinterest.com/pin/create/button/">
+                            </a>
                         </div>
                     </li>
                 </ul>
