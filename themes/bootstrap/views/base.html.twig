@@ -15,6 +15,9 @@
 
     {% block social_metatags %}
 
+        <meta itemprop="name" content="{{ settings.meta_title.value }}">
+        <meta itemprop="description" content="{{ settings.meta_description.value | replace({"\n": ""}) }}">
+
         <meta property="og:url" content="{{ current_full_url() }}" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="{{ settings.meta_title.value }}" />

@@ -5,6 +5,7 @@
     {{ parent() }}
     <meta property="og:image" content="{{ uploads_url(news.file.filename) }}" />
     <meta name="twitter:image:src" content="{{ uploads_url(news.file.filename) }}" />
+    <meta itemprop="image" content="{{ uploads_url(news.file.filename) }}">
 
 {% endblock %}
 
@@ -12,7 +13,6 @@
 
     {% if settings.social_share_plugin.value == 1 %}
 
-    <div id="fb-root"></div>
     <script>
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -44,6 +44,10 @@
             return t;
         }(document, "script", "twitter-wjs"));
     </script>
+    
+    <script src="https://apis.google.com/js/platform.js" async defer>
+      {lang: '{{ config.selected_lang }}'}
+    </script>
 
     {% endif %}
 
@@ -59,25 +63,32 @@
 
             {% if settings.social_share_plugin.value == 1 %}
 
-            <ul class="shareButtons list-inline">
-                <li>
-                    <div class="fb-share-button"
-                         data-href="{{ current_full_url() }}"
-                         data-layout="button"
-                         data-size="small"
-                         data-mobile-iframe="true">
-                        {{ lang('social.share') }}
-                    </div>
-                </li>
-                <li>
-                    <div class="twitter-share-button">
-                        <a id ="twitter-wjs" class="twitter-share-button"
-                           href="{{ current_full_url() }}">
+                <ul class="shareButtons list-inline">
+                    <li>
+                        <div class="fb-share-button"
+                             data-href="{{ current_full_url() }}"
+                             data-layout="button"
+                             data-size="small"
+                             data-mobile-iframe="true">
                             {{ lang('social.share') }}
-                        </a>
-                    </div>
-                </li>
-            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="twitter-share-button">
+                            <a id ="twitter-wjs" class="twitter-share-button"
+                               href="{{ current_full_url() }}">
+                                {{ lang('social.share') }}
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="g-plus google-share-button" 
+                             data-action="share"
+                             data-href="{{ current_full_url() }}"
+                             data-annotation="none">
+                        </div>
+                    </li>
+                </ul>
 
             {% endif %}
 
