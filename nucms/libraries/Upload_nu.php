@@ -6,9 +6,7 @@ if (!defined('BASEPATH'))
 /**
  * Codeigniter Upload helper class
  * 
- * @subpackage		Libraries
- * @category		Libraries
- * @author		nugato	
+ * @author nugato
  */
 class Upload_nu
 {

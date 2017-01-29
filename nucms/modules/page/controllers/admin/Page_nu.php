@@ -129,6 +129,9 @@ class Page_nu extends Backend_Controller
                 $this->route->update($routeData, $page->route_id);
                 
                 $this->db->trans_complete();
+                
+                // Generate sitemap
+                $this->sitemap->generate();
 
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
                 redirect(current_full_url());
@@ -171,6 +174,9 @@ class Page_nu extends Backend_Controller
             if ($inserted_id) {
                 // Insert all translations
                 $insertedTranslate = $this->page_translations->insert_all_translations($inserted_id);
+
+                // Generate sitemap
+                $this->sitemap->generate();
 
                 // Set informations
                 if ($insertedTranslate) {

@@ -125,6 +125,9 @@ class News_category_nu extends Backend_Controller
             if ($insertedTranslate) {
                 $this->session->set_flashdata('success', lang('news_category.alert.success.add'));
             }
+            
+            // Generate sitemap
+            $this->sitemap->generate();
 
             // Redirect
             redirect(current_full_url());
@@ -200,6 +203,9 @@ class News_category_nu extends Backend_Controller
                 $this->route->update($routeData, $this->input->post('route_id'));
 
                 $this->db->trans_complete();
+                
+                // Generate sitemap
+                $this->sitemap->generate();
 
                 // Set informations
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));

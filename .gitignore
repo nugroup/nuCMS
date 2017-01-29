@@ -11,6 +11,9 @@ application/logs/*
 uploads/*
 !uploads/index.html
 
+sitemap.xml
+sitemaps/
+
 /.git/
 /vendor/
 

@@ -231,6 +231,39 @@ class Block_lib
         
         return $blocksToDelete;
     }
+    
+    public function getImagesFromContent(array $blocks)
+    {
+        $files = [];
+        $filesIds = [];
+        
+        foreach ($blocks as $block) {
+            if ($block->type == 'gallery') {
+                if (isset($block->content) && $block->content->photos) {
+                    foreach ($block->content->photos as $photo) {
+                        $filesIds[] = $photo->file_id;
+                        $filesData[$photo->file_id] = $photo;
+                    }
+                }
+            }
+        }
+        
+        if (!empty($filesIds)) {
+            $filesTmp = $this->CI->file->get_files_by_ids($filesIds);
+            if ($filesTmp) {
+                foreach ($filesTmp as $fileTmp) {
+                    $files[] = [
+                        'filename' => $fileTmp->filename,
+                        'filepath' => uploads_url($fileTmp->filename),
+                        'alt' => $filesData[$fileTmp->id]->alt,
+                        'title' => $filesData[$fileTmp->id]->title,
+                    ];
+                }
+            }
+        }
+        
+        return $files;
+    }
 }
 
 /* End of file Block_lib.php */

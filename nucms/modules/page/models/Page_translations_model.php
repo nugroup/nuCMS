@@ -52,7 +52,8 @@ class Page_translations_model extends MY_Model {
      * 
      * @param array $data
      */
-    protected function decode_content($data) {
+    protected function decode_content($data)
+    {
         if (isset($data[0])) {
             foreach ($data as &$row) {
                 $row['content_blocks'] = array();

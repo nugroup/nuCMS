@@ -135,6 +135,9 @@ class News_nu extends Backend_Controller
 
                 $this->db->trans_complete();
 
+                // Generate sitemap
+                $this->sitemap->generate();
+
                 $this->session->set_flashdata('success', lang('alert.success.saved_changes'));
                 redirect(current_full_url());
             } catch (Exception $ex) {
@@ -190,6 +193,9 @@ class News_nu extends Backend_Controller
 
                 // Save categories
                 $this->news_category_news->save_news_categories($this->input->post('categories'), $inserted_id);
+
+                // Generate sitemap
+                $this->sitemap->generate();
 
                 // Set informations
                 if ($insertedTranslate) {

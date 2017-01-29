@@ -34,6 +34,9 @@ class Backend_Controller extends NU_Controller
         // Load block module
         $this->lang->load('block/block', config_item('selected_locale'));
         $this->load->config('block/block', TRUE);
+        
+        // Load sitemap library
+        $this->load->library('sitemap_nu', [], 'sitemap');
 
         // Url exceptions
         $exception_uris = array(
