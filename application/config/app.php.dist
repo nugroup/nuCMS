@@ -48,7 +48,8 @@ $config['twig_user_functions'] = [
     'current_full_url',
     'widget',
     'generate_thumbnail',
-    'uploads_url'
+    'uploads_url',
+    'route'
 ];
 
 /* =languages

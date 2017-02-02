@@ -45,3 +45,35 @@ if (!function_exists('asset')) {
         return site_url(config_item('assets_path').'/'.$pathName);
     }
 }
+
+if (!function_exists('route')) {
+
+    /**
+     * Generate route
+     * 
+     * @param int $primaryKey
+     * @param string $module
+     * @param string $locale
+     * 
+     * @return string
+     */
+    function route($primaryKey, $module, $locale = null)
+    {
+        $CI = & get_instance();
+        $CI->load->model('route/route_model', 'route');
+        $locale = (is_null($locale)) ? config_item('selected_locale') : $locale;
+
+        $route = $CI->route->getSingleRoute($primaryKey, $module, $locale);
+        
+        if ($route) {
+            $prefix = '';
+            if (in_array($module, config_item('prefix'))) {
+                $prefix = $CI->config->item($module, 'prefix');
+            }
+            
+            return $prefix . $route->slug;
+        }
+        
+        return '';
+    }
+}

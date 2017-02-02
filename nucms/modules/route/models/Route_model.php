@@ -19,7 +19,6 @@ class Route_model extends MY_Model
         ],
     ];
 
-
     function __construct()
     {
         $this->timestamps = false;
@@ -57,6 +56,24 @@ class Route_model extends MY_Model
         }
 
         return $slugOk;
+    }
+    
+    /**
+     * Get single url
+     * 
+     * @param int $primaryKey
+     * @param string $module
+     * @param string $locale
+     */
+    public function getSingleRoute($primaryKey, $module, $locale)
+    {
+        $where = [
+            'primary_key' => $primaryKey,
+            'module' => $module,
+            'locale' => $locale,
+        ];
+        
+        return $this->where($where)->get();
     }
 }
 

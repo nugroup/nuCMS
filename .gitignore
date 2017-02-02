@@ -29,13 +29,9 @@ application/config/production/config.php
 
 # Themes
 #-------------------------
-themes/bootstrap/node_modules/
-themes/bootstrap/assets/
-themes/bootstrap/npm-*
-
-nucms/themes/admin/node_modules/
-nucms/themes/admin/assets/
-nucms/themes/admin/npm-*
+npm-*
+node_modules
+assets
 
 # Deploy
 #-------------------------
