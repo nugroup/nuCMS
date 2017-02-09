@@ -12,21 +12,21 @@ class News_widget
      * 
      * @var Controller
      */
-    private $CI;
+    protected $CI;
 
     /**
      * Copy of data array from controller
      * 
      * @var array
      */
-    private $data;
+    protected $data;
 
     /**
      * Path to templates file
      * 
      * @var string 
      */
-    private $templatesPath;
+    protected $templatesPath;
 
     public function __construct($data = array())
     {
@@ -38,6 +38,7 @@ class News_widget
         $this->CI->load->model('news/news_model', 'news');
         $this->CI->load->model('news/news_category_model', 'news_category');
         $this->CI->load->model('news/news_translations_model', 'news_translations');
+        $this->CI->load->model('news/news_category_news_model', 'news_category_news');
         $this->CI->load->model('route/route_model', 'route');
     }
 

@@ -12,6 +12,8 @@ class Main_nu extends Backend_Controller
     {
         parent::__construct();
 
+        redirect(admin_url('page'));
+
         // View data
         $this->data['nu_title'] = lang('desktop');
     }

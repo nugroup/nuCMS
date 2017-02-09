@@ -75,7 +75,7 @@ class News_category_news_model extends MY_Model
             ->where('n.locale', $locale)
             ->where('news_category_id', $newsCategoryId)
             ->where('active', 1)
-            ->where('publication_date >=', $dt->format('Y-m-d'))
+            ->where('DATE_FORMAT(n.publication_date, "%Y-%m-%d") <=', $dt->format('Y-m-d'))
             ->count_all_results();
     }
 
