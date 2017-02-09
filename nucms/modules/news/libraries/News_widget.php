@@ -126,6 +126,7 @@ class News_widget
         $this->data = $data;
 
         $newsCategory = $this->CI->news_category_translations
+            ->with('root')
             ->where('news_category_id', $newsCategoryId)
             ->where('locale', $locale)
             ->get();
@@ -133,7 +134,7 @@ class News_widget
         $newsList = $this->CI->news_category_news->get_news_list_by_category(
             $newsCategoryId, $locale, $limit, $offset
         );
-
+        
         // Set metadata
         if (!$partial) {
             $this->set_metatags($newsCategory);
@@ -149,13 +150,21 @@ class News_widget
     /**
      * Render news categories tree
      */
-    public function render_category_menu()
+    public function render_category_menu($categoryId = null)
     {
-        $data['news_categories'] = $this->CI->news_category_translations
-            ->get_categories_tree(config_item('selected_locale'));
+        $newsCategories = $this->CI->news_category_translations
+            ->get_categories_tree(config_item('selected_locale'), false);
 
-        $data['active_slug'] = $this->CI->uri->uri_string();
-
+        if (!is_null($categoryId) && isset($newsCategories[(int) $categoryId])) {
+            $categoryId = $newsCategories[(int) $categoryId]->root_category_id;;
+        }
+        
+        $data = [
+            'news_categories' => array_to_array_by_key($newsCategories, 'parent_id'),
+            'active_slug' => $this->CI->uri->uri_string(),
+            'category_id' => (int) $categoryId
+        ];
+        
         echo render_twig('news/news_category_menu', $data, true);
     }
 

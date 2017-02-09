@@ -58,9 +58,8 @@
                 </div><!-- /.newsList -->
             </div>
             <div class="col-sm-4">
-                {{
-                    widget('News_widget::render_category_menu')
-                }}
+{#                {{ widget('News_widget::render_category_menu', {categoryId: news_category.news_category_id }) }}#}
+                {{ widget('News_widget::render_category_menu', {categoryId: null }) }}
             </div>
         </div>
     </div><!--/.container-->

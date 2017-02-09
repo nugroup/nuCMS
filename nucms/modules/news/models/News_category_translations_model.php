@@ -293,8 +293,20 @@ class News_category_translations_model extends MY_Model
             ->get_all();
 
         if ($newsCategoryList) {
+            $newsCategoryListById = array_to_array_by_key_single($newsCategoryList, 'news_category_id');
+
             foreach ($newsCategoryList as $category) {
                 $category->route->slug = $this->config->item('news_category', 'prefix') . $category->route->slug;
+                
+                $rootId = (is_null($category->root->parent_id)) ? $category->root->id : $category->root->parent_id;
+                while(
+                    isset($newsCategoryListById[$rootId]) &&
+                    !is_null($newsCategoryListById[$rootId]->root->parent_id)
+                ) {
+                    $rootId = $newsCategoryListById[$rootId]->root->parent_id;
+                }
+                
+                $category->root_category_id = $rootId;
             }
 
             $newsCategoryList = prepare_join_data($newsCategoryList, 'root');
@@ -307,7 +319,7 @@ class News_category_translations_model extends MY_Model
         }
         
         return [];
-    }    
+    }
 }
 
 /* End of file News_category_translations_model.php */
