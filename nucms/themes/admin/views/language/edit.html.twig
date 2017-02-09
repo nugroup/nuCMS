@@ -118,6 +118,13 @@
 
     <script>
 
+        $('#language-edit-form').submit(function() {
+
+            showBeforeUnload = false;
+            return true;
+
+        });
+
         $(document).on('change', '#language-edit-form', function () {
             showBeforeUnload = true;
         });

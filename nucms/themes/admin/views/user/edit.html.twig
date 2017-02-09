@@ -145,9 +145,17 @@
 
     <script>
 
+        $('#user-edit-form').submit(function() {
+
+            showBeforeUnload = false;
+            return true;
+
+        });
+        
         $(document).on('change', '#user-edit-form', function () {
             
             showBeforeUnload = true;
+
         });
 
     </script>

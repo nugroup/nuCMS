@@ -12,16 +12,8 @@ var showBeforeUnload = false;
         if (showBeforeUnload === true) {
             return "Nie zapisano zmian. Czy na pewno chcesz opuścić tę stronę?";
         }
-
     });
-    // ----- uncheck beforeUnload event when we submit the form
-    $(document).on('submit', 'form', function () {
-
-        showBeforeUnload = false;
-
-    });
-
-
+        
     // ----- show delete confirm modal window
     $(document).on('click', '.deleteRecord', function () {
 

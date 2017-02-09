@@ -67,6 +67,13 @@
 
     <script>
 
+        $('#block-edit-form').submit(function() {
+
+            showBeforeUnload = false;
+            return true;
+
+        });
+
         $(document).on('change', '#block-edit-form', function () {
             showBeforeUnload = true;
         });

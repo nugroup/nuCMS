@@ -234,7 +234,8 @@
         $('#page-edit-form').submit(function() {
 
             $('.blockEditContent').remove();
-            $(this).submit();
+            showBeforeUnload = false;
+            return true;
 
         });
     </script>

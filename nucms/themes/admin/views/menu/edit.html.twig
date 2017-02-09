@@ -296,7 +296,8 @@
 
             });
 
-            $('#menu-edit-form').submit();
+            showBeforeUnload = false;
+            return true;
 
         });
 
