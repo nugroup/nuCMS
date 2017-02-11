@@ -20,6 +20,11 @@ class Backend_Controller extends NU_Controller
         // Load needed config
         $this->load->config('app');
         $this->load->config('nucms');
+        
+        // Sort menu
+        $menu = config_item('admin_menu');
+        ksort($menu);
+        $this->config->set_item('admin_menu', $menu);
 
         // Check profiler status
         if ($this->config->item('profiler') && ENVIRONMENT == 'development') {

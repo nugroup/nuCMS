@@ -23,8 +23,13 @@
                 ['removeformat'],
                 ['fullscreen']
             ]
+        })
+        .on('tbwchange', function(){
+            var content = $(this).trumbowyg('html');
+            $(this).val(content);
+            $(this).html(content);
         });
-
+        
     }
 
 </script>

@@ -9,7 +9,7 @@ $(function () {
      *
      * @param {int} moduleId
      */
-    var craetetTab = function (moduleId, html, title) {
+    var createdTab = function (moduleId, html, title) {
 
         // Nav
         var navi = $('<i />').addClass('fa fa-remove tab-close');
@@ -97,7 +97,7 @@ $(function () {
 
                 // Create new tab if not exist
                 if (false === exist) {
-                    craetetTab(info.id, response.html.toString(), info.title);
+                    createdTab(info.id, response.html.toString(), info.title);
                 }
 
                 // Activate edit tab
