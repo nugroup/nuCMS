@@ -1,0 +1,16 @@
+@twBorderColor: #afafaf;
+@twBorder: 1px dashed @twBorderColor;
+
+.trumbowyg-box {
+    table {
+        border: @twBorder;
+        
+        tr {
+            td {
+                padding: 10px;
+                border-right: @twBorder;
+                border-bottom: @twBorder;
+            }
+        }
+    }
+}
