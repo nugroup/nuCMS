@@ -279,10 +279,14 @@ class News_category_translations_model extends MY_Model
      * 
      * @return array
      */
-    public function get_categories_tree($locale, $parentAsKey = true, $onlyActive = true)
+    public function get_categories_tree($locale, $parentAsKey = true, $onlyActive = true, $categoryId = null)
     {
         if ($onlyActive) {
             $this->db->where('active', 1);
+        }
+
+        if (!is_null($categoryId)) {
+            $this->db->where('news_category_id !=', $categoryId);
         }
 
         $newsCategoryList = $this
